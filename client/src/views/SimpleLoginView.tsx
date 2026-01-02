@@ -79,7 +79,9 @@ const SimpleLoginView = () => {
 
   const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      void handleLogin();
+      handleLogin().catch(() => {
+        // Errors are handled inside handleLogin via Alert/catchError
+      });
     }
   }, [handleLogin]);
 
