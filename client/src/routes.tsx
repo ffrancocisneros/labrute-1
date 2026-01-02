@@ -28,6 +28,7 @@ import GeneratingView from './views/GeneratingView';
 import GlobalTournamentView from './views/GlobalTournamentView';
 import HallView from './views/HallView';
 import HomeView from './views/HomeView';
+import SimpleLoginView from './views/SimpleLoginView';
 import { InventoryView } from './views/InventoryView';
 import LevelUpView from './views/LevelUpView';
 import { MultipleAccountsView } from './views/admin/MultipleAccountsView';
@@ -58,6 +59,7 @@ const routes: RouteObject[] = [
     element: <Main />,
     children: [
       { path: '', element: <HomeView /> },
+      { path: 'login', element: <SimpleLoginView /> },
       { path: 'oauth/callback', element: <HomeView /> },
       { path: 'achievements/rankings', element: <AchievementRankingView /> },
       { path: 'unknown-brute', element: <BruteNotFoundView /> },

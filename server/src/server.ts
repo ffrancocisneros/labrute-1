@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { doubleCsrf } from 'csrf-csrf';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import schedule from 'node-schedule';
 import { GLOBAL, ServerContext } from './context.js';
 import { dailyJob } from './dailyJob.js';
@@ -12,6 +14,10 @@ import './i18n.js';
 import { initRoutes } from './routes.js';
 import { lockMiddleware } from './utils/middlewares/locks.js';
 import { readyCheck } from './utils/middlewares/readyCheck.js';
+
+// ES module compatible __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function main(cx: ServerContext) {
   cx.logger.info(`Server started (v${Version})`);
@@ -87,6 +93,29 @@ export function main(cx: ServerContext) {
   });
 
   initRoutes(app, cx.config, cx.prisma);
+
+  // Serve static files from client build (production)
+  if (cx.config.isProduction) {
+    // Trust proxy for correct IP detection behind Railway/nginx
+    app.set('trust proxy', 1);
+
+    // Path to client build folder (relative to server/lib/)
+    const clientBuildPath = path.resolve(__dirname, '../../client/build');
+
+    // Serve static files
+    app.use(express.static(clientBuildPath));
+
+    // SPA fallback - serve index.html for all non-API routes
+    app.get('*', (req, res) => {
+      // Don't serve index.html for API routes
+      if (req.path.startsWith('/api')) {
+        return res.status(404).json({ message: 'Not found' });
+      }
+      return res.sendFile(path.join(clientBuildPath, 'index.html'));
+    });
+
+    cx.logger.info(`Serving static files from ${clientBuildPath}`);
+  }
 }
 
 /**

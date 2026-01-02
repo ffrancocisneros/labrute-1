@@ -4,6 +4,7 @@ import { AlertTitle, Box, BoxProps, Alert as MuiAlert, Stack, Tooltip } from '@m
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
 import { useBrute } from '../../hooks/useBrute';
@@ -37,6 +38,7 @@ const CellMain = ({
   const { t } = useTranslation();
   const Confirm = useConfirm();
   const Alert = useAlert();
+  const navigate = useNavigate();
   const { brute, owner } = useBrute();
   const { user, authing, currentEvent } = useAuth();
 
@@ -62,12 +64,18 @@ const CellMain = ({
     });
   }, [Alert, Confirm, brute, t]);
 
-  // Login
+  // Login - checks auth mode and redirects appropriately
   const login = useCallback(() => {
-    Fetch<{ url: string }>('/api/oauth/redirect').then(({ url }) => {
-      window.location.href = url;
+    Server.Auth.getAuthMode().then((response) => {
+      if (response.localAuthEnabled) {
+        // Local auth mode - redirect to login page
+        navigate('/login');
+      } else if (response.url) {
+        // OAuth mode - redirect to Eternal-Twin
+        window.location.href = response.url;
+      }
     }).catch(catchError(Alert));
-  }, [Alert]);
+  }, [Alert, navigate]);
 
   return brute && (
     <Box {...rest}>

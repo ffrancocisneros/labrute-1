@@ -1,0 +1,22 @@
+# Nixpacks configuration for Railway deployment
+# Single service: server serves the React frontend
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "yarn"]
+cmds = ["corepack enable"]
+
+[phases.install]
+cmds = ["yarn install --immutable"]
+
+[phases.build]
+cmds = [
+  "yarn compile",
+  "yarn build:client"
+]
+
+[start]
+cmd = "bash scripts/start-production.sh"
+
+[variables]
+NODE_ENV = "production"
+

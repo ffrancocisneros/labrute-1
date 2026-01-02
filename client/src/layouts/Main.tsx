@@ -57,12 +57,18 @@ const Main = () => {
     setOpen(newOpen);
   };
 
-  // Login
+  // Login - checks auth mode and redirects appropriately
   const oauth = useCallback(() => {
-    Fetch<{ url: string }>('/api/oauth/redirect').then(({ url }) => {
-      window.location.href = url;
+    Server.Auth.getAuthMode().then((response) => {
+      if (response.localAuthEnabled) {
+        // Local auth mode - redirect to login page
+        navigate('/login');
+      } else if (response.url) {
+        // OAuth mode - redirect to Eternal-Twin
+        window.location.href = response.url;
+      }
     }).catch(catchError(Alert));
-  }, [Alert]);
+  }, [Alert, navigate]);
 
   // Logout
   const logout = useCallback(() => {

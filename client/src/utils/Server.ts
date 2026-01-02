@@ -5,6 +5,16 @@ import Fetch from './Fetch';
 const Server = {
   isReady: () => Fetch<ServerReadyResponse>('/api/is-ready'),
   csrf: () => Fetch<{ csrfToken: string }>('/api/csrf'),
+  Auth: {
+    // Check if local auth is enabled (returns { localAuthEnabled: true } or OAuth redirect URL)
+    getAuthMode: () => Fetch<{ url?: string; localAuthEnabled?: boolean }>('/api/oauth/redirect'),
+    // Simple login with username + shared secret (for private deployments)
+    simpleLogin: (username: string, secret: string) => Fetch<UsersAuthenticateResponse>(
+      '/api/auth/simple-login',
+      { username, secret },
+      'POST'
+    ),
+  },
   User: {
     authenticate: (login: string, token: string) => Fetch<UsersAuthenticateResponse>('/api/user/authenticate', {
       login,

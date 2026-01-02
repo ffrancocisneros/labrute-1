@@ -62,8 +62,13 @@ function initOpentelemetry(config: Config): NodeSDK {
 
 async function main() {
   const config = await loadConfig();
-  const otelSdk = initOpentelemetry(config);
-  otelSdk.start();
+
+  // Only initialize OpenTelemetry if enabled (requires Eternal-Twin server)
+  if (config.otelEnabled) {
+    const otelSdk = initOpentelemetry(config);
+    otelSdk.start();
+  }
+
   // eslint-disable-next-line node/no-unsupported-features/es-syntax
   const server = await import('./server.js');
   server.mainWrapper();

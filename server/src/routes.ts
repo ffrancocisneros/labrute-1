@@ -13,6 +13,7 @@ import { Fights } from './controllers/Fights.js';
 import { Logs } from './controllers/Logs.js';
 import { Notifications } from './controllers/Notifications.js';
 import { OAuth } from './controllers/OAuth.js';
+import { LocalAuth } from './controllers/LocalAuth.js';
 import { Tournaments } from './controllers/Tournaments.js';
 import { Users } from './controllers/Users.js';
 import { ServerState } from './utils/ServerState.js';
@@ -34,10 +35,22 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
     });
   });
 
-  // OAuth
-  const oauth = new OAuth(config, prisma);
-  app.get('/api/oauth/redirect', oauth.redirect.bind(oauth));
-  app.get('/api/oauth/token', oauth.token.bind(oauth));
+  // Authentication
+  if (config.localAuthEnabled) {
+    // Local auth (username + shared secret) - for private deployments
+    const localAuth = new LocalAuth(config, prisma);
+    app.post('/api/auth/simple-login', localAuth.login.bind(localAuth));
+
+    // Return info about auth mode
+    app.get('/api/oauth/redirect', (_req: Request, res: Response) => {
+      res.status(200).send({ localAuthEnabled: true });
+    });
+  } else {
+    // Eternal-Twin OAuth
+    const oauth = new OAuth(config, prisma);
+    app.get('/api/oauth/redirect', oauth.redirect.bind(oauth));
+    app.get('/api/oauth/token', oauth.token.bind(oauth));
+  }
 
   // Daily job
   app.patch('/api/run-daily-job', Users.runDailyJob(prisma));

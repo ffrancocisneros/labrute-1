@@ -97,6 +97,24 @@ export interface Config {
   readonly csrfSecret: string;
 
   /**
+   * Whether OpenTelemetry tracing is enabled.
+   * Disabled by default for private deployments.
+   */
+  readonly otelEnabled: boolean;
+
+  /**
+   * Whether local authentication is enabled (username + shared secret).
+   * When enabled, Eternal-Twin OAuth routes are disabled.
+   */
+  readonly localAuthEnabled: boolean;
+
+  /**
+   * Shared secret for local authentication.
+   * Required when localAuthEnabled is true.
+   */
+  readonly localAuthSecret: string;
+
+  /**
    * Configuration for the Eternaltwin client.
    */
   readonly eternaltwin: EternaltwinConfig;
@@ -144,6 +162,9 @@ export const emptyConfig: Config = {
   corsRegex: /.*/,
   cookieSecret: 'dev',
   csrfSecret: 'dev2',
+  otelEnabled: false,
+  localAuthEnabled: false,
+  localAuthSecret: '',
   eternaltwin: {
     url: 'http://localhost:50320/',
     clientRef: 'brute_dev@clients',
@@ -245,6 +266,13 @@ export async function readConfig(
   const corsRegex = readCorsRegex(env.CORS_REGEX);
   const cookieSecret = readCookieSecret(env.COOKIE_SECRET);
   const csrfSecret = readCsrfSecret(env.CSRF_SECRET);
+
+  // OpenTelemetry is disabled by default for private deployments
+  const otelEnabled = env.OTEL_ENABLED === 'true';
+
+  // Local auth configuration (username + shared secret)
+  const localAuthSecret = env.LOCAL_AUTH_SECRET ?? '';
+  const localAuthEnabled = localAuthSecret.length > 0;
 
   const configVars = await prisma?.config.findMany({
     select: {
@@ -379,6 +407,9 @@ export async function readConfig(
     corsRegex,
     cookieSecret,
     csrfSecret,
+    otelEnabled,
+    localAuthEnabled,
+    localAuthSecret,
     eternaltwin,
     discordNotifications,
     discordLogs,

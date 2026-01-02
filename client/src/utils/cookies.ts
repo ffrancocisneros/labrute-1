@@ -1,5 +1,5 @@
-// Get current domain
-const mainDomain = window.location.hostname.split('.').slice(-2).join('.');
+// Cookie utilities with host-only cookies for Railway/cloud compatibility
+// Host-only cookies (no domain specified) work better on platform domains like *.up.railway.app
 
 export const getCookie = (name: string) => {
   const value = `; ${document.cookie}`;
@@ -9,9 +9,12 @@ export const getCookie = (name: string) => {
 };
 
 export const setCookie = (name: string, value: string, days: number) => {
-  document.cookie = `${name}=${value}; path=/; domain=${mainDomain}; max-age=${days * 24 * 60 * 60}`;
+  // Use host-only cookies (no domain) for maximum compatibility
+  // This works on all platforms including Railway, Vercel, etc.
+  document.cookie = `${name}=${value}; path=/; max-age=${days * 24 * 60 * 60}; SameSite=Lax`;
 };
 
 export const deleteCookie = (name: string) => {
-  document.cookie = `${name}=; path=/; domain=${mainDomain}; max-age=0`;
+  // Delete from current host (no domain)
+  document.cookie = `${name}=; path=/; max-age=0`;
 };
