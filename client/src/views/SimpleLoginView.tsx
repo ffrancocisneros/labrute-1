@@ -79,7 +79,7 @@ const SimpleLoginView = () => {
 
   const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleLogin();
+      void handleLogin();
     }
   }, [handleLogin]);
 
@@ -147,4 +147,3 @@ const SimpleLoginView = () => {
 };
 
 export default SimpleLoginView;
-

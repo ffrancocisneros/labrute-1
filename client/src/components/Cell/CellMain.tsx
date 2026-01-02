@@ -9,7 +9,6 @@ import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
 import { useBrute } from '../../hooks/useBrute';
 import { useConfirm } from '../../hooks/useConfirm';
-import Fetch from '../../utils/Fetch';
 import Server from '../../utils/Server';
 import catchError from '../../utils/catchError';
 import BruteBodyAndStats from '../Brute/BruteBodyAndStats';

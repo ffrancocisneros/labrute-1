@@ -17,7 +17,6 @@ import { useLanguage } from '../hooks/useLanguage';
 import { ColorModeContext } from '../theme/ColorModeContext';
 import dark from '../theme/dark';
 import catchError from '../utils/catchError';
-import Fetch from '../utils/Fetch';
 import Server from '../utils/Server';
 
 const Main = () => {
