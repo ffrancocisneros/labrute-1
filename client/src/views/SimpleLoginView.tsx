@@ -70,7 +70,8 @@ const SimpleLoginView = () => {
         navigate('/');
       }
     } catch (error) {
-      catchError(Alert)(error);
+      // TS uses `unknown` for catch variables; normalize to the ErrorType expected by catchError
+      catchError(Alert)(error instanceof Error ? error.message : String(error));
     } finally {
       setLoading(false);
       setAuthing(false);

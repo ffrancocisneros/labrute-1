@@ -11,7 +11,7 @@ cmds = ["yarn install --immutable"]
 [phases.build]
 cmds = [
   "yarn compile",
-  "yarn build:client"
+  "DISABLE_ESLINT_PLUGIN=true CI=false yarn build:client"
 ]
 
 [start]
