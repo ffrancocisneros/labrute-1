@@ -778,11 +778,6 @@ export const Brutes = {
         throw new NotFoundError(translate('bruteNotFound', authed));
       }
 
-      // Prevent sacrificing the day of creation
-      if (dayjs.utc().isSame(dayjs.utc(brute.createdAt), 'day')) {
-        throw new ForbiddenError(translate('cannotSacrificeSameDay', authed));
-      }
-
       // Check if brute is master of a clan
       const isClanMaster = await prisma.clan.count({
         where: {
