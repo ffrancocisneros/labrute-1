@@ -48,7 +48,12 @@ export function main(cx: ServerContext) {
     },
     ignoredMethods: ['HEAD', 'OPTIONS'],
     // Disable CSRF for /api/user/:userId/done since it's used externally by other games
-    skipCsrfProtection: (req) => req.path.startsWith('/api/user/') && req.path.endsWith('/done'),
+    // Also disable CSRF for health checks (/api/is-ready) so Railway can mark the service healthy
+    skipCsrfProtection: (req) => (
+      req.path === '/api/is-ready'
+      || req.path === '/api/is-ready/'
+      || (req.path.startsWith('/api/user/') && req.path.endsWith('/done'))
+    ),
   });
 
   // CSRF getter
