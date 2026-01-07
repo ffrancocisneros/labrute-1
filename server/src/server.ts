@@ -71,7 +71,8 @@ export function main(cx: ServerContext) {
   });
 
   // CSRF middleware
-  app.use(doubleCsrfProtection);
+  // Only protect API routes with CSRF. Never block the SPA root or static assets.
+  app.use('/api', doubleCsrfProtection);
 
   // Silence CSRF errors
   const csrfErrorSilencer: express.ErrorRequestHandler = (err: Error, _req, res, next) => {
