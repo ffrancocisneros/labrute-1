@@ -26,7 +26,7 @@
   "reportNotFound": "Denúncia não encontrada",
   "invalidCreation": "Sinto uma perturbação na força.",
   "nameAlreadyTaken": "Este nome já está em uso",
-  "bruteLimitReached": "Você atingiu seu limite de bruto. Você precisa de {{gold}} Ouro para desbloquear um novo bruto.",
+  "bruteLimitReached": "Você atingiu seu limite de brutos (10).",
   "bruteCannotLevelUp": "Seu bruto não pode subir de nível",
   "maxTierReached": "Maximum tier reached",
   "notEnoughXP": "XP insuficiente",

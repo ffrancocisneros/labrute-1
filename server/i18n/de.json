@@ -26,7 +26,7 @@
   "reportNotFound": "Meldung nicht gefunden",
   "invalidCreation": "Ich verspüre eine Schwankung in der Macht.",
   "nameAlreadyTaken": "Dieser Name ist bereits vergeben",
-  "bruteLimitReached": "Du hast das Brutalo Limit erreicht. Du benötigst {{gold}} Gold, um einen neuen freizuschalten.",
+  "bruteLimitReached": "Du hast das Brutalo Limit erreicht (10).",
   "bruteCannotLevelUp": "Dein Brutalo kann nicht in der Stufe aufsteigen",
   "maxTierReached": "Maximale Aufwertung erreicht",
   "notEnoughXP": "Nicht genug EP",

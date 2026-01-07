@@ -486,6 +486,7 @@
   "allRead": "Marcar como leído",
   "newBrute": "Nuevo Bruto",
   "gold": "Oro",
+  "yourGold": "Tu Oro",
   "goldNeededForNewBrute": "Necesitas {{gold}} de oro para desbloquear un nuevo Bruto.",
   "sacrifice": "Sacrificar",
   "sacrificeConfirm": "¿Estás seguro de que quieres sacrificar tu Bruto por {{gold}} Oro? Esta acción no se puede deshacer.",

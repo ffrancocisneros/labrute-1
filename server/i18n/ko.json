@@ -26,7 +26,7 @@
   "reportNotFound": "Report not found",
   "invalidCreation": "I sense a disturbance in the force.",
   "nameAlreadyTaken": "This name is already taken",
-  "bruteLimitReached": "You have reached your brute limit. You need {{gold}} Gold to unlock a new brute.",
+  "bruteLimitReached": "You have reached your brute limit (10).",
   "bruteCannotLevelUp": "Your brute cannot level up",
   "maxTierReached": "Maximum tier reached",
   "notEnoughXP": "Not enough XP",

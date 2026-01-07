@@ -26,7 +26,7 @@
   "reportNotFound": "Signalement introuvable",
   "invalidCreation": "Je sens une perturbation dans la force.",
   "nameAlreadyTaken": "Ce nom est déjà utilisé",
-  "bruteLimitReached": "Vous avez atteint votre limite de brute. Vous avez besoin de {{gold}} Or pour débloquer une nouvelle brute.",
+  "bruteLimitReached": "Vous avez atteint votre limite de brutes (10).",
   "bruteCannotLevelUp": "Votre brute ne peut pas monter de niveau",
   "maxTierReached": "Niveau maximum atteint",
   "notEnoughXP": "Pas assez d'XP",

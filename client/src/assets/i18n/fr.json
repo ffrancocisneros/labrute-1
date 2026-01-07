@@ -486,6 +486,7 @@
   "allRead": "Tout lu",
   "newBrute": "Nouvelle brute",
   "gold": "Or",
+  "yourGold": "Votre Or",
   "goldNeededForNewBrute": "Vous avez besoin de {{gold}} Or pour créer une nouvelle Brute.",
   "sacrifice": "Sacrifier",
   "sacrificeConfirm": "Voulez-vous vraiment sacrifier votre brute pour {{gold}} Or ? Cette action est irréversible.",

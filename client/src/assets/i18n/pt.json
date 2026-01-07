@@ -486,6 +486,7 @@
   "allRead": "All read",
   "newBrute": "Novo Bruto",
   "gold": "Ouro",
+  "yourGold": "Seu Ouro",
   "goldNeededForNewBrute": "You need {{gold}} Gold to create a new Brute.",
   "sacrifice": "Sacrifício",
   "sacrificeConfirm": "Tem certeza de que deseja sacrificar seu bruto por {{gold}} de Ouro ? Essa ação não pode ser desfeita.",

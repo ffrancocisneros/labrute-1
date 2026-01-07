@@ -26,7 +26,6 @@ import {
   getBruteGoldValue,
   getBruteToSave,
   getFightsLeft,
-  getGoldNeededForNewBrute,
   getLevelUpChoices,
   getRandomStartingStats,
   getTieredPets,
@@ -293,33 +292,12 @@ export const Brutes = {
         }
       }
 
-      let goldLost = 0;
-      let newLimit = user.bruteLimit;
+      const goldLost = 0;
+      const newLimit = user.bruteLimit;
 
-      // Refuse if user has too many brutes and not enough gold
+      // Refuse if user has reached their brute limit
       if (user.brutes.length >= user.bruteLimit) {
-        const gold = getGoldNeededForNewBrute(user);
-        if (user.gold < gold) {
-          throw new LimitError(translate('bruteLimitReached', authed, { gold }));
-        } else {
-          // Remove XXX Gold and update brute limit
-          await prisma.user.update({
-            where: { id: user.id },
-            data: {
-              gold: { decrement: gold },
-              bruteLimit: { increment: 1 },
-            },
-            select: { id: true },
-          });
-          goldLost = gold;
-          newLimit += 1;
-
-          createUserLog(prisma, {
-            type: UserLogType.GOLD_LOSS,
-            userId: authed.id,
-            gold: goldLost,
-          });
-        }
+        throw new LimitError(translate('bruteLimitReached', authed));
       }
 
       const master = req.body.master ? await prisma.brute.findFirst({

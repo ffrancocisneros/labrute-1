@@ -1,4 +1,4 @@
-import { BruteRankings, DailyTournamentGoldReward, DailyTournamentXpReward, getBruteGoldValue, getGoldNeededForNewBrute, getWinsNeededToRankUp, GlobalTournamentGoldReward, GlobalTournamentXpReward, RESET_PRICE } from '@labrute/core';
+import { BruteRankings, DailyTournamentGoldReward, DailyTournamentXpReward, getBruteGoldValue, getWinsNeededToRankUp, GlobalTournamentGoldReward, GlobalTournamentXpReward, RESET_PRICE } from '@labrute/core';
 import { Box, Grid, Paper } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,6 @@ import FantasyButton from '../components/FantasyButton';
 import Page from '../components/Page';
 import Text from '../components/Text';
 import { ChildCare, EmojiEvents, Groups, KeyboardDoubleArrowUp } from '@mui/icons-material';
-import { Brute } from '@labrute/prisma';
 
 const sacrificeExamples = [
   { rank: 11, level: 10 },
@@ -159,17 +158,6 @@ export const WikiView = () => {
             </Text>
             <Text h6 upperCase typo="LaBrute" color="secondary">• {t('wiki.beatClanBoss')}</Text>
             <Text h5 bold upperCase typo="LaBrute" color="secondary" mt={1}>{t('wiki.howToUseGold')}</Text>
-            <Text h6 upperCase typo="LaBrute" color="secondary">• {t('wiki.createNewBrutes')}</Text>
-            {[4, 5, 6].map((brutes) => (
-              <Text body2 key={brutes}>
-                {t('wiki.count', { count: brutes })} = {getGoldNeededForNewBrute({ bruteLimit: brutes - 1, brutes: new Array(brutes - 1).fill({ id: '' }) as Pick<Brute, 'id'>[] })}
-                <Box
-                  component="img"
-                  src="/images/gold.png"
-                  sx={{ ml: 0.5, verticalAlign: 'middle' }}
-                />
-              </Text>
-            ))}
             <Text h6 upperCase typo="LaBrute" color="secondary">
               • {t('wiki.resetBrute')} = {RESET_PRICE}
               <Box

@@ -1,4 +1,4 @@
-import { getFightsLeft, getGoldNeededForNewBrute, UserUpdateSettingsRequest } from '@labrute/core';
+import { getFightsLeft, UserUpdateSettingsRequest } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
 import { Add, AdminPanelSettings, DarkMode, Event, Info, LightMode, Logout, Menu, MilitaryTech, MoreHoriz, MusicNote, NewReleases, Person, PersonSearch, Policy, RssFeed, Speed, SportsKabaddi } from '@mui/icons-material';
 import { Badge, Box, Button, Divider, Drawer, GlobalStyles, IconButton, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Alert as MuiAlert, Switch, ThemeProvider, Tooltip, useMediaQuery, useTheme } from '@mui/material';
@@ -244,7 +244,7 @@ const Main = () => {
           )}
           {user && (
             <>
-              <Tooltip title={t('goldNeededForNewBrute', { gold: getGoldNeededForNewBrute(user) })}>
+              <Tooltip title={t('yourGold')}>
                 <Text color={theme.palette.topbar.contrast} whiteSpace="nowrap">
                   {user.gold}
                   <Box component="img" src="/images/gold.png" sx={{ ml: 0.5, width: 8 }} />
