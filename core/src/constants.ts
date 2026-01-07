@@ -8,6 +8,9 @@ export const FIGHTS_PER_DAY = 12;
 export const ARENA_OPPONENTS_COUNT = 6;
 export const ARENA_OPPONENTS_MAX_GAP = 2;
 
+export const NPC_BRUTES_PER_LEVEL = 30;
+export const NPC_MAX_LEVEL = 50;
+
 export const BRUTE_STARTING_POINTS = 11;
 export const PERKS_TOTAL_ODDS = WEAPONS_TOTAL_ODDS + PETS_TOTAL_ODDS + SKILLS_TOTAL_ODDS;
 

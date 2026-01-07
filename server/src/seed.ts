@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import {
-  ARENA_OPPONENTS_COUNT,
   FIGHTS_PER_DAY,
+  NPC_BRUTES_PER_LEVEL,
+  NPC_MAX_LEVEL,
   createRandomBruteStats,
   getBruteToSave,
   getLevelUpChoices, getRandomBody,
@@ -71,12 +72,14 @@ const generateBrute = (
 };
 
 async function main(cx: ServerContext) {
+  const totalNPCs = NPC_BRUTES_PER_LEVEL * NPC_MAX_LEVEL;
+
   // Check if DB is already seeded
   const count = await cx.prisma.brute.count({
-    where: { userId: null },
+    where: { userId: null, deletedAt: null },
   });
 
-  if (count >= ARENA_OPPONENTS_COUNT * 100) {
+  if (count >= totalNPCs) {
     return;
   }
 
@@ -86,28 +89,35 @@ async function main(cx: ServerContext) {
     data: { deletedAt: dayjs.utc().toDate() },
   });
 
-  // Generate random names
-  cx.logger.log(`DB only contains ${count} generated brutes, regenerating ${ARENA_OPPONENTS_COUNT * 100}...`);
+  // Generate NPC brutes: 30 per level, from level 1 to 50
+  cx.logger.log(`DB only contains ${count} NPC brutes, regenerating ${totalNPCs} (${NPC_BRUTES_PER_LEVEL} per level, levels 1-${NPC_MAX_LEVEL})...`);
   const nicks: string[] = [];
-  for (let i = 0; i < ARENA_OPPONENTS_COUNT * 100; i++) {
-    let generatedName;
 
-    // Reroll if name already exists
-    while (!generatedName || nicks.includes(generatedName)) {
-      generatedName = uniqueNamesGenerator({
-        dictionaries: [colors, adjectives, animals, names, languages, starWars],
-        style: 'capital',
-        separator: '',
-        length: 2,
-      }).replace(/\s/g, '').substring(0, 16);
+  for (let level = 1; level <= NPC_MAX_LEVEL; level++) {
+    for (let i = 0; i < NPC_BRUTES_PER_LEVEL; i++) {
+      let generatedName;
+
+      // Reroll if name already exists
+      while (!generatedName || nicks.includes(generatedName)) {
+        generatedName = uniqueNamesGenerator({
+          dictionaries: [colors, adjectives, animals, names, languages, starWars],
+          style: 'capital',
+          separator: '',
+          length: 2,
+        }).replace(/\s/g, '').substring(0, 16);
+      }
+
+      nicks.push(generatedName);
+
+      await cx.prisma.brute.create({
+        data: generateBrute(level, generatedName),
+      });
     }
 
-    nicks.push(generatedName);
-
-    await cx.prisma.brute.create({
-      data: generateBrute(Math.floor(i / (ARENA_OPPONENTS_COUNT / 2)) + 1, generatedName),
-    });
+    cx.logger.log(`Generated ${NPC_BRUTES_PER_LEVEL} NPCs for level ${level}`);
   }
+
+  cx.logger.log(`Finished generating ${totalNPCs} NPC brutes`);
 }
 
 /**
