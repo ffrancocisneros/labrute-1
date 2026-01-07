@@ -141,19 +141,15 @@ const CellMobileView = ({
           )}
         </Grid>
         <Grid item xs={12} sm={6} sx={{ textAlign: 'center' }} order={isXs ? 4 : 0}>
-          {/* PETS OR ADVERT */}
+          {/* PETS OR CUSTOM IMAGE */}
           {keys(brute.pets).length > 0 ? (
             <CellPets />
           ) : (
-            <Tooltip title={t(`${ad.name}.desc`)}>
-              <Link to={ad.url} target="_blank" sx={{ width: 200, mx: 'auto' }}>
-                <Box
-                  component="img"
-                  src={`/images/redirects/${ad.illustration}`}
-                  sx={{ border: 2 }}
-                />
-              </Link>
-            </Tooltip>
+            <Box
+              component="img"
+              src={`/images/redirects/${ad.illustration}`}
+              sx={{ width: 200, height: 200, objectFit: 'cover', border: 2 }}
+            />
           )}
         </Grid>
         <Grid item xs={12} sm={6} sx={{ textAlign: 'center' }} order={isXs ? 5 : 0}>

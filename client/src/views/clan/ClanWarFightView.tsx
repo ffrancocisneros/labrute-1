@@ -1,5 +1,5 @@
 import { Fighter, FightGetResponse } from '@labrute/core';
-import { Box, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableHead, TableRow, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
@@ -82,17 +82,13 @@ const ClanWarFightView = () => {
         <Box display="flex">
           {/* ADVERTS */}
           <Box sx={{ width: 236, mt: 5 }}>
-            <Text color="text.primary" center typo="GameFont" upperCase sx={{ ml: 2, fontSize: 10 }}>{t('fight.discoverGames')}</Text>
             {ads.map((ad) => (
-              <Tooltip title={t(`${ad.name}.desc`)} key={ad.name}>
-                <Link href={ad.url} target="_blank" sx={{ width: 200, display: 'inline-block' }}>
-                  <Box
-                    component="img"
-                    src={`/images/redirects/${ad.illustration}`}
-                    sx={{ width: 1, border: 2, borderColor: 'common.white', ml: 3 }}
-                  />
-                </Link>
-              </Tooltip>
+              <Box
+                key={ad.name}
+                component="img"
+                src={`/images/redirects/${ad.illustration}`}
+                sx={{ width: 200, height: 200, objectFit: 'cover', border: 2, borderColor: 'common.white', ml: 3, mb: 1 }}
+              />
             ))}
           </Box>
           <Box sx={{ mt: 2, ml: 5, alignSelf: 'center' }}>

@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, Link, Paper, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Grid, IconButton, Paper, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Page from '../../components/Page';
@@ -42,19 +42,15 @@ const HomeMobileView = ({
       {/* SECOND TEXT */}
       <Text h4 bold typo="handwritten" color="secondary">{t('orNotToBe')}</Text>
       <Text bold color="text.primary">{t('otherGames')}</Text>
-      {/* OTHER GAMES */}
+      {/* CUSTOM IMAGES */}
       <Grid container spacing={1}>
         {[leftAd, isSx ? rightAd : null].map((ad) => ad && (
           <Grid item xs={12} key={ad.name} sx={{ textAlign: 'center', mt: 1 }}>
-            <Tooltip title={t(`${ad.name}.desc`)}>
-              <Link href={ad.url} target="_blank" sx={{ width: 200, display: 'inline-block' }}>
-                <Box
-                  component="img"
-                  src={`/images/redirects/${ad.illustration}`}
-                  sx={{ width: 1, border: 2 }}
-                />
-              </Link>
-            </Tooltip>
+            <Box
+              component="img"
+              src={`/images/redirects/${ad.illustration}`}
+              sx={{ width: 200, height: 200, objectFit: 'cover', border: 2 }}
+            />
           </Grid>
         ))}
       </Grid>

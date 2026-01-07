@@ -352,17 +352,14 @@ const CellView = () => {
                   width: 300,
                   height: 205,
                   ml: 0.5,
+                  overflow: 'hidden',
                 }}
               >
-                <Tooltip title={t(`${ad.name}.desc`)}>
-                  <Link to={ad.url} target="_blank" sx={{ width: 200, mx: 4, display: 'inline-block' }}>
-                    <Box
-                      component="img"
-                      src={`/images/redirects/${ad.illustration}`}
-                      sx={{ ml: 1, mt: 3.5 }}
-                    />
-                  </Link>
-                </Tooltip>
+                <Box
+                  component="img"
+                  src={`/images/redirects/${ad.illustration}`}
+                  sx={{ ml: 6, mt: 2.5, width: 190, height: 155, objectFit: 'cover' }}
+                />
               </BoxBg>
               {/* LOGS */}
               <Box sx={{ ml: 2, mt: 1 }}>

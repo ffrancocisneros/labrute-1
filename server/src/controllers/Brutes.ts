@@ -295,8 +295,12 @@ export const Brutes = {
       const goldLost = 0;
       const newLimit = user.bruteLimit;
 
-      // Refuse if user has reached their brute limit
-      if (user.brutes.length >= user.bruteLimit) {
+      // Count only normal brutes (exclude event brutes) for the limit check
+      const normalBrutes = user.brutes.filter((b) => b.eventId === null);
+
+      // Refuse if user has reached their brute limit (only for normal brutes)
+      // Event brutes don't count towards the normal brute limit
+      if (!req.body.eventId && normalBrutes.length >= user.bruteLimit) {
         throw new LimitError(translate('bruteLimitReached', authed));
       }
 

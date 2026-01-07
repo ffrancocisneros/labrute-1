@@ -29,7 +29,7 @@ model User {
   admin                  Boolean          @default(false)
   moderator              Boolean          @default(false)
   connexionToken         String           @db.Uuid
-  bruteLimit             Int              @default(3)
+  bruteLimit             Int              @default(10)
   gold                   Int              @default(0)
   fightSpeed             Int              @default(2)
   backgroundMusic        Boolean          @default(true)
@@ -261,7 +261,7 @@ model Brute {
   eventTournamentWatchedDate   DateTime?               @db.Date
   eventTournamentRoundWatched  Int?
   lastFight                    DateTime?               @db.Date
-  fightsLeft                   Int                     @default(6)
+  fightsLeft                   Int                     @default(12)
   victories                    Int                     @default(0)
   losses                       Int                     @default(0)
   fights                       Fight[]

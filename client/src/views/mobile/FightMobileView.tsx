@@ -1,5 +1,5 @@
 import { Fighter, FightGetResponse } from '@labrute/core';
-import { Box, Grid, Link, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from '@mui/material';
+import { Box, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import FightComponent from '../../components/Arena/FightComponent';
@@ -99,15 +99,11 @@ const FightMobileView = ({
         <Grid container spacing={2}>
           {ads.map((ad) => (
             <Grid item key={ad.name} xs={12} sm={6}>
-              <Tooltip title={t(`${ad.name}.desc`)}>
-                <Link href={ad.url} target="_blank" sx={{ width: 200, display: 'inline-block' }}>
-                  <Box
-                    component="img"
-                    src={`/images/redirects/${ad.illustration}`}
-                    sx={{ width: 1, border: 2, borderColor: 'common.white' }}
-                  />
-                </Link>
-              </Tooltip>
+              <Box
+                component="img"
+                src={`/images/redirects/${ad.illustration}`}
+                sx={{ width: 200, height: 200, objectFit: 'cover', border: 2, borderColor: 'common.white' }}
+              />
             </Grid>
           ))}
         </Grid>

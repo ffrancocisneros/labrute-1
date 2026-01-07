@@ -1,12 +1,11 @@
 import { FightGetResponse } from '@labrute/core';
-import { Box, Link, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 import FightComponent from '../components/Arena/FightComponent';
 import BoxBg from '../components/BoxBg';
 import Page from '../components/Page';
-import Text from '../components/Text';
 import { useAlert } from '../hooks/useAlert';
 import { useLanguage } from '../hooks/useLanguage';
 import { getRandomAd } from '../utils/ads';
@@ -73,19 +72,15 @@ const FightView = () => {
         }}
       >
         <Box display="flex">
-          {/* ADVERTS */}
-          <Box sx={{ width: 236, mt: 5 }}>
-            <Text color="text.primary" center typo="GameFont" upperCase sx={{ ml: 2, fontSize: 10 }}>{t('fight.discoverGames')}</Text>
+          {/* CUSTOM IMAGES */}
+          <Box sx={{ width: 236, mt: 5, overflow: 'hidden' }}>
             {ads.map((ad) => (
-              <Tooltip title={t(`${ad.name}.desc`)} key={ad.name}>
-                <Link href={ad.url} target="_blank" sx={{ width: 200, display: 'inline-block' }}>
-                  <Box
-                    component="img"
-                    src={`/images/redirects/${ad.illustration}`}
-                    sx={{ width: 1, border: 2, borderColor: 'common.white', ml: 3 }}
-                  />
-                </Link>
-              </Tooltip>
+              <Box
+                key={ad.name}
+                component="img"
+                src={`/images/redirects/${ad.illustration}`}
+                sx={{ width: 160, height: 160, objectFit: 'cover', border: 2, borderColor: 'common.white', ml: 4, mb: 1 }}
+              />
             ))}
           </Box>
           {/* FIGHT */}

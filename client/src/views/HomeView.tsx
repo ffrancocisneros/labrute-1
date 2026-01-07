@@ -1,7 +1,7 @@
 import { getCalculatedBrute, getRandomBody, getRandomColors, isNameValid, TOKEN_COOKIE, USER_COOKIE, UsersAuthenticateResponse } from '@labrute/core';
 import { Gender } from '@labrute/prisma';
 import { Lock, LockOpen } from '@mui/icons-material';
-import { Box, IconButton, Link, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -382,18 +382,15 @@ const HomeView = () => {
               <Text h5 bold typo="handwritten" color="secondary">{t('orNotToBe')}</Text>
               <Text bold color="text.primary">{t('otherGames')}</Text>
             </Box>
-            {/* OTHER GAMES */}
+            {/* CUSTOM IMAGES */}
             <Box sx={{ mt: 1, ml: 2 }}>
               {[leftAd, rightAd].map((ad) => (
-                <Tooltip title={t(`${ad.name}.desc`)} key={ad.name}>
-                  <Link href={ad.url} target="_blank" sx={{ width: 200, mx: 4, display: 'inline-block' }}>
-                    <Box
-                      component="img"
-                      src={`/images/redirects/${ad.illustration}`}
-                      sx={{ width: 1, border: 2 }}
-                    />
-                  </Link>
-                </Tooltip>
+                <Box
+                  key={ad.name}
+                  component="img"
+                  src={`/images/redirects/${ad.illustration}`}
+                  sx={{ width: 200, height: 200, objectFit: 'cover', mx: 4, display: 'inline-block', border: 2 }}
+                />
               ))}
             </Box>
           </BoxBg>
