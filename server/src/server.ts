@@ -46,12 +46,18 @@ export function main(cx: ServerContext) {
       sameSite: 'lax',
       path: '/',
     },
-    // CSRF should only protect state-changing requests; allow GET for SPA/asset loads and read-only APIs
+    // CSRF should only protect state-changing requests.
+    // Note: We also explicitly skip safe methods in `skipCsrfProtection` to avoid environment-specific behavior.
     ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
-    // Disable CSRF for /api/user/:userId/done since it's used externally by other games
-    // Also disable CSRF for health checks (/api/is-ready) so Railway can mark the service healthy
+    // Disable CSRF for read-only/health routes:
+    // - Allow SPA/asset loads (GET/HEAD/OPTIONS)
+    // - Allow health checks (/api/is-ready) so Railway can mark the service healthy
+    // - Allow /api/user/:userId/done since it's used externally by other games
     skipCsrfProtection: (req) => (
-      req.path === '/api/is-ready'
+      req.method === 'GET'
+      || req.method === 'HEAD'
+      || req.method === 'OPTIONS'
+      || req.path === '/api/is-ready'
       || req.path === '/api/is-ready/'
       || (req.path.startsWith('/api/user/') && req.path.endsWith('/done'))
     ),
