@@ -1,7 +1,6 @@
 import { Lang, Log } from '@labrute/prisma';
 import { History, Policy } from '@mui/icons-material';
 import { Box, Grid, IconButton, Paper, Tooltip, useMediaQuery, useTheme } from '@mui/material';
-import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
