@@ -47,7 +47,7 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false
   },
-  fallbackLng: Lang.en,
+  fallbackLng: Lang.es,
 }).catch((err) => {
   console.error('Error loading language', err);
 });
