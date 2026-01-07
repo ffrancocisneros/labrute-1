@@ -195,7 +195,6 @@ const CellMobileView = ({
       </Box>
       {/* BRUTE SACRIFICE */}
       {owner
-        && dayjs.utc().isAfter(dayjs.utc(brute.createdAt), 'day')
         && (
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <FantasyButton

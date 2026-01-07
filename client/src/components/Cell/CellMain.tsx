@@ -215,7 +215,6 @@ const CellMain = ({
       )}
       {/* BRUTE SACRIFICE */}
       {owner
-        && dayjs.utc().isAfter(dayjs.utc(brute.createdAt), 'day')
         && !!confirmSacrifice
         && (
           <FantasyButton
