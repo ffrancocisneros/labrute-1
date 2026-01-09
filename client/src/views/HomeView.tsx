@@ -385,12 +385,12 @@ const HomeView = () => {
             {/* CUSTOM IMAGES */}
             <Box sx={{ mt: 1, ml: 2 }}>
               {[leftAd, rightAd].map((ad) => (
-                    <Box
+                <Box
                   key={ad.name}
-                      component="img"
-                      src={`/images/redirects/${ad.illustration}`}
+                  component="img"
+                  src={`/images/redirects/${ad.illustration}`}
                   sx={{ width: 200, height: 200, objectFit: 'cover', mx: 4, display: 'inline-block', border: 2 }}
-                    />
+                />
               ))}
             </Box>
           </BoxBg>

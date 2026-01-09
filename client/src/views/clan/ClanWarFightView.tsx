@@ -83,12 +83,12 @@ const ClanWarFightView = () => {
           {/* ADVERTS */}
           <Box sx={{ width: 236, mt: 5 }}>
             {ads.map((ad) => (
-                  <Box
+              <Box
                 key={ad.name}
-                    component="img"
-                    src={`/images/redirects/${ad.illustration}`}
+                component="img"
+                src={`/images/redirects/${ad.illustration}`}
                 sx={{ width: 200, height: 200, objectFit: 'cover', border: 2, borderColor: 'common.white', ml: 3, mb: 1 }}
-                  />
+              />
             ))}
           </Box>
           <Box sx={{ mt: 2, ml: 5, alignSelf: 'center' }}>

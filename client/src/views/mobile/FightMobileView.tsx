@@ -99,11 +99,11 @@ const FightMobileView = ({
         <Grid container spacing={2}>
           {ads.map((ad) => (
             <Grid item key={ad.name} xs={12} sm={6}>
-                  <Box
-                    component="img"
-                    src={`/images/redirects/${ad.illustration}`}
+              <Box
+                component="img"
+                src={`/images/redirects/${ad.illustration}`}
                 sx={{ width: 200, height: 200, objectFit: 'cover', border: 2, borderColor: 'common.white' }}
-                  />
+              />
             </Grid>
           ))}
         </Grid>

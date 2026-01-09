@@ -355,11 +355,11 @@ const CellView = () => {
                   overflow: 'hidden',
                 }}
               >
-                    <Box
-                      component="img"
-                      src={`/images/redirects/${ad.illustration}`}
+                <Box
+                  component="img"
+                  src={`/images/redirects/${ad.illustration}`}
                   sx={{ ml: 6, mt: 2.5, width: 190, height: 155, objectFit: 'cover' }}
-                    />
+                />
               </BoxBg>
               {/* LOGS */}
               <Box sx={{ ml: 2, mt: 1 }}>
