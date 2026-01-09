@@ -11,6 +11,7 @@ cmds = ["yarn install --immutable"]
 [phases.build]
 cmds = [
   "cd server && yarn prisma generate",
+  "cp prisma/package.reference.json prisma/package.json",
   "yarn compile",
   "DISABLE_ESLINT_PLUGIN=true CI=false yarn build:client"
 ]
