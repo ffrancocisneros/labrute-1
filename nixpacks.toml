@@ -6,7 +6,10 @@ nixPkgs = ["nodejs_20", "yarn"]
 cmds = ["corepack enable"]
 
 [phases.install]
-cmds = ["yarn install --immutable"]
+cmds = [
+  "yarn install --immutable",
+  "cp prisma/package.reference.json prisma/package.json"
+]
 
 [phases.build]
 cmds = [
