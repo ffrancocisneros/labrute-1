@@ -7,6 +7,7 @@ cmds = ["corepack enable"]
 
 [phases.install]
 cmds = [
+  "cp prisma/package.reference.json prisma/package.json",
   "yarn install --immutable",
   "cp prisma/package.reference.json prisma/package.json"
 ]
