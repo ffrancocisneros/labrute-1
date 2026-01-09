@@ -312,7 +312,12 @@ export const FightModifier: {
   randomWeapon: 'randomWeapon',
   bareHandsFirstHit: 'bareHandsFirstHit',
   startWithWeapon: 'startWithWeapon',
-  chaos: 'chaos'
+  chaos: 'chaos',
+  doubleXP: 'doubleXP',
+  doubleHP: 'doubleHP',
+  noPets: 'noPets',
+  allHaveBear: 'allHaveBear',
+  doubleFights: 'doubleFights'
 };
 
 export type FightModifier = (typeof FightModifier)[keyof typeof FightModifier]

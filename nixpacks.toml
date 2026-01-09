@@ -10,6 +10,7 @@ cmds = ["yarn install --immutable"]
 
 [phases.build]
 cmds = [
+  "cd server && yarn prisma generate",
   "yarn compile",
   "DISABLE_ESLINT_PLUGIN=true CI=false yarn build:client"
 ]
