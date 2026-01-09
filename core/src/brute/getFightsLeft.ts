@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 import { getMaxFightsPerDay } from './getMaxFightsPerDay';
-import { CalculatedBrute } from '../types';
+import { CalculatedBrute, Modifiers } from '../types';
 
 export const getFightsLeft = (
   brute: Pick<CalculatedBrute, 'id' | 'lastFight' | 'fightsLeft' | 'skills' | 'eventId'>,
+  modifiers: Modifiers = {},
 ) => (dayjs.utc(brute.lastFight).isSame(dayjs.utc(), 'day')
   ? brute.fightsLeft
-  : getMaxFightsPerDay(brute));
+  : getMaxFightsPerDay(brute, modifiers));

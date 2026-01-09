@@ -75,12 +75,12 @@ const FightView = () => {
           {/* CUSTOM IMAGES */}
           <Box sx={{ width: 236, mt: 5, overflow: 'hidden' }}>
             {ads.map((ad) => (
-              <Box
+                  <Box
                 key={ad.name}
-                component="img"
-                src={`/images/redirects/${ad.illustration}`}
+                    component="img"
+                    src={`/images/redirects/${ad.illustration}`}
                 sx={{ width: 160, height: 160, objectFit: 'cover', border: 2, borderColor: 'common.white', ml: 4, mb: 1 }}
-              />
+                  />
             ))}
           </Box>
           {/* FIGHT */}

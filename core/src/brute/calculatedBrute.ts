@@ -208,6 +208,11 @@ export const getCalculatedBrute = <T extends Pick<Brute, 'id' | 'weapons' | 'ski
     }
   }
 
+  // Double HP modifier
+  if (modifiers[FightModifier.doubleHP]) {
+    calculatedBrute.hp *= 2;
+  }
+
   return calculatedBrute;
 };
 export const getWeaponsList = (brute: Pick<CalculatedBrute, 'weapons'>) => {

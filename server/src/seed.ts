@@ -95,23 +95,23 @@ async function main(cx: ServerContext) {
 
   for (let level = 1; level <= NPC_MAX_LEVEL; level++) {
     for (let i = 0; i < NPC_BRUTES_PER_LEVEL; i++) {
-      let generatedName;
+    let generatedName;
 
-      // Reroll if name already exists
-      while (!generatedName || nicks.includes(generatedName)) {
-        generatedName = uniqueNamesGenerator({
-          dictionaries: [colors, adjectives, animals, names, languages, starWars],
-          style: 'capital',
-          separator: '',
-          length: 2,
-        }).replace(/\s/g, '').substring(0, 16);
-      }
+    // Reroll if name already exists
+    while (!generatedName || nicks.includes(generatedName)) {
+      generatedName = uniqueNamesGenerator({
+        dictionaries: [colors, adjectives, animals, names, languages, starWars],
+        style: 'capital',
+        separator: '',
+        length: 2,
+      }).replace(/\s/g, '').substring(0, 16);
+    }
 
-      nicks.push(generatedName);
+    nicks.push(generatedName);
 
-      await cx.prisma.brute.create({
+    await cx.prisma.brute.create({
         data: generateBrute(level, generatedName),
-      });
+    });
     }
 
     cx.logger.log(`Generated ${NPC_BRUTES_PER_LEVEL} NPCs for level ${level}`);

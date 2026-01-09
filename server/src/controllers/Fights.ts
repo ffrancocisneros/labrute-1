@@ -8,6 +8,7 @@ import {
   randomBetween,
 } from '@labrute/core';
 import {
+  FightModifier,
   InventoryItemType,
   LogType, Prisma, PrismaClient, TournamentType,
 } from '@labrute/prisma';
@@ -120,7 +121,7 @@ export const Fights = {
       // Check if this is an arena fight
       const arenaFight = brute1.opponents.some((opponent) => opponent.name === brute2.name);
 
-      const brute1FightsLeft = getFightsLeft(brute1);
+      const brute1FightsLeft = getFightsLeft(brute1, modifiers);
 
       // Cancel if brute1 has no fights left
       if (arenaFight && brute1FightsLeft <= 0) {
@@ -198,7 +199,7 @@ export const Fights = {
       // (+0 otherwise)
       const levelDifference = brute1.level - brute2.level;
       const brute1Won = isWinner(brute1, generatedFight);
-      const xpGained = arenaFight
+      let xpGained = arenaFight
         ? brute1Won
           ? brute1.eventId
             ? brute1.level >= (event?.maxLevel ?? 999)
@@ -211,6 +212,11 @@ export const Fights = {
               : Math.ceil(getXPNeeded(brute1.level + 1) / 2)
             : levelDifference > 10 ? 0 : 1
         : 0;
+
+      // Double XP modifier
+      if (modifiers[FightModifier.doubleXP]) {
+        xpGained *= 2;
+      }
 
       // Update brute XP, victories and losses if arena fight
       if (arenaFight) {
@@ -273,7 +279,7 @@ export const Fights = {
         });
       }
 
-      const fightsLeft = getFightsLeft(brute1);
+      const fightsLeft = getFightsLeft(brute1, modifiers);
 
       // Send fight id to client
       res.send({

@@ -246,13 +246,19 @@ export const getFighters = ({
 
       fighters.push(fighter);
 
-      // No pets in clan fights
-      if (clanFight) {
+      // No pets in clan fights or if noPets modifier is active
+      if (clanFight || modifiers[FightModifier.noPets]) {
         continue;
       }
 
+      // Get brute pets, adding bear if allHaveBear modifier is active
+      const brutePets = { ...brute.pets };
+      if (modifiers[FightModifier.allHaveBear] && !brutePets.bear) {
+        brutePets.bear = 1;
+      }
+
       // Pets stats
-      for (const [petName, tier] of entries(brute.pets)) {
+      for (const [petName, tier] of entries(brutePets)) {
         const pet = {
           ...pets[petName],
           tier,

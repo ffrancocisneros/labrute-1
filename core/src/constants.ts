@@ -107,6 +107,12 @@ export const DailyModifierOdds = [
   { modifier: FightModifier.bareHandsFirstHit, odds: 1 },
   { modifier: FightModifier.startWithWeapon, odds: 1 },
   { modifier: FightModifier.chaos, odds: 0 },
+  // Custom modifiers
+  { modifier: FightModifier.doubleXP, odds: 1 },
+  { modifier: FightModifier.doubleHP, odds: 1 },
+  { modifier: FightModifier.noPets, odds: 1 },
+  { modifier: FightModifier.allHaveBear, odds: 1 },
+  { modifier: FightModifier.doubleFights, odds: 1 },
 ];
 
 export const DailyModifierCountOdds = [

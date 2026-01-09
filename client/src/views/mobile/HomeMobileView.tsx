@@ -46,11 +46,11 @@ const HomeMobileView = ({
       <Grid container spacing={1}>
         {[leftAd, isSx ? rightAd : null].map((ad) => ad && (
           <Grid item xs={12} key={ad.name} sx={{ textAlign: 'center', mt: 1 }}>
-            <Box
-              component="img"
-              src={`/images/redirects/${ad.illustration}`}
+                <Box
+                  component="img"
+                  src={`/images/redirects/${ad.illustration}`}
               sx={{ width: 200, height: 200, objectFit: 'cover', border: 2 }}
-            />
+                />
           </Grid>
         ))}
       </Grid>

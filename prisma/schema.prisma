@@ -335,6 +335,12 @@ enum FightModifier {
   bareHandsFirstHit
   startWithWeapon
   chaos
+  // Custom modifiers
+  doubleXP
+  doubleHP
+  noPets
+  allHaveBear
+  doubleFights
 }
 
 model Fight {

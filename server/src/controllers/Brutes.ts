@@ -1528,7 +1528,7 @@ export const Brutes = {
       // Get current modifiers
       const modifiers = await ServerState.getModifiers(prisma);
 
-      const fightsLeft = getFightsLeft({ ...brute, skills: getTieredSkills(brute, modifiers) });
+      const fightsLeft = getFightsLeft({ ...brute, skills: getTieredSkills(brute, modifiers) }, modifiers);
 
       res.send({
         fightsLeft,

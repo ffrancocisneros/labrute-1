@@ -1338,7 +1338,7 @@ export const Clans = {
       const brute = getCalculatedBrute(baseBrute, modifiers);
 
       // Check if the brute has fights left
-      if (getFightsLeft(brute) <= 0) {
+      if (getFightsLeft(brute, modifiers) <= 0) {
         throw new LimitError(translate('noFightsLeft', user));
       }
 
@@ -1371,7 +1371,7 @@ export const Clans = {
         where: { id: brute.id },
         data: {
           lastFight: new Date(),
-          fightsLeft: getFightsLeft(brute) - 1,
+          fightsLeft: getFightsLeft(brute, modifiers) - 1,
         },
         select: { id: true },
       });

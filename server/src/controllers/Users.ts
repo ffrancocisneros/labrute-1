@@ -474,7 +474,7 @@ export const Users = {
 
       const modifiers = await ServerState.getModifiers(prisma);
       const isDoneForToday = brutes.every(
-        (brute) => getFightsLeft({ ...brute, skills: getTieredSkills(brute, modifiers) }) === 0,
+        (brute) => getFightsLeft({ ...brute, skills: getTieredSkills(brute, modifiers) }, modifiers) === 0,
       );
 
       res.send(isDoneForToday);
@@ -574,6 +574,7 @@ export const Users = {
       for (const brute of brutes) {
         const fightsLeft = getFightsLeft(
           { ...brute, skills: getTieredSkills(brute, modifiers) },
+          modifiers,
         ) + 1;
 
         await prisma.brute.update({
