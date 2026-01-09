@@ -857,7 +857,7 @@ export const Users = {
 
       const { modifiers } = req.body;
 
-      if (!modifiers || !Array.isArray(modifiers)) {
+      if (!modifiers || typeof modifiers !== 'object' || Array.isArray(modifiers)) {
         throw new ExpectedError(translate('invalidParameters', authed));
       }
 
