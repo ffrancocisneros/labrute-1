@@ -260,6 +260,25 @@ const Main = () => {
               />
             </>
           )}
+          <Button
+            component={RouterLink}
+            to="/wiki"
+            variant="outlined"
+            size="small"
+            color="secondary"
+            sx={{
+              mr: 1,
+              color: theme.palette.info.main,
+              borderColor: theme.palette.info.main,
+              '&:hover': {
+                borderColor: theme.palette.info.light,
+                color: theme.palette.info.light,
+                bgcolor: `${theme.palette.info.main}15`,
+              },
+            }}
+          >
+            WIKI
+          </Button>
           {user ? (
             <Badge
               badgeContent={user.notifications.length}
