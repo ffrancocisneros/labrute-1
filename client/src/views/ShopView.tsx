@@ -1,13 +1,27 @@
-import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Tabs, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getCalculatedBrute } from '@labrute/core';
+import { getCalculatedBrute, USER_COOKIE, TOKEN_COOKIE } from '@labrute/core';
 import { useAlert } from '../hooks/useAlert';
 import { useAuth } from '../hooks/useAuth';
 import type { LoggedInUser } from '../hooks/useAuth';
 import Server from '../utils/Server';
 import { getCookie } from '../utils/cookies';
-import { USER_COOKIE, TOKEN_COOKIE } from '@labrute/core';
 import catchError from '../utils/catchError';
 import { ErrorType } from '../utils/Fetch';
 import Page from '../components/Page';
