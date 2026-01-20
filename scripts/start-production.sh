@@ -13,11 +13,16 @@ if yarn db:sync:prod; then
 else
   echo "Database migrations failed. Attempting automatic recovery..."
 
-  # If we have a known failed migration in prod, Prisma blocks all further migrations (P3009).
-  # Mark the failed migration as rolled back, then re-run deploy (which will apply the v2 repair migration).
-  yarn prisma migrate resolve --rolled-back 20260119000000_add_shop_system || true
+  # Caso específico: migración 20260119000000_add_shop_system quedó en estado \"failed\"
+  # pero partes del SQL ya se aplicaron (el tipo ShopItemType ya existe).
+  # En este caso NO queremos reintentar esa migración (siempre fallará),
+  # sino marcarla como aplicada y dejar que la migración v2 (idempotente) repare el esquema.
 
-  # Second attempt
+  # Marcar la migración problemática como aplicada en el historial de Prisma
+  yarn prisma migrate resolve --applied 20260119000000_add_shop_system || true
+
+  # Segundo intento: ahora Prisma ya no volverá a ejecutar 20260119000000,
+  # y podrá aplicar la migración v2 (20260120000000_add_shop_system_v2).
   yarn db:sync:prod
 fi
 
