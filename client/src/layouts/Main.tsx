@@ -1,6 +1,6 @@
 import { getFightsLeft, UserUpdateSettingsRequest } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
-import { Add, AdminPanelSettings, DarkMode, Event, Info, LightMode, Logout, Menu, MilitaryTech, MoreHoriz, MusicNote, NewReleases, Person, PersonSearch, Policy, RssFeed, Speed, SportsKabaddi } from '@mui/icons-material';
+import { Add, AdminPanelSettings, BarChart, CardGiftcard, DarkMode, Event, Info, LightMode, Logout, Menu, MilitaryTech, MoreHoriz, MusicNote, NewReleases, Person, PersonSearch, Policy, RssFeed, ShoppingCart, Speed, SportsKabaddi, Assignment } from '@mui/icons-material';
 import { Badge, Box, Button, Divider, Drawer, GlobalStyles, IconButton, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Alert as MuiAlert, Switch, ThemeProvider, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,8 @@ const Main = () => {
     displayOpponentDetails: false,
   });
 
-  const favoriteCount = user?.brutes.filter((b) => b.favorite).length || 0;
+  // Límite de brutos a mostrar: 10 en web, 3 en mobile
+  const maxBrutesToShow: number = smallScreen ? 3 : 10;
 
   // Sync settings with user
   useEffect(() => {
@@ -158,25 +159,26 @@ const Main = () => {
           left: 0,
           right: 0,
           zIndex: 100,
-          height: 32,
+          minHeight: 40,
           bgcolor: theme.palette.topbar.background,
           boxShadow: 1,
           color: theme.palette.topbar.color,
           px: 1,
-          py: 0.5,
+          py: 0.75,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 1,
-          overflow: 'hidden'
+          flexWrap: 'nowrap',
         }}
       >
         <Box sx={{
           display: 'flex',
           alignItems: 'center',
           minWidth: 0,
+          flexShrink: 0,
           overflowX: 'auto',
-          overflowY: 'hidden',
+          overflowY: 'visible',
           '&::-webkit-scrollbar-track': {
             bgcolor: 'transparent',
           },
@@ -189,7 +191,7 @@ const Main = () => {
           },
         }}
         >
-          {user?.brutes.slice(0, favoriteCount || 3).map((b) => (
+          {user?.brutes.slice(0, maxBrutesToShow).map((b) => (
             <Box
               key={b.id}
               mr={1}
@@ -217,7 +219,7 @@ const Main = () => {
               </Badge>
             </Box>
           ))}
-          {user && user.brutes.length > 3 && (
+          {user && user.brutes.length > maxBrutesToShow && (
             <IconButton component={RouterLink} to="/hall" sx={{ color: theme.palette.topbar.color }}>
               <MoreHoriz />
             </IconButton>
@@ -228,7 +230,19 @@ const Main = () => {
             </IconButton>
           )}
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 0.5,
+          flexShrink: 0,
+          overflowX: 'auto',
+          overflowY: 'visible',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          scrollbarWidth: 'none',
+        }}
+        >
           {!smallScreen && (
             <>
               <BruteSearch />
@@ -245,9 +259,9 @@ const Main = () => {
           {user && (
             <>
               <Tooltip title={t('yourGold')}>
-                <Text color={theme.palette.topbar.contrast} whiteSpace="nowrap">
+                <Text color={theme.palette.topbar.contrast} whiteSpace="nowrap" sx={{ display: 'flex', alignItems: 'center' }}>
                   {user.gold}
-                  <Box component="img" src="/images/gold.png" sx={{ ml: 0.5, width: 8 }} />
+                  <Box component="img" src="/images/gold.png" sx={{ ml: 0.5, width: 12, height: 12 }} />
                 </Text>
               </Tooltip>
               <Divider
@@ -260,25 +274,134 @@ const Main = () => {
               />
             </>
           )}
-          <Button
-            component={RouterLink}
-            to="/wiki"
-            variant="outlined"
-            size="small"
-            color="secondary"
-            sx={{
-              mr: 1,
-              color: theme.palette.info.main,
-              borderColor: theme.palette.info.main,
-              '&:hover': {
-                borderColor: theme.palette.info.light,
-                color: theme.palette.info.light,
-                bgcolor: `${theme.palette.info.main}15`,
-              },
-            }}
-          >
-            WIKI
-          </Button>
+          {!smallScreen && (
+            <>
+              <Tooltip title="WIKI">
+                <IconButton
+                  component={RouterLink}
+                  to="/wiki"
+                  size="small"
+                  sx={{
+                    mr: 0.5,
+                    color: theme.palette.info.main,
+                    border: 1,
+                    borderColor: theme.palette.info.main,
+                    '&:hover': {
+                      borderColor: theme.palette.info.light,
+                      color: theme.palette.info.light,
+                      bgcolor: `${theme.palette.info.main}15`,
+                    },
+                  }}
+                >
+                  <Info />
+                </IconButton>
+              </Tooltip>
+              {user && (
+                <>
+                  <Tooltip title="Misiones">
+                    <IconButton
+                      component={RouterLink}
+                      to="/missions"
+                      size="small"
+                      sx={{
+                        mr: 0.5,
+                        color: theme.palette.success.main,
+                        border: 1,
+                        borderColor: theme.palette.success.main,
+                        '&:hover': {
+                          borderColor: theme.palette.success.light,
+                          color: theme.palette.success.light,
+                          bgcolor: `${theme.palette.success.main}15`,
+                        },
+                      }}
+                    >
+                      <Assignment />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Pase">
+                    <IconButton
+                      component={RouterLink}
+                      to="/pase"
+                      size="small"
+                      sx={{
+                        mr: 0.5,
+                        color: theme.palette.secondary.main,
+                        border: 1,
+                        borderColor: theme.palette.secondary.main,
+                        '&:hover': {
+                          borderColor: theme.palette.secondary.light,
+                          color: theme.palette.secondary.light,
+                          bgcolor: `${theme.palette.secondary.main}15`,
+                        },
+                      }}
+                    >
+                      <CardGiftcard />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Estadísticas">
+                    <IconButton
+                      component={RouterLink}
+                      to="/statistics"
+                      size="small"
+                      sx={{
+                        mr: 0.5,
+                        color: theme.palette.info.main,
+                        border: 1,
+                        borderColor: theme.palette.info.main,
+                        '&:hover': {
+                          borderColor: theme.palette.info.light,
+                          color: theme.palette.info.light,
+                          bgcolor: `${theme.palette.info.main}15`,
+                        },
+                      }}
+                    >
+                      <BarChart />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Logros">
+                    <IconButton
+                      component={RouterLink}
+                      to="/achievements"
+                      size="small"
+                      sx={{
+                        mr: 0.5,
+                        color: theme.palette.warning.main,
+                        border: 1,
+                        borderColor: theme.palette.warning.main,
+                        '&:hover': {
+                          borderColor: theme.palette.warning.light,
+                          color: theme.palette.warning.light,
+                          bgcolor: `${theme.palette.warning.main}15`,
+                        },
+                      }}
+                    >
+                      <MilitaryTech />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Tienda">
+                    <IconButton
+                      component={RouterLink}
+                      to="/shop"
+                      size="small"
+                      sx={{
+                        mr: 0.5,
+                        color: theme.palette.warning.main,
+                        border: 1,
+                        borderColor: theme.palette.warning.main,
+                        '&:hover': {
+                          borderColor: theme.palette.warning.light,
+                          color: theme.palette.warning.light,
+                          bgcolor: `${theme.palette.warning.main}15`,
+                        },
+                      }}
+                    >
+                      <ShoppingCart />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              )}
+            </>
+          )}
           {user ? (
             <Badge
               badgeContent={user.notifications.length}
@@ -407,6 +530,31 @@ const Main = () => {
                   to="/achievements/rankings"
                   Icon={MilitaryTech}
                   title={t('ranking')}
+                />
+                <ActionButton
+                  to="/achievements"
+                  Icon={SportsKabaddi}
+                  title="Logros"
+                />
+                <ActionButton
+                  to="/missions"
+                  Icon={Assignment}
+                  title="Misiones"
+                />
+                <ActionButton
+                  to="/pase"
+                  Icon={CardGiftcard}
+                  title="Pase"
+                />
+                <ActionButton
+                  to="/shop"
+                  Icon={ShoppingCart}
+                  title="Tienda"
+                />
+                <ActionButton
+                  to="/statistics"
+                  Icon={BarChart}
+                  title="Estadísticas"
                 />
                 <ActionButton
                   to="/patch-notes"

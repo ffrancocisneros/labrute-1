@@ -11,6 +11,7 @@ import catchError from '../utils/catchError';
 import { setCookie } from '../utils/cookies';
 import Server from '../utils/Server';
 import { useAlert } from '../hooks/useAlert';
+import { ErrorType } from '../utils/Fetch';
 
 /**
  * Simple login view for private deployments.
@@ -69,9 +70,9 @@ const SimpleLoginView = () => {
       } else {
         navigate('/');
       }
-    } catch (error) {
-      // TS uses `unknown` for catch variables; normalize to the ErrorType expected by catchError
-      catchError(Alert)(error instanceof Error ? error.message : String(error));
+    } catch (error: unknown) {
+      // Pass error directly to catchError which handles ErrorType properly
+      catchError(Alert)(error as ErrorType | string);
     } finally {
       setLoading(false);
       setAuthing(false);

@@ -246,6 +246,13 @@ export const resetBrute = async ({
   // Update achievements for the first bonus
   await checkLevelUpAchievements(prisma, updatedBrute, firstBonus);
 
+  // Actualizar logro de resets totales (solo si el usuario existe y no es un reset de evento)
+  if (user && !free) {
+    const { updateAchievementProgress } = await import('../achievements/updateAchievementProgress.js');
+    const { AchievementType } = await import('@labrute/prisma');
+    await updateAchievementProgress(prisma, user.id, AchievementType.RESET_TOTAL, 1);
+  }
+
   // Get new opponents
   const opponents = await getOpponents(prisma, updatedBrute);
 

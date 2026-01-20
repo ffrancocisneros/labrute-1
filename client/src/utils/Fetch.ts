@@ -74,6 +74,14 @@ const Fetch = <ReturnType>(url: string, data = {}, method = 'GET', additionalURL
             }).catch((err) => {
               reject(err);
             });
+          } else if (response.status === 400) {
+            // Para status 400 con JSON válido, resolver en lugar de rechazar
+            // Esto permite manejar validaciones del servidor como respuestas normales
+            json.then((processedJson: ReturnType) => {
+              resolve(processedJson);
+            }).catch((err) => {
+              reject(err);
+            });
           } else {
             json.then((processedJson: ReturnType) => {
               reject(processedJson);

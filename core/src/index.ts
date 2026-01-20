@@ -4,6 +4,7 @@ export * from './Elo';
 export * from './knownIssues';
 export * from './releases';
 export * from './Titles';
+export * from './rewardTitles';
 export * from './types';
 export * from './Version';
 export * from './brute/index';

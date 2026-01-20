@@ -105,6 +105,61 @@ const CellView = () => {
     });
   }, [Alert, Confirm, brute, t, updateBrute, updateData]);
 
+  // Auto fight
+  const [isAutoFighting, setIsAutoFighting] = React.useState(false);
+  const toggleAutoFight = useCallback(() => {
+    if (!brute || isAutoFighting) return;
+
+    setIsAutoFighting(true);
+    Server.Brute.toggleAutoFight(brute.name).then((response) => {
+      // Manejar errores de validación (400)
+      if (!response.success && response.error) {
+        if (response.error === 'canLevelUp') {
+          Alert.open('warning', t('autoFightCannotStartLevelUp'));
+        } else if (response.error === 'noFightsLeft') {
+          Alert.open('info', t('autoFightNoFightsLeft'));
+        } else {
+          Alert.open('error', (response.message as string) || 'Error desconocido');
+        }
+        return;
+      }
+
+      if (response.result) {
+        const { fightsCompleted, fightsLeft, canLevelUp, stopped, reason } = response.result;
+
+        if (fightsCompleted > 0) {
+          if (stopped && canLevelUp) {
+            Alert.open('warning', t('autoFightStoppedLevelUp', { fights: fightsCompleted }));
+          } else if (stopped && reason === 'noFightsLeft') {
+            Alert.open('success', t('autoFightCompleted', { fights: fightsCompleted }));
+          } else {
+            Alert.open('success', t('autoFightCompleted', { fights: fightsCompleted }));
+          }
+
+          // Recargar la página después de completar peleas
+          setTimeout(() => {
+            window.location.reload();
+          }, 1500);
+        }
+
+        // Actualizar el bruto con los nuevos datos
+        updateBrute((currentBrute) => (currentBrute ? {
+          ...currentBrute,
+          autoFightEnabled: false, // Siempre false al terminar
+          fightsLeft: fightsLeft ?? currentBrute.fightsLeft,
+        } : null));
+      } else {
+        // Solo se desactivó manualmente
+        updateBrute((currentBrute) => (currentBrute ? {
+          ...currentBrute,
+          autoFightEnabled: false,
+        } : null));
+      }
+    }).catch(catchError(Alert)).finally(() => {
+      setIsAutoFighting(false);
+    });
+  }, [Alert, brute, isAutoFighting, t, updateBrute]);
+
   // Randomized advertising
   const ad = useMemo(() => getRandomAd(language), [language]);
 
@@ -224,6 +279,8 @@ const CellView = () => {
           confirmReport={confirmReport}
           confirmSacrifice={confirmSacrifice}
           confirmReset={confirmReset}
+          toggleAutoFight={toggleAutoFight}
+          isAutoFighting={isAutoFighting}
         />
         {nextBruteArrow}
       </>
@@ -318,6 +375,8 @@ const CellView = () => {
                 language={language}
                 confirmSacrifice={confirmSacrifice}
                 confirmReset={confirmReset}
+                toggleAutoFight={toggleAutoFight}
+                isAutoFighting={isAutoFighting}
               />
             </Box>
             {/* RIGHT SIDE */}

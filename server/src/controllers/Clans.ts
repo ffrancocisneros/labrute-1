@@ -542,6 +542,19 @@ export const Clans = {
         select: { id: true },
       });
 
+      // Obtener userId del brute aceptado
+      const acceptedBrute = await prisma.brute.findFirst({
+        where: { id: brute.id },
+        select: { userId: true },
+      });
+
+      // Actualizar misión de unirse a clan
+      if (acceptedBrute?.userId) {
+        const { updateMissionProgress } = await import('../utils/missions/updateMissionProgress.js');
+        const { MissionType } = await import('@labrute/prisma');
+        await updateMissionProgress(prisma, acceptedBrute.userId, MissionType.JOIN_CLAN, 1);
+      }
+
       // Update clan points
       await updateClanPoints(prisma, clan.id, 'add', brute);
 

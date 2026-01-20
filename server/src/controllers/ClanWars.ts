@@ -438,7 +438,7 @@ export const ClanWars = {
             },
           },
         },
-        select: { id: true },
+        select: { id: true, userId: true },
       });
 
       if (!brute) {
@@ -472,6 +472,14 @@ export const ClanWars = {
             : undefined,
         },
       });
+
+      // Actualizar misiones de participación en guerras de clan
+      if (req.body.add === 'true' && brute.userId) {
+        const { updateMissionProgress } = await import('../utils/missions/updateMissionProgress.js');
+        const { MissionType } = await import('@labrute/prisma');
+        await updateMissionProgress(prisma, brute.userId, MissionType.PARTICIPATE_CLAN_WAR, 1);
+        await updateMissionProgress(prisma, brute.userId, MissionType.PARTICIPATE_CLAN_WARS, 1);
+      }
 
       res.status(200).send({
         success: true,

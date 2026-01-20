@@ -36,6 +36,11 @@ const Server = {
     setNextModifiers: (modifiers: Modifiers) => Fetch<never>('/api/user/next-modifiers', { modifiers }, 'PUT'),
     toggleFollow: (bruteId: string) => Fetch<never>(`/api/user/toggle-follow/${bruteId}`, {}, 'PATCH'),
     updateSettings: (settings: UserUpdateSettingsRequest) => Fetch<never>('/api/user/settings', settings, 'PUT'),
+    equipTitle: (titleId: number | null) => Fetch<{ success: boolean }>(
+      '/api/user/equip-title',
+      { titleId },
+      'PATCH',
+    ),
     disconnect: () => Fetch<never>('/api/user/disconnect', {}, 'PATCH'),
   },
   Brute: {
@@ -80,10 +85,80 @@ const Server = {
     reset: (name: string) => Fetch<HookBrute>(`/api/brute/${name}/reset`, {}, 'PATCH'),
     resetVisuals: (name: string, body: string, colors: string) => Fetch<never>(`/api/brute/${name}/reset-visuals`, { body, colors }, 'PATCH'),
     changeName: (name: string, newName: string) => Fetch<never>(`/api/brute/${name}/change-name/${newName}`, {}, 'PATCH'),
+    toggleAutoFight: (name: string) => Fetch<{
+      success: boolean;
+      autoFightEnabled: boolean;
+      error?: string;
+      message?: string;
+      result?: {
+        fightsCompleted: number;
+        fightsLeft: number;
+        canLevelUp: boolean;
+        stopped: boolean;
+        reason?: string;
+      };
+    }>(`/api/brute/${name}/auto-fight/toggle`, {}, 'POST'),
     getInventory: (name: string) => Fetch<BruteGetInventoryResponse>(`/api/brute/${name}/inventory`),
     giveItem: (id: string, item: InventoryItemType) => Fetch<never>('/api/brute/item', { id, item }, 'PUT'),
     getClanIdAsMaster: (name: string) => Fetch<BrutesGetClanIdAsMasterResponse>(`/api/brute/${name}/master-clan-id`),
     updateEventRoundWatched: (name: string, fight: string) => Fetch<BruteUpdateEventRoundWatchedResponse>(`/api/brute/${name}/update-event-round-watched/${fight}`, {}, 'PUT'),
+  },
+  Objectives: {
+    get: () => Fetch<{
+      daily: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        completedAt?: string | null;
+        rewardType: string;
+        rewardValue: number;
+      }>;
+      weekly: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        completedAt?: string | null;
+        rewardType: string;
+        rewardValue: number;
+      }>;
+    }>('/api/objectives'),
+    claimDaily: (id: string) => Fetch<{
+      success: boolean;
+      gold?: number;
+      title?: string;
+    }>(`/api/objectives/daily/${id}/claim`, {}, 'POST'),
+    claimWeekly: (id: string) => Fetch<{
+      success: boolean;
+      gold?: number;
+      title?: string;
+    }>(`/api/objectives/weekly/${id}/claim`, {}, 'POST'),
+  },
+  PermanentAchievements: {
+    get: () => Fetch<{
+      achievements: Array<{
+        id: string;
+        type: string;
+        level: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        completedAt?: string | null;
+        claimed: boolean;
+        claimedAt?: string | null;
+        rewardType: string;
+        rewardValue: number;
+      }>;
+    }>('/api/achievements/permanent'),
+    claim: (id: string) => Fetch<{
+      success: boolean;
+      gold?: number;
+      title?: string;
+      cosmetic?: string;
+    }>(`/api/achievements/permanent/${id}/claim`, {}, 'POST'),
   },
   Log: {
     list: (brute: string) => Fetch<LogListResponse>(`/api/log/list/${brute}`),
@@ -210,6 +285,220 @@ const Server = {
   },
   UserLog: {
     list: (params: UserLogsListRequest) => Fetch<UserLogsListResponse>('/api/user-log/list', params, 'POST'),
+  },
+  Missions: {
+    get: () => Fetch<{
+      daily: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        completedAt?: string | null;
+        rewardType: string;
+        rewardValue: number;
+      }>;
+      weekly: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        completedAt?: string | null;
+        rewardType: string;
+        rewardValue: number;
+      }>;
+      general: Array<{
+        id: string;
+        category: string;
+        type: string;
+        title: string;
+        description: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        completedAt?: string | null;
+        claimed: boolean;
+        rewardType: string;
+        rewardValue: number;
+        order: number;
+      }>;
+    }>('/api/missions'),
+    claim: (id: string) => Fetch<{
+      success: boolean;
+      gold?: number;
+      title?: string;
+    }>(`/api/missions/${id}/claim`, {}, 'POST'),
+  },
+  Statistics: {
+    get: () => Fetch<{
+      userName?: string;
+      totalFights: number;
+      totalVictories: number;
+      totalLosses: number;
+      overallWinRate: number;
+      maxWinStreak: number;
+      totalDamage: number;
+      maxDamage: number;
+      averageDamage: number;
+      flawlessWins: number;
+      maxLevel: number;
+      totalXP: number;
+      totalAscensions: number;
+      totalResets: number;
+      totalGold: number;
+      totalTournamentWins: number;
+      totalTournamentParticipations: number;
+      totalEventsParticipated: number;
+      totalEventsFinalReached: number;
+      totalEventsWon: number;
+      totalClanWarsParticipated: number;
+      totalClanWarsWon: number;
+      totalClanPointsContributed: number;
+      totalUniqueSkillsUsed: number;
+      totalUniqueWeaponsUsed: number;
+      totalBrutes: number;
+      activeBrutes: number;
+      daysSinceFirstBrute: number;
+      consecutiveDaysPlayed: number;
+      brutes: Array<{
+        id: string;
+        name: string;
+        totalFights: number;
+        victories: number;
+        losses: number;
+        winRate: number;
+        maxWinStreak: number;
+        currentWinStreak: number;
+        totalDamage: number;
+        maxDamage: number;
+        averageDamage: number;
+        flawlessWins: number;
+        level: number;
+        totalXP: number;
+        ascensions: number;
+        resets: number;
+        tournamentWins: number;
+        tournamentParticipations: number;
+        eventsParticipated: number;
+        eventsFinalReached: number;
+        eventsWon: number;
+        clanWarsParticipated: number;
+        clanWarsWon: number;
+        clanPointsContributed: number;
+        uniqueSkillsUsed: number;
+        uniqueWeaponsUsed: number;
+        daysSinceCreation: number;
+        lastFightDate: Date | null;
+      }>;
+    }>('/api/statistics'),
+    getByUsername: (username: string) => Fetch<{
+      totalFights: number;
+      totalVictories: number;
+      totalLosses: number;
+      overallWinRate: number;
+      maxWinStreak: number;
+      totalDamage: number;
+      maxDamage: number;
+      averageDamage: number;
+      flawlessWins: number;
+      maxLevel: number;
+      totalXP: number;
+      totalAscensions: number;
+      totalResets: number;
+      totalGold: number;
+      totalTournamentWins: number;
+      totalTournamentParticipations: number;
+      totalEventsParticipated: number;
+      totalEventsFinalReached: number;
+      totalEventsWon: number;
+      totalClanWarsParticipated: number;
+      totalClanWarsWon: number;
+      totalClanPointsContributed: number;
+      totalUniqueSkillsUsed: number;
+      totalUniqueWeaponsUsed: number;
+      totalBrutes: number;
+      activeBrutes: number;
+      daysSinceFirstBrute: number;
+      consecutiveDaysPlayed: number;
+      brutes: Array<{
+        id: string;
+        name: string;
+        totalFights: number;
+        victories: number;
+        losses: number;
+        winRate: number;
+        maxWinStreak: number;
+        currentWinStreak: number;
+        totalDamage: number;
+        maxDamage: number;
+        averageDamage: number;
+        flawlessWins: number;
+        level: number;
+        totalXP: number;
+        ascensions: number;
+        resets: number;
+        tournamentWins: number;
+        tournamentParticipations: number;
+        eventsParticipated: number;
+        eventsFinalReached: number;
+        eventsWon: number;
+        clanWarsParticipated: number;
+        clanWarsWon: number;
+        clanPointsContributed: number;
+        uniqueSkillsUsed: number;
+        uniqueWeaponsUsed: number;
+        daysSinceCreation: number;
+        lastFightDate: Date | null;
+      }>;
+      userName: string;
+    }>(`/api/statistics/${username}`),
+  },
+  BattlePass: {
+    get: () => Fetch<{
+      season: { id: string; name: string; startDate: string; endDate: string } | null;
+      levels: Array<{
+        level: number;
+        xpRequired: number;
+        rewards: Array<{ type: string; valueInt: number | null; valueString: string | null }>;
+        claimed: boolean;
+      }>;
+      userProgress: { totalXp: number; claimedLevels: number[] } | null;
+      missions: Array<{
+        id: string;
+        type: string;
+        target: number;
+        xpReward: number;
+        difficulty: string;
+        userProgress: number;
+        completedAt: string | null;
+      }>;
+    }>('/api/battle-pass'),
+    claimLevel: (level: number, bruteId?: string) => Fetch<{ success: boolean }>(
+      '/api/battle-pass/claim-level',
+      { level, ...(bruteId && { bruteId }) },
+      'POST',
+    ),
+  },
+  Shop: {
+    get: () => Fetch<{
+      items: Array<{
+        id: string;
+        type: string;
+        name: string;
+        description: string | null;
+        price: number;
+        valueInt: number | null;
+        valueString: string | null;
+        available: boolean;
+        order: number;
+      }>;
+    }>('/api/shop'),
+    purchase: (itemId: string, bruteId?: string) => Fetch<{ success: boolean }>(
+      '/api/shop/purchase',
+      { itemId, ...(bruteId && { bruteId }) },
+      'POST',
+    ),
   },
 };
 

@@ -1,5 +1,5 @@
 import { Lang, Log } from '@labrute/prisma';
-import { History, Policy } from '@mui/icons-material';
+import { History, Policy, PlayArrow } from '@mui/icons-material';
 import { Box, Grid, IconButton, Paper, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +30,8 @@ export interface CellMobileViewProps {
   confirmReport: () => void;
   confirmSacrifice: () => void;
   confirmReset: () => void;
+  toggleAutoFight?: () => void;
+  isAutoFighting?: boolean;
 }
 
 const CellMobileView = ({
@@ -39,6 +41,8 @@ const CellMobileView = ({
   confirmReport,
   confirmSacrifice,
   confirmReset,
+  toggleAutoFight,
+  isAutoFighting,
 }: CellMobileViewProps) => {
   const { t } = useTranslation();
   const { brute, owner } = useBrute();
@@ -214,6 +218,34 @@ const CellMobileView = ({
             }}
           >
             {t('reset')}
+          </FantasyButton>
+        </Box>
+      )}
+      {/* AUTO FIGHT */}
+      {owner && toggleAutoFight && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <FantasyButton
+            color={isAutoFighting ? 'error' : 'success'}
+            onClick={toggleAutoFight}
+            disabled={isAutoFighting}
+            sx={{
+              mt: 2,
+            }}
+          >
+            {isAutoFighting ? (
+              <>
+                <Box component="span" sx={{ display: 'inline-block', animation: 'spin 1s linear infinite', '@keyframes spin': { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } } }}>
+                  ⏳
+                </Box>
+                {' '}
+                {t('autoFightInProgress')}
+              </>
+            ) : (
+              <>
+                <PlayArrow sx={{ verticalAlign: 'middle', mr: 1 }} />
+                {t('startAutoFight')}
+              </>
+            )}
           </FantasyButton>
         </Box>
       )}

@@ -1,5 +1,6 @@
 import { BruteRanking, getFightsLeft, getMaxFightsPerDay, getWinsNeededToRankUp, getXPNeeded } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
+import { PlayArrow } from '@mui/icons-material';
 import { AlertTitle, Box, BoxProps, Alert as MuiAlert, Stack, Tooltip } from '@mui/material';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
@@ -25,6 +26,8 @@ export interface CellMainProps extends BoxProps {
   smallScreen?: boolean;
   confirmSacrifice?: () => void;
   confirmReset?: () => void;
+  toggleAutoFight?: () => void;
+  isAutoFighting?: boolean;
 }
 
 const CellMain = ({
@@ -32,6 +35,8 @@ const CellMain = ({
   smallScreen,
   confirmSacrifice,
   confirmReset,
+  toggleAutoFight,
+  isAutoFighting,
   ...rest
 }: CellMainProps) => {
   const { t } = useTranslation();
@@ -237,6 +242,32 @@ const CellMain = ({
           }}
         >
           {t('reset')}
+        </FantasyButton>
+      )}
+      {/* AUTO FIGHT */}
+      {owner && !!toggleAutoFight && (
+        <FantasyButton
+          color={isAutoFighting ? 'error' : 'success'}
+          onClick={toggleAutoFight}
+          disabled={isAutoFighting}
+          sx={{
+            mt: 2,
+          }}
+        >
+          {isAutoFighting ? (
+            <>
+              <Box component="span" sx={{ display: 'inline-block', animation: 'spin 1s linear infinite', '@keyframes spin': { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } } }}>
+                ⏳
+              </Box>
+              {' '}
+              {t('autoFightInProgress')}
+            </>
+          ) : (
+            <>
+              <PlayArrow sx={{ verticalAlign: 'middle', mr: 1 }} />
+              {t('startAutoFight')}
+            </>
+          )}
         </FantasyButton>
       )}
     </Box>

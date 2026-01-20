@@ -1,4 +1,4 @@
-import { EventFightsPerDay, EventFreeResets, EventGetResponse, EventPauseDuration, Fighter, formatLargeNumber, isWinner } from '@labrute/core';
+import { BruteUpdateEventRoundWatchedResponse, EventFightsPerDay, EventFreeResets, EventGetResponse, EventPauseDuration, Fighter, formatLargeNumber, isWinner } from '@labrute/core';
 import { EventStatus, EventType, Gender } from '@labrute/prisma';
 import { Close, Groups } from '@mui/icons-material';
 import { Badge, Box, List, ListItem, ListItemButton, ListItemText, ListSubheader, Paper, Tooltip, useTheme } from '@mui/material';
@@ -112,15 +112,16 @@ export const EventView = () => {
 
     // Update watched round
     if (owner && !skipUpdate && round >= watchingRound) {
-      Server.Brute.updateEventRoundWatched(currentBrute, fightId).then((d) => {
-        updateBrute((b) => (b ? ({
-          ...b,
-          eventTournamentRoundWatched: d.eventTournamentRoundWatched,
-          eventTournamentWatchedDate: d.eventTournamentWatchedDate,
-        }) : b));
+      Server.Brute.updateEventRoundWatched(currentBrute, fightId)
+        .then((d: BruteUpdateEventRoundWatchedResponse) => {
+          updateBrute((b) => (b ? ({
+            ...b,
+            eventTournamentRoundWatched: d.eventTournamentRoundWatched,
+            eventTournamentWatchedDate: d.eventTournamentWatchedDate,
+          }) : b));
 
-        navigate(`/fight/${fightId}`);
-      }).catch(catchError(Alert));
+          navigate(`/fight/${fightId}`);
+        }).catch(catchError(Alert));
     } else {
       navigate(`/fight/${fightId}`);
     }

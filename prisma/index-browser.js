@@ -137,7 +137,13 @@ exports.Prisma.UserScalarFieldEnum = {
   banReason: 'banReason',
   displayVersusPage: 'displayVersusPage',
   displayOpponentDetails: 'displayOpponentDetails',
-  lastSeen: 'lastSeen'
+  lastSeen: 'lastSeen',
+  lastFightDate: 'lastFightDate',
+  consecutiveDaysPlayed: 'consecutiveDaysPlayed',
+  unlockedTitleIds: 'unlockedTitleIds',
+  equippedTitleId: 'equippedTitleId',
+  bonusFightsCount: 'bonusFightsCount',
+  bonusFightsDate: 'bonusFightsDate'
 };
 
 exports.Prisma.RelationLoadStrategy = {
@@ -209,6 +215,7 @@ exports.Prisma.BruteScalarFieldEnum = {
   opponentsGeneratedAt: 'opponentsGeneratedAt',
   canRankUpSince: 'canRankUpSince',
   favorite: 'favorite',
+  autoFightEnabled: 'autoFightEnabled',
   wantToJoinClanId: 'wantToJoinClanId',
   tournamentWins: 'tournamentWins',
   eventId: 'eventId',
@@ -312,6 +319,87 @@ exports.Prisma.AchievementScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.DailyObjectiveScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  target: 'target',
+  progress: 'progress',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  rewardType: 'rewardType',
+  rewardValue: 'rewardValue',
+  date: 'date',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WeeklyObjectiveScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  target: 'target',
+  progress: 'progress',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  rewardType: 'rewardType',
+  rewardValue: 'rewardValue',
+  weekStart: 'weekStart',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  category: 'category',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  target: 'target',
+  progress: 'progress',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  claimed: 'claimed',
+  claimedAt: 'claimedAt',
+  rewardType: 'rewardType',
+  rewardValue: 'rewardValue',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MissionAchievementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  target: 'target',
+  progress: 'progress',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  claimed: 'claimed',
+  claimedAt: 'claimedAt',
+  rewardType: 'rewardType',
+  rewardValue: 'rewardValue',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PermanentAchievementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  level: 'level',
+  target: 'target',
+  progress: 'progress',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  claimed: 'claimed',
+  claimedAt: 'claimedAt',
+  rewardType: 'rewardType',
+  rewardValue: 'rewardValue',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.BruteReportScalarFieldEnum = {
   id: 'id',
   bruteId: 'bruteId',
@@ -408,6 +496,86 @@ exports.Prisma.InventoryItemScalarFieldEnum = {
   count: 'count',
   bruteId: 'bruteId',
   userId: 'userId'
+};
+
+exports.Prisma.BattlePassSeasonScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate'
+};
+
+exports.Prisma.BattlePassRewardScalarFieldEnum = {
+  id: 'id',
+  seasonId: 'seasonId',
+  level: 'level',
+  rewardType: 'rewardType',
+  valueInt: 'valueInt',
+  valueString: 'valueString'
+};
+
+exports.Prisma.BattlePassMissionScalarFieldEnum = {
+  id: 'id',
+  seasonId: 'seasonId',
+  type: 'type',
+  target: 'target',
+  xpReward: 'xpReward',
+  difficulty: 'difficulty'
+};
+
+exports.Prisma.UserBattlePassProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  seasonId: 'seasonId',
+  totalXp: 'totalXp',
+  claimedLevels: 'claimedLevels'
+};
+
+exports.Prisma.UserBattlePassMissionProgressScalarFieldEnum = {
+  userId: 'userId',
+  missionId: 'missionId',
+  progress: 'progress',
+  completedAt: 'completedAt'
+};
+
+exports.Prisma.BruteTemporaryEffectScalarFieldEnum = {
+  id: 'id',
+  bruteId: 'bruteId',
+  skillName: 'skillName',
+  expiresAt: 'expiresAt'
+};
+
+exports.Prisma.BruteTemporaryWeaponScalarFieldEnum = {
+  id: 'id',
+  bruteId: 'bruteId',
+  weaponName: 'weaponName',
+  expiresAt: 'expiresAt'
+};
+
+exports.Prisma.CosmeticPresetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  body: 'body',
+  colors: 'colors'
+};
+
+exports.Prisma.UserUnlockedCosmeticScalarFieldEnum = {
+  userId: 'userId',
+  cosmeticPresetId: 'cosmeticPresetId'
+};
+
+exports.Prisma.ShopItemScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  name: 'name',
+  description: 'description',
+  price: 'price',
+  valueInt: 'valueInt',
+  valueString: 'valueString',
+  available: 'available',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ReleaseScalarFieldEnum = {
@@ -750,6 +918,108 @@ exports.AchievementName = exports.$Enums.AchievementName = {
   bug: 'bug'
 };
 
+exports.ObjectiveType = exports.$Enums.ObjectiveType = {
+  WIN_FIGHTS: 'WIN_FIGHTS',
+  WIN_TOURNAMENT: 'WIN_TOURNAMENT',
+  LEVEL_UP: 'LEVEL_UP',
+  COMPLETE_FIGHTS: 'COMPLETE_FIGHTS',
+  USE_SKILLS: 'USE_SKILLS',
+  GAIN_XP: 'GAIN_XP',
+  REACH_LEVEL: 'REACH_LEVEL',
+  COMPLETE_ACHIEVEMENTS: 'COMPLETE_ACHIEVEMENTS'
+};
+
+exports.ObjectiveRewardType = exports.$Enums.ObjectiveRewardType = {
+  GOLD: 'GOLD',
+  TITLE: 'TITLE'
+};
+
+exports.MissionCategory = exports.$Enums.MissionCategory = {
+  COMBAT: 'COMBAT',
+  PROGRESSION: 'PROGRESSION',
+  SOCIAL: 'SOCIAL',
+  EVENTS: 'EVENTS',
+  SPECIAL: 'SPECIAL'
+};
+
+exports.MissionType = exports.$Enums.MissionType = {
+  WIN_FIGHTS: 'WIN_FIGHTS',
+  WIN_FIGHTS_STREAK: 'WIN_FIGHTS_STREAK',
+  WIN_TOURNAMENT: 'WIN_TOURNAMENT',
+  DEAL_DAMAGE: 'DEAL_DAMAGE',
+  PARTICIPATE_CLAN_WAR: 'PARTICIPATE_CLAN_WAR',
+  REACH_LEVEL: 'REACH_LEVEL',
+  ASCEND: 'ASCEND',
+  COMPLETE_FIGHTS: 'COMPLETE_FIGHTS',
+  GAIN_XP: 'GAIN_XP',
+  FOLLOW_BRUTES: 'FOLLOW_BRUTES',
+  JOIN_CLAN: 'JOIN_CLAN',
+  PARTICIPATE_CLAN_WARS: 'PARTICIPATE_CLAN_WARS',
+  PARTICIPATE_EVENT: 'PARTICIPATE_EVENT',
+  REACH_EVENT_FINAL: 'REACH_EVENT_FINAL',
+  WIN_EVENT: 'WIN_EVENT',
+  CREATE_BRUTES: 'CREATE_BRUTES',
+  TRY_DIFFERENT_SKILLS: 'TRY_DIFFERENT_SKILLS'
+};
+
+exports.MissionRewardType = exports.$Enums.MissionRewardType = {
+  GOLD: 'GOLD',
+  TITLE: 'TITLE'
+};
+
+exports.MissionAchievementType = exports.$Enums.MissionAchievementType = {
+  COMPLETE_COMBAT_MISSIONS: 'COMPLETE_COMBAT_MISSIONS',
+  COMPLETE_PROGRESSION_MISSIONS: 'COMPLETE_PROGRESSION_MISSIONS',
+  COMPLETE_SOCIAL_MISSIONS: 'COMPLETE_SOCIAL_MISSIONS',
+  COMPLETE_EVENTS_MISSIONS: 'COMPLETE_EVENTS_MISSIONS',
+  COMPLETE_SPECIAL_MISSIONS: 'COMPLETE_SPECIAL_MISSIONS',
+  COMPLETE_DAILY_MISSIONS: 'COMPLETE_DAILY_MISSIONS',
+  COMPLETE_WEEKLY_MISSIONS: 'COMPLETE_WEEKLY_MISSIONS',
+  COMPLETE_ALL_MISSIONS: 'COMPLETE_ALL_MISSIONS'
+};
+
+exports.AchievementType = exports.$Enums.AchievementType = {
+  WIN_FIGHTS_TOTAL: 'WIN_FIGHTS_TOTAL',
+  WIN_FIGHTS_SINGLE_BRUTE: 'WIN_FIGHTS_SINGLE_BRUTE',
+  WIN_TOURNAMENTS_TOTAL: 'WIN_TOURNAMENTS_TOTAL',
+  WIN_TOURNAMENTS_CONSECUTIVE: 'WIN_TOURNAMENTS_CONSECUTIVE',
+  REACH_LEVEL: 'REACH_LEVEL',
+  REACH_LEVEL_MULTIPLE: 'REACH_LEVEL_MULTIPLE',
+  COMPLETE_FIGHTS_TOTAL: 'COMPLETE_FIGHTS_TOTAL',
+  COMPLETE_FIGHTS_SINGLE_BRUTE: 'COMPLETE_FIGHTS_SINGLE_BRUTE',
+  GAIN_GOLD_TOTAL: 'GAIN_GOLD_TOTAL',
+  GAIN_GOLD_MONTHLY: 'GAIN_GOLD_MONTHLY',
+  ASCEND_TOTAL: 'ASCEND_TOTAL',
+  ASCEND_SINGLE_BRUTE: 'ASCEND_SINGLE_BRUTE',
+  RESET_TOTAL: 'RESET_TOTAL',
+  RESET_SINGLE_BRUTE: 'RESET_SINGLE_BRUTE',
+  CLAN_WARS_WON: 'CLAN_WARS_WON',
+  CLAN_BOSS_CHALLENGES: 'CLAN_BOSS_CHALLENGES',
+  CLAN_POINTS_CONTRIBUTED: 'CLAN_POINTS_CONTRIBUTED',
+  EVENTS_PARTICIPATED: 'EVENTS_PARTICIPATED',
+  EVENTS_FINAL_REACHED: 'EVENTS_FINAL_REACHED',
+  EVENTS_WON: 'EVENTS_WON',
+  AUTO_FIGHTS_COMPLETED: 'AUTO_FIGHTS_COMPLETED',
+  DAMAGE_DEALT_TOTAL: 'DAMAGE_DEALT_TOTAL',
+  WIN_STREAK: 'WIN_STREAK',
+  TOP_RANKING: 'TOP_RANKING',
+  BRUTES_IN_TOP_100: 'BRUTES_IN_TOP_100',
+  DAYS_PLAYED_CONSECUTIVE: 'DAYS_PLAYED_CONSECUTIVE'
+};
+
+exports.AchievementLevel = exports.$Enums.AchievementLevel = {
+  BRONZE: 'BRONZE',
+  SILVER: 'SILVER',
+  GOLD: 'GOLD',
+  PLATINUM: 'PLATINUM'
+};
+
+exports.AchievementRewardType = exports.$Enums.AchievementRewardType = {
+  GOLD: 'GOLD',
+  TITLE: 'TITLE',
+  COSMETIC: 'COSMETIC'
+};
+
 exports.BruteReportReason = exports.$Enums.BruteReportReason = {
   name: 'name'
 };
@@ -785,6 +1055,37 @@ exports.InventoryItemType = exports.$Enums.InventoryItemType = {
   favoriteFight: 'favoriteFight'
 };
 
+exports.BattlePassRewardType = exports.$Enums.BattlePassRewardType = {
+  GOLD: 'GOLD',
+  TITLE: 'TITLE',
+  COSMETIC: 'COSMETIC',
+  BONUS_FIGHTS: 'BONUS_FIGHTS',
+  TEMPORARY_SKILL: 'TEMPORARY_SKILL',
+  TEMPORARY_WEAPON: 'TEMPORARY_WEAPON'
+};
+
+exports.BattlePassMissionType = exports.$Enums.BattlePassMissionType = {
+  WIN_FIGHTS: 'WIN_FIGHTS',
+  PARTICIPATE_TOURNAMENTS: 'PARTICIPATE_TOURNAMENTS',
+  WIN_TOURNAMENTS: 'WIN_TOURNAMENTS',
+  DEAL_DAMAGE: 'DEAL_DAMAGE',
+  WIN_STREAK: 'WIN_STREAK',
+  ASCEND: 'ASCEND'
+};
+
+exports.BattlePassMissionDifficulty = exports.$Enums.BattlePassMissionDifficulty = {
+  EASY: 'EASY',
+  MEDIUM: 'MEDIUM',
+  HARD: 'HARD'
+};
+
+exports.ShopItemType = exports.$Enums.ShopItemType = {
+  COSMETIC: 'COSMETIC',
+  BONUS_FIGHTS: 'BONUS_FIGHTS',
+  TEMPORARY_WEAPON: 'TEMPORARY_WEAPON',
+  TEMPORARY_SKILL: 'TEMPORARY_SKILL'
+};
+
 exports.EventType = exports.$Enums.EventType = {
   battleRoyale: 'battleRoyale'
 };
@@ -815,6 +1116,11 @@ exports.Prisma.ModelName = {
   TournamentGold: 'TournamentGold',
   TournamentXp: 'TournamentXp',
   Achievement: 'Achievement',
+  DailyObjective: 'DailyObjective',
+  WeeklyObjective: 'WeeklyObjective',
+  Mission: 'Mission',
+  MissionAchievement: 'MissionAchievement',
+  PermanentAchievement: 'PermanentAchievement',
   BruteReport: 'BruteReport',
   ServerState: 'ServerState',
   BannedWord: 'BannedWord',
@@ -826,6 +1132,16 @@ exports.Prisma.ModelName = {
   ClanWar: 'ClanWar',
   ClanWarFighters: 'ClanWarFighters',
   InventoryItem: 'InventoryItem',
+  BattlePassSeason: 'BattlePassSeason',
+  BattlePassReward: 'BattlePassReward',
+  BattlePassMission: 'BattlePassMission',
+  UserBattlePassProgress: 'UserBattlePassProgress',
+  UserBattlePassMissionProgress: 'UserBattlePassMissionProgress',
+  BruteTemporaryEffect: 'BruteTemporaryEffect',
+  BruteTemporaryWeapon: 'BruteTemporaryWeapon',
+  CosmeticPreset: 'CosmeticPreset',
+  UserUnlockedCosmetic: 'UserUnlockedCosmetic',
+  ShopItem: 'ShopItem',
   Release: 'Release',
   Event: 'Event',
   Notification: 'Notification',

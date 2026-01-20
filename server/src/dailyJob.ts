@@ -454,6 +454,16 @@ const handleDailyTournaments = async (
         select: { id: true },
       });
 
+      // Actualizar logro de torneos ganados
+      const { updateAchievementProgress } = await import('./utils/achievements/updateAchievementProgress.js');
+      const { AchievementType } = await import('@labrute/prisma');
+      await updateAchievementProgress(prisma, winnerBrute.userId, AchievementType.WIN_TOURNAMENTS_TOTAL, 1);
+
+      // Actualizar misión de ganar torneo
+      const { updateMissionProgress } = await import('./utils/missions/updateMissionProgress.js');
+      const { MissionType } = await import('@labrute/prisma');
+      await updateMissionProgress(prisma, winnerBrute.userId, MissionType.WIN_TOURNAMENT, 1);
+
       // Allow rank up for winner if brute has enough wins
       if (!winnerBrute.canRankUpSince
         && (winnerBrute.tournamentWins + 1) >= getWinsNeededToRankUp(winnerBrute)) {
@@ -1113,6 +1123,30 @@ const handleTournamentEarnings = async (prisma: PrismaClient) => {
     `,
   ]);
 
+  // Actualizar logros de oro ganado para todos los usuarios que recibieron oro
+  if (goldCount > 0) {
+    const { updateAchievementProgress } = await import('./utils/achievements/updateAchievementProgress.js');
+    const { AchievementType } = await import('@labrute/prisma');
+    
+    // Obtener todos los usuarios que recibieron oro
+    const usersWithGold = await prisma.$queryRaw<Array<{ userId: string; gold: bigint }>>`
+      SELECT "userId", SUM(gold) as gold
+      FROM "TournamentGold"
+      WHERE date < ${today}
+      GROUP BY "userId"
+    `;
+    
+    // Actualizar logro de oro ganado para cada usuario
+    for (const userGold of usersWithGold) {
+      await updateAchievementProgress(
+        prisma,
+        userGold.userId,
+        AchievementType.GAIN_GOLD_TOTAL,
+        Number(userGold.gold),
+      );
+    }
+  }
+
   LOGGER.log(`${dayjs.utc().valueOf() - now}ms to handle ${achievementCount} achievements and ${goldCount} gold earnings`);
 };
 
@@ -1507,6 +1541,31 @@ const handleClanWars = async (
           elo: defenderElo,
         },
       });
+    }
+
+    // Actualizar logro de guerras de clan ganadas para el clan ganador
+    const { updateAchievementProgress } = await import('./utils/achievements/updateAchievementProgress.js');
+    const { AchievementType } = await import('@labrute/prisma');
+    
+    // Obtener todos los usuarios del clan ganador
+    const winnerClanId = clanWar.winnerId;
+    const winnerClan = await prisma.clan.findUnique({
+      where: { id: winnerClanId },
+      include: {
+        brutes: {
+          where: { deletedAt: null },
+          select: { userId: true },
+        },
+      },
+    });
+    
+    if (winnerClan) {
+      const userIds = new Set(winnerClan.brutes.map((b) => b.userId).filter(Boolean));
+      for (const userId of userIds) {
+        if (userId) {
+          await updateAchievementProgress(prisma, userId, AchievementType.CLAN_WARS_WON, 1);
+        }
+      }
     }
 
     // Update clan war status
@@ -2069,6 +2128,23 @@ const handleEventTournament = async (
       throw new Error('Winner brute not found');
     }
 
+    // Actualizar logro de llegar a la final para el ganador
+    const winnerBruteForFinal = await prisma.brute.findUnique({
+      where: { id: winner },
+      select: { userId: true },
+    });
+
+    if (winnerBruteForFinal?.userId) {
+      const { updateAchievementProgress } = await import('./utils/achievements/updateAchievementProgress.js');
+      const { AchievementType } = await import('@labrute/prisma');
+      await updateAchievementProgress(prisma, winnerBruteForFinal.userId, AchievementType.EVENTS_FINAL_REACHED, 1);
+
+      // Actualizar misión de llegar a la final del evento
+      const { updateMissionProgress } = await import('./utils/missions/updateMissionProgress.js');
+      const { MissionType } = await import('@labrute/prisma');
+      await updateMissionProgress(prisma, winnerBruteForFinal.userId, MissionType.REACH_EVENT_FINAL, 1);
+    }
+
     // Update event
     await prisma.event.update({
       where: { id: lastEvent.id },
@@ -2143,6 +2219,16 @@ const handleEventTournament = async (
       AchievementName.battleRoyaleWin,
     );
 
+    // Actualizar logro de eventos ganados
+    const { updateAchievementProgress } = await import('./utils/achievements/updateAchievementProgress.js');
+    const { AchievementType } = await import('@labrute/prisma');
+    await updateAchievementProgress(prisma, winnerBrute.userId, AchievementType.EVENTS_WON, 1);
+
+    // Actualizar misión de ganar evento
+    const { updateMissionProgress } = await import('./utils/missions/updateMissionProgress.js');
+    const { MissionType } = await import('@labrute/prisma');
+    await updateMissionProgress(prisma, winnerBrute.userId, MissionType.WIN_EVENT, 1);
+
     LOGGER.log(`Event ${lastEvent.id} finished with winner ${winnerBrute.id}`);
   }
 
@@ -2181,6 +2267,19 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
     // Releases
     await handleReleases(prisma);
     logMemory('After releases');
+
+    // Asegurar próxima temporada de pase de batalla (si la actual termina en ≤1 día)
+    const { ensureNextBattlePassSeason, updateCurrentSeasonRewards } = await import('./utils/battlePass/ensureNextSeason.js');
+    await ensureNextBattlePassSeason(prisma).catch((err: Error) => {
+      LOGGER.log('ensureNextBattlePassSeason error:');
+      LOGGER.log(err?.message ?? String(err));
+    });
+    // Actualizar recompensas de la temporada actual si tiene las antiguas
+    await updateCurrentSeasonRewards(prisma).catch((err: Error) => {
+      LOGGER.log('updateCurrentSeasonRewards error:');
+      LOGGER.log(err?.message ?? String(err));
+    });
+    logMemory('After ensureNextBattlePassSeason');
 
     // Roll daily modifiers
     const modifiers = await handleModifiers(prisma);

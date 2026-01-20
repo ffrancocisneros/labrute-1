@@ -49,6 +49,18 @@ const UserAdminView = () => {
         displayVersusPage: u.displayVersusPage,
         displayOpponentDetails: u.displayOpponentDetails,
         lastSeen: u.lastSeen,
+        lastFightDate: u.lastFightDate ?? null,
+        consecutiveDaysPlayed: u.consecutiveDaysPlayed ?? 0,
+        unlockedTitleIds: u.unlockedTitleIds ?? [],
+        equippedTitleId: u.equippedTitleId ?? null,
+        bonusFightsCount: ((): number => {
+          const v = (u as unknown as { bonusFightsCount?: number }).bonusFightsCount;
+          return typeof v === 'number' ? v : 0;
+        })(),
+        bonusFightsDate: ((): Date | null => {
+          const v = (u as unknown as { bonusFightsDate?: Date | null }).bonusFightsDate;
+          return v != null ? v : null;
+        })(),
       });
       setAchievements(u.achievements);
       // Map to new array to avoid reference

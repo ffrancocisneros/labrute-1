@@ -4,6 +4,11 @@ import ProvideBrute from './components/Brute/ProvideBrute';
 import Main from './layouts/Main';
 import AchievementRankingView from './views/AchievementRankingView';
 import AchievementsView from './views/AchievementsView';
+import PermanentAchievementsView from './views/PermanentAchievementsView';
+import BattlePassView from './views/BattlePassView';
+import MissionsView from './views/MissionsView';
+import ShopView from './views/ShopView';
+import StatisticsView from './views/StatisticsView';
 import AdminView from './views/admin/AdminView';
 import ArenaView from './views/ArenaView';
 import AscendView from './views/AscendView';
@@ -62,6 +67,11 @@ const routes: RouteObject[] = [
       { path: 'login', element: <SimpleLoginView /> },
       { path: 'oauth/callback', element: <HomeView /> },
       { path: 'achievements/rankings', element: <AchievementRankingView /> },
+      { path: 'missions', element: <MissionsView /> },
+      { path: 'pase', element: <BattlePassView /> },
+      { path: 'shop', element: <ShopView /> },
+      { path: 'statistics', element: <StatisticsView /> },
+      { path: 'achievements', element: <PermanentAchievementsView /> },
       { path: 'unknown-brute', element: <BruteNotFoundView /> },
       { path: 'generating-tournaments', element: <GeneratingView /> },
       { path: 'hall', element: <HallView /> },

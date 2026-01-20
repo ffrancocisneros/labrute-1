@@ -35,17 +35,17 @@ const UserView = () => {
   const [user, setUser] = useState<CalculatedUserGetProfileResponse | null>(null);
   const [banReason, setBanReason] = useState('');
 
-  // Fetch user profile
-  useEffect(() => {
-    if (!userId) {
-      return;
-    }
-
+  const loadProfile = useCallback(() => {
+    if (!userId) return;
     Server.User.getProfile(userId).then((profile) => {
       const brutes = profile.brutes.map((brute) => getCalculatedBrute(brute, modifiers));
       setUser({ ...profile, brutes });
     }).catch(catchError(Alert));
   }, [Alert, modifiers, userId]);
+
+  useEffect(() => {
+    loadProfile();
+  }, [loadProfile]);
 
   const getDinoRpgReward = useCallback(() => {
     if (!authedUser) return;
@@ -83,23 +83,53 @@ const UserView = () => {
     >
       {user && (
         <>
-          <Paper sx={{ mx: 4 }}>
-            <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
-              <ActivityStatus user={user} sx={{ verticalAlign: 'middle', mr: 1 }} />
-              {t('userProfile', { user: user.name })}
-              {authedUser?.admin && (
-                <Tooltip title="User logs">
-                  <IconButton
-                    color="warning"
-                    component={RouterLink}
-                    to={`/admin-panel/user/logs/${user.id}`}
-                    sx={{ ml: 1 }}
-                  >
-                    <ManageSearch />
-                  </IconButton>
-                </Tooltip>
+          <Paper sx={{ mx: 4, p: 2 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
+              <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
+                <ActivityStatus user={user} sx={{ verticalAlign: 'middle', mr: 1 }} />
+                {t('userProfile', { user: user.name })}
+                {authedUser?.admin && (
+                  <Tooltip title="User logs">
+                    <IconButton
+                      color="warning"
+                      component={RouterLink}
+                      to={`/admin-panel/user/logs/${user.id}`}
+                      sx={{ ml: 1 }}
+                    >
+                      <ManageSearch />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              </Text>
+              {(user.equippedTitle
+                || (authedUser?.id === user.id && (user.unlockedTitles?.length ?? 0) > 0)) && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  {user.equippedTitle && (
+                    <Text sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
+                      {user.equippedTitle}
+                    </Text>
+                  )}
+                  {authedUser?.id === user.id && (user.unlockedTitles?.length ?? 0) > 0 && (
+                    <Select
+                      size="small"
+                      value={user.equippedTitleId != null ? String(user.equippedTitleId) : ''}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        Server.User.equipTitle(v === '' ? null : Number(v))
+                          .then(() => loadProfile())
+                          .catch(catchError(Alert));
+                      }}
+                      sx={{ minWidth: 160 }}
+                    >
+                      <MenuItem value="">Ninguno</MenuItem>
+                      {(user.unlockedTitles ?? []).map((title) => (
+                        <MenuItem key={title.id} value={String(title.id)}>{title.name}</MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                </Box>
               )}
-            </Text>
+            </Box>
           </Paper>
           <Paper sx={{ bgcolor: 'background.paperLight', mt: -2 }}>
             {authedUser?.admin && user.id !== authedUser.id && (

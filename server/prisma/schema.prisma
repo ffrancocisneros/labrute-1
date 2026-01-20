@@ -50,6 +50,20 @@ model User {
   notifications          Notification[]
   reportsHandled         BruteReport[]    @relation("BruteReportHandler")
   logs                   UserLog[]
+  dailyObjectives        DailyObjective[]
+  weeklyObjectives       WeeklyObjective[]
+  permanentAchievements  PermanentAchievement[]
+  missions               Mission[]
+  missionAchievements    MissionAchievement[]
+  lastFightDate          DateTime?        @db.Date
+  consecutiveDaysPlayed  Int              @default(0)
+  unlockedTitleIds      Int[]            @default([])
+  equippedTitleId       Int?
+  bonusFightsCount      Int               @default(0)
+  bonusFightsDate       DateTime?         @db.Date
+  userBattlePassProgress UserBattlePassProgress[]
+  userBattlePassMissionProgress UserBattlePassMissionProgress[]
+  userUnlockedCosmetics  UserUnlockedCosmetic[]
 }
 
 enum UserLogType {
@@ -276,6 +290,7 @@ model Brute {
   achievements                 Achievement[]
   reports                      BruteReport[]
   favorite                     Boolean                 @default(false)
+  autoFightEnabled             Boolean                 @default(false)
   masterOfClan                 Clan?                   @relation("MasterOfClan")
   clanPosts                    ClanPost[]
   wantToJoinClan               Clan?                   @relation("JoinRequests", fields: [wantToJoinClanId], references: [id])
@@ -295,6 +310,8 @@ model Brute {
   wonEvents                    Event[]                 @relation("EventBruteWinner")
   resets                       Int                     @default(0)
   userlogs                     UserLog[]
+  bruteTemporaryEffects        BruteTemporaryEffect[]
+  bruteTemporaryWeapons        BruteTemporaryWeapon[]
 
   @@index([deletedAt, eventId, ranking])
   @@index([ascensions, level, xp])
@@ -649,6 +666,225 @@ model Achievement {
   @@index([userId])
 }
 
+// DAILY/WEEKLY OBJECTIVES (Improved Achievements System)
+enum ObjectiveType {
+  WIN_FIGHTS          // Ganar X peleas
+  WIN_TOURNAMENT      // Ganar un torneo
+  LEVEL_UP            // Subir de nivel
+  COMPLETE_FIGHTS     // Completar X peleas (ganar o perder)
+  USE_SKILLS          // Usar X habilidades en peleas
+  GAIN_XP             // Ganar X XP
+  REACH_LEVEL         // Llegar al nivel X
+  COMPLETE_ACHIEVEMENTS // Completar X logros
+}
+
+enum ObjectiveRewardType {
+  GOLD
+  TITLE
+}
+
+model DailyObjective {
+  id          String              @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user        User                @relation(fields: [userId], references: [id])
+  userId      String              @db.Uuid
+  type        ObjectiveType
+  target      Int                 // Cantidad objetivo
+  progress    Int                 @default(0)
+  completed   Boolean             @default(false)
+  completedAt DateTime?
+  rewardType  ObjectiveRewardType
+  rewardValue Int                 // Cantidad de oro o ID del título
+  date        DateTime            @default(now()) @db.Date
+  createdAt   DateTime            @default(now()) @db.Timestamp()
+
+  @@unique([userId, type, date])
+  @@index([userId, date])
+  @@index([date])
+}
+
+model WeeklyObjective {
+  id          String              @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user        User                @relation(fields: [userId], references: [id])
+  userId      String              @db.Uuid
+  type        ObjectiveType
+  target      Int                 // Cantidad objetivo
+  progress    Int                 @default(0)
+  completed   Boolean             @default(false)
+  completedAt DateTime?
+  rewardType  ObjectiveRewardType
+  rewardValue Int                 // Cantidad de oro o ID del título
+  weekStart   DateTime            @db.Date // Inicio de la semana (lunes)
+  createdAt   DateTime            @default(now()) @db.Timestamp()
+
+  @@unique([userId, type, weekStart])
+  @@index([userId, weekStart])
+  @@index([weekStart])
+}
+
+// MISSIONS SYSTEM (Sistema de Misiones)
+enum MissionType {
+  // Combate
+  WIN_FIGHTS
+  WIN_FIGHTS_STREAK
+  WIN_TOURNAMENT
+  DEAL_DAMAGE
+  PARTICIPATE_CLAN_WAR
+  
+  // Progresión
+  REACH_LEVEL
+  ASCEND
+  COMPLETE_FIGHTS
+  GAIN_XP
+  
+  // Social
+  FOLLOW_BRUTES
+  JOIN_CLAN
+  PARTICIPATE_CLAN_WARS
+  
+  // Eventos
+  PARTICIPATE_EVENT
+  REACH_EVENT_FINAL
+  WIN_EVENT
+  
+  // Especiales
+  CREATE_BRUTES
+  TRY_DIFFERENT_SKILLS
+}
+
+enum MissionCategory {
+  COMBAT
+  PROGRESSION
+  SOCIAL
+  EVENTS
+  SPECIAL
+}
+
+enum MissionRewardType {
+  GOLD
+  TITLE
+}
+
+model Mission {
+  id          String            @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user        User               @relation(fields: [userId], references: [id])
+  userId      String             @db.Uuid
+  category    MissionCategory
+  type        MissionType
+  title       String             @db.VarChar(255)
+  description String             @db.Text
+  target      Int
+  progress    Int                @default(0)
+  completed   Boolean            @default(false)
+  completedAt DateTime?
+  claimed     Boolean            @default(false)
+  claimedAt   DateTime?
+  rewardType  MissionRewardType
+  rewardValue Int
+  order       Int                @default(0)
+  createdAt   DateTime           @default(now()) @db.Timestamp()
+  updatedAt   DateTime           @default(now()) @db.Timestamp()
+
+  @@index([userId, completed, claimed])
+  @@index([userId, category])
+  @@index([category, order])
+}
+
+enum MissionAchievementType {
+  COMPLETE_COMBAT_MISSIONS
+  COMPLETE_PROGRESSION_MISSIONS
+  COMPLETE_SOCIAL_MISSIONS
+  COMPLETE_EVENTS_MISSIONS
+  COMPLETE_SPECIAL_MISSIONS
+  COMPLETE_DAILY_MISSIONS
+  COMPLETE_WEEKLY_MISSIONS
+  COMPLETE_ALL_MISSIONS
+}
+
+model MissionAchievement {
+  id          String                  @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user        User                    @relation(fields: [userId], references: [id])
+  userId      String                  @db.Uuid
+  type        MissionAchievementType
+  target      Int
+  progress    Int                     @default(0)
+  completed   Boolean                 @default(false)
+  completedAt DateTime?
+  claimed     Boolean                 @default(false)
+  claimedAt   DateTime?
+  rewardType  MissionRewardType
+  rewardValue Int
+  createdAt   DateTime                @default(now()) @db.Timestamp()
+  updatedAt   DateTime                @default(now()) @db.Timestamp()
+
+  @@unique([userId, type])
+  @@index([userId, completed, claimed])
+}
+
+// Permanent Achievements (Logros Permanentes)
+enum AchievementType {
+  WIN_FIGHTS_TOTAL
+  WIN_FIGHTS_SINGLE_BRUTE
+  WIN_TOURNAMENTS_TOTAL
+  WIN_TOURNAMENTS_CONSECUTIVE
+  REACH_LEVEL
+  REACH_LEVEL_MULTIPLE
+  COMPLETE_FIGHTS_TOTAL
+  COMPLETE_FIGHTS_SINGLE_BRUTE
+  GAIN_GOLD_TOTAL
+  GAIN_GOLD_MONTHLY
+  ASCEND_TOTAL
+  ASCEND_SINGLE_BRUTE
+  RESET_TOTAL
+  RESET_SINGLE_BRUTE
+  CLAN_WARS_WON
+  CLAN_BOSS_CHALLENGES
+  CLAN_POINTS_CONTRIBUTED
+  EVENTS_PARTICIPATED
+  EVENTS_FINAL_REACHED
+  EVENTS_WON
+  AUTO_FIGHTS_COMPLETED
+  DAMAGE_DEALT_TOTAL
+  WIN_STREAK
+  TOP_RANKING
+  BRUTES_IN_TOP_100
+  DAYS_PLAYED_CONSECUTIVE
+}
+
+enum AchievementLevel {
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+}
+
+enum AchievementRewardType {
+  GOLD
+  TITLE
+  COSMETIC
+}
+
+model PermanentAchievement {
+  id          String                @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user        User                  @relation(fields: [userId], references: [id])
+  userId      String                @db.Uuid
+  type        AchievementType
+  level       AchievementLevel
+  target      Int
+  progress    Int                   @default(0)
+  completed   Boolean               @default(false)
+  completedAt DateTime?
+  claimed     Boolean               @default(false)
+  claimedAt   DateTime?
+  rewardType  AchievementRewardType
+  rewardValue Int
+  createdAt   DateTime              @default(now()) @db.Timestamp()
+  updatedAt   DateTime              @default(now()) @db.Timestamp()
+
+  @@unique([userId, type, level])
+  @@index([userId, completed, claimed])
+  @@index([type, level])
+}
+
 // REPORTS
 enum BruteReportStatus {
   pending
@@ -846,6 +1082,160 @@ model InventoryItem {
   @@unique([type, userId])
   @@index([bruteId])
   @@index([userId])
+}
+
+// Battle Pass
+enum BattlePassRewardType {
+  GOLD
+  TITLE
+  COSMETIC
+  BONUS_FIGHTS
+  TEMPORARY_SKILL
+  TEMPORARY_WEAPON
+}
+
+enum BattlePassMissionType {
+  WIN_FIGHTS
+  PARTICIPATE_TOURNAMENTS
+  WIN_TOURNAMENTS
+  DEAL_DAMAGE
+  WIN_STREAK
+  ASCEND
+}
+
+enum BattlePassMissionDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model BattlePassSeason {
+  id        String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String   @db.VarChar(255)
+  startDate DateTime @db.Date
+  endDate   DateTime @db.Date
+  rewards   BattlePassReward[]
+  missions  BattlePassMission[]
+  userProgress UserBattlePassProgress[]
+
+  @@index([startDate, endDate])
+}
+
+model BattlePassReward {
+  id          String               @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  season      BattlePassSeason     @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  seasonId    String               @db.Uuid
+  level       Int
+  rewardType  BattlePassRewardType
+  valueInt    Int?
+  valueString String?              @db.VarChar(255)
+
+  @@index([seasonId, level])
+}
+
+model BattlePassMission {
+  id         String                     @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  season     BattlePassSeason           @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  seasonId   String                     @db.Uuid
+  type       BattlePassMissionType
+  target     Int
+  xpReward   Int
+  difficulty BattlePassMissionDifficulty
+  userProgress UserBattlePassMissionProgress[]
+
+  @@index([seasonId])
+}
+
+model UserBattlePassProgress {
+  id            String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String           @db.Uuid
+  season        BattlePassSeason @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  seasonId      String           @db.Uuid
+  totalXp       Int              @default(0)
+  claimedLevels Int[]            @default([])
+
+  @@unique([userId, seasonId])
+  @@index([userId])
+  @@index([seasonId])
+}
+
+model UserBattlePassMissionProgress {
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String    @db.Uuid
+  mission     BattlePassMission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  missionId   String    @db.Uuid
+  progress    Int       @default(0)
+  completedAt DateTime? @db.Timestamptz
+
+  @@id([userId, missionId])
+  @@index([userId])
+  @@index([missionId])
+}
+
+model BruteTemporaryEffect {
+  id        String    @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  brute     Brute     @relation(fields: [bruteId], references: [id], onDelete: Cascade)
+  bruteId   String    @db.Uuid
+  skillName SkillName
+  expiresAt DateTime  @db.Timestamptz
+
+  @@index([bruteId])
+  @@index([expiresAt])
+}
+
+model BruteTemporaryWeapon {
+  id        String    @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  brute     Brute     @relation(fields: [bruteId], references: [id], onDelete: Cascade)
+  bruteId   String    @db.Uuid
+  weaponName WeaponName
+  expiresAt DateTime  @db.Timestamptz
+
+  @@index([bruteId])
+  @@index([expiresAt])
+}
+
+model CosmeticPreset {
+  id     Int     @id @default(autoincrement())
+  name   String  @db.VarChar(255)
+  body   String  @db.VarChar(11)
+  colors String  @db.VarChar(32)
+  users  UserUnlockedCosmetic[]
+}
+
+model UserUnlockedCosmetic {
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String         @db.Uuid
+  preset   CosmeticPreset @relation(fields: [cosmeticPresetId], references: [id], onDelete: Cascade)
+  cosmeticPresetId Int
+
+  @@id([userId, cosmeticPresetId])
+  @@index([userId])
+}
+
+// SHOP SYSTEM
+enum ShopItemType {
+  COSMETIC
+  BONUS_FIGHTS
+  TEMPORARY_WEAPON
+  TEMPORARY_SKILL
+}
+
+model ShopItem {
+  id          String        @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  type        ShopItemType
+  name        String        @db.VarChar(255)
+  description String?       @db.Text
+  price       Int
+  valueInt    Int?
+  valueString String?       @db.VarChar(255)
+  available   Boolean       @default(true)
+  order       Int           @default(0)
+  createdAt   DateTime      @default(now()) @db.Timestamp()
+  updatedAt   DateTime      @default(now()) @db.Timestamp()
+
+  @@index([type, available])
+  @@index([order])
 }
 
 // Releases

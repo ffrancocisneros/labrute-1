@@ -567,7 +567,9 @@ export type TournamentsGetGlobalResponse = {
 export type TournementsUpdateGlobalRoundWatchedResponse = Pick<Brute, 'globalTournamentRoundWatched' | 'globalTournamentWatchedDate'>;
 export type BrutesGetDestinyResponse = DestinyBranch;
 export type BrutesGetFightsLeftResponse = {
-  fightsLeft: number,
+  fightsLeft: number;
+  /** Peleas extra de hoy (pase de batalla). Solo si el bruto es del usuario autenticado. */
+  bonusFights?: number;
 };
 export type BrutesCreateResponse = {
   brute: Brute,
@@ -700,6 +702,10 @@ export type UserGetProfileResponse = Pick<User, 'id' | 'name' | 'gold' | 'lang' 
     brute1: Pick<Brute, 'id' | 'name'> | null,
     brute2: Pick<Brute, 'id' | 'name'> | null,
   })[],
+  equippedTitle: string | null;
+  equippedTitleId: number | null;
+  unlockedTitleIds: number[];
+  unlockedTitles: { id: number; name: string }[];
 };
 export type UserBannedListResponse = Pick<User, 'id' | 'name' | 'bannedAt' | 'banReason'>[];
 export type UserMultipleAccountsListResponse = { ip: string, users: string[] }[];

@@ -31,6 +31,7 @@ import { DISCORD, GLOBAL, LOGGER } from '../context.js';
 import { dailyJob } from '../dailyJob.js';
 import { ServerState } from '../utils/ServerState.js';
 import { auth } from '../utils/auth.js';
+import { getRewardTitleName } from '@labrute/core';
 import { createUserLog } from '../utils/createUserLog.js';
 import { sendError } from '../utils/sendError.js';
 import { translate } from '../utils/translate.js';
@@ -343,6 +344,8 @@ export const Users = {
           gold: true,
           lang: true,
           lastSeen: true,
+          unlockedTitleIds: true,
+          equippedTitleId: true,
           brutes: {
             select: {
               id: true,
@@ -434,9 +437,18 @@ export const Users = {
         return 0;
       });
 
+      const unlockedIds = user.unlockedTitleIds ?? [];
+      const unlockedTitles = unlockedIds
+        .map((id) => ({ id, name: getRewardTitleName(id) ?? '' }))
+        .filter((t) => t.name !== '');
+
       res.send({
         ...user,
         achievements: mergedAchievements,
+        equippedTitle: getRewardTitleName(user.equippedTitleId) ?? null,
+        equippedTitleId: user.equippedTitleId ?? null,
+        unlockedTitleIds: unlockedIds,
+        unlockedTitles,
       });
     } catch (error) {
       sendError(res, error);
@@ -914,6 +926,11 @@ export const Users = {
             },
           },
         });
+
+        // Actualizar misión de seguir brutes
+        const { updateMissionProgress } = await import('../utils/missions/updateMissionProgress.js');
+        const { MissionType } = await import('@labrute/prisma');
+        await updateMissionProgress(prisma, authed.id, MissionType.FOLLOW_BRUTES, 1);
       }
 
       res.send({
@@ -955,6 +972,45 @@ export const Users = {
       });
 
       res.send({ message: 'Settings updated' });
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
+  equipTitle: (prisma: PrismaClient) => async (
+    req: Request<never, unknown, { titleId: number | null }>,
+    res: Response<{ success: boolean }>,
+  ) => {
+    try {
+      const authed = await auth(prisma, req);
+      const { titleId } = req.body ?? {};
+
+      if (titleId === null || titleId === undefined) {
+        await prisma.user.update({
+          where: { id: authed.id },
+          data: { equippedTitleId: null },
+        });
+        res.send({ success: true });
+        return;
+      }
+
+      if (typeof titleId !== 'number') {
+        throw new ExpectedError(translate('invalidParameters', authed));
+      }
+
+      const u = await prisma.user.findUnique({
+        where: { id: authed.id },
+        select: { unlockedTitleIds: true },
+      });
+      const ids = u?.unlockedTitleIds ?? [];
+      if (!ids.includes(titleId)) {
+        throw new ExpectedError('No has desbloqueado este título');
+      }
+
+      await prisma.user.update({
+        where: { id: authed.id },
+        data: { equippedTitleId: titleId },
+      });
+      res.send({ success: true });
     } catch (error) {
       sendError(res, error);
     }

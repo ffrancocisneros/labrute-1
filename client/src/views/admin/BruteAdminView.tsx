@@ -66,7 +66,7 @@ export const BruteAdminView = () => {
   const giveItem = useCallback(() => {
     if (!brute || !item) return;
 
-    Server.Brute.giveItem(brute.id, item).then(() => {
+    Server.Brute.giveItem(brute.id, item).then((): void => {
       Alert.open('success', 'Item given');
     }).catch(catchError(Alert));
   }, [Alert, brute, item]);

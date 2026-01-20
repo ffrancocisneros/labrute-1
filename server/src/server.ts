@@ -101,6 +101,13 @@ export function main(cx: ServerContext) {
       cx.discord.sendError(error);
     });
 
+    // Actualizar recompensas del pase de batalla al iniciar
+    import('./utils/battlePass/ensureNextSeason.js').then(({ updateCurrentSeasonRewards }) => {
+      updateCurrentSeasonRewards(cx.prisma).catch((error: Error) => {
+        cx.logger.error(`updateCurrentSeasonRewards error: ${error.message}`);
+      });
+    });
+
     // Initialize daily scheduler
     schedule.scheduleJob('0 0 * * *', dailyJob(cx.prisma));
   });

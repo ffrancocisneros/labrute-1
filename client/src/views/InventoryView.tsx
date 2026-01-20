@@ -36,7 +36,7 @@ export const InventoryView = () => {
   useEffect(() => {
     if (!brute) return;
 
-    Server.Brute.getInventory(brute.name).then((data) => {
+    Server.Brute.getInventory(brute.name).then((data: BruteGetInventoryResponse) => {
       setInventory(data);
     }).catch(catchError(Alert));
   }, [brute, Alert]);

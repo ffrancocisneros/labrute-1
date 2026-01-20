@@ -1,4 +1,5 @@
 import {
+  BATTLE_PASS_XP,
   ExpectedError, FightCreateResponse, FightGetResponse, FightLogTemplateCount,
   GLOBAL_TOURNAMENT_START_HOUR, LimitError, MissingElementError, NotFoundError,
   canLevelUp, getCalculatedBrute, getFightsLeft,
@@ -7,15 +8,16 @@ import {
   isWinner,
   randomBetween,
 } from '@labrute/core';
+import dayjs from 'dayjs';
 import {
   FightModifier,
   InventoryItemType,
   LogType, Prisma, PrismaClient, TournamentType,
 } from '@labrute/prisma';
-import dayjs from 'dayjs';
 import type { Request, Response } from 'express';
 import { DISCORD, LOGGER } from '../context.js';
 import { auth } from '../utils/auth.js';
+import { enrichCalculatedBruteWithTemporary } from '../utils/brute/enrichCalculatedBruteWithTemporary.js';
 import { getOpponents } from '../utils/brute/getOpponents.js';
 import { generateFight } from '../utils/fight/generateFight.js';
 import { ilike } from '../utils/ilike.js';
@@ -80,6 +82,14 @@ export const Fights = {
   ) => {
     try {
       const user = await auth(prisma, req);
+      const userBonus = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { bonusFightsCount: true, bonusFightsDate: true },
+      });
+      const hasBonusToday = (userBonus?.bonusFightsDate
+        && dayjs.utc(userBonus.bonusFightsDate).isSame(dayjs.utc(), 'day'))
+        ?? false;
+      const bonusCount = hasBonusToday ? (userBonus?.bonusFightsCount ?? 0) : 0;
 
       if (!req.body.brute1 || !req.body.brute2) {
         throw new MissingElementError(translate('missingParameters', user));
@@ -117,14 +127,17 @@ export const Fights = {
 
       const brute1 = getCalculatedBrute(baseBrute1, modifiers);
       const brute2 = getCalculatedBrute(baseBrute2, modifiers);
+      await enrichCalculatedBruteWithTemporary(prisma, brute1);
+      await enrichCalculatedBruteWithTemporary(prisma, brute2);
 
       // Check if this is an arena fight
       const arenaFight = brute1.opponents.some((opponent) => opponent.name === brute2.name);
 
       const brute1FightsLeft = getFightsLeft(brute1, modifiers);
+      const availableFights = brute1FightsLeft + bonusCount;
 
-      // Cancel if brute1 has no fights left
-      if (arenaFight && brute1FightsLeft <= 0) {
+      // Cancel if brute1 has no fights left (ni del bruto ni bonus de hoy)
+      if (arenaFight && availableFights <= 0) {
         throw new LimitError(translate('noFightsLeft', user));
       }
 
@@ -133,16 +146,30 @@ export const Fights = {
         throw new LimitError(translate('cantFightBeforeLevelingUp', user));
       }
 
-      // Update brute last fight and fights left if arena fight
+      // Consumir pelea: priorizar bonus de hoy para no gastar las diarias del bruto
+      let usedBonus = false;
       if (arenaFight) {
-        await prisma.brute.update({
-          where: { id: brute1.id },
-          data: {
-            lastFight: new Date(),
-            fightsLeft: brute1FightsLeft - 1,
-          },
-          select: { id: true },
-        });
+        if (bonusCount > 0) {
+          usedBonus = true;
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { bonusFightsCount: { decrement: 1 } },
+          });
+          await prisma.brute.update({
+            where: { id: brute1.id },
+            data: { lastFight: new Date() },
+            select: { id: true },
+          });
+        } else {
+          await prisma.brute.update({
+            where: { id: brute1.id },
+            data: {
+              lastFight: new Date(),
+              fightsLeft: brute1FightsLeft - 1,
+            },
+            select: { id: true },
+          });
+        }
       }
 
       // Generate fight (retry if failed)
@@ -220,15 +247,107 @@ export const Fights = {
 
       // Update brute XP, victories and losses if arena fight
       if (arenaFight) {
-        await prisma.brute.update({
+        const updatedBrute = await prisma.brute.update({
           where: { id: brute1.id },
           data: {
             xp: { increment: xpGained },
             victories: { increment: brute1Won ? 1 : 0 },
             losses: { increment: brute1Won ? 0 : 1 },
           },
-          select: { id: true },
+          select: { id: true, userId: true },
         });
+
+        // Update objectives progress
+        if (updatedBrute.userId) {
+          const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('../utils/objectives/updateObjectiveProgress.js');
+          const { ObjectiveType, AchievementType } = await import('@labrute/prisma');
+
+
+          const { updateAchievementProgress, updateAchievementProgressSingleBrute, updateWinStreakAchievement, updateDamageDealtAchievement, updateConsecutiveDaysAchievement } = await import('../utils/achievements/updateAchievementProgress.js');
+          
+          // Update complete fights objective
+          await updateDailyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+          await updateWeeklyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+          await updateAchievementProgress(prisma, updatedBrute.userId, AchievementType.COMPLETE_FIGHTS_TOTAL, 1);
+          // Actualizar logro de peleas completadas con un solo bruto (máximo)
+          await updateAchievementProgressSingleBrute(
+            prisma,
+            updatedBrute.userId,
+            AchievementType.COMPLETE_FIGHTS_SINGLE_BRUTE,
+            (brute) => (brute.victories || 0) + (brute.losses || 0),
+          );
+          
+          // Update win fights objective
+          if (brute1Won) {
+            await updateDailyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.WIN_FIGHTS, 1);
+            await updateWeeklyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.WIN_FIGHTS, 1);
+            await updateAchievementProgress(prisma, updatedBrute.userId, AchievementType.WIN_FIGHTS_TOTAL, 1);
+            // Actualizar logro de peleas ganadas con un solo bruto (máximo)
+            await updateAchievementProgressSingleBrute(
+              prisma,
+              updatedBrute.userId,
+              AchievementType.WIN_FIGHTS_SINGLE_BRUTE,
+              (brute) => brute.victories || 0,
+            );
+          }
+          
+          // Update gain XP objective
+          if (xpGained > 0) {
+            await updateDailyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.GAIN_XP, xpGained);
+            await updateWeeklyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.GAIN_XP, xpGained);
+          }
+          
+          // Actualizar logros de racha de victorias, daño total y días consecutivos
+          await updateWinStreakAchievement(prisma, updatedBrute.userId);
+          await updateDamageDealtAchievement(prisma, updatedBrute.userId, fightId);
+          await updateConsecutiveDaysAchievement(prisma, updatedBrute.userId);
+          
+          // Actualizar progreso de misiones
+          const { updateMissionProgress, updateMissionProgressSingleBrute } = await import('../utils/missions/updateMissionProgress.js');
+          const { MissionType } = await import('@labrute/prisma');
+          
+          // Misiones de combate
+          await updateMissionProgress(prisma, updatedBrute.userId, MissionType.COMPLETE_FIGHTS, 1);
+          if (brute1Won) {
+            await updateMissionProgress(prisma, updatedBrute.userId, MissionType.WIN_FIGHTS, 1);
+          }
+          await updateMissionProgressSingleBrute(
+            prisma,
+            updatedBrute.userId,
+            MissionType.REACH_LEVEL,
+            (brute) => brute.level || 0,
+          );
+
+          // Misiones de progresión
+          if (xpGained > 0) {
+            await updateMissionProgress(prisma, updatedBrute.userId, MissionType.GAIN_XP, xpGained);
+          }
+
+          // Misiones de daño causado, racha de victorias y habilidades diferentes
+          const { updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMission } = await import('../utils/missions/updateMissionProgress.js');
+          await updateDamageDealtMission(prisma, updatedBrute.userId, fightId);
+          await updateWinStreakMission(prisma, updatedBrute.userId);
+          await updateDifferentSkillsMission(prisma, updatedBrute.userId, fightId);
+
+          // Pase de batalla (peleas manuales; las automáticas no suman)
+          try {
+            const { addXp, addMissionProgress, addMissionProgressFromFight } = await import('../utils/battlePass/updateBattlePassProgress.js');
+            const { BattlePassMissionType: BP } = await import('@labrute/prisma');
+            await addXp(prisma, updatedBrute.userId, brute1Won ? BATTLE_PASS_XP.FIGHT_WIN : BATTLE_PASS_XP.FIGHT_LOSS).catch((err: Error) => {
+              LOGGER.error(`Battle Pass addXp error: ${err.message}`);
+            });
+            if (brute1Won) {
+              await addMissionProgress(prisma, updatedBrute.userId, BP.WIN_FIGHTS, 1).catch((err: Error) => {
+                LOGGER.error(`Battle Pass addMissionProgress WIN_FIGHTS error: ${err.message}`);
+              });
+            }
+            await addMissionProgressFromFight(prisma, updatedBrute.userId, fightId, { damage: true, winStreak: true }).catch((err: Error) => {
+              LOGGER.error(`Battle Pass addMissionProgressFromFight error: ${err.message}`);
+            });
+          } catch (err) {
+            LOGGER.error(`Battle Pass update error: ${err instanceof Error ? err.message : String(err)}`);
+          }
+        }
       }
 
       // Add fighter log
@@ -279,13 +398,15 @@ export const Fights = {
         });
       }
 
-      const fightsLeft = getFightsLeft(brute1, modifiers);
+      const fightsLeftAfter = arenaFight
+        ? (usedBonus ? brute1FightsLeft : brute1FightsLeft - 1)
+        : brute1FightsLeft;
 
       // Send fight id to client
       res.send({
         id: fightId,
         xpWon: arenaFight ? xpGained : 0,
-        fightsLeft: arenaFight ? fightsLeft - 1 : fightsLeft,
+        fightsLeft: fightsLeftAfter,
         victories: arenaFight ? brute1Won ? 1 : 0 : 0,
         losses: arenaFight ? !brute1Won ? 1 : 0 : 0,
       });

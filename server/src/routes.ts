@@ -4,6 +4,10 @@ import { PrismaClient } from '@labrute/prisma';
 import type { Express, Request, Response } from 'express';
 import { Config } from './config.js';
 import { Achievements } from './controllers/Achievements.js';
+import { Objectives } from './controllers/Objectives.js';
+import { Missions } from './controllers/Missions.js';
+import { Statistics } from './controllers/Statistics.js';
+import { PermanentAchievements } from './controllers/PermanentAchievements.js';
 import { BruteReports } from './controllers/BruteReports.js';
 import { Brutes } from './controllers/Brutes.js';
 import { Clans } from './controllers/Clans.js';
@@ -17,6 +21,8 @@ import { LocalAuth } from './controllers/LocalAuth.js';
 import { Tournaments } from './controllers/Tournaments.js';
 import { Users } from './controllers/Users.js';
 import { ServerState } from './utils/ServerState.js';
+import { BattlePass } from './controllers/BattlePass.js';
+import { Shop } from './controllers/Shop.js';
 import { Configs } from './controllers/Configs.js';
 import { UserLogs } from './controllers/UserLogs.js';
 
@@ -73,6 +79,7 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
   app.put('/api/user/next-modifiers', Users.setNextModifiers(prisma));
   app.patch('/api/user/toggle-follow/:bruteId', Users.toggleFollow(prisma));
   app.put('/api/user/settings', Users.updateSettings(prisma));
+  app.patch('/api/user/equip-title', Users.equipTitle(prisma));
   app.patch('/api/user/disconnect', Users.disconnect(prisma));
 
   // Brute
@@ -98,6 +105,7 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
   app.patch('/api/brute/:name/favorite', Brutes.toggleFavorite(prisma));
   app.patch('/api/brute/:name/reset', Brutes.reset(prisma));
   app.patch('/api/brute/:name/reset-visuals', Brutes.resetVisuals(prisma));
+  app.post('/api/brute/:name/auto-fight/toggle', Brutes.toggleAutoFight(prisma));
   app.patch('/api/brute/:name/change-name/:newName', Brutes.changeName(prisma));
   app.get('/api/brute/:name/inventory', Brutes.getInventory(prisma));
   app.put('/api/brute/item', Brutes.giveItem(prisma));
@@ -129,8 +137,33 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
   // Achievement
   app.post('/api/achievements', Achievements.getForUser(prisma));
   // app.get('/api/achievements/titles-as-csv', Achievements.generateTitlesCSV);
-  app.get('/api/achievements/:name', Achievements.getForBrute(prisma));
   app.get('/api/achievements/rankings/all', Achievements.getRankings(prisma));
+
+  // Permanent Achievements (Logros Permanentes) - Must be before /api/achievements/:name
+  app.get('/api/achievements/permanent', PermanentAchievements.get(prisma));
+  app.post('/api/achievements/permanent/:id/claim', PermanentAchievements.claim(prisma));
+
+  // Achievement (must be after specific routes)
+  app.get('/api/achievements/:name', Achievements.getForBrute(prisma));
+
+  // Objectives (Improved Achievements System) - Renamed to Missions
+  app.get('/api/objectives', Objectives.get(prisma));
+  app.get('/api/missions', Missions.get(prisma));
+  app.post('/api/missions/:id/claim', Missions.claim(prisma));
+  app.post('/api/objectives/daily/:id/claim', Objectives.claimDaily(prisma));
+  app.post('/api/objectives/weekly/:id/claim', Objectives.claimWeekly(prisma));
+
+  // Statistics
+  app.get('/api/statistics', Statistics.get(prisma));
+  app.get('/api/statistics/:username', Statistics.getByUsername(prisma));
+
+  // Battle Pass (Pase)
+  app.get('/api/battle-pass', BattlePass.get(prisma));
+  app.post('/api/battle-pass/claim-level', BattlePass.claimLevel(prisma));
+
+  // Shop
+  app.get('/api/shop', Shop.get(prisma));
+  app.post('/api/shop/purchase', Shop.purchase(prisma));
 
   // BruteReport
   app.get('/api/report/list/:status/:page', BruteReports.list(prisma));

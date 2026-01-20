@@ -148,3 +148,26 @@ export const DEFAULT_LANGUAGE = Lang.es;
 
 export const USER_COOKIE = 'x-brute-user';
 export const TOKEN_COOKIE = 'x-brute-token';
+
+// Battle Pass: XP por actividad
+export const BATTLE_PASS_XP = {
+  FIGHT_WIN: 5,
+  FIGHT_LOSS: 2,
+  TOURNAMENT_REGISTER: 3,
+  TOURNAMENT_WIN_ROUND: 5,
+  TOURNAMENT_WIN: 25,
+  EVENT_PARTICIPATE: 5,
+  EVENT_FINAL: 15,
+  EVENT_WIN: 50,
+  MISSION_EASY: 10,
+  MISSION_MEDIUM: 25,
+  MISSION_HARD: 50,
+} as const;
+
+// Battle Pass: 300 XP por nivel; nivel 40 = 12.000 XP total
+export const BATTLE_PASS_XP_PER_LEVEL = 300;
+export const BATTLE_PASS_LEVELS = 40;
+
+/** XP total necesaria para alcanzar un nivel (acumulada desde 0) */
+export const getBattlePassXpForLevel = (level: number): number =>
+  Math.min(level, BATTLE_PASS_LEVELS) * BATTLE_PASS_XP_PER_LEVEL;

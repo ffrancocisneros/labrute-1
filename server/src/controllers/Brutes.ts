@@ -53,6 +53,7 @@ import { checkLevelUpAchievements } from '../utils/brute/checkLevelUpAchievement
 import { getOpponents } from '../utils/brute/getOpponents.js';
 import { resetBrute } from '../utils/brute/resetBrute.js';
 import { updateBruteData } from '../utils/brute/updateBruteData.js';
+import { executeAutoFights } from '../utils/brute/executeAutoFights.js';
 import { updateClanPoints } from '../utils/clan/updateClanPoints.js';
 import { createUserLog } from '../utils/createUserLog.js';
 import { ilike } from '../utils/ilike.js';
@@ -60,6 +61,7 @@ import { sendError } from '../utils/sendError.js';
 import { ServerState } from '../utils/ServerState.js';
 import { translate } from '../utils/translate.js';
 import { increaseAchievement } from './Achievements.js';
+import { getCalculatedBrute } from '@labrute/core';
 
 export const Brutes = {
   getForVersus: (prisma: PrismaClient) => async (
@@ -395,6 +397,25 @@ export const Brutes = {
       // Update achievements
       await checkLevelUpAchievements(prisma, brute, destinyChoice);
 
+      // Actualizar logro de participación en eventos si el bruto fue creado para un evento
+      if (req.body.eventId && brute.userId) {
+        const { updateAchievementProgress } = await import('../utils/achievements/updateAchievementProgress.js');
+        const { AchievementType } = await import('@labrute/prisma');
+        await updateAchievementProgress(prisma, brute.userId, AchievementType.EVENTS_PARTICIPATED, 1);
+
+        // Actualizar misión de participar en evento
+        const { updateMissionProgress } = await import('../utils/missions/updateMissionProgress.js');
+        const { MissionType } = await import('@labrute/prisma');
+        await updateMissionProgress(prisma, brute.userId, MissionType.PARTICIPATE_EVENT, 1);
+      }
+
+      // Actualizar progreso de misiones
+      if (brute.userId) {
+        const { updateMissionProgress } = await import('../utils/missions/updateMissionProgress.js');
+        const { MissionType } = await import('@labrute/prisma');
+        await updateMissionProgress(prisma, brute.userId, MissionType.CREATE_BRUTES, 1);
+      }
+
       res.send({ brute, goldLost, newLimit });
     } catch (error) {
       sendError(res, error);
@@ -662,6 +683,54 @@ export const Brutes = {
       // Update clan points
       if (brute.clanId) {
         await updateClanPoints(prisma, brute.clanId, 'add', updatedBrute, oldBrute);
+      }
+
+      // Update objectives progress for level up
+      if (authed.id) {
+        const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('../utils/objectives/updateObjectiveProgress.js');
+        const { ObjectiveType, AchievementType } = await import('@labrute/prisma');
+        const { updateAchievementProgress } = await import('../utils/achievements/updateAchievementProgress.js');
+        
+        await updateDailyObjectiveProgress(prisma, authed.id, ObjectiveType.LEVEL_UP, 1);
+        await updateWeeklyObjectiveProgress(prisma, authed.id, ObjectiveType.LEVEL_UP, 1);
+        
+        // Actualizar logro de alcanzar nivel
+        // Obtener el nivel máximo de todos los brutes del usuario
+        const maxLevelBrute = await prisma.brute.findFirst({
+          where: {
+            userId: authed.id,
+            deletedAt: null,
+          },
+          select: { level: true },
+          orderBy: { level: 'desc' },
+        });
+
+        if (maxLevelBrute && maxLevelBrute.level >= 30) {
+          // Obtener el progreso actual del logro REACH_LEVEL
+          const reachLevelAchievements = await prisma.permanentAchievement.findMany({
+            where: {
+              userId: authed.id,
+              type: AchievementType.REACH_LEVEL,
+              completed: false,
+            },
+          });
+
+          // Actualizar cada logro con el nivel máximo (no sumar, sino establecer)
+          for (const achievement of reachLevelAchievements) {
+            const newProgress = Math.min(maxLevelBrute.level, achievement.target);
+            const isCompleted = newProgress >= achievement.target;
+
+            await prisma.permanentAchievement.update({
+              where: { id: achievement.id },
+              data: {
+                progress: newProgress,
+                completed: isCompleted,
+                completedAt: isCompleted ? new Date() : undefined,
+                updatedAt: new Date(),
+              },
+            });
+          }
+        }
       }
 
       res.send(updatedBrute);
@@ -1383,6 +1452,16 @@ export const Brutes = {
       // Achievement
       await increaseAchievement(prisma, authed.id, brute.id, 'ascend');
 
+      // Actualizar logro de ascensiones totales
+      const { updateAchievementProgress } = await import('../utils/achievements/updateAchievementProgress.js');
+      const { AchievementType } = await import('@labrute/prisma');
+      await updateAchievementProgress(prisma, authed.id, AchievementType.ASCEND_TOTAL, 1);
+
+      // Actualizar misión de ascensión
+      const { updateMissionProgress } = await import('../utils/missions/updateMissionProgress.js');
+      const { MissionType } = await import('@labrute/prisma');
+      await updateMissionProgress(prisma, authed.id, MissionType.ASCEND, 1);
+
       // Add ascend log
       await prisma.log.create({
         data: {
@@ -1514,6 +1593,7 @@ export const Brutes = {
         where: { name: ilike(name), deletedAt: null },
         select: {
           id: true,
+          userId: true,
           fightsLeft: true,
           lastFight: true,
           skills: true,
@@ -1530,8 +1610,25 @@ export const Brutes = {
 
       const fightsLeft = getFightsLeft({ ...brute, skills: getTieredSkills(brute, modifiers) }, modifiers);
 
+      let bonusFights: number | undefined;
+      try {
+        const user = await auth(prisma, req);
+        if (brute.userId && brute.userId === user.id) {
+          const u = await prisma.user.findUnique({
+            where: { id: user.id },
+            select: { bonusFightsCount: true, bonusFightsDate: true },
+          });
+          const isToday = u?.bonusFightsDate
+            && dayjs.utc(u.bonusFightsDate).isSame(dayjs.utc(), 'day');
+          bonusFights = isToday ? (u?.bonusFightsCount ?? 0) : 0;
+        }
+      } catch {
+        // no auth: no bonus
+      }
+
       res.send({
         fightsLeft,
+        ...(typeof bonusFights === 'number' && { bonusFights }),
       });
     } catch (error) {
       sendError(res, error);
@@ -2024,6 +2121,125 @@ export const Brutes = {
       });
 
       res.send({ success: true });
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
+  toggleAutoFight: (prisma: PrismaClient) => async (
+    req: Request<{ name: string }>,
+    res: Response<{
+      success: boolean;
+      autoFightEnabled: boolean;
+      error?: string;
+      message?: string;
+      result?: {
+        fightsCompleted: number;
+        fightsLeft: number;
+        canLevelUp: boolean;
+        stopped: boolean;
+        reason?: string;
+      };
+    }>,
+  ) => {
+    try {
+      const authed = await auth(prisma, req);
+
+      // Get brute
+      const brute = await prisma.brute.findFirst({
+        where: {
+          name: ilike(req.params.name),
+          deletedAt: null,
+          userId: authed.id,
+        },
+        select: {
+          id: true,
+          name: true,
+          autoFightEnabled: true,
+        },
+      });
+
+      if (!brute) {
+        throw new NotFoundError(translate('bruteNotFound', authed));
+      }
+
+      // Si está activando, validar primero y luego ejecutar peleas
+      if (!brute.autoFightEnabled) {
+        // Obtener el bruto completo para validar
+        const fullBrute = await prisma.brute.findFirst({
+          where: { id: brute.id },
+          include: {
+            opponents: {
+              select: { name: true },
+            },
+          },
+        });
+
+        if (!fullBrute) {
+          throw new NotFoundError(translate('bruteNotFound', authed));
+        }
+
+        // Obtener modificadores para validar
+        const modifiers = await ServerState.getModifiers(prisma);
+        const calculatedBrute = getCalculatedBrute(fullBrute, modifiers);
+
+        // Validar si puede subir de nivel
+        if (canLevelUp(calculatedBrute)) {
+          res.status(400).send({
+            success: false,
+            autoFightEnabled: false,
+            error: 'canLevelUp',
+          });
+          return;
+        }
+
+        // Validar si tiene peleas disponibles
+        const fightsLeft = getFightsLeft(calculatedBrute, modifiers);
+        if (fightsLeft <= 0) {
+          res.status(400).send({
+            success: false,
+            autoFightEnabled: false,
+            error: 'noFightsLeft',
+          });
+          return;
+        }
+
+        // Ejecutar peleas automáticas
+        const result = await executeAutoFights(prisma, brute.id);
+
+        // Actualizar estado - autoFightEnabled siempre queda en false al terminar
+        const updatedBrute = await prisma.brute.update({
+          where: { id: brute.id },
+          data: {
+            autoFightEnabled: false, // Siempre se desactiva al terminar
+            fightsLeft: result.fightsLeft,
+          },
+          select: {
+            id: true,
+            autoFightEnabled: true,
+            fightsLeft: true,
+          },
+        });
+
+        res.send({
+          success: true,
+          autoFightEnabled: false, // Siempre false al terminar
+          result,
+        });
+      } else {
+        // Solo desactivar
+        await prisma.brute.update({
+          where: { id: brute.id },
+          data: {
+            autoFightEnabled: false,
+          },
+          select: { id: true },
+        });
+
+        res.send({
+          success: true,
+          autoFightEnabled: false,
+        });
+      }
     } catch (error) {
       sendError(res, error);
     }

@@ -82,7 +82,7 @@ const ClanView = () => {
       return;
     }
 
-    Server.Brute.getClanIdAsMaster(brute.name).then((data) => {
+    Server.Brute.getClanIdAsMaster(brute.name).then((data: BrutesGetClanIdAsMasterResponse) => {
       setMasterOfClan(data.id);
     }).catch(catchError(Alert));
   }, [brute, Alert, clan, owner]);
