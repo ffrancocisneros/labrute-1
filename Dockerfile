@@ -2,6 +2,9 @@ FROM node:20-bookworm-slim AS build
 
 WORKDIR /app
 
+# Build stage env: producción y sin scripts de postinstall (db:sync, seed, etc.)
+ENV NODE_ENV=production YARN_ENABLE_SCRIPTS=false
+
 # Enable Yarn via Corepack
 RUN corepack enable
 
