@@ -12,10 +12,10 @@ COPY .yarn/ .yarn/
 COPY client/package.json ./client/
 COPY server/package.json ./server/
 COPY core/package.json ./core/
-COPY prisma/package.json ./prisma/
+COPY prisma/package.reference.json ./prisma/
 
-# Install monorepo dependencies
-RUN yarn install --immutable
+# Prepare prisma workspace package.json and install dependencies
+RUN cp prisma/package.reference.json prisma/package.json && yarn install --immutable
 
 # Copy the rest of the repo
 COPY . .
