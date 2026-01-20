@@ -5,6 +5,10 @@ WORKDIR /app
 # Build stage env: producción y sin scripts de postinstall (db:sync, seed, etc.)
 ENV NODE_ENV=production YARN_ENABLE_SCRIPTS=false
 
+# Prisma engines may require openssl to be present for libssl detection
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+
 # Enable Yarn via Corepack
 RUN corepack enable
 
@@ -36,6 +40,10 @@ FROM node:20-bookworm-slim
 
 WORKDIR /app
 ENV NODE_ENV=production
+
+# Prisma engines may require openssl to be present for libssl detection
+RUN apt-get update -y && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy everything we need to run (includes node_modules, build artifacts, server/lib, client/build, prisma client)
 COPY --from=build /app /app
