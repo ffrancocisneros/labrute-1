@@ -2,6 +2,7 @@ import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, Grid, Inp
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getCalculatedBrute, USER_COOKIE, TOKEN_COOKIE } from '@labrute/core';
+import { applyTemporaryEffects } from '../utils/applyTemporaryEffects';
 import { useAlert } from '../hooks/useAlert';
 import { useAuth } from '../hooks/useAuth';
 import type { LoggedInUser } from '../hooks/useAuth';
@@ -182,10 +183,19 @@ const ShopView = () => {
                   temporarySkills?: TempSkill[];
                   temporaryWeapons?: TempWeapon[];
                 };
-                return {
-                  ...getCalculatedBrute(brute, modifiers),
+                const temps = {
                   temporarySkills: bruteWithTemps.temporarySkills ?? [],
                   temporaryWeapons: bruteWithTemps.temporaryWeapons ?? [],
+                };
+                const calculated = getCalculatedBrute(brute, modifiers);
+                const enriched = applyTemporaryEffects(
+                  calculated,
+                  temps.temporarySkills,
+                  temps.temporaryWeapons,
+                );
+                return {
+                  ...enriched,
+                  ...temps,
                 };
               }),
             });

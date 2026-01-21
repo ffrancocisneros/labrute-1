@@ -21,6 +21,7 @@ import catchError from '../utils/catchError';
 import { setCookie } from '../utils/cookies';
 import Fetch from '../utils/Fetch';
 import Server from '../utils/Server';
+import { applyTemporaryEffects } from '../utils/applyTemporaryEffects';
 import HomeMobileView from './mobile/HomeMobileView';
 
 /**
@@ -75,10 +76,19 @@ const HomeView = () => {
               temporarySkills?: TempSkill[];
               temporaryWeapons?: TempWeapon[];
             };
-            return {
-              ...getCalculatedBrute(brute, response.modifiers),
+            const temps = {
               temporarySkills: bruteWithTemps.temporarySkills ?? [],
               temporaryWeapons: bruteWithTemps.temporaryWeapons ?? [],
+            };
+            const calculated = getCalculatedBrute(brute, response.modifiers);
+            const enriched = applyTemporaryEffects(
+              calculated,
+              temps.temporarySkills,
+              temps.temporaryWeapons,
+            );
+            return {
+              ...enriched,
+              ...temps,
             };
           }),
         };

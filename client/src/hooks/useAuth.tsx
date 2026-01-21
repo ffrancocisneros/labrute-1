@@ -4,6 +4,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { deleteCookie, getCookie } from '../utils/cookies';
 import Server from '../utils/Server';
+import { applyTemporaryEffects } from '../utils/applyTemporaryEffects';
 import { useAlert } from './useAlert';
 import { useLanguage } from './useLanguage';
 
@@ -104,10 +105,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             temporarySkills?: TempSkill[];
             temporaryWeapons?: TempWeapon[];
           };
-          return {
-            ...getCalculatedBrute(brute, response.modifiers),
+          const temps = {
             temporarySkills: bruteWithTemps.temporarySkills ?? [],
             temporaryWeapons: bruteWithTemps.temporaryWeapons ?? [],
+          };
+          const calculated = getCalculatedBrute(brute, response.modifiers);
+          const enriched = applyTemporaryEffects(
+            calculated,
+            temps.temporarySkills,
+            temps.temporaryWeapons,
+          );
+          return {
+            ...enriched,
+            ...temps,
           };
         }),
       };
