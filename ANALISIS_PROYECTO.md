@@ -1307,6 +1307,246 @@ core/src/
    - Variable de entorno + detección en script
    - Garantiza que no se ejecute en CI
 
+### 5. Errores de ESLint y TypeScript en Build de Docker (Enero 2026)
+
+#### **Contexto:**
+Durante la implementación del sistema de habilidades y armas temporales en la UI, el build de Docker fallaba repetidamente con errores de ESLint y TypeScript. Se requirieron múltiples iteraciones para resolver todos los problemas.
+
+#### **Errores Encontrados y Soluciones:**
+
+##### **5.1. ESLint `max-len` - Líneas Demasiado Largas**
+
+**Problema:**
+- Múltiples archivos tenían líneas que excedían el límite de caracteres (100-120 caracteres)
+- Archivos afectados: `ProvideBrute.tsx`, `CellMain.tsx`, `SimpleLoginView.tsx`, `useAuth.tsx`, `HomeView.tsx`, `ShopView.tsx`
+
+**Ejemplo de Error:**
+```
+Line 84: This line has 125 characters, but the maximum is 100
+```
+
+**Solución:**
+- Dividir líneas largas en múltiples líneas
+- Usar paréntesis para agrupar expresiones
+- Extraer variables intermedias cuando sea necesario
+
+**Archivos Corregidos:**
+- `client/src/components/Brute/ProvideBrute.tsx`
+- `client/src/components/Cell/CellMain.tsx`
+- `client/src/views/SimpleLoginView.tsx`
+- `client/src/hooks/useAuth.tsx`
+- `client/src/views/HomeView.tsx`
+- `client/src/views/ShopView.tsx`
+
+##### **5.2. ESLint `no-shadow` - Variable Shadowing**
+
+**Problema:**
+- Variables dentro de funciones `map()` usaban nombres que ya existían en el scope superior
+- Ejemplo: usar `t` para el loop cuando `t` ya se usaba para la función de traducción (`useTranslation()`)
+
+**Ejemplo de Error:**
+```typescript
+const { t } = useTranslation();
+// ...
+.map((t) => ...) // ❌ Shadowing de 't'
+```
+
+**Solución:**
+- Renombrar variables de loop con nombres descriptivos
+- `t` → `temp` (para temporary effects)
+- `s` → `skill` (para skills)
+- `w` → `weapon` (para weapons)
+
+**Archivos Corregidos:**
+- `client/src/components/Cell/CellMain.tsx`
+- `client/src/components/Cell/CellSkills.tsx`
+- `client/src/views/ShopView.tsx`
+
+##### **5.3. TypeScript `TS2345` - Incompatibilidad de Tipos**
+
+**Problema:**
+- Tipos locales `TempSkill` y `TempWeapon` usaban `string` para `skillName` y `weaponName`
+- La función `applyTemporaryEffects` esperaba `TemporarySkillEffect[]` y `TemporaryWeaponEffect[]` de `@labrute/core`
+- Estos tipos usan `SkillName` y `WeaponName` (tipos más específicos que `string`)
+
+**Ejemplo de Error:**
+```
+TS2345: Argument of type 'TempSkill[]' is not assignable to parameter of type 'TemporarySkillEffect[]'.
+  Type 'TempSkill' is not assignable to type 'TemporarySkillEffect'.
+    Types of property 'skillName' are incompatible.
+      Type 'string' is not assignable to type 'SkillName'.
+```
+
+**Solución:**
+1. **Importar tipos del core:**
+   ```typescript
+   import { TemporarySkillEffect, TemporaryWeaponEffect } from '@labrute/core';
+   ```
+
+2. **Usar tipos del core en lugar de tipos locales:**
+   ```typescript
+   // ❌ Antes:
+   type TempSkill = { skillName: string; expiresAt: string };
+   
+   // ✅ Después:
+   type TempSkill = TemporarySkillEffect;
+   ```
+
+**Archivos Corregidos:**
+- `client/src/hooks/useAuth.tsx`
+- `client/src/views/HomeView.tsx`
+- `client/src/views/ShopView.tsx`
+- `client/src/views/SimpleLoginView.tsx`
+
+##### **5.4. ESLint `@typescript-eslint/no-unnecessary-type-assertion`**
+
+**Problema:**
+- Type assertions innecesarias en `ProvideBrute.tsx`
+- Las aserciones no cambiaban el tipo real de la expresión
+
+**Ejemplo de Error:**
+```typescript
+const tempSkills = (data.temporarySkills ?? []) as TemporarySkillEffect[];
+// ❌ Assertion innecesaria
+```
+
+**Solución:**
+- Eliminar type assertions cuando TypeScript puede inferir el tipo correctamente
+- Confiar en los tipos del core que ya son correctos
+
+**Archivo Corregido:**
+- `client/src/components/Brute/ProvideBrute.tsx`
+
+##### **5.5. ESLint `@typescript-eslint/no-unused-vars`**
+
+**Problema:**
+- Imports no utilizados después de refactorizar código
+- Variables no utilizadas después de eliminar type assertions
+
+**Ejemplo de Error:**
+```
+'TemporarySkillEffect' is defined but never used
+'TemporaryWeaponEffect' is defined but never used
+```
+
+**Solución:**
+- Eliminar imports no utilizados
+- Usar solo los tipos necesarios
+
+**Archivos Corregidos:**
+- `client/src/components/Brute/ProvideBrute.tsx`
+- `client/src/utils/applyTemporaryEffects.ts`
+
+##### **5.6. ESLint `prefer-destructuring`**
+
+**Problema:**
+- Acceso a propiedades de objetos sin usar destructuring
+- ESLint recomienda usar destructuring para mejor legibilidad
+
+**Ejemplo de Error:**
+```typescript
+// ❌ Antes:
+for (const temp of temporarySkills) {
+  const skillName = temp.skillName;
+}
+
+// ✅ Después:
+for (const { skillName } of temporarySkills) {
+  // ...
+}
+```
+
+**Solución:**
+- Usar destructuring en loops y asignaciones
+- Mejora la legibilidad y sigue las convenciones de ESLint
+
+**Archivo Corregido:**
+- `client/src/utils/applyTemporaryEffects.ts`
+
+##### **5.7. TypeScript `TS2740` - Uso Incorrecto de Objetos como Arrays**
+
+**Problema:**
+- En `ShopView.tsx`, se intentaba usar `skills` y `weapons` como arrays (`string[]`)
+- En realidad, son objetos de tipo `Partial<Record<SkillName, number>>` y `Partial<Record<WeaponName, number>>`
+
+**Ejemplo de Error:**
+```typescript
+// ❌ Antes:
+const skillsArray: string[] = selectedBrute.skills ?? [];
+const permTier = skillsArray.filter((skillName) => skillName === skill).length;
+
+// Error: Type 'Partial<Record<SkillName, number>>' is missing properties from type 'string[]'
+```
+
+**Solución:**
+- Acceder directamente al objeto usando la clave como índice
+- Obtener el tier directamente del objeto en lugar de filtrar un array
+
+**Código Corregido:**
+```typescript
+// ✅ Después:
+const permTier = selectedBrute.skills?.[skill as keyof typeof selectedBrute.skills] ?? 0;
+```
+
+**Archivo Corregido:**
+- `client/src/views/ShopView.tsx`
+
+#### **Lecciones Aprendidas:**
+
+1. **Consistencia de Tipos:**
+   - Siempre usar tipos del core (`@labrute/core`) en lugar de definir tipos locales duplicados
+   - Los tipos del core (`TemporarySkillEffect`, `TemporaryWeaponEffect`) ya están correctamente tipados con `SkillName` y `WeaponName`
+
+2. **Nombres de Variables Descriptivos:**
+   - Evitar nombres genéricos como `t`, `s`, `w` en loops
+   - Usar nombres descriptivos como `temp`, `skill`, `weapon` para evitar shadowing
+
+3. **Estructura de Datos:**
+   - Entender la estructura real de los datos (`skills` y `weapons` son objetos, no arrays)
+   - Consultar los tipos TypeScript antes de asumir la estructura
+
+4. **Type Assertions:**
+   - Evitar type assertions innecesarias
+   - Confiar en la inferencia de tipos de TypeScript cuando sea posible
+
+5. **Imports Limpios:**
+   - Eliminar imports no utilizados regularmente
+   - Usar herramientas de IDE para detectar imports no utilizados
+
+6. **Destructuring:**
+   - Usar destructuring para mejorar legibilidad
+   - Especialmente útil en loops y cuando se accede a múltiples propiedades
+
+#### **Proceso de Resolución:**
+
+1. **Iteración 1:** Corrección de `max-len` (líneas largas)
+2. **Iteración 2:** Corrección de `no-shadow` (variable shadowing)
+3. **Iteración 3:** Corrección de tipos (`TS2345` - incompatibilidad de tipos)
+4. **Iteración 4:** Eliminación de type assertions innecesarias
+5. **Iteración 5:** Eliminación de imports no utilizados
+6. **Iteración 6:** Corrección de uso de objetos como arrays (`TS2740`)
+
+**Total de Commits:** 6 commits para resolver todos los errores
+**Tiempo Total:** ~30 minutos de builds iterativos
+
+#### **Prevención Futura:**
+
+1. **Pre-commit Hooks:**
+   - Considerar usar `husky` con `lint-staged` para ejecutar ESLint antes de commits
+   - Prevenir errores antes de que lleguen a CI/CD
+
+2. **Type Checking Local:**
+   - Ejecutar `yarn compile` y `yarn build:client` localmente antes de push
+   - Usar `yarn lint` para verificar errores de ESLint
+
+3. **IDE Configuration:**
+   - Configurar ESLint en el IDE para mostrar errores en tiempo real
+   - Usar TypeScript strict mode para detectar errores de tipos temprano
+
+4. **Code Review:**
+   - Revisar tipos y estructura de datos antes de merge
+   - Verificar que se usen tipos del core en lugar de tipos locales
+
 ---
 
 ## 🎯 Próximas Mejoras Sugeridas
