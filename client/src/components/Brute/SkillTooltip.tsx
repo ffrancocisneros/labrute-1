@@ -25,12 +25,14 @@ const statValue = (stat: FightStat | null, value: number) => {
 export interface SkillTooltipProps extends Omit<TooltipProps, 'title'> {
   skill?: Skill | null;
   tier?: number;
+  remainingText?: string;
 }
 
 const SkillTooltip = ({
   skill,
   tier = 1,
   children,
+  remainingText,
   ...rest
 }: SkillTooltipProps) => {
   const { t } = useTranslation();
@@ -156,6 +158,11 @@ const SkillTooltip = ({
               </Box>
             )}
           </Box>
+          {remainingText && (
+            <Text subtitle2 sx={{ fontSize: 12, mt: 0.5 }}>
+              {remainingText}
+            </Text>
+          )}
         </>
       ) : ''}
       componentsProps={{
