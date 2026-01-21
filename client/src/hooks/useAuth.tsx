@@ -7,8 +7,16 @@ import Server from '../utils/Server';
 import { useAlert } from './useAlert';
 import { useLanguage } from './useLanguage';
 
+type TempSkill = { skillName: string; expiresAt: string; createdAt?: string };
+type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
+
+export type CalculatedBruteWithTemps = CalculatedBrute & {
+  temporarySkills?: TempSkill[];
+  temporaryWeapons?: TempWeapon[];
+};
+
 export type LoggedInUser = Omit<UserWithBrutesBodyColor, 'brutes'> & {
-  brutes: CalculatedBrute[];
+  brutes: CalculatedBruteWithTemps[];
 };
 
 type AuthContextInterface = {
@@ -91,7 +99,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const loggedInUser: LoggedInUser = {
         ...response.user,
-        brutes: response.user.brutes.map((brute) => getCalculatedBrute(brute, response.modifiers)),
+        brutes: response.user.brutes.map((brute) => ({
+          ...getCalculatedBrute(brute, response.modifiers),
+          temporarySkills: (brute as unknown as { temporarySkills?: TempSkill[] }).temporarySkills ?? [],
+          temporaryWeapons: (brute as unknown as { temporaryWeapons?: TempWeapon[] }).temporaryWeapons ?? [],
+        })),
       };
 
       setUser(loggedInUser);

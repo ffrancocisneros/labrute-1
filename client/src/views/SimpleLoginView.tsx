@@ -51,9 +51,15 @@ const SimpleLoginView = () => {
       // Update language
       setLanguage(response.user.lang);
 
+      type TempSkill = { skillName: string; expiresAt: string; createdAt?: string };
+      type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
       const loggedInUser: LoggedInUser = {
         ...response.user,
-        brutes: response.user.brutes.map((brute) => getCalculatedBrute(brute, response.modifiers)),
+        brutes: response.user.brutes.map((brute) => ({
+          ...getCalculatedBrute(brute, response.modifiers),
+          temporarySkills: (brute as unknown as { temporarySkills?: TempSkill[] }).temporarySkills ?? [],
+          temporaryWeapons: (brute as unknown as { temporaryWeapons?: TempWeapon[] }).temporaryWeapons ?? [],
+        })),
       };
 
       updateData(loggedInUser);

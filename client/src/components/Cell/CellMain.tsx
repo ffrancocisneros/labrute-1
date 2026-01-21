@@ -1,7 +1,7 @@
 import { BruteRanking, getFightsLeft, getMaxFightsPerDay, getWinsNeededToRankUp, getXPNeeded } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
 import { PlayArrow } from '@mui/icons-material';
-import { AlertTitle, Box, BoxProps, Alert as MuiAlert, Stack, Tooltip } from '@mui/material';
+import { AlertTitle, Box, BoxProps, Alert as MuiAlert, Stack, Tooltip, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -146,7 +146,19 @@ const CellMain = ({
           {temporarySkills.slice(0, 3).map((s) => (
             <Tooltip
               key={`temp-skill-${s.skillName}-${s.expiresAt}`}
-              title={`Habilidad temporal: ${formatRemaining(s.expiresAt)}`}
+              title={(
+                <Stack spacing={0.5}>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    {t(s.skillName)}
+                  </Typography>
+                  <Typography variant="body2">
+                    {t(`${s.skillName}.desc`)}
+                  </Typography>
+                  <Typography variant="caption">
+                    Tiempo restante: {formatRemaining(s.expiresAt)}
+                  </Typography>
+                </Stack>
+              )}
             >
               <Box
                 component="img"
@@ -167,7 +179,16 @@ const CellMain = ({
           {temporaryWeapons.slice(0, 3).map((w) => (
             <Tooltip
               key={`temp-weapon-${w.weaponName}-${w.expiresAt}`}
-              title={`Arma temporal: ${formatRemaining(w.expiresAt)}`}
+              title={(
+                <Stack spacing={0.5}>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    {t(w.weaponName)}
+                  </Typography>
+                  <Typography variant="caption">
+                    Tiempo restante: {formatRemaining(w.expiresAt)}
+                  </Typography>
+                </Stack>
+              )}
             >
               <Box
                 component="img"
