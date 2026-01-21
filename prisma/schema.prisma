@@ -64,6 +64,7 @@ model User {
   userBattlePassProgress        UserBattlePassProgress[]
   userBattlePassMissionProgress UserBattlePassMissionProgress[]
   userUnlockedCosmetics         UserUnlockedCosmetic[]
+  usedSkills                    UserUsedSkill[]
 }
 
 enum UserLogType {
@@ -278,6 +279,8 @@ model Brute {
   fightsLeft                   Int                     @default(12)
   victories                    Int                     @default(0)
   losses                       Int                     @default(0)
+  winStreakCurrent             Int                     @default(0)
+  winStreakMax                 Int                     @default(0)
   fights                       Fight[]
   fightsAsAdversary            Fight[]                 @relation("Adversary")
   logs                         Log[]
@@ -321,6 +324,17 @@ model Brute {
   @@index([clanId])
   @@index([wantToJoinClanId])
   @@index([eventId])
+}
+
+model UserUsedSkill {
+  id        String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid
+  skill     String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp()
+
+  @@unique([userId, skill])
+  @@index([userId])
 }
 
 model BruteStartingStats {

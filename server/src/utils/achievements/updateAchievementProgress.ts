@@ -96,57 +96,13 @@ export const updateWinStreakAchievement = async (
   prisma: PrismaClient,
   userId: string,
 ): Promise<void> => {
-  // Obtener todos los brutes del usuario con sus nombres
-  const brutesWithNames = await prisma.brute.findMany({
-    where: {
-      userId,
-      deletedAt: null,
-    },
-    select: {
-      id: true,
-      name: true,
-    },
+  // Nueva lógica (O(#brutes)): usar campos incrementales en Brute
+  const agg = await prisma.brute.aggregate({
+    where: { userId, deletedAt: null },
+    _max: { winStreakMax: true },
   });
 
-  let maxStreak = 0;
-
-  // Calcular la racha máxima para cada bruto
-  for (const brute of brutesWithNames) {
-    // Obtener todas las peleas del bruto ordenadas por fecha
-    const fights = await prisma.fight.findMany({
-      where: {
-        OR: [
-          { brute1Id: brute.id },
-          { brute2Id: brute.id },
-        ],
-      },
-      orderBy: {
-        date: 'asc',
-      },
-      select: {
-        winner: true,
-        date: true,
-      },
-    });
-
-    // Calcular la racha máxima de victorias consecutivas
-    let currentStreak = 0;
-    let maxBruteStreak = 0;
-
-    for (const fight of fights) {
-      // Determinar si el bruto ganó (el campo winner es el nombre del bruto ganador)
-      const bruteWon = fight.winner === brute.name;
-
-      if (bruteWon) {
-        currentStreak++;
-        maxBruteStreak = Math.max(maxBruteStreak, currentStreak);
-      } else {
-        currentStreak = 0;
-      }
-    }
-
-    maxStreak = Math.max(maxStreak, maxBruteStreak);
-  }
+  const maxStreak = agg._max.winStreakMax ?? 0;
 
   // Obtener todos los logros de este tipo que no estén completados
   const achievements = await prisma.permanentAchievement.findMany({

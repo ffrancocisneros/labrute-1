@@ -247,6 +247,27 @@ export const Fights = {
 
       // Update brute XP, victories and losses if arena fight
       if (arenaFight) {
+        // Actualizar racha de victorias incrementalmente (evita escanear todas las peleas)
+        // Lo hacemos con lectura + update para mantenerlo simple y portable.
+        const streakBefore = await prisma.brute.findUnique({
+          where: { id: brute1.id },
+          select: { winStreakCurrent: true, winStreakMax: true },
+        });
+
+        const newCurrentStreak = brute1Won
+          ? (streakBefore?.winStreakCurrent ?? 0) + 1
+          : 0;
+        const newMaxStreak = Math.max(streakBefore?.winStreakMax ?? 0, newCurrentStreak);
+
+        await prisma.brute.update({
+          where: { id: brute1.id },
+          data: {
+            winStreakCurrent: newCurrentStreak,
+            winStreakMax: newMaxStreak,
+          },
+          select: { id: true },
+        });
+
         const updatedBrute = await prisma.brute.update({
           where: { id: brute1.id },
           data: {
@@ -298,6 +319,7 @@ export const Fights = {
           }
           
           // Actualizar logros de racha de victorias, daño total y días consecutivos
+          // Racha de victorias: se actualiza incrementalmente en Brute y se refleja aquí sin escanear peleas
           await updateWinStreakAchievement(prisma, updatedBrute.userId);
           await updateDamageDealtAchievement(prisma, updatedBrute.userId, fightId);
           await updateConsecutiveDaysAchievement(prisma, updatedBrute.userId);
@@ -324,10 +346,10 @@ export const Fights = {
           }
 
           // Misiones de daño causado, racha de victorias y habilidades diferentes
-          const { updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMission } = await import('../utils/missions/updateMissionProgress.js');
+          const { updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMissionIncremental } = await import('../utils/missions/updateMissionProgress.js');
           await updateDamageDealtMission(prisma, updatedBrute.userId, fightId);
           await updateWinStreakMission(prisma, updatedBrute.userId);
-          await updateDifferentSkillsMission(prisma, updatedBrute.userId, fightId);
+          await updateDifferentSkillsMissionIncremental(prisma, updatedBrute.userId, fightId);
 
           // Pase de batalla (peleas manuales; las automáticas no suman)
           try {

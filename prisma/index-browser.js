@@ -212,6 +212,8 @@ exports.Prisma.BruteScalarFieldEnum = {
   fightsLeft: 'fightsLeft',
   victories: 'victories',
   losses: 'losses',
+  winStreakCurrent: 'winStreakCurrent',
+  winStreakMax: 'winStreakMax',
   opponentsGeneratedAt: 'opponentsGeneratedAt',
   canRankUpSince: 'canRankUpSince',
   favorite: 'favorite',
@@ -220,6 +222,13 @@ exports.Prisma.BruteScalarFieldEnum = {
   tournamentWins: 'tournamentWins',
   eventId: 'eventId',
   resets: 'resets'
+};
+
+exports.Prisma.UserUsedSkillScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  skill: 'skill',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.BruteStartingStatsScalarFieldEnum = {
@@ -1111,6 +1120,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   UserLog: 'UserLog',
   Brute: 'Brute',
+  UserUsedSkill: 'UserUsedSkill',
   BruteStartingStats: 'BruteStartingStats',
   Fight: 'Fight',
   Log: 'Log',

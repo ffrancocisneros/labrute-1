@@ -29,6 +29,11 @@ export type UserLog = $Result.DefaultSelection<Prisma.$UserLogPayload>
  */
 export type Brute = $Result.DefaultSelection<Prisma.$BrutePayload>
 /**
+ * Model UserUsedSkill
+ * 
+ */
+export type UserUsedSkill = $Result.DefaultSelection<Prisma.$UserUsedSkillPayload>
+/**
  * Model BruteStartingStats
  * 
  */
@@ -1113,6 +1118,16 @@ export class PrismaClient<
   get brute(): Prisma.BruteDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.userUsedSkill`: Exposes CRUD operations for the **UserUsedSkill** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserUsedSkills
+    * const userUsedSkills = await prisma.userUsedSkill.findMany()
+    * ```
+    */
+  get userUsedSkill(): Prisma.UserUsedSkillDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.bruteStartingStats`: Exposes CRUD operations for the **BruteStartingStats** model.
     * Example usage:
     * ```ts
@@ -1944,6 +1959,7 @@ export namespace Prisma {
     User: 'User',
     UserLog: 'UserLog',
     Brute: 'Brute',
+    UserUsedSkill: 'UserUsedSkill',
     BruteStartingStats: 'BruteStartingStats',
     Fight: 'Fight',
     Log: 'Log',
@@ -2001,7 +2017,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userLog" | "brute" | "bruteStartingStats" | "fight" | "log" | "destinyChoice" | "tournament" | "tournamentAchievement" | "tournamentGold" | "tournamentXp" | "achievement" | "dailyObjective" | "weeklyObjective" | "mission" | "missionAchievement" | "permanentAchievement" | "bruteReport" | "serverState" | "bannedWord" | "bannedIp" | "clan" | "clanThread" | "clanPost" | "bossDamage" | "clanWar" | "clanWarFighters" | "inventoryItem" | "battlePassSeason" | "battlePassReward" | "battlePassMission" | "userBattlePassProgress" | "userBattlePassMissionProgress" | "bruteTemporaryEffect" | "bruteTemporaryWeapon" | "cosmeticPreset" | "userUnlockedCosmetic" | "shopItem" | "release" | "event" | "notification" | "config"
+      modelProps: "user" | "userLog" | "brute" | "userUsedSkill" | "bruteStartingStats" | "fight" | "log" | "destinyChoice" | "tournament" | "tournamentAchievement" | "tournamentGold" | "tournamentXp" | "achievement" | "dailyObjective" | "weeklyObjective" | "mission" | "missionAchievement" | "permanentAchievement" | "bruteReport" | "serverState" | "bannedWord" | "bannedIp" | "clan" | "clanThread" | "clanPost" | "bossDamage" | "clanWar" | "clanWarFighters" | "inventoryItem" | "battlePassSeason" | "battlePassReward" | "battlePassMission" | "userBattlePassProgress" | "userBattlePassMissionProgress" | "bruteTemporaryEffect" | "bruteTemporaryWeapon" | "cosmeticPreset" | "userUnlockedCosmetic" | "shopItem" | "release" | "event" | "notification" | "config"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2224,6 +2240,80 @@ export namespace Prisma {
           count: {
             args: Prisma.BruteCountArgs<ExtArgs>
             result: $Utils.Optional<BruteCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserUsedSkill: {
+        payload: Prisma.$UserUsedSkillPayload<ExtArgs>
+        fields: Prisma.UserUsedSkillFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserUsedSkillFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserUsedSkillFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>
+          }
+          findFirst: {
+            args: Prisma.UserUsedSkillFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserUsedSkillFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>
+          }
+          findMany: {
+            args: Prisma.UserUsedSkillFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>[]
+          }
+          create: {
+            args: Prisma.UserUsedSkillCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>
+          }
+          createMany: {
+            args: Prisma.UserUsedSkillCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserUsedSkillCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>[]
+          }
+          delete: {
+            args: Prisma.UserUsedSkillDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>
+          }
+          update: {
+            args: Prisma.UserUsedSkillUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserUsedSkillDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUsedSkillUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserUsedSkillUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserUsedSkillUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserUsedSkillPayload>
+          }
+          aggregate: {
+            args: Prisma.UserUsedSkillAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserUsedSkill>
+          }
+          groupBy: {
+            args: Prisma.UserUsedSkillGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserUsedSkillGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserUsedSkillCountArgs<ExtArgs>
+            result: $Utils.Optional<UserUsedSkillCountAggregateOutputType> | number
           }
         }
       }
@@ -5212,6 +5302,7 @@ export namespace Prisma {
     user?: UserOmit
     userLog?: UserLogOmit
     brute?: BruteOmit
+    userUsedSkill?: UserUsedSkillOmit
     bruteStartingStats?: BruteStartingStatsOmit
     fight?: FightOmit
     log?: LogOmit
@@ -5349,6 +5440,7 @@ export namespace Prisma {
     userBattlePassProgress: number
     userBattlePassMissionProgress: number
     userUnlockedCosmetics: number
+    usedSkills: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5370,6 +5462,7 @@ export namespace Prisma {
     userBattlePassProgress?: boolean | UserCountOutputTypeCountUserBattlePassProgressArgs
     userBattlePassMissionProgress?: boolean | UserCountOutputTypeCountUserBattlePassMissionProgressArgs
     userUnlockedCosmetics?: boolean | UserCountOutputTypeCountUserUnlockedCosmeticsArgs
+    usedSkills?: boolean | UserCountOutputTypeCountUsedSkillsArgs
   }
 
   // Custom InputTypes
@@ -5507,6 +5600,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUserUnlockedCosmeticsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserUnlockedCosmeticWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUsedSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserUsedSkillWhereInput
   }
 
 
@@ -6599,6 +6699,7 @@ export namespace Prisma {
     userBattlePassProgress?: boolean | User$userBattlePassProgressArgs<ExtArgs>
     userBattlePassMissionProgress?: boolean | User$userBattlePassMissionProgressArgs<ExtArgs>
     userUnlockedCosmetics?: boolean | User$userUnlockedCosmeticsArgs<ExtArgs>
+    usedSkills?: boolean | User$usedSkillsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -6700,6 +6801,7 @@ export namespace Prisma {
     userBattlePassProgress?: boolean | User$userBattlePassProgressArgs<ExtArgs>
     userBattlePassMissionProgress?: boolean | User$userBattlePassMissionProgressArgs<ExtArgs>
     userUnlockedCosmetics?: boolean | User$userUnlockedCosmeticsArgs<ExtArgs>
+    usedSkills?: boolean | User$usedSkillsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6726,6 +6828,7 @@ export namespace Prisma {
       userBattlePassProgress: Prisma.$UserBattlePassProgressPayload<ExtArgs>[]
       userBattlePassMissionProgress: Prisma.$UserBattlePassMissionProgressPayload<ExtArgs>[]
       userUnlockedCosmetics: Prisma.$UserUnlockedCosmeticPayload<ExtArgs>[]
+      usedSkills: Prisma.$UserUsedSkillPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7163,6 +7266,7 @@ export namespace Prisma {
     userBattlePassProgress<T extends User$userBattlePassProgressArgs<ExtArgs> = {}>(args?: Subset<T, User$userBattlePassProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBattlePassProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userBattlePassMissionProgress<T extends User$userBattlePassMissionProgressArgs<ExtArgs> = {}>(args?: Subset<T, User$userBattlePassMissionProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBattlePassMissionProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userUnlockedCosmetics<T extends User$userUnlockedCosmeticsArgs<ExtArgs> = {}>(args?: Subset<T, User$userUnlockedCosmeticsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserUnlockedCosmeticPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usedSkills<T extends User$usedSkillsArgs<ExtArgs> = {}>(args?: Subset<T, User$usedSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8041,6 +8145,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserUnlockedCosmeticScalarFieldEnum | UserUnlockedCosmeticScalarFieldEnum[]
+  }
+
+  /**
+   * User.usedSkills
+   */
+  export type User$usedSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    where?: UserUsedSkillWhereInput
+    orderBy?: UserUsedSkillOrderByWithRelationInput | UserUsedSkillOrderByWithRelationInput[]
+    cursor?: UserUsedSkillWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserUsedSkillScalarFieldEnum | UserUsedSkillScalarFieldEnum[]
   }
 
   /**
@@ -9253,6 +9381,8 @@ export namespace Prisma {
     fightsLeft: number | null
     victories: number | null
     losses: number | null
+    winStreakCurrent: number | null
+    winStreakMax: number | null
     tournamentWins: number | null
     resets: number | null
   }
@@ -9282,6 +9412,8 @@ export namespace Prisma {
     fightsLeft: number | null
     victories: number | null
     losses: number | null
+    winStreakCurrent: number | null
+    winStreakMax: number | null
     tournamentWins: number | null
     resets: number | null
   }
@@ -9329,6 +9461,8 @@ export namespace Prisma {
     fightsLeft: number | null
     victories: number | null
     losses: number | null
+    winStreakCurrent: number | null
+    winStreakMax: number | null
     opponentsGeneratedAt: Date | null
     canRankUpSince: Date | null
     favorite: boolean | null
@@ -9382,6 +9516,8 @@ export namespace Prisma {
     fightsLeft: number | null
     victories: number | null
     losses: number | null
+    winStreakCurrent: number | null
+    winStreakMax: number | null
     opponentsGeneratedAt: Date | null
     canRankUpSince: Date | null
     favorite: boolean | null
@@ -9443,6 +9579,8 @@ export namespace Prisma {
     fightsLeft: number
     victories: number
     losses: number
+    winStreakCurrent: number
+    winStreakMax: number
     opponentsGeneratedAt: number
     canRankUpSince: number
     favorite: number
@@ -9480,6 +9618,8 @@ export namespace Prisma {
     fightsLeft?: true
     victories?: true
     losses?: true
+    winStreakCurrent?: true
+    winStreakMax?: true
     tournamentWins?: true
     resets?: true
   }
@@ -9509,6 +9649,8 @@ export namespace Prisma {
     fightsLeft?: true
     victories?: true
     losses?: true
+    winStreakCurrent?: true
+    winStreakMax?: true
     tournamentWins?: true
     resets?: true
   }
@@ -9556,6 +9698,8 @@ export namespace Prisma {
     fightsLeft?: true
     victories?: true
     losses?: true
+    winStreakCurrent?: true
+    winStreakMax?: true
     opponentsGeneratedAt?: true
     canRankUpSince?: true
     favorite?: true
@@ -9609,6 +9753,8 @@ export namespace Prisma {
     fightsLeft?: true
     victories?: true
     losses?: true
+    winStreakCurrent?: true
+    winStreakMax?: true
     opponentsGeneratedAt?: true
     canRankUpSince?: true
     favorite?: true
@@ -9670,6 +9816,8 @@ export namespace Prisma {
     fightsLeft?: true
     victories?: true
     losses?: true
+    winStreakCurrent?: true
+    winStreakMax?: true
     opponentsGeneratedAt?: true
     canRankUpSince?: true
     favorite?: true
@@ -9818,6 +9966,8 @@ export namespace Prisma {
     fightsLeft: number
     victories: number
     losses: number
+    winStreakCurrent: number
+    winStreakMax: number
     opponentsGeneratedAt: Date | null
     canRankUpSince: Date | null
     favorite: boolean
@@ -9898,6 +10048,8 @@ export namespace Prisma {
     fightsLeft?: boolean
     victories?: boolean
     losses?: boolean
+    winStreakCurrent?: boolean
+    winStreakMax?: boolean
     opponentsGeneratedAt?: boolean
     canRankUpSince?: boolean
     favorite?: boolean
@@ -9990,6 +10142,8 @@ export namespace Prisma {
     fightsLeft?: boolean
     victories?: boolean
     losses?: boolean
+    winStreakCurrent?: boolean
+    winStreakMax?: boolean
     opponentsGeneratedAt?: boolean
     canRankUpSince?: boolean
     favorite?: boolean
@@ -10056,6 +10210,8 @@ export namespace Prisma {
     fightsLeft?: boolean
     victories?: boolean
     losses?: boolean
+    winStreakCurrent?: boolean
+    winStreakMax?: boolean
     opponentsGeneratedAt?: boolean
     canRankUpSince?: boolean
     favorite?: boolean
@@ -10122,6 +10278,8 @@ export namespace Prisma {
     fightsLeft?: boolean
     victories?: boolean
     losses?: boolean
+    winStreakCurrent?: boolean
+    winStreakMax?: boolean
     opponentsGeneratedAt?: boolean
     canRankUpSince?: boolean
     favorite?: boolean
@@ -10132,7 +10290,7 @@ export namespace Prisma {
     resets?: boolean
   }
 
-  export type BruteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "deletedAt" | "createdAt" | "willBeDeletedAt" | "deletionReason" | "destinyPath" | "previousDestinyPath" | "level" | "xp" | "hp" | "enduranceStat" | "enduranceModifier" | "enduranceValue" | "strengthStat" | "strengthModifier" | "strengthValue" | "agilityStat" | "agilityModifier" | "agilityValue" | "speedStat" | "speedModifier" | "speedValue" | "ranking" | "gender" | "userId" | "body" | "colors" | "weapons" | "skills" | "pets" | "ascensions" | "ascendedWeapons" | "ascendedSkills" | "ascendedPets" | "masterId" | "pupilsCount" | "clanId" | "registeredForTournament" | "nextTournamentDate" | "currentTournamentDate" | "currentTournamentStepWatched" | "globalTournamentWatchedDate" | "globalTournamentRoundWatched" | "eventTournamentWatchedDate" | "eventTournamentRoundWatched" | "lastFight" | "fightsLeft" | "victories" | "losses" | "opponentsGeneratedAt" | "canRankUpSince" | "favorite" | "autoFightEnabled" | "wantToJoinClanId" | "tournamentWins" | "eventId" | "resets", ExtArgs["result"]["brute"]>
+  export type BruteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "deletedAt" | "createdAt" | "willBeDeletedAt" | "deletionReason" | "destinyPath" | "previousDestinyPath" | "level" | "xp" | "hp" | "enduranceStat" | "enduranceModifier" | "enduranceValue" | "strengthStat" | "strengthModifier" | "strengthValue" | "agilityStat" | "agilityModifier" | "agilityValue" | "speedStat" | "speedModifier" | "speedValue" | "ranking" | "gender" | "userId" | "body" | "colors" | "weapons" | "skills" | "pets" | "ascensions" | "ascendedWeapons" | "ascendedSkills" | "ascendedPets" | "masterId" | "pupilsCount" | "clanId" | "registeredForTournament" | "nextTournamentDate" | "currentTournamentDate" | "currentTournamentStepWatched" | "globalTournamentWatchedDate" | "globalTournamentRoundWatched" | "eventTournamentWatchedDate" | "eventTournamentRoundWatched" | "lastFight" | "fightsLeft" | "victories" | "losses" | "winStreakCurrent" | "winStreakMax" | "opponentsGeneratedAt" | "canRankUpSince" | "favorite" | "autoFightEnabled" | "wantToJoinClanId" | "tournamentWins" | "eventId" | "resets", ExtArgs["result"]["brute"]>
   export type BruteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Brute$userArgs<ExtArgs>
     master?: boolean | Brute$masterArgs<ExtArgs>
@@ -10266,6 +10424,8 @@ export namespace Prisma {
       fightsLeft: number
       victories: number
       losses: number
+      winStreakCurrent: number
+      winStreakMax: number
       opponentsGeneratedAt: Date | null
       canRankUpSince: Date | null
       favorite: boolean
@@ -10777,6 +10937,8 @@ export namespace Prisma {
     readonly fightsLeft: FieldRef<"Brute", 'Int'>
     readonly victories: FieldRef<"Brute", 'Int'>
     readonly losses: FieldRef<"Brute", 'Int'>
+    readonly winStreakCurrent: FieldRef<"Brute", 'Int'>
+    readonly winStreakMax: FieldRef<"Brute", 'Int'>
     readonly opponentsGeneratedAt: FieldRef<"Brute", 'DateTime'>
     readonly canRankUpSince: FieldRef<"Brute", 'DateTime'>
     readonly favorite: FieldRef<"Brute", 'Boolean'>
@@ -11890,6 +12052,1060 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BruteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserUsedSkill
+   */
+
+  export type AggregateUserUsedSkill = {
+    _count: UserUsedSkillCountAggregateOutputType | null
+    _min: UserUsedSkillMinAggregateOutputType | null
+    _max: UserUsedSkillMaxAggregateOutputType | null
+  }
+
+  export type UserUsedSkillMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    skill: string | null
+    createdAt: Date | null
+  }
+
+  export type UserUsedSkillMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    skill: string | null
+    createdAt: Date | null
+  }
+
+  export type UserUsedSkillCountAggregateOutputType = {
+    id: number
+    userId: number
+    skill: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UserUsedSkillMinAggregateInputType = {
+    id?: true
+    userId?: true
+    skill?: true
+    createdAt?: true
+  }
+
+  export type UserUsedSkillMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    skill?: true
+    createdAt?: true
+  }
+
+  export type UserUsedSkillCountAggregateInputType = {
+    id?: true
+    userId?: true
+    skill?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UserUsedSkillAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserUsedSkill to aggregate.
+     */
+    where?: UserUsedSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserUsedSkills to fetch.
+     */
+    orderBy?: UserUsedSkillOrderByWithRelationInput | UserUsedSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserUsedSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserUsedSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserUsedSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserUsedSkills
+    **/
+    _count?: true | UserUsedSkillCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserUsedSkillMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserUsedSkillMaxAggregateInputType
+  }
+
+  export type GetUserUsedSkillAggregateType<T extends UserUsedSkillAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserUsedSkill]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserUsedSkill[P]>
+      : GetScalarType<T[P], AggregateUserUsedSkill[P]>
+  }
+
+
+
+
+  export type UserUsedSkillGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserUsedSkillWhereInput
+    orderBy?: UserUsedSkillOrderByWithAggregationInput | UserUsedSkillOrderByWithAggregationInput[]
+    by: UserUsedSkillScalarFieldEnum[] | UserUsedSkillScalarFieldEnum
+    having?: UserUsedSkillScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserUsedSkillCountAggregateInputType | true
+    _min?: UserUsedSkillMinAggregateInputType
+    _max?: UserUsedSkillMaxAggregateInputType
+  }
+
+  export type UserUsedSkillGroupByOutputType = {
+    id: string
+    userId: string
+    skill: string
+    createdAt: Date
+    _count: UserUsedSkillCountAggregateOutputType | null
+    _min: UserUsedSkillMinAggregateOutputType | null
+    _max: UserUsedSkillMaxAggregateOutputType | null
+  }
+
+  type GetUserUsedSkillGroupByPayload<T extends UserUsedSkillGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserUsedSkillGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserUsedSkillGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserUsedSkillGroupByOutputType[P]>
+            : GetScalarType<T[P], UserUsedSkillGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserUsedSkillSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    skill?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userUsedSkill"]>
+
+  export type UserUsedSkillSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    skill?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userUsedSkill"]>
+
+  export type UserUsedSkillSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    skill?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userUsedSkill"]>
+
+  export type UserUsedSkillSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    skill?: boolean
+    createdAt?: boolean
+  }
+
+  export type UserUsedSkillOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "skill" | "createdAt", ExtArgs["result"]["userUsedSkill"]>
+  export type UserUsedSkillInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserUsedSkillIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserUsedSkillIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserUsedSkillPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserUsedSkill"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      skill: string
+      createdAt: Date
+    }, ExtArgs["result"]["userUsedSkill"]>
+    composites: {}
+  }
+
+  type UserUsedSkillGetPayload<S extends boolean | null | undefined | UserUsedSkillDefaultArgs> = $Result.GetResult<Prisma.$UserUsedSkillPayload, S>
+
+  type UserUsedSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserUsedSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: UserUsedSkillCountAggregateInputType | true
+    }
+
+  export interface UserUsedSkillDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserUsedSkill'], meta: { name: 'UserUsedSkill' } }
+    /**
+     * Find zero or one UserUsedSkill that matches the filter.
+     * @param {UserUsedSkillFindUniqueArgs} args - Arguments to find a UserUsedSkill
+     * @example
+     * // Get one UserUsedSkill
+     * const userUsedSkill = await prisma.userUsedSkill.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserUsedSkillFindUniqueArgs>(args: SelectSubset<T, UserUsedSkillFindUniqueArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserUsedSkill that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserUsedSkillFindUniqueOrThrowArgs} args - Arguments to find a UserUsedSkill
+     * @example
+     * // Get one UserUsedSkill
+     * const userUsedSkill = await prisma.userUsedSkill.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserUsedSkillFindUniqueOrThrowArgs>(args: SelectSubset<T, UserUsedSkillFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserUsedSkill that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUsedSkillFindFirstArgs} args - Arguments to find a UserUsedSkill
+     * @example
+     * // Get one UserUsedSkill
+     * const userUsedSkill = await prisma.userUsedSkill.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserUsedSkillFindFirstArgs>(args?: SelectSubset<T, UserUsedSkillFindFirstArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserUsedSkill that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUsedSkillFindFirstOrThrowArgs} args - Arguments to find a UserUsedSkill
+     * @example
+     * // Get one UserUsedSkill
+     * const userUsedSkill = await prisma.userUsedSkill.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserUsedSkillFindFirstOrThrowArgs>(args?: SelectSubset<T, UserUsedSkillFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserUsedSkills that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUsedSkillFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserUsedSkills
+     * const userUsedSkills = await prisma.userUsedSkill.findMany()
+     * 
+     * // Get first 10 UserUsedSkills
+     * const userUsedSkills = await prisma.userUsedSkill.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userUsedSkillWithIdOnly = await prisma.userUsedSkill.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserUsedSkillFindManyArgs>(args?: SelectSubset<T, UserUsedSkillFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserUsedSkill.
+     * @param {UserUsedSkillCreateArgs} args - Arguments to create a UserUsedSkill.
+     * @example
+     * // Create one UserUsedSkill
+     * const UserUsedSkill = await prisma.userUsedSkill.create({
+     *   data: {
+     *     // ... data to create a UserUsedSkill
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserUsedSkillCreateArgs>(args: SelectSubset<T, UserUsedSkillCreateArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserUsedSkills.
+     * @param {UserUsedSkillCreateManyArgs} args - Arguments to create many UserUsedSkills.
+     * @example
+     * // Create many UserUsedSkills
+     * const userUsedSkill = await prisma.userUsedSkill.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserUsedSkillCreateManyArgs>(args?: SelectSubset<T, UserUsedSkillCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserUsedSkills and returns the data saved in the database.
+     * @param {UserUsedSkillCreateManyAndReturnArgs} args - Arguments to create many UserUsedSkills.
+     * @example
+     * // Create many UserUsedSkills
+     * const userUsedSkill = await prisma.userUsedSkill.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserUsedSkills and only return the `id`
+     * const userUsedSkillWithIdOnly = await prisma.userUsedSkill.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserUsedSkillCreateManyAndReturnArgs>(args?: SelectSubset<T, UserUsedSkillCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserUsedSkill.
+     * @param {UserUsedSkillDeleteArgs} args - Arguments to delete one UserUsedSkill.
+     * @example
+     * // Delete one UserUsedSkill
+     * const UserUsedSkill = await prisma.userUsedSkill.delete({
+     *   where: {
+     *     // ... filter to delete one UserUsedSkill
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserUsedSkillDeleteArgs>(args: SelectSubset<T, UserUsedSkillDeleteArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserUsedSkill.
+     * @param {UserUsedSkillUpdateArgs} args - Arguments to update one UserUsedSkill.
+     * @example
+     * // Update one UserUsedSkill
+     * const userUsedSkill = await prisma.userUsedSkill.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUsedSkillUpdateArgs>(args: SelectSubset<T, UserUsedSkillUpdateArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserUsedSkills.
+     * @param {UserUsedSkillDeleteManyArgs} args - Arguments to filter UserUsedSkills to delete.
+     * @example
+     * // Delete a few UserUsedSkills
+     * const { count } = await prisma.userUsedSkill.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserUsedSkillDeleteManyArgs>(args?: SelectSubset<T, UserUsedSkillDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserUsedSkills.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUsedSkillUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserUsedSkills
+     * const userUsedSkill = await prisma.userUsedSkill.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUsedSkillUpdateManyArgs>(args: SelectSubset<T, UserUsedSkillUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserUsedSkills and returns the data updated in the database.
+     * @param {UserUsedSkillUpdateManyAndReturnArgs} args - Arguments to update many UserUsedSkills.
+     * @example
+     * // Update many UserUsedSkills
+     * const userUsedSkill = await prisma.userUsedSkill.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserUsedSkills and only return the `id`
+     * const userUsedSkillWithIdOnly = await prisma.userUsedSkill.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUsedSkillUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUsedSkillUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserUsedSkill.
+     * @param {UserUsedSkillUpsertArgs} args - Arguments to update or create a UserUsedSkill.
+     * @example
+     * // Update or create a UserUsedSkill
+     * const userUsedSkill = await prisma.userUsedSkill.upsert({
+     *   create: {
+     *     // ... data to create a UserUsedSkill
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserUsedSkill we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUsedSkillUpsertArgs>(args: SelectSubset<T, UserUsedSkillUpsertArgs<ExtArgs>>): Prisma__UserUsedSkillClient<$Result.GetResult<Prisma.$UserUsedSkillPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserUsedSkills.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUsedSkillCountArgs} args - Arguments to filter UserUsedSkills to count.
+     * @example
+     * // Count the number of UserUsedSkills
+     * const count = await prisma.userUsedSkill.count({
+     *   where: {
+     *     // ... the filter for the UserUsedSkills we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserUsedSkillCountArgs>(
+      args?: Subset<T, UserUsedSkillCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserUsedSkillCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserUsedSkill.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUsedSkillAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserUsedSkillAggregateArgs>(args: Subset<T, UserUsedSkillAggregateArgs>): Prisma.PrismaPromise<GetUserUsedSkillAggregateType<T>>
+
+    /**
+     * Group by UserUsedSkill.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUsedSkillGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserUsedSkillGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserUsedSkillGroupByArgs['orderBy'] }
+        : { orderBy?: UserUsedSkillGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserUsedSkillGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserUsedSkillGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserUsedSkill model
+   */
+  readonly fields: UserUsedSkillFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserUsedSkill.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserUsedSkillClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserUsedSkill model
+   */
+  interface UserUsedSkillFieldRefs {
+    readonly id: FieldRef<"UserUsedSkill", 'String'>
+    readonly userId: FieldRef<"UserUsedSkill", 'String'>
+    readonly skill: FieldRef<"UserUsedSkill", 'String'>
+    readonly createdAt: FieldRef<"UserUsedSkill", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserUsedSkill findUnique
+   */
+  export type UserUsedSkillFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which UserUsedSkill to fetch.
+     */
+    where: UserUsedSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill findUniqueOrThrow
+   */
+  export type UserUsedSkillFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which UserUsedSkill to fetch.
+     */
+    where: UserUsedSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill findFirst
+   */
+  export type UserUsedSkillFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which UserUsedSkill to fetch.
+     */
+    where?: UserUsedSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserUsedSkills to fetch.
+     */
+    orderBy?: UserUsedSkillOrderByWithRelationInput | UserUsedSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserUsedSkills.
+     */
+    cursor?: UserUsedSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserUsedSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserUsedSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserUsedSkills.
+     */
+    distinct?: UserUsedSkillScalarFieldEnum | UserUsedSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill findFirstOrThrow
+   */
+  export type UserUsedSkillFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which UserUsedSkill to fetch.
+     */
+    where?: UserUsedSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserUsedSkills to fetch.
+     */
+    orderBy?: UserUsedSkillOrderByWithRelationInput | UserUsedSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserUsedSkills.
+     */
+    cursor?: UserUsedSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserUsedSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserUsedSkills.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserUsedSkills.
+     */
+    distinct?: UserUsedSkillScalarFieldEnum | UserUsedSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill findMany
+   */
+  export type UserUsedSkillFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * Filter, which UserUsedSkills to fetch.
+     */
+    where?: UserUsedSkillWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserUsedSkills to fetch.
+     */
+    orderBy?: UserUsedSkillOrderByWithRelationInput | UserUsedSkillOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserUsedSkills.
+     */
+    cursor?: UserUsedSkillWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserUsedSkills from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserUsedSkills.
+     */
+    skip?: number
+    distinct?: UserUsedSkillScalarFieldEnum | UserUsedSkillScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill create
+   */
+  export type UserUsedSkillCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserUsedSkill.
+     */
+    data: XOR<UserUsedSkillCreateInput, UserUsedSkillUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill createMany
+   */
+  export type UserUsedSkillCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserUsedSkills.
+     */
+    data: UserUsedSkillCreateManyInput | UserUsedSkillCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserUsedSkill createManyAndReturn
+   */
+  export type UserUsedSkillCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserUsedSkills.
+     */
+    data: UserUsedSkillCreateManyInput | UserUsedSkillCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserUsedSkill update
+   */
+  export type UserUsedSkillUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserUsedSkill.
+     */
+    data: XOR<UserUsedSkillUpdateInput, UserUsedSkillUncheckedUpdateInput>
+    /**
+     * Choose, which UserUsedSkill to update.
+     */
+    where: UserUsedSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill updateMany
+   */
+  export type UserUsedSkillUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserUsedSkills.
+     */
+    data: XOR<UserUsedSkillUpdateManyMutationInput, UserUsedSkillUncheckedUpdateManyInput>
+    /**
+     * Filter which UserUsedSkills to update
+     */
+    where?: UserUsedSkillWhereInput
+    /**
+     * Limit how many UserUsedSkills to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserUsedSkill updateManyAndReturn
+   */
+  export type UserUsedSkillUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * The data used to update UserUsedSkills.
+     */
+    data: XOR<UserUsedSkillUpdateManyMutationInput, UserUsedSkillUncheckedUpdateManyInput>
+    /**
+     * Filter which UserUsedSkills to update
+     */
+    where?: UserUsedSkillWhereInput
+    /**
+     * Limit how many UserUsedSkills to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserUsedSkill upsert
+   */
+  export type UserUsedSkillUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserUsedSkill to update in case it exists.
+     */
+    where: UserUsedSkillWhereUniqueInput
+    /**
+     * In case the UserUsedSkill found by the `where` argument doesn't exist, create a new UserUsedSkill with this data.
+     */
+    create: XOR<UserUsedSkillCreateInput, UserUsedSkillUncheckedCreateInput>
+    /**
+     * In case the UserUsedSkill was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUsedSkillUpdateInput, UserUsedSkillUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill delete
+   */
+  export type UserUsedSkillDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
+    /**
+     * Filter which UserUsedSkill to delete.
+     */
+    where: UserUsedSkillWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserUsedSkill deleteMany
+   */
+  export type UserUsedSkillDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserUsedSkills to delete
+     */
+    where?: UserUsedSkillWhereInput
+    /**
+     * Limit how many UserUsedSkills to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserUsedSkill without action
+   */
+  export type UserUsedSkillDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserUsedSkill
+     */
+    select?: UserUsedSkillSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserUsedSkill
+     */
+    omit?: UserUsedSkillOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserUsedSkillInclude<ExtArgs> | null
   }
 
 
@@ -56554,6 +57770,8 @@ export namespace Prisma {
     fightsLeft: 'fightsLeft',
     victories: 'victories',
     losses: 'losses',
+    winStreakCurrent: 'winStreakCurrent',
+    winStreakMax: 'winStreakMax',
     opponentsGeneratedAt: 'opponentsGeneratedAt',
     canRankUpSince: 'canRankUpSince',
     favorite: 'favorite',
@@ -56565,6 +57783,16 @@ export namespace Prisma {
   };
 
   export type BruteScalarFieldEnum = (typeof BruteScalarFieldEnum)[keyof typeof BruteScalarFieldEnum]
+
+
+  export const UserUsedSkillScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    skill: 'skill',
+    createdAt: 'createdAt'
+  };
+
+  export type UserUsedSkillScalarFieldEnum = (typeof UserUsedSkillScalarFieldEnum)[keyof typeof UserUsedSkillScalarFieldEnum]
 
 
   export const BruteStartingStatsScalarFieldEnum: {
@@ -57707,6 +58935,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressListRelationFilter
     userBattlePassMissionProgress?: UserBattlePassMissionProgressListRelationFilter
     userUnlockedCosmetics?: UserUnlockedCosmeticListRelationFilter
+    usedSkills?: UserUsedSkillListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -57751,6 +58980,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressOrderByRelationAggregateInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressOrderByRelationAggregateInput
     userUnlockedCosmetics?: UserUnlockedCosmeticOrderByRelationAggregateInput
+    usedSkills?: UserUsedSkillOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -57798,6 +59028,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressListRelationFilter
     userBattlePassMissionProgress?: UserBattlePassMissionProgressListRelationFilter
     userUnlockedCosmetics?: UserUnlockedCosmeticListRelationFilter
+    usedSkills?: UserUsedSkillListRelationFilter
   }, "id" | "id">
 
   export type UserOrderByWithAggregationInput = {
@@ -57984,6 +59215,8 @@ export namespace Prisma {
     fightsLeft?: IntFilter<"Brute"> | number
     victories?: IntFilter<"Brute"> | number
     losses?: IntFilter<"Brute"> | number
+    winStreakCurrent?: IntFilter<"Brute"> | number
+    winStreakMax?: IntFilter<"Brute"> | number
     opponentsGeneratedAt?: DateTimeNullableFilter<"Brute"> | Date | string | null
     canRankUpSince?: DateTimeNullableFilter<"Brute"> | Date | string | null
     favorite?: BoolFilter<"Brute"> | boolean
@@ -58075,6 +59308,8 @@ export namespace Prisma {
     fightsLeft?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
+    winStreakCurrent?: SortOrder
+    winStreakMax?: SortOrder
     opponentsGeneratedAt?: SortOrderInput | SortOrder
     canRankUpSince?: SortOrderInput | SortOrder
     favorite?: SortOrder
@@ -58169,6 +59404,8 @@ export namespace Prisma {
     fightsLeft?: IntFilter<"Brute"> | number
     victories?: IntFilter<"Brute"> | number
     losses?: IntFilter<"Brute"> | number
+    winStreakCurrent?: IntFilter<"Brute"> | number
+    winStreakMax?: IntFilter<"Brute"> | number
     opponentsGeneratedAt?: DateTimeNullableFilter<"Brute"> | Date | string | null
     canRankUpSince?: DateTimeNullableFilter<"Brute"> | Date | string | null
     favorite?: BoolFilter<"Brute"> | boolean
@@ -58260,6 +59497,8 @@ export namespace Prisma {
     fightsLeft?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
+    winStreakCurrent?: SortOrder
+    winStreakMax?: SortOrder
     opponentsGeneratedAt?: SortOrderInput | SortOrder
     canRankUpSince?: SortOrderInput | SortOrder
     favorite?: SortOrder
@@ -58329,6 +59568,8 @@ export namespace Prisma {
     fightsLeft?: IntWithAggregatesFilter<"Brute"> | number
     victories?: IntWithAggregatesFilter<"Brute"> | number
     losses?: IntWithAggregatesFilter<"Brute"> | number
+    winStreakCurrent?: IntWithAggregatesFilter<"Brute"> | number
+    winStreakMax?: IntWithAggregatesFilter<"Brute"> | number
     opponentsGeneratedAt?: DateTimeNullableWithAggregatesFilter<"Brute"> | Date | string | null
     canRankUpSince?: DateTimeNullableWithAggregatesFilter<"Brute"> | Date | string | null
     favorite?: BoolWithAggregatesFilter<"Brute"> | boolean
@@ -58337,6 +59578,57 @@ export namespace Prisma {
     tournamentWins?: IntWithAggregatesFilter<"Brute"> | number
     eventId?: UuidNullableWithAggregatesFilter<"Brute"> | string | null
     resets?: IntWithAggregatesFilter<"Brute"> | number
+  }
+
+  export type UserUsedSkillWhereInput = {
+    AND?: UserUsedSkillWhereInput | UserUsedSkillWhereInput[]
+    OR?: UserUsedSkillWhereInput[]
+    NOT?: UserUsedSkillWhereInput | UserUsedSkillWhereInput[]
+    id?: UuidFilter<"UserUsedSkill"> | string
+    userId?: UuidFilter<"UserUsedSkill"> | string
+    skill?: StringFilter<"UserUsedSkill"> | string
+    createdAt?: DateTimeFilter<"UserUsedSkill"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserUsedSkillOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    skill?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserUsedSkillWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_skill?: UserUsedSkillUserIdSkillCompoundUniqueInput
+    AND?: UserUsedSkillWhereInput | UserUsedSkillWhereInput[]
+    OR?: UserUsedSkillWhereInput[]
+    NOT?: UserUsedSkillWhereInput | UserUsedSkillWhereInput[]
+    userId?: UuidFilter<"UserUsedSkill"> | string
+    skill?: StringFilter<"UserUsedSkill"> | string
+    createdAt?: DateTimeFilter<"UserUsedSkill"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "id" | "userId_skill">
+
+  export type UserUsedSkillOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    skill?: SortOrder
+    createdAt?: SortOrder
+    _count?: UserUsedSkillCountOrderByAggregateInput
+    _max?: UserUsedSkillMaxOrderByAggregateInput
+    _min?: UserUsedSkillMinOrderByAggregateInput
+  }
+
+  export type UserUsedSkillScalarWhereWithAggregatesInput = {
+    AND?: UserUsedSkillScalarWhereWithAggregatesInput | UserUsedSkillScalarWhereWithAggregatesInput[]
+    OR?: UserUsedSkillScalarWhereWithAggregatesInput[]
+    NOT?: UserUsedSkillScalarWhereWithAggregatesInput | UserUsedSkillScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"UserUsedSkill"> | string
+    userId?: UuidWithAggregatesFilter<"UserUsedSkill"> | string
+    skill?: StringWithAggregatesFilter<"UserUsedSkill"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"UserUsedSkill"> | Date | string
   }
 
   export type BruteStartingStatsWhereInput = {
@@ -61102,6 +62394,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -61146,6 +62439,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -61190,6 +62484,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -61234,6 +62529,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -61430,6 +62726,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -61519,6 +62817,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -61602,6 +62902,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -61691,6 +62993,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -61777,6 +63081,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -61835,6 +63141,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -61894,6 +63202,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -61902,6 +63212,54 @@ export namespace Prisma {
     tournamentWins?: IntFieldUpdateOperationsInput | number
     eventId?: NullableStringFieldUpdateOperationsInput | string | null
     resets?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserUsedSkillCreateInput = {
+    id?: string
+    skill: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutUsedSkillsInput
+  }
+
+  export type UserUsedSkillUncheckedCreateInput = {
+    id?: string
+    userId: string
+    skill: string
+    createdAt?: Date | string
+  }
+
+  export type UserUsedSkillUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUsedSkillsNestedInput
+  }
+
+  export type UserUsedSkillUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    skill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUsedSkillCreateManyInput = {
+    id?: string
+    userId: string
+    skill: string
+    createdAt?: Date | string
+  }
+
+  export type UserUsedSkillUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUsedSkillUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    skill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BruteStartingStatsCreateInput = {
@@ -64916,6 +66274,12 @@ export namespace Prisma {
     none?: UserUnlockedCosmeticWhereInput
   }
 
+  export type UserUsedSkillListRelationFilter = {
+    every?: UserUsedSkillWhereInput
+    some?: UserUsedSkillWhereInput
+    none?: UserUsedSkillWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -64982,6 +66346,10 @@ export namespace Prisma {
   }
 
   export type UserUnlockedCosmeticOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserUsedSkillOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -65551,6 +66919,8 @@ export namespace Prisma {
     fightsLeft?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
+    winStreakCurrent?: SortOrder
+    winStreakMax?: SortOrder
     opponentsGeneratedAt?: SortOrder
     canRankUpSince?: SortOrder
     favorite?: SortOrder
@@ -65586,6 +66956,8 @@ export namespace Prisma {
     fightsLeft?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
+    winStreakCurrent?: SortOrder
+    winStreakMax?: SortOrder
     tournamentWins?: SortOrder
     resets?: SortOrder
   }
@@ -65633,6 +67005,8 @@ export namespace Prisma {
     fightsLeft?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
+    winStreakCurrent?: SortOrder
+    winStreakMax?: SortOrder
     opponentsGeneratedAt?: SortOrder
     canRankUpSince?: SortOrder
     favorite?: SortOrder
@@ -65686,6 +67060,8 @@ export namespace Prisma {
     fightsLeft?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
+    winStreakCurrent?: SortOrder
+    winStreakMax?: SortOrder
     opponentsGeneratedAt?: SortOrder
     canRankUpSince?: SortOrder
     favorite?: SortOrder
@@ -65721,6 +67097,8 @@ export namespace Prisma {
     fightsLeft?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
+    winStreakCurrent?: SortOrder
+    winStreakMax?: SortOrder
     tournamentWins?: SortOrder
     resets?: SortOrder
   }
@@ -65749,6 +67127,32 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumGenderFilter<$PrismaModel>
     _max?: NestedEnumGenderFilter<$PrismaModel>
+  }
+
+  export type UserUsedSkillUserIdSkillCompoundUniqueInput = {
+    userId: string
+    skill: string
+  }
+
+  export type UserUsedSkillCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    skill?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserUsedSkillMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    skill?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserUsedSkillMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    skill?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type BruteScalarRelationFilter = {
@@ -68053,6 +69457,13 @@ export namespace Prisma {
     connect?: UserUnlockedCosmeticWhereUniqueInput | UserUnlockedCosmeticWhereUniqueInput[]
   }
 
+  export type UserUsedSkillCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserUsedSkillCreateWithoutUserInput, UserUsedSkillUncheckedCreateWithoutUserInput> | UserUsedSkillCreateWithoutUserInput[] | UserUsedSkillUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserUsedSkillCreateOrConnectWithoutUserInput | UserUsedSkillCreateOrConnectWithoutUserInput[]
+    createMany?: UserUsedSkillCreateManyUserInputEnvelope
+    connect?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+  }
+
   export type BruteUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<BruteCreateWithoutUserInput, BruteUncheckedCreateWithoutUserInput> | BruteCreateWithoutUserInput[] | BruteUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BruteCreateOrConnectWithoutUserInput | BruteCreateOrConnectWithoutUserInput[]
@@ -68174,6 +69585,13 @@ export namespace Prisma {
     connectOrCreate?: UserUnlockedCosmeticCreateOrConnectWithoutUserInput | UserUnlockedCosmeticCreateOrConnectWithoutUserInput[]
     createMany?: UserUnlockedCosmeticCreateManyUserInputEnvelope
     connect?: UserUnlockedCosmeticWhereUniqueInput | UserUnlockedCosmeticWhereUniqueInput[]
+  }
+
+  export type UserUsedSkillUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserUsedSkillCreateWithoutUserInput, UserUsedSkillUncheckedCreateWithoutUserInput> | UserUsedSkillCreateWithoutUserInput[] | UserUsedSkillUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserUsedSkillCreateOrConnectWithoutUserInput | UserUsedSkillCreateOrConnectWithoutUserInput[]
+    createMany?: UserUsedSkillCreateManyUserInputEnvelope
+    connect?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -68475,6 +69893,20 @@ export namespace Prisma {
     deleteMany?: UserUnlockedCosmeticScalarWhereInput | UserUnlockedCosmeticScalarWhereInput[]
   }
 
+  export type UserUsedSkillUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserUsedSkillCreateWithoutUserInput, UserUsedSkillUncheckedCreateWithoutUserInput> | UserUsedSkillCreateWithoutUserInput[] | UserUsedSkillUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserUsedSkillCreateOrConnectWithoutUserInput | UserUsedSkillCreateOrConnectWithoutUserInput[]
+    upsert?: UserUsedSkillUpsertWithWhereUniqueWithoutUserInput | UserUsedSkillUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserUsedSkillCreateManyUserInputEnvelope
+    set?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    disconnect?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    delete?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    connect?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    update?: UserUsedSkillUpdateWithWhereUniqueWithoutUserInput | UserUsedSkillUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserUsedSkillUpdateManyWithWhereWithoutUserInput | UserUsedSkillUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserUsedSkillScalarWhereInput | UserUsedSkillScalarWhereInput[]
+  }
+
   export type BruteUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<BruteCreateWithoutUserInput, BruteUncheckedCreateWithoutUserInput> | BruteCreateWithoutUserInput[] | BruteUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BruteCreateOrConnectWithoutUserInput | BruteCreateOrConnectWithoutUserInput[]
@@ -68722,6 +70154,20 @@ export namespace Prisma {
     update?: UserUnlockedCosmeticUpdateWithWhereUniqueWithoutUserInput | UserUnlockedCosmeticUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserUnlockedCosmeticUpdateManyWithWhereWithoutUserInput | UserUnlockedCosmeticUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserUnlockedCosmeticScalarWhereInput | UserUnlockedCosmeticScalarWhereInput[]
+  }
+
+  export type UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserUsedSkillCreateWithoutUserInput, UserUsedSkillUncheckedCreateWithoutUserInput> | UserUsedSkillCreateWithoutUserInput[] | UserUsedSkillUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserUsedSkillCreateOrConnectWithoutUserInput | UserUsedSkillCreateOrConnectWithoutUserInput[]
+    upsert?: UserUsedSkillUpsertWithWhereUniqueWithoutUserInput | UserUsedSkillUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserUsedSkillCreateManyUserInputEnvelope
+    set?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    disconnect?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    delete?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    connect?: UserUsedSkillWhereUniqueInput | UserUsedSkillWhereUniqueInput[]
+    update?: UserUsedSkillUpdateWithWhereUniqueWithoutUserInput | UserUsedSkillUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserUsedSkillUpdateManyWithWhereWithoutUserInput | UserUsedSkillUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserUsedSkillScalarWhereInput | UserUsedSkillScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutLogsInput = {
@@ -69926,6 +71372,20 @@ export namespace Prisma {
     update?: BruteTemporaryWeaponUpdateWithWhereUniqueWithoutBruteInput | BruteTemporaryWeaponUpdateWithWhereUniqueWithoutBruteInput[]
     updateMany?: BruteTemporaryWeaponUpdateManyWithWhereWithoutBruteInput | BruteTemporaryWeaponUpdateManyWithWhereWithoutBruteInput[]
     deleteMany?: BruteTemporaryWeaponScalarWhereInput | BruteTemporaryWeaponScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutUsedSkillsInput = {
+    create?: XOR<UserCreateWithoutUsedSkillsInput, UserUncheckedCreateWithoutUsedSkillsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUsedSkillsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutUsedSkillsNestedInput = {
+    create?: XOR<UserCreateWithoutUsedSkillsInput, UserUncheckedCreateWithoutUsedSkillsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUsedSkillsInput
+    upsert?: UserUpsertWithoutUsedSkillsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUsedSkillsInput, UserUpdateWithoutUsedSkillsInput>, UserUncheckedUpdateWithoutUsedSkillsInput>
   }
 
   export type BruteCreateNestedOneWithoutStartingStatsInput = {
@@ -72736,6 +74196,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -72823,6 +74285,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -73060,6 +74524,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -73148,6 +74614,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -73551,6 +75019,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserUsedSkillCreateWithoutUserInput = {
+    id?: string
+    skill: string
+    createdAt?: Date | string
+  }
+
+  export type UserUsedSkillUncheckedCreateWithoutUserInput = {
+    id?: string
+    skill: string
+    createdAt?: Date | string
+  }
+
+  export type UserUsedSkillCreateOrConnectWithoutUserInput = {
+    where: UserUsedSkillWhereUniqueInput
+    create: XOR<UserUsedSkillCreateWithoutUserInput, UserUsedSkillUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserUsedSkillCreateManyUserInputEnvelope = {
+    data: UserUsedSkillCreateManyUserInput | UserUsedSkillCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BruteUpsertWithWhereUniqueWithoutUserInput = {
     where: BruteWhereUniqueInput
     update: XOR<BruteUpdateWithoutUserInput, BruteUncheckedUpdateWithoutUserInput>
@@ -73621,6 +75111,8 @@ export namespace Prisma {
     fightsLeft?: IntFilter<"Brute"> | number
     victories?: IntFilter<"Brute"> | number
     losses?: IntFilter<"Brute"> | number
+    winStreakCurrent?: IntFilter<"Brute"> | number
+    winStreakMax?: IntFilter<"Brute"> | number
     opponentsGeneratedAt?: DateTimeNullableFilter<"Brute"> | Date | string | null
     canRankUpSince?: DateTimeNullableFilter<"Brute"> | Date | string | null
     favorite?: BoolFilter<"Brute"> | boolean
@@ -74127,6 +75619,32 @@ export namespace Prisma {
     cosmeticPresetId?: IntFilter<"UserUnlockedCosmetic"> | number
   }
 
+  export type UserUsedSkillUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserUsedSkillWhereUniqueInput
+    update: XOR<UserUsedSkillUpdateWithoutUserInput, UserUsedSkillUncheckedUpdateWithoutUserInput>
+    create: XOR<UserUsedSkillCreateWithoutUserInput, UserUsedSkillUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserUsedSkillUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserUsedSkillWhereUniqueInput
+    data: XOR<UserUsedSkillUpdateWithoutUserInput, UserUsedSkillUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserUsedSkillUpdateManyWithWhereWithoutUserInput = {
+    where: UserUsedSkillScalarWhereInput
+    data: XOR<UserUsedSkillUpdateManyMutationInput, UserUsedSkillUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserUsedSkillScalarWhereInput = {
+    AND?: UserUsedSkillScalarWhereInput | UserUsedSkillScalarWhereInput[]
+    OR?: UserUsedSkillScalarWhereInput[]
+    NOT?: UserUsedSkillScalarWhereInput | UserUsedSkillScalarWhereInput[]
+    id?: UuidFilter<"UserUsedSkill"> | string
+    userId?: UuidFilter<"UserUsedSkill"> | string
+    skill?: StringFilter<"UserUsedSkill"> | string
+    createdAt?: DateTimeFilter<"UserUsedSkill"> | Date | string
+  }
+
   export type UserCreateWithoutLogsInput = {
     id: string
     lang?: $Enums.Lang
@@ -74168,6 +75686,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLogsInput = {
@@ -74211,6 +75730,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLogsInput = {
@@ -74266,6 +75786,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -74354,6 +75876,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -74445,6 +75969,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLogsInput = {
@@ -74488,6 +76013,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteUpsertWithoutUserlogsInput = {
@@ -74549,6 +76075,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -74637,6 +76165,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -74712,6 +76242,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBrutesInput = {
@@ -74755,6 +76286,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBrutesInput = {
@@ -74810,6 +76342,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -74898,6 +76432,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -74985,6 +76521,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -75072,6 +76610,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -75411,6 +76951,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -75499,6 +77041,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -75586,6 +77130,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -75674,6 +77220,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -76069,6 +77617,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowingInput = {
@@ -76112,6 +77661,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowingInput = {
@@ -76348,6 +77898,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrutesInput = {
@@ -76391,6 +77942,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteUpsertWithoutPupilsInput = {
@@ -76452,6 +78004,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -76540,6 +78094,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -77331,6 +78887,198 @@ export namespace Prisma {
     expiresAt?: DateTimeFilter<"BruteTemporaryWeapon"> | Date | string
   }
 
+  export type UserCreateWithoutUsedSkillsInput = {
+    id: string
+    lang?: $Enums.Lang
+    name: string
+    admin?: boolean
+    moderator?: boolean
+    connexionToken: string
+    bruteLimit?: number
+    gold?: number
+    fightSpeed?: number
+    backgroundMusic?: boolean
+    dinorpgDone?: Date | string | null
+    ips?: UserCreateipsInput | string[]
+    bannedAt?: Date | string | null
+    banReason?: string | null
+    displayVersusPage?: boolean
+    displayOpponentDetails?: boolean
+    lastSeen?: Date | string
+    lastFightDate?: Date | string | null
+    consecutiveDaysPlayed?: number
+    unlockedTitleIds?: UserCreateunlockedTitleIdsInput | number[]
+    equippedTitleId?: number | null
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    brutes?: BruteCreateNestedManyWithoutUserInput
+    achievements?: AchievementCreateNestedManyWithoutUserInput
+    reports?: BruteReportCreateNestedManyWithoutUsersInput
+    tournamentGolds?: TournamentGoldCreateNestedManyWithoutUserInput
+    inventory?: InventoryItemCreateNestedManyWithoutUserInput
+    favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
+    following?: BruteCreateNestedManyWithoutFollowersInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
+    logs?: UserLogCreateNestedManyWithoutUserInput
+    dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
+    weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
+    permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
+    missions?: MissionCreateNestedManyWithoutUserInput
+    missionAchievements?: MissionAchievementCreateNestedManyWithoutUserInput
+    userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUsedSkillsInput = {
+    id: string
+    lang?: $Enums.Lang
+    name: string
+    admin?: boolean
+    moderator?: boolean
+    connexionToken: string
+    bruteLimit?: number
+    gold?: number
+    fightSpeed?: number
+    backgroundMusic?: boolean
+    dinorpgDone?: Date | string | null
+    ips?: UserCreateipsInput | string[]
+    bannedAt?: Date | string | null
+    banReason?: string | null
+    displayVersusPage?: boolean
+    displayOpponentDetails?: boolean
+    lastSeen?: Date | string
+    lastFightDate?: Date | string | null
+    consecutiveDaysPlayed?: number
+    unlockedTitleIds?: UserCreateunlockedTitleIdsInput | number[]
+    equippedTitleId?: number | null
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    brutes?: BruteUncheckedCreateNestedManyWithoutUserInput
+    achievements?: AchievementUncheckedCreateNestedManyWithoutUserInput
+    reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
+    tournamentGolds?: TournamentGoldUncheckedCreateNestedManyWithoutUserInput
+    inventory?: InventoryItemUncheckedCreateNestedManyWithoutUserInput
+    favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
+    following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
+    logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
+    weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
+    permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
+    missions?: MissionUncheckedCreateNestedManyWithoutUserInput
+    missionAchievements?: MissionAchievementUncheckedCreateNestedManyWithoutUserInput
+    userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUsedSkillsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUsedSkillsInput, UserUncheckedCreateWithoutUsedSkillsInput>
+  }
+
+  export type UserUpsertWithoutUsedSkillsInput = {
+    update: XOR<UserUpdateWithoutUsedSkillsInput, UserUncheckedUpdateWithoutUsedSkillsInput>
+    create: XOR<UserCreateWithoutUsedSkillsInput, UserUncheckedCreateWithoutUsedSkillsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUsedSkillsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUsedSkillsInput, UserUncheckedUpdateWithoutUsedSkillsInput>
+  }
+
+  export type UserUpdateWithoutUsedSkillsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    name?: StringFieldUpdateOperationsInput | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
+    moderator?: BoolFieldUpdateOperationsInput | boolean
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    bruteLimit?: IntFieldUpdateOperationsInput | number
+    gold?: IntFieldUpdateOperationsInput | number
+    fightSpeed?: IntFieldUpdateOperationsInput | number
+    backgroundMusic?: BoolFieldUpdateOperationsInput | boolean
+    dinorpgDone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ips?: UserUpdateipsInput | string[]
+    bannedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    displayVersusPage?: BoolFieldUpdateOperationsInput | boolean
+    displayOpponentDetails?: BoolFieldUpdateOperationsInput | boolean
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    consecutiveDaysPlayed?: IntFieldUpdateOperationsInput | number
+    unlockedTitleIds?: UserUpdateunlockedTitleIdsInput | number[]
+    equippedTitleId?: NullableIntFieldUpdateOperationsInput | number | null
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    brutes?: BruteUpdateManyWithoutUserNestedInput
+    achievements?: AchievementUpdateManyWithoutUserNestedInput
+    reports?: BruteReportUpdateManyWithoutUsersNestedInput
+    tournamentGolds?: TournamentGoldUpdateManyWithoutUserNestedInput
+    inventory?: InventoryItemUpdateManyWithoutUserNestedInput
+    favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
+    following?: BruteUpdateManyWithoutFollowersNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
+    logs?: UserLogUpdateManyWithoutUserNestedInput
+    dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
+    weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
+    permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
+    missions?: MissionUpdateManyWithoutUserNestedInput
+    missionAchievements?: MissionAchievementUpdateManyWithoutUserNestedInput
+    userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUsedSkillsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    name?: StringFieldUpdateOperationsInput | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
+    moderator?: BoolFieldUpdateOperationsInput | boolean
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    bruteLimit?: IntFieldUpdateOperationsInput | number
+    gold?: IntFieldUpdateOperationsInput | number
+    fightSpeed?: IntFieldUpdateOperationsInput | number
+    backgroundMusic?: BoolFieldUpdateOperationsInput | boolean
+    dinorpgDone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ips?: UserUpdateipsInput | string[]
+    bannedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    displayVersusPage?: BoolFieldUpdateOperationsInput | boolean
+    displayOpponentDetails?: BoolFieldUpdateOperationsInput | boolean
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    consecutiveDaysPlayed?: IntFieldUpdateOperationsInput | number
+    unlockedTitleIds?: UserUpdateunlockedTitleIdsInput | number[]
+    equippedTitleId?: NullableIntFieldUpdateOperationsInput | number | null
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    brutes?: BruteUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: AchievementUncheckedUpdateManyWithoutUserNestedInput
+    reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
+    tournamentGolds?: TournamentGoldUncheckedUpdateManyWithoutUserNestedInput
+    inventory?: InventoryItemUncheckedUpdateManyWithoutUserNestedInput
+    favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
+    following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
+    logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
+    weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
+    permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
+    missions?: MissionUncheckedUpdateManyWithoutUserNestedInput
+    missionAchievements?: MissionAchievementUncheckedUpdateManyWithoutUserNestedInput
+    userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type BruteCreateWithoutStartingStatsInput = {
     id?: string
     name: string
@@ -77379,6 +79127,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -77467,6 +79217,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -77565,6 +79317,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -77653,6 +79407,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -77735,6 +79491,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -77823,6 +79581,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -77910,6 +79670,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -77998,6 +79760,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -78137,6 +79901,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFavoriteFightsInput = {
@@ -78180,6 +79945,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFavoriteFightsInput = {
@@ -78283,6 +80049,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -78371,6 +80139,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -78464,6 +80234,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -78552,6 +80324,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -78738,6 +80512,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -78826,6 +80602,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -79008,6 +80786,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -79096,6 +80876,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -79274,6 +81056,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -79362,6 +81146,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -79496,6 +81282,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -79584,6 +81372,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -79682,6 +81472,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -79770,6 +81562,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -80007,6 +81801,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -80095,6 +81891,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -80193,6 +81991,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -80281,6 +82081,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -80356,6 +82158,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTournamentGoldsInput = {
@@ -80399,6 +82202,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTournamentGoldsInput = {
@@ -80458,6 +82262,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTournamentGoldsInput = {
@@ -80501,6 +82306,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutTournamentXpsInput = {
@@ -80551,6 +82357,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -80639,6 +82447,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -80737,6 +82547,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -80825,6 +82637,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -80907,6 +82721,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -80995,6 +82811,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -81075,6 +82893,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAchievementsInput = {
@@ -81118,6 +82937,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAchievementsInput = {
@@ -81184,6 +83004,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -81272,6 +83094,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -81358,6 +83182,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAchievementsInput = {
@@ -81401,6 +83226,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutDailyObjectivesInput = {
@@ -81444,6 +83270,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDailyObjectivesInput = {
@@ -81487,6 +83314,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDailyObjectivesInput = {
@@ -81546,6 +83374,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDailyObjectivesInput = {
@@ -81589,6 +83418,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWeeklyObjectivesInput = {
@@ -81632,6 +83462,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWeeklyObjectivesInput = {
@@ -81675,6 +83506,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWeeklyObjectivesInput = {
@@ -81734,6 +83566,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWeeklyObjectivesInput = {
@@ -81777,6 +83610,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMissionsInput = {
@@ -81820,6 +83654,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMissionsInput = {
@@ -81863,6 +83698,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMissionsInput = {
@@ -81922,6 +83758,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMissionsInput = {
@@ -81965,6 +83802,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMissionAchievementsInput = {
@@ -82008,6 +83846,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMissionAchievementsInput = {
@@ -82051,6 +83890,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMissionAchievementsInput = {
@@ -82110,6 +83950,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMissionAchievementsInput = {
@@ -82153,6 +83994,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPermanentAchievementsInput = {
@@ -82196,6 +84038,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPermanentAchievementsInput = {
@@ -82239,6 +84082,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPermanentAchievementsInput = {
@@ -82298,6 +84142,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPermanentAchievementsInput = {
@@ -82341,6 +84186,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutReportsInput = {
@@ -82391,6 +84237,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -82479,6 +84327,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -82559,6 +84409,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReportsInput = {
@@ -82602,6 +84453,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReportsInput = {
@@ -82650,6 +84502,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReportsHandledInput = {
@@ -82693,6 +84546,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReportsHandledInput = {
@@ -82759,6 +84613,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -82847,6 +84703,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -82949,6 +84807,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportsHandledInput = {
@@ -82992,6 +84851,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutMasterOfClanInput = {
@@ -83042,6 +84902,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -83130,6 +84992,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -83217,6 +85081,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -83304,6 +85170,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -83397,6 +85265,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -83485,6 +85355,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -83770,6 +85642,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -83858,6 +85732,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -84113,6 +85989,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -84201,6 +86079,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -84372,6 +86252,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -84460,6 +86342,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -84587,6 +86471,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -84675,6 +86561,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -84808,6 +86696,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -84896,6 +86786,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -84978,6 +86870,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -85066,6 +86960,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -85207,6 +87103,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -85295,6 +87193,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -85845,6 +87745,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -85933,6 +87835,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -86020,6 +87924,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -86108,6 +88014,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -86270,6 +88178,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -86358,6 +88268,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -86438,6 +88350,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInventoryInput = {
@@ -86481,6 +88394,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInventoryInput = {
@@ -86547,6 +88461,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -86635,6 +88551,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -86721,6 +88639,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInventoryInput = {
@@ -86764,6 +88683,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BattlePassRewardCreateWithoutSeasonInput = {
@@ -87099,6 +89019,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserBattlePassProgressInput = {
@@ -87142,6 +89063,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserBattlePassProgressInput = {
@@ -87224,6 +89146,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserBattlePassProgressInput = {
@@ -87267,6 +89190,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BattlePassSeasonUpsertWithoutUserProgressInput = {
@@ -87339,6 +89263,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementCreateNestedManyWithoutUserInput
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserBattlePassMissionProgressInput = {
@@ -87382,6 +89307,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUncheckedCreateNestedManyWithoutUserInput
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserBattlePassMissionProgressInput = {
@@ -87464,6 +89390,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUpdateManyWithoutUserNestedInput
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserBattlePassMissionProgressInput = {
@@ -87507,6 +89434,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BattlePassMissionUpsertWithoutUserProgressInput = {
@@ -87586,6 +89514,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -87674,6 +89604,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -87772,6 +89704,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -87860,6 +89794,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -87942,6 +89878,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -88030,6 +89968,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -88128,6 +90068,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -88216,6 +90158,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -88325,6 +90269,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementCreateNestedManyWithoutUserInput
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserUnlockedCosmeticsInput = {
@@ -88368,6 +90313,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUncheckedCreateNestedManyWithoutUserInput
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserUnlockedCosmeticsInput = {
@@ -88445,6 +90391,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUpdateManyWithoutUserNestedInput
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserUnlockedCosmeticsInput = {
@@ -88488,6 +90435,7 @@ export namespace Prisma {
     missionAchievements?: MissionAchievementUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CosmeticPresetUpsertWithoutUsersInput = {
@@ -88562,6 +90510,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -88650,6 +90600,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -88765,6 +90717,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -88853,6 +90807,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -88996,6 +90952,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -89084,6 +91042,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -89159,6 +91119,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -89202,6 +91163,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -89261,6 +91223,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -89304,6 +91267,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateManyUserInput = {
@@ -89356,6 +91320,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -89512,6 +91478,12 @@ export namespace Prisma {
     cosmeticPresetId: number
   }
 
+  export type UserUsedSkillCreateManyUserInput = {
+    id?: string
+    skill: string
+    createdAt?: Date | string
+  }
+
   export type BruteUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -89560,6 +91532,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -89647,6 +91621,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -89732,6 +91708,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -89945,6 +91923,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -90033,6 +92013,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -90118,6 +92100,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -90508,6 +92492,24 @@ export namespace Prisma {
     cosmeticPresetId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type UserUsedSkillUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUsedSkillUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUsedSkillUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    skill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BruteCreateManyMasterInput = {
     id?: string
     name: string
@@ -90558,6 +92560,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -90775,6 +92779,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -90862,6 +92868,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -90947,6 +92955,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -91236,6 +93246,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -91324,6 +93336,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -91409,6 +93423,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -91467,6 +93483,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -91555,6 +93573,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -91640,6 +93660,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -91881,6 +93903,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowingInput = {
@@ -91924,6 +93947,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutFollowingInput = {
@@ -92185,6 +94209,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFavoriteFightsInput = {
@@ -92228,6 +94253,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutFavoriteFightsInput = {
@@ -92374,6 +94400,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -92462,6 +94490,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -92547,6 +94577,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -92656,6 +94688,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportsInput = {
@@ -92699,6 +94732,7 @@ export namespace Prisma {
     userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
     userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
     userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutReportsInput = {
@@ -92777,6 +94811,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -92838,6 +94874,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -92954,6 +94992,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93041,6 +95081,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93126,6 +95168,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93184,6 +95228,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93272,6 +95318,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93357,6 +95405,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93733,6 +95783,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93821,6 +95873,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93906,6 +95960,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -93964,6 +96020,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -94052,6 +96110,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -94137,6 +96197,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -94332,6 +96394,8 @@ export namespace Prisma {
     fightsLeft?: number
     victories?: number
     losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
     opponentsGeneratedAt?: Date | string | null
     canRankUpSince?: Date | string | null
     favorite?: boolean
@@ -94389,6 +96453,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -94477,6 +96543,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean
@@ -94562,6 +96630,8 @@ export namespace Prisma {
     fightsLeft?: IntFieldUpdateOperationsInput | number
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
     opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     favorite?: BoolFieldUpdateOperationsInput | boolean

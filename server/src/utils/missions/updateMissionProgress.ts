@@ -175,57 +175,13 @@ export const updateWinStreakMission = async (
   prisma: PrismaClient,
   userId: string,
 ): Promise<void> => {
-  // Obtener todos los brutes del usuario con sus nombres
-  const brutesWithNames = await prisma.brute.findMany({
-    where: {
-      userId,
-      deletedAt: null,
-    },
-    select: {
-      id: true,
-      name: true,
-    },
+  // Nueva lógica (O(#brutes)): usar campos incrementales en Brute
+  const agg = await prisma.brute.aggregate({
+    where: { userId, deletedAt: null },
+    _max: { winStreakMax: true },
   });
 
-  let maxStreak = 0;
-
-  // Calcular la racha máxima para cada bruto
-  for (const brute of brutesWithNames) {
-    // Obtener todas las peleas del bruto ordenadas por fecha
-    const fights = await prisma.fight.findMany({
-      where: {
-        OR: [
-          { brute1Id: brute.id },
-          { brute2Id: brute.id },
-        ],
-      },
-      orderBy: {
-        date: 'asc',
-      },
-      select: {
-        winner: true,
-        date: true,
-      },
-    });
-
-    // Calcular la racha máxima de victorias consecutivas
-    let currentStreak = 0;
-    let maxBruteStreak = 0;
-
-    for (const fight of fights) {
-      // Determinar si el bruto ganó (el campo winner es el nombre del bruto ganador)
-      const bruteWon = fight.winner === brute.name;
-
-      if (bruteWon) {
-        currentStreak++;
-        maxBruteStreak = Math.max(maxBruteStreak, currentStreak);
-      } else {
-        currentStreak = 0;
-      }
-    }
-
-    maxStreak = Math.max(maxStreak, maxBruteStreak);
-  }
+  const maxStreak = agg._max.winStreakMax ?? 0;
 
   // Obtener todas las misiones de este tipo que no estén completadas
   const missions = await prisma.mission.findMany({
@@ -241,6 +197,93 @@ export const updateWinStreakMission = async (
     const newProgress = Math.min(maxStreak, mission.target);
     const isCompleted = newProgress >= mission.target;
 
+    await prisma.mission.update({
+      where: { id: mission.id },
+      data: {
+        progress: newProgress,
+        completed: isCompleted,
+        completedAt: isCompleted ? new Date() : undefined,
+        updatedAt: new Date(),
+      },
+    });
+  }
+};
+
+/**
+ * Actualiza el progreso de TRY_DIFFERENT_SKILLS en forma incremental.
+ * En vez de escanear todas las peleas del usuario, inserta skills usadas en esta pelea
+ * en una tabla única (userId, skill) y luego usa COUNT(*) como progreso.
+ */
+export const updateDifferentSkillsMissionIncremental = async (
+  prisma: PrismaClient,
+  userId: string,
+  fightId: string,
+): Promise<void> => {
+  const fight = await prisma.fight.findUnique({
+    where: { id: fightId },
+    select: {
+      steps: true,
+      fighters: true,
+      brute1Id: true,
+      brute2Id: true,
+    },
+  });
+
+  if (!fight) return;
+
+  const steps = JSON.parse(fight.steps) as FightStep[];
+  const fighters = JSON.parse(fight.fighters) as Array<{ id: string; index: number; type?: string }>;
+  const bruteFighters = fighters.filter((f) => f.type === 'brute' || !f.type);
+
+  const fightUserBrutes = await prisma.brute.findMany({
+    where: {
+      userId,
+      deletedAt: null,
+      id: {
+        in: [fight.brute1Id, fight.brute2Id].filter(Boolean) as string[],
+      },
+    },
+    select: { id: true },
+  });
+
+  const fightBruteIds = new Set(fightUserBrutes.map((b) => b.id));
+  const fightBruteIndices = new Set(
+    bruteFighters.filter((f) => fightBruteIds.has(f.id)).map((f) => f.index),
+  );
+
+  const skillsUsedInFight = new Set<string>();
+  for (const step of steps) {
+    if (step.a === StepType.SkillActivate && 's' in step && step.s) {
+      const fighterIndex = 'b' in step ? step.b : undefined;
+      if (fighterIndex === undefined || !fightBruteIndices.has(fighterIndex)) continue;
+
+      const skill = step.s as unknown;
+      if (skill && typeof skill === 'object' && 'id' in skill) {
+        skillsUsedInFight.add(String((skill as { id: string }).id));
+      }
+    }
+  }
+
+  if (skillsUsedInFight.size > 0) {
+    await prisma.userUsedSkill.createMany({
+      data: Array.from(skillsUsedInFight).map((skill) => ({ userId, skill })),
+      skipDuplicates: true,
+    });
+  }
+
+  const uniqueSkillCount = await prisma.userUsedSkill.count({ where: { userId } });
+
+  const missions = await prisma.mission.findMany({
+    where: {
+      userId,
+      type: MissionType.TRY_DIFFERENT_SKILLS,
+      completed: false,
+    },
+  });
+
+  for (const mission of missions) {
+    const newProgress = Math.min(uniqueSkillCount, mission.target);
+    const isCompleted = newProgress >= mission.target;
     await prisma.mission.update({
       where: { id: mission.id },
       data: {
