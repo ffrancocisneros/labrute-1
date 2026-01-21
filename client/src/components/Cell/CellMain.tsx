@@ -123,12 +123,11 @@ const CellMain = ({
   }, [Alert, brute, t, updateBrute, updateData]);
 
   // Check if user has unregistered brutes
+  // Simplified: just check if there are any brutes not registered
+  // Backend will filter out invalid brutes (canRankUpSince, deletedAt, eventId)
   const hasUnregisteredBrutes = useMemo(() => {
     if (!owner || !user) return false;
-    return user.brutes.some((b) => !b.registeredForTournament
-      && !b.canRankUpSince
-      && (!dayjs.utc(b.currentTournamentDate).isSame(dayjs.utc(), 'day')
-        || b.currentTournamentStepWatched === 6));
+    return user.brutes.some((b) => !b.registeredForTournament && !b.canRankUpSince);
   }, [owner, user]);
 
   return brute && (
@@ -165,6 +164,19 @@ const CellMain = ({
         )}
       </Box>
       <BruteBodyAndStats brute={brute} sx={{ mb: 1 }} />
+
+      {/* REGISTER ALL BRUTES BUTTON */}
+      {owner && hasUnregisteredBrutes && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+          <FantasyButton
+            color="primary"
+            onClick={registerAllBrutes}
+            sx={{ my: 1 }}
+          >
+            {t('registerAllBrutes')}
+          </FantasyButton>
+        </Box>
+      )}
 
       {/* TEMPORARY SKILLS/WEAPONS */}
       {(temporarySkills.length > 0 || temporaryWeapons.length > 0) && (
@@ -337,18 +349,6 @@ const CellMain = ({
           </FantasyButton>
         )
           : null)}
-      {/* REGISTER ALL BRUTES BUTTON */}
-      {owner && hasUnregisteredBrutes && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-          <FantasyButton
-            color="primary"
-            onClick={registerAllBrutes}
-            sx={{ my: 1 }}
-          >
-            {t('registerAllBrutes')}
-          </FantasyButton>
-        </Box>
-      )}
       {/* TOURNAMENT */}
       {!smallScreen && !brute.eventId && (
         <CellTournament
