@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Outlet, useParams } from 'react-router';
 import Server from '../../utils/Server';
 import { useBrute } from '../../hooks/useBrute';
-import { getCalculatedBrute } from '@labrute/core';
+import { getCalculatedBrute, TemporarySkillEffect, TemporaryWeaponEffect } from '@labrute/core';
 import { useAuth } from '../../hooks/useAuth';
 
 /**
@@ -24,8 +24,8 @@ const ProvideBrute = () => {
       const calculated = getCalculatedBrute(data, modifiers);
       updateBrute({
         ...calculated,
-        temporarySkills: data.temporarySkills ?? ownedBrute?.temporarySkills ?? [],
-        temporaryWeapons: data.temporaryWeapons ?? ownedBrute?.temporaryWeapons ?? [],
+        temporarySkills: (data.temporarySkills ?? ownedBrute?.temporarySkills ?? []) as TemporarySkillEffect[],
+        temporaryWeapons: (data.temporaryWeapons ?? ownedBrute?.temporaryWeapons ?? []) as TemporaryWeaponEffect[],
       });
     }).catch(() => {
       window.location.href = '/unknown-brute';
