@@ -14,14 +14,14 @@ export const applyTemporaryEffects = (
   // Aplicar skills temporales
   if (temporarySkills && temporarySkills.length > 0) {
     for (const temp of temporarySkills) {
-      const skillName: SkillName = temp.skillName as SkillName;
-      const currentTier: number = enriched.skills[skillName] ?? 0;
+      const skillName = temp.skillName;
+      const currentTier = enriched.skills[skillName] ?? 0;
 
       // Si no tiene el skill o está en tier 0, añadirlo como tier 1
       if (currentTier === 0) {
         enriched.skills[skillName] = 1;
         // Aplicar modificadores de stats (fuerza, agilidad, etc.)
-        applySkillModifiers(enriched, skillName as SkillName, 1, false);
+        applySkillModifiers(enriched, skillName, 1, false);
       }
     }
   }
@@ -29,8 +29,8 @@ export const applyTemporaryEffects = (
   // Aplicar armas temporales
   if (temporaryWeapons && temporaryWeapons.length > 0) {
     for (const temp of temporaryWeapons) {
-      const weaponName: WeaponName = temp.weaponName as WeaponName;
-      const currentTier: number = enriched.weapons[weaponName] ?? 0;
+      const weaponName = temp.weaponName;
+      const currentTier = enriched.weapons[weaponName] ?? 0;
 
       // Si no tiene el arma o está en tier 0, añadirla como tier 1
       if (currentTier === 0) {
