@@ -21,11 +21,12 @@ const ProvideBrute = () => {
       const ownedBrute = user?.brutes.find((b) => (
         b.id === data.id || b.name.toLowerCase() === bruteName.toLowerCase()
       ));
-      updateBrute(getCalculatedBrute({
-        ...data,
+      const calculated = getCalculatedBrute(data, modifiers);
+      updateBrute({
+        ...calculated,
         temporarySkills: data.temporarySkills ?? ownedBrute?.temporarySkills ?? [],
         temporaryWeapons: data.temporaryWeapons ?? ownedBrute?.temporaryWeapons ?? [],
-      }, modifiers));
+      });
     }).catch(() => {
       window.location.href = '/unknown-brute';
     });
