@@ -1,3 +1,4 @@
+import { applySkillModifiers, getHP } from '@labrute/core';
 import type { CalculatedBrute } from '@labrute/core';
 import type { PrismaClient } from '@labrute/prisma';
 import { enrichCalculatedBruteWithTemporaryWeapon } from './enrichCalculatedBruteWithTemporaryWeapon.js';
@@ -18,8 +19,17 @@ export const enrichCalculatedBruteWithTemporary = async (
     const v = brute.skills[e.skillName];
     if (v === undefined || v === 0) {
       brute.skills[e.skillName] = 1;
+      // IMPORTANTE: para skills temporales, además de mostrarlas, hay que aplicar sus modificadores
+      // al bruto calculado (si no, no afectan fuerza/daño/etc.)
+      applySkillModifiers(brute, e.skillName, 1, false);
     }
   }
+
+  // Recalcular enduranceValue/hp en caso de que alguna skill temporal modifique endurance.
+  // applySkillModifiers no recalcula hp (solo strength/agility/speedValue), así que lo hacemos aquí.
+  brute.enduranceValue = Math.floor(brute.enduranceStat * brute.enduranceModifier);
+  brute.hp = getHP(brute.level, brute.enduranceValue);
+
   // También añadir armas temporales
   await enrichCalculatedBruteWithTemporaryWeapon(prisma, brute);
 };
