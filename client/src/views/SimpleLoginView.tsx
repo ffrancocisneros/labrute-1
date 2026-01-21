@@ -55,11 +55,17 @@ const SimpleLoginView = () => {
       type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
       const loggedInUser: LoggedInUser = {
         ...response.user,
-        brutes: response.user.brutes.map((brute) => ({
-          ...getCalculatedBrute(brute, response.modifiers),
-          temporarySkills: (brute as unknown as { temporarySkills?: TempSkill[] }).temporarySkills ?? [],
-          temporaryWeapons: (brute as unknown as { temporaryWeapons?: TempWeapon[] }).temporaryWeapons ?? [],
-        })),
+        brutes: response.user.brutes.map((brute) => {
+          const bruteWithTemps = brute as unknown as {
+            temporarySkills?: TempSkill[];
+            temporaryWeapons?: TempWeapon[];
+          };
+          return {
+            ...getCalculatedBrute(brute, response.modifiers),
+            temporarySkills: bruteWithTemps.temporarySkills ?? [],
+            temporaryWeapons: bruteWithTemps.temporaryWeapons ?? [],
+          };
+        }),
       };
 
       updateData(loggedInUser);

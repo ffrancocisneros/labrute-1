@@ -59,8 +59,12 @@ const CellMain = ({
   // Temporales activos (arma/habilidad) - vienen del payload /api/user/authenticate
   type TempSkill = { skillName: string; expiresAt: string };
   type TempWeapon = { weaponName: string; expiresAt: string };
-  const temporarySkills = (brute as unknown as { temporarySkills?: TempSkill[] })?.temporarySkills ?? [];
-  const temporaryWeapons = (brute as unknown as { temporaryWeapons?: TempWeapon[] })?.temporaryWeapons ?? [];
+  const bruteWithTemps = brute as unknown as {
+    temporarySkills?: TempSkill[];
+    temporaryWeapons?: TempWeapon[];
+  };
+  const temporarySkills: TempSkill[] = bruteWithTemps?.temporarySkills ?? [];
+  const temporaryWeapons: TempWeapon[] = bruteWithTemps?.temporaryWeapons ?? [];
 
   const formatRemaining = useCallback((expiresAt: string) => {
     const now = dayjs.utc();
@@ -143,27 +147,27 @@ const CellMain = ({
             flexWrap: 'wrap',
           }}
         >
-          {temporarySkills.slice(0, 3).map((s) => (
+          {temporarySkills.slice(0, 3).map((skill) => (
             <Tooltip
-              key={`temp-skill-${s.skillName}-${s.expiresAt}`}
+              key={`temp-skill-${skill.skillName}-${skill.expiresAt}`}
               title={(
                 <Stack spacing={0.5}>
                   <Typography variant="subtitle2" fontWeight="bold">
-                    {t(s.skillName)}
+                    {t(skill.skillName)}
                   </Typography>
                   <Typography variant="body2">
-                    {t(`${s.skillName}.desc`)}
+                    {t(`${skill.skillName}.desc`)}
                   </Typography>
                   <Typography variant="caption">
-                    Tiempo restante: {formatRemaining(s.expiresAt)}
+                    Tiempo restante: {formatRemaining(skill.expiresAt)}
                   </Typography>
                 </Stack>
               )}
             >
               <Box
                 component="img"
-                src={`/images/skills/${s.skillName}.svg`}
-                alt={s.skillName}
+                src={`/images/skills/${skill.skillName}.svg`}
+                alt={skill.skillName}
                 sx={{
                   width: 28,
                   height: 28,
@@ -176,24 +180,24 @@ const CellMain = ({
               />
             </Tooltip>
           ))}
-          {temporaryWeapons.slice(0, 3).map((w) => (
+          {temporaryWeapons.slice(0, 3).map((weapon) => (
             <Tooltip
-              key={`temp-weapon-${w.weaponName}-${w.expiresAt}`}
+              key={`temp-weapon-${weapon.weaponName}-${weapon.expiresAt}`}
               title={(
                 <Stack spacing={0.5}>
                   <Typography variant="subtitle2" fontWeight="bold">
-                    {t(w.weaponName)}
+                    {t(weapon.weaponName)}
                   </Typography>
                   <Typography variant="caption">
-                    Tiempo restante: {formatRemaining(w.expiresAt)}
+                    Tiempo restante: {formatRemaining(weapon.expiresAt)}
                   </Typography>
                 </Stack>
               )}
             >
               <Box
                 component="img"
-                src={`/images/weapons/${w.weaponName}.png`}
-                alt={w.weaponName}
+                src={`/images/weapons/${weapon.weaponName}.png`}
+                alt={weapon.weaponName}
                 sx={{
                   width: 28,
                   height: 28,

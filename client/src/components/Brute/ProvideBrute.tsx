@@ -18,7 +18,9 @@ const ProvideBrute = () => {
     if (!bruteName) return;
 
     Server.Brute.getForHook(bruteName).then((data) => {
-      const ownedBrute = user?.brutes.find((b) => b.id === data.id || b.name.toLowerCase() === bruteName.toLowerCase());
+      const ownedBrute = user?.brutes.find((b) => (
+        b.id === data.id || b.name.toLowerCase() === bruteName.toLowerCase()
+      ));
       updateBrute(getCalculatedBrute({
         ...data,
         temporarySkills: data.temporarySkills ?? ownedBrute?.temporarySkills ?? [],
