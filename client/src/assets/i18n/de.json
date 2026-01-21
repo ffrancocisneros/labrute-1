@@ -538,6 +538,8 @@
   "bruteRegistered": "Brutalo erfolgreich angemeldet.",
   "bruteNotRegistered": "Brutalo nicht angemeldet.",
   "youCanRegisterYourBrute": "Du kannst deinen Brutalo nicht zum nächsten Wettkampf anmelden.",
+  "registerAllBrutes": "Alle Brutalos Anmelden",
+  "brutesRegistered": "{{count}} Brutalo(s) erfolgreich angemeldet.",
   "arena.noXP": "Dein Brutalo hat die maximale Stufe erreicht. Du kannst weiterhin kämpfen, aber du wirst keine EP mehr erhalten.",
   "arena.search.notFound": "Kein Brutalo mit diesem Namen gefunden.",
   "arena.search.noSelf": "Hör auf dich selbst zu hauen.",

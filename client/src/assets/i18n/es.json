@@ -538,6 +538,8 @@
   "bruteRegistered": "Inscripción registrada con éxito.",
   "bruteNotRegistered": "Inscripción no registrada.",
   "youCanRegisterYourBrute": "Inscribe tu Bruto para el próximo torneo.",
+  "registerAllBrutes": "Inscribir Todos los Brutos",
+  "brutesRegistered": "{{count}} Bruto(s) registrado(s) con éxito.",
   "arena.noXP": "Tu bruto ha alcanzado el nivel máximo. Puedes seguir combatiendo, pero no ganarás más XP.",
   "arena.search.notFound": "No se ha encontrado ningún Bruto.",
   "arena.search.noSelf": "Estás confuso, pero no puedes golpearte a ti mismo.",

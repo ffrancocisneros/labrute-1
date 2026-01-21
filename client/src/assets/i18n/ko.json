@@ -530,6 +530,8 @@
   "bruteRegistered": "Brute successfully registered.",
   "bruteNotRegistered": "Brute not registered.",
   "youCanRegisterYourBrute": "You can register your Brute for the next tournament.",
+  "registerAllBrutes": "모든 브루트 등록",
+  "brutesRegistered": "{{count}}명의 브루트가 성공적으로 등록되었습니다.",
   "arena.noXP": "Your brute reached the maximum level. You can still fight, but you won't gain any more XP.",
   "arena.search.notFound": "No Brute found with this name.",
   "arena.search.noSelf": "Stop hitting yourself.",

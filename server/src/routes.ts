@@ -124,6 +124,7 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
   // Tournament
   app.get('/api/tournament/is-valid/global', Tournaments.isGlobalTournamentValid(prisma));
   app.patch('/api/tournament/:name/register', Tournaments.registerDaily(prisma));
+  app.patch('/api/tournament/register-all', Tournaments.registerAllDaily(prisma));
   app.get('/api/tournament/:name/history', Tournaments.getHistory(prisma));
   app.patch('/api/tournament/:name/update-step-watched', Tournaments.updateStepWatched(prisma));
   app.patch('/api/tournament/:name/update-global-round-watched/:fight', Tournaments.updateGlobalRoundWatched(prisma));

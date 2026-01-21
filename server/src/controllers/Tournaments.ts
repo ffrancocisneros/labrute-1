@@ -112,6 +112,43 @@ export const Tournaments = {
       sendError(res, error);
     }
   },
+  registerAllDaily: (prisma: PrismaClient) => async (req: Request, res: Response<{ success: boolean; registered: number }>) => {
+    try {
+      const user = await auth(prisma, req);
+
+      // Get all valid brutes for the user
+      const brutes = await prisma.brute.findMany({
+        where: {
+          userId: user.id,
+          deletedAt: null,
+          eventId: null,
+          canRankUpSince: null,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      // Update all valid brutes
+      const nextTournamentDate = dayjs.utc().startOf('day').add(1, 'day').toDate();
+      await prisma.brute.updateMany({
+        where: {
+          id: { in: brutes.map((b) => b.id) },
+        },
+        data: {
+          registeredForTournament: true,
+          nextTournamentDate,
+        },
+      });
+
+      res.send({
+        success: true,
+        registered: brutes.length,
+      });
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
   updateStepWatched: (prisma: PrismaClient) => async (
     req: Request,
     res: Response<TournamentsUpdateStepWatchedResponse>,

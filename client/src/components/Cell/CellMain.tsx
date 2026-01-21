@@ -43,8 +43,8 @@ const CellMain = ({
   const Confirm = useConfirm();
   const Alert = useAlert();
   const navigate = useNavigate();
-  const { brute, owner } = useBrute();
-  const { user, authing, currentEvent } = useAuth();
+  const { brute, owner, updateBrute } = useBrute();
+  const { user, authing, currentEvent, updateData } = useAuth();
 
   const xpNeededForNextLevel = useMemo(
     () => (brute ? getXPNeeded(brute.level + 1) : 0),
@@ -99,6 +99,37 @@ const CellMain = ({
       }
     }).catch(catchError(Alert));
   }, [Alert, navigate]);
+
+  // Register all brutes for tournament
+  const registerAllBrutes = useCallback(() => {
+    Server.Tournament.registerAllDaily().then((response) => {
+      Alert.open('success', t('brutesRegistered', { count: response.registered }));
+      // Update all brutes in the user data
+      updateData((data) => (data ? {
+        ...data,
+        brutes: data.brutes.map((b) => ({
+          ...b,
+          registeredForTournament: true,
+        })),
+      } : data));
+      // Update current brute if it exists
+      if (brute) {
+        updateBrute({
+          ...brute,
+          registeredForTournament: true,
+        });
+      }
+    }).catch(catchError(Alert));
+  }, [Alert, brute, t, updateBrute, updateData]);
+
+  // Check if user has unregistered brutes
+  const hasUnregisteredBrutes = useMemo(() => {
+    if (!owner || !user) return false;
+    return user.brutes.some((b) => !b.registeredForTournament
+      && !b.canRankUpSince
+      && (!dayjs.utc(b.currentTournamentDate).isSame(dayjs.utc(), 'day')
+        || b.currentTournamentStepWatched === 6));
+  }, [owner, user]);
 
   return brute && (
     <Box {...rest}>
@@ -306,6 +337,18 @@ const CellMain = ({
           </FantasyButton>
         )
           : null)}
+      {/* REGISTER ALL BRUTES BUTTON */}
+      {owner && hasUnregisteredBrutes && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <FantasyButton
+            color="primary"
+            onClick={registerAllBrutes}
+            sx={{ my: 1 }}
+          >
+            {t('registerAllBrutes')}
+          </FantasyButton>
+        </Box>
+      )}
       {/* TOURNAMENT */}
       {!smallScreen && !brute.eventId && (
         <CellTournament
