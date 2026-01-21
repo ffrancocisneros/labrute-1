@@ -89,7 +89,8 @@ const ShopView = () => {
   };
 
   const selectedShopItem = purchaseItemId ? items.find((i) => i.id === purchaseItemId) : null;
-  const selectedBrute = (user?.brutes ?? []).find((b) => b.id === bruteId) as BruteWithTemps | undefined;
+  const selectedBrute = (user?.brutes ?? [])
+    .find((b) => b.id === bruteId) as BruteWithTemps | undefined;
 
   const purchaseBlockReason = (() => {
     if (!selectedShopItem) return null;
@@ -108,9 +109,10 @@ const ShopView = () => {
 
     if (selectedShopItem.type === 'TEMPORARY_SKILL') {
       const skill = selectedShopItem.valueString;
-      const permTier = (selectedBrute.skills ?? [])
+      const skillsArray: string[] = selectedBrute.skills ?? [];
+      const permTier = skillsArray
         .filter((skillName) => skillName === skill).length;
-      const activeTemps = selectedBrute.temporarySkills ?? [];
+      const activeTemps: TempSkill[] = selectedBrute.temporarySkills ?? [];
       const activeTier = activeTemps
         .filter((temp) => temp.skillName === skill).length;
       const currentTier = permTier + activeTier;
@@ -123,9 +125,10 @@ const ShopView = () => {
 
     if (selectedShopItem.type === 'TEMPORARY_WEAPON') {
       const weapon = selectedShopItem.valueString;
-      const permTier = (selectedBrute.weapons ?? [])
+      const weaponsArray: string[] = selectedBrute.weapons ?? [];
+      const permTier = weaponsArray
         .filter((weaponName) => weaponName === weapon).length;
-      const activeTemps = selectedBrute.temporaryWeapons ?? [];
+      const activeTemps: TempWeapon[] = selectedBrute.temporaryWeapons ?? [];
       const activeTier = activeTemps
         .filter((temp) => temp.weaponName === weapon).length;
       const currentTier = permTier + activeTier;
