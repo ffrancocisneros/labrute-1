@@ -1,4 +1,4 @@
-import { applySkillModifiers, CalculatedBrute, getHP, SkillName, TemporarySkillEffect, TemporaryWeaponEffect, WeaponName } from '@labrute/core';
+import { applySkillModifiers, CalculatedBrute, getHP, TemporarySkillEffect, TemporaryWeaponEffect } from '@labrute/core';
 
 /**
  * Aplica habilidades y armas temporales a un bruto calculado, modificando sus stats.
@@ -13,8 +13,7 @@ export const applyTemporaryEffects = (
 
   // Aplicar skills temporales
   if (temporarySkills && temporarySkills.length > 0) {
-    for (const temp of temporarySkills) {
-      const skillName = temp.skillName;
+    for (const { skillName } of temporarySkills) {
       const currentTier = enriched.skills[skillName] ?? 0;
 
       // Si no tiene el skill o está en tier 0, añadirlo como tier 1
@@ -28,8 +27,7 @@ export const applyTemporaryEffects = (
 
   // Aplicar armas temporales
   if (temporaryWeapons && temporaryWeapons.length > 0) {
-    for (const temp of temporaryWeapons) {
-      const weaponName = temp.weaponName;
+    for (const { weaponName } of temporaryWeapons) {
       const currentTier = enriched.weapons[weaponName] ?? 0;
 
       // Si no tiene el arma o está en tier 0, añadirla como tier 1
