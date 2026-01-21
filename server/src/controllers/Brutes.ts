@@ -146,7 +146,31 @@ export const Brutes = {
         throw new NotFoundError('Brute not found');
       }
 
-      res.send(brute);
+      const now = new Date();
+      const [tempSkills, tempWeapons] = await Promise.all([
+        prisma.bruteTemporaryEffect.findMany({
+          where: { bruteId: brute.id, expiresAt: { gt: now } },
+          select: { skillName: true, expiresAt: true, createdAt: true },
+        }),
+        prisma.bruteTemporaryWeapon.findMany({
+          where: { bruteId: brute.id, expiresAt: { gt: now } },
+          select: { weaponName: true, expiresAt: true, createdAt: true },
+        }),
+      ]);
+
+      res.send({
+        ...brute,
+        temporarySkills: tempSkills.map((t) => ({
+          skillName: t.skillName,
+          expiresAt: t.expiresAt.toISOString(),
+          createdAt: t.createdAt.toISOString(),
+        })),
+        temporaryWeapons: tempWeapons.map((t) => ({
+          weaponName: t.weaponName,
+          expiresAt: t.expiresAt.toISOString(),
+          createdAt: t.createdAt.toISOString(),
+        })),
+      });
     } catch (error) {
       sendError(res, error);
     }

@@ -11,18 +11,23 @@ import { useAuth } from '../../hooks/useAuth';
 const ProvideBrute = () => {
   const { bruteName } = useParams();
   const { updateBrute } = useBrute();
-  const { modifiers } = useAuth();
+  const { modifiers, user } = useAuth();
 
   // Fetch brute
   useEffect(() => {
     if (!bruteName) return;
 
     Server.Brute.getForHook(bruteName).then((data) => {
-      updateBrute(getCalculatedBrute(data, modifiers));
+      const ownedBrute = user?.brutes.find((b) => b.id === data.id || b.name.toLowerCase() === bruteName.toLowerCase());
+      updateBrute(getCalculatedBrute({
+        ...data,
+        temporarySkills: data.temporarySkills ?? ownedBrute?.temporarySkills ?? [],
+        temporaryWeapons: data.temporaryWeapons ?? ownedBrute?.temporaryWeapons ?? [],
+      }, modifiers));
     }).catch(() => {
       window.location.href = '/unknown-brute';
     });
-  }, [bruteName, updateBrute, modifiers]);
+  }, [bruteName, updateBrute, modifiers, user]);
   return (
     <Outlet />
   );

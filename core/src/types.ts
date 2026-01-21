@@ -8,6 +8,18 @@ export interface AnimatedWeapon {
   animation: WeaponAnimation;
 }
 
+export type TemporarySkillEffect = {
+  skillName: SkillName;
+  expiresAt: string;
+  createdAt?: string;
+};
+
+export type TemporaryWeaponEffect = {
+  weaponName: WeaponName;
+  expiresAt: string;
+  createdAt?: string;
+};
+
 export type SuperName =
   'thief'
   | 'fierceBrute'
@@ -482,12 +494,16 @@ export type ServerHookBrute = Brute & {
   clan: Pick<Clan, 'id' | 'name'> | null;
   user: Pick<User, 'id' | 'name' | 'lastSeen'> | null;
   tournaments: Tournament[];
+  temporarySkills?: TemporarySkillEffect[];
+  temporaryWeapons?: TemporaryWeaponEffect[];
 };
 export type HookBrute = CalculatedBrute & {
   master: Pick<Brute, 'id' | 'name'> | null;
   clan: Pick<Clan, 'id' | 'name'> | null;
   user: Pick<User, 'id' | 'name' | 'lastSeen'> | null;
   tournaments: Tournament[];
+  temporarySkills?: TemporarySkillEffect[];
+  temporaryWeapons?: TemporaryWeaponEffect[];
 };
 export type AdminPanelBrute = Brute & {
   user: User | null;
