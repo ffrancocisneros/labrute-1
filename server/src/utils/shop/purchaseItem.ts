@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { ExpectedError, LimitError, NotFoundError } from '@labrute/core';
 import { createUserLog } from '../createUserLog.js';
 import { UserLogType } from '@labrute/prisma';
+import { translate } from '../translate.js';
 
 interface PurchaseItemParams {
   prisma: PrismaClient;
@@ -33,7 +34,7 @@ export const purchaseItem = async ({
   // Obtener el usuario
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { id: true, gold: true },
+    select: { id: true, gold: true, lang: true },
   });
 
   if (!user) {
@@ -50,10 +51,21 @@ export const purchaseItem = async ({
     throw new ExpectedError('Debes elegir un bruto para este item');
   }
 
+  const now = new Date();
+  const dayStart = dayjs.utc().startOf('day').toDate();
+  const dayEnd = dayjs.utc().add(1, 'day').startOf('day').toDate();
+
+  // Si hay bruteId, cargar el bruto una sola vez (para contar tiers y validar ownership)
+  const brute = bruteId ? await prisma.brute.findFirst({
+    where: { id: bruteId, userId, deletedAt: null },
+    select: {
+      id: true,
+      skills: true,
+      weapons: true,
+    },
+  }) : null;
+
   if (bruteId) {
-    const brute = await prisma.brute.findFirst({
-      where: { id: bruteId, userId, deletedAt: null },
-    });
     if (!brute) {
       throw new NotFoundError('Bruto no encontrado');
     }
@@ -109,6 +121,37 @@ export const purchaseItem = async ({
       if (!item.valueString || !bruteId) {
         throw new ExpectedError('Item de arma temporal inválido');
       }
+      if (!brute) {
+        throw new NotFoundError('Bruto no encontrado');
+      }
+
+      // Límite: 1 compra por día UTC por bruto+arma
+      const alreadyBoughtWeaponToday = await prisma.bruteTemporaryWeapon.findFirst({
+        where: {
+          bruteId,
+          weaponName: item.valueString as WeaponName,
+          createdAt: { gte: dayStart, lt: dayEnd },
+        },
+        select: { id: true },
+      });
+      if (alreadyBoughtWeaponToday) {
+        throw new LimitError(translate('shop.tempAlreadyBoughtTodayWeapon', user));
+      }
+
+      // Calcular tier actual (permanente + temporales activos)
+      const permWeaponTier = brute.weapons.filter((w) => w === item.valueString).length;
+      const activeTempWeaponTier = await prisma.bruteTemporaryWeapon.count({
+        where: {
+          bruteId,
+          weaponName: item.valueString as WeaponName,
+          expiresAt: { gt: now },
+        },
+      });
+      const currentWeaponTier = permWeaponTier + activeTempWeaponTier;
+      if (currentWeaponTier >= 3) {
+        throw new LimitError(translate('shop.tempTier3Weapon', user));
+      }
+
       // Crear arma temporal (24 horas)
       const weaponExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
       await prisma.bruteTemporaryWeapon.create({
@@ -124,6 +167,37 @@ export const purchaseItem = async ({
       if (!item.valueString || !bruteId) {
         throw new ExpectedError('Item de habilidad temporal inválido');
       }
+      if (!brute) {
+        throw new NotFoundError('Bruto no encontrado');
+      }
+
+      // Límite: 1 compra por día UTC por bruto+habilidad
+      const alreadyBoughtSkillToday = await prisma.bruteTemporaryEffect.findFirst({
+        where: {
+          bruteId,
+          skillName: item.valueString as SkillName,
+          createdAt: { gte: dayStart, lt: dayEnd },
+        },
+        select: { id: true },
+      });
+      if (alreadyBoughtSkillToday) {
+        throw new LimitError(translate('shop.tempAlreadyBoughtTodaySkill', user));
+      }
+
+      // Calcular tier actual (permanente + temporales activos)
+      const permSkillTier = brute.skills.filter((s) => s === item.valueString).length;
+      const activeTempSkillTier = await prisma.bruteTemporaryEffect.count({
+        where: {
+          bruteId,
+          skillName: item.valueString as SkillName,
+          expiresAt: { gt: now },
+        },
+      });
+      const currentSkillTier = permSkillTier + activeTempSkillTier;
+      if (currentSkillTier >= 3) {
+        throw new LimitError(translate('shop.tempTier3Skill', user));
+      }
+
       // Crear habilidad temporal (24 horas)
       const skillExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
       await prisma.bruteTemporaryEffect.create({

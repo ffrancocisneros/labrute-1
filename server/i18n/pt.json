@@ -126,5 +126,9 @@
   "eventAlreadyStarted": "Evento já iniciado",
   "eventMaxLevelReached": "Você atingiu o nível máximo para este evento",
   "reportAlreadyHandled": "Report already handled",
-  "cantFightBeforeLevelingUp": "You cannot fight before leveling up"
+  "cantFightBeforeLevelingUp": "You cannot fight before leveling up",
+  "shop.tempAlreadyBoughtTodaySkill": "You already bought this skill today. You can only increase 1 tier per day.",
+  "shop.tempAlreadyBoughtTodayWeapon": "You already bought this weapon today. You can only increase 1 tier per day.",
+  "shop.tempTier3Skill": "You already have this skill at Tier 3. You cannot buy it.",
+  "shop.tempTier3Weapon": "You already have this weapon at Tier 3. You cannot buy it."
 }

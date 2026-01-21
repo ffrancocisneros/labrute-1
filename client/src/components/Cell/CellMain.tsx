@@ -56,6 +56,21 @@ const CellMain = ({
     [brute],
   );
 
+  // Temporales activos (arma/habilidad) - vienen del payload /api/user/authenticate
+  type TempSkill = { skillName: string; expiresAt: string };
+  type TempWeapon = { weaponName: string; expiresAt: string };
+  const temporarySkills = (brute as unknown as { temporarySkills?: TempSkill[] })?.temporarySkills ?? [];
+  const temporaryWeapons = (brute as unknown as { temporaryWeapons?: TempWeapon[] })?.temporaryWeapons ?? [];
+
+  const formatRemaining = useCallback((expiresAt: string) => {
+    const now = dayjs.utc();
+    const exp = dayjs.utc(expiresAt);
+    const totalMinutes = Math.max(0, exp.diff(now, 'minute'));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h ${minutes}m`;
+  }, []);
+
   // Rank up
   const rankUp = useCallback(() => {
     if (!brute) return;
@@ -115,6 +130,64 @@ const CellMain = ({
         )}
       </Box>
       <BruteBodyAndStats brute={brute} sx={{ mb: 1 }} />
+
+      {/* TEMPORARY SKILLS/WEAPONS */}
+      {(temporarySkills.length > 0 || temporaryWeapons.length > 0) && (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            mb: 1,
+            flexWrap: 'wrap',
+          }}
+        >
+          {temporarySkills.slice(0, 3).map((s) => (
+            <Tooltip
+              key={`temp-skill-${s.skillName}-${s.expiresAt}`}
+              title={`Habilidad temporal: ${formatRemaining(s.expiresAt)}`}
+            >
+              <Box
+                component="img"
+                src={`/images/skills/${s.skillName}.svg`}
+                alt={s.skillName}
+                sx={{
+                  width: 28,
+                  height: 28,
+                  border: '2px solid',
+                  borderColor: 'error.main',
+                  borderRadius: 1,
+                  p: 0.5,
+                  bgcolor: 'background.paperDark',
+                }}
+              />
+            </Tooltip>
+          ))}
+          {temporaryWeapons.slice(0, 3).map((w) => (
+            <Tooltip
+              key={`temp-weapon-${w.weaponName}-${w.expiresAt}`}
+              title={`Arma temporal: ${formatRemaining(w.expiresAt)}`}
+            >
+              <Box
+                component="img"
+                src={`/images/weapons/${w.weaponName}.png`}
+                alt={w.weaponName}
+                sx={{
+                  width: 28,
+                  height: 28,
+                  border: '2px solid',
+                  borderColor: 'error.main',
+                  borderRadius: 1,
+                  p: 0.5,
+                  bgcolor: 'background.paperDark',
+                }}
+              />
+            </Tooltip>
+          ))}
+        </Box>
+      )}
+
       {/* Tournament wins until rank up */}
       {(!owner || (!brute.tournaments.length || brute.currentTournamentStepWatched === 6))
         && !brute.eventId

@@ -1627,5 +1627,9 @@
   "dayOver": "Day {{day}} is over",
   "seeParticipants": "See participants",
   "searchForParticipant": "Search for a participant",
-  "outdatedVersion": "You are using an outdated version of the game. Please refresh the page to get the latest version. If you keep seeing this message, please clear your cache and refresh the page."
+  "outdatedVersion": "You are using an outdated version of the game. Please refresh the page to get the latest version. If you keep seeing this message, please clear your cache and refresh the page.",
+  "shop.tempAlreadyBoughtTodaySkill": "You already bought this skill today. You can only increase 1 tier per day.",
+  "shop.tempAlreadyBoughtTodayWeapon": "You already bought this weapon today. You can only increase 1 tier per day.",
+  "shop.tempTier3Skill": "You already have this skill at Tier 3. You cannot buy it.",
+  "shop.tempTier3Weapon": "You already have this weapon at Tier 3. You cannot buy it."
 }

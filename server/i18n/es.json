@@ -136,5 +136,9 @@
   "eventAlreadyStarted": "El evento ya está en curso",
   "eventMaxLevelReached": "Has alcanzado el nivel máximo para este evento",
   "reportAlreadyHandled": "Reporte ya manejado",
-  "cantFightBeforeLevelingUp": "No puedes combatir hasta que subas de nivel"
+  "cantFightBeforeLevelingUp": "No puedes combatir hasta que subas de nivel",
+  "shop.tempAlreadyBoughtTodaySkill": "Ya compraste esta habilidad hoy. Solo puedes subir 1 tier por día.",
+  "shop.tempAlreadyBoughtTodayWeapon": "Ya compraste esta arma hoy. Solo puedes subir 1 tier por día.",
+  "shop.tempTier3Skill": "Ya tienes esta habilidad en Tier 3. No puedes comprarla.",
+  "shop.tempTier3Weapon": "Ya tienes esta arma en Tier 3. No puedes comprarla."
 }

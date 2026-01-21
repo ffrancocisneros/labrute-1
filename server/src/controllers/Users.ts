@@ -137,8 +137,52 @@ export const Users = {
         throw new Error('User not found');
       }
 
+      // Enriquecer brutos con temporales activos (sin N+1)
+      const bruteIds = user.brutes.map((b) => b.id);
+      const now = new Date();
+      const [activeTempSkills, activeTempWeapons] = await Promise.all([
+        prisma.bruteTemporaryEffect.findMany({
+          where: { bruteId: { in: bruteIds }, expiresAt: { gt: now } },
+          select: { bruteId: true, skillName: true, expiresAt: true, createdAt: true },
+        }),
+        prisma.bruteTemporaryWeapon.findMany({
+          where: { bruteId: { in: bruteIds }, expiresAt: { gt: now } },
+          select: { bruteId: true, weaponName: true, expiresAt: true, createdAt: true },
+        }),
+      ]);
+
+      const tempSkillsByBrute = new Map<string, Array<{ skillName: string; expiresAt: Date; createdAt: Date }>>();
+      for (const row of activeTempSkills) {
+        const list = tempSkillsByBrute.get(row.bruteId) ?? [];
+        list.push({ skillName: row.skillName, expiresAt: row.expiresAt, createdAt: row.createdAt });
+        tempSkillsByBrute.set(row.bruteId, list);
+      }
+      const tempWeaponsByBrute = new Map<string, Array<{ weaponName: string; expiresAt: Date; createdAt: Date }>>();
+      for (const row of activeTempWeapons) {
+        const list = tempWeaponsByBrute.get(row.bruteId) ?? [];
+        list.push({ weaponName: row.weaponName, expiresAt: row.expiresAt, createdAt: row.createdAt });
+        tempWeaponsByBrute.set(row.bruteId, list);
+      }
+
+      const enrichedUser = {
+        ...user,
+        brutes: user.brutes.map((b) => ({
+          ...b,
+          temporarySkills: (tempSkillsByBrute.get(b.id) ?? []).map((t) => ({
+            skillName: t.skillName,
+            expiresAt: t.expiresAt.toISOString(),
+            createdAt: t.createdAt.toISOString(),
+          })),
+          temporaryWeapons: (tempWeaponsByBrute.get(b.id) ?? []).map((t) => ({
+            weaponName: t.weaponName,
+            expiresAt: t.expiresAt.toISOString(),
+            createdAt: t.createdAt.toISOString(),
+          })),
+        })),
+      };
+
       res.send({
-        user,
+        user: enrichedUser,
         modifiers: await ServerState.getModifiers(prisma),
         currentEvent: await ServerState.getCurrentEvent(prisma),
         version: Version,

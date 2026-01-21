@@ -555,6 +555,7 @@ exports.Prisma.BruteTemporaryEffectScalarFieldEnum = {
   id: 'id',
   bruteId: 'bruteId',
   skillName: 'skillName',
+  createdAt: 'createdAt',
   expiresAt: 'expiresAt'
 };
 
@@ -562,6 +563,7 @@ exports.Prisma.BruteTemporaryWeaponScalarFieldEnum = {
   id: 'id',
   bruteId: 'bruteId',
   weaponName: 'weaponName',
+  createdAt: 'createdAt',
   expiresAt: 'expiresAt'
 };
 

@@ -48006,6 +48006,7 @@ export namespace Prisma {
     id: string | null
     bruteId: string | null
     skillName: $Enums.SkillName | null
+    createdAt: Date | null
     expiresAt: Date | null
   }
 
@@ -48013,6 +48014,7 @@ export namespace Prisma {
     id: string | null
     bruteId: string | null
     skillName: $Enums.SkillName | null
+    createdAt: Date | null
     expiresAt: Date | null
   }
 
@@ -48020,6 +48022,7 @@ export namespace Prisma {
     id: number
     bruteId: number
     skillName: number
+    createdAt: number
     expiresAt: number
     _all: number
   }
@@ -48029,6 +48032,7 @@ export namespace Prisma {
     id?: true
     bruteId?: true
     skillName?: true
+    createdAt?: true
     expiresAt?: true
   }
 
@@ -48036,6 +48040,7 @@ export namespace Prisma {
     id?: true
     bruteId?: true
     skillName?: true
+    createdAt?: true
     expiresAt?: true
   }
 
@@ -48043,6 +48048,7 @@ export namespace Prisma {
     id?: true
     bruteId?: true
     skillName?: true
+    createdAt?: true
     expiresAt?: true
     _all?: true
   }
@@ -48123,6 +48129,7 @@ export namespace Prisma {
     id: string
     bruteId: string
     skillName: $Enums.SkillName
+    createdAt: Date
     expiresAt: Date
     _count: BruteTemporaryEffectCountAggregateOutputType | null
     _min: BruteTemporaryEffectMinAggregateOutputType | null
@@ -48147,6 +48154,7 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     skillName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bruteTemporaryEffect"]>
@@ -48155,6 +48163,7 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     skillName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bruteTemporaryEffect"]>
@@ -48163,6 +48172,7 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     skillName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bruteTemporaryEffect"]>
@@ -48171,10 +48181,11 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     skillName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
   }
 
-  export type BruteTemporaryEffectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bruteId" | "skillName" | "expiresAt", ExtArgs["result"]["bruteTemporaryEffect"]>
+  export type BruteTemporaryEffectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bruteId" | "skillName" | "createdAt" | "expiresAt", ExtArgs["result"]["bruteTemporaryEffect"]>
   export type BruteTemporaryEffectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }
@@ -48194,6 +48205,7 @@ export namespace Prisma {
       id: string
       bruteId: string
       skillName: $Enums.SkillName
+      createdAt: Date
       expiresAt: Date
     }, ExtArgs["result"]["bruteTemporaryEffect"]>
     composites: {}
@@ -48622,6 +48634,7 @@ export namespace Prisma {
     readonly id: FieldRef<"BruteTemporaryEffect", 'String'>
     readonly bruteId: FieldRef<"BruteTemporaryEffect", 'String'>
     readonly skillName: FieldRef<"BruteTemporaryEffect", 'SkillName'>
+    readonly createdAt: FieldRef<"BruteTemporaryEffect", 'DateTime'>
     readonly expiresAt: FieldRef<"BruteTemporaryEffect", 'DateTime'>
   }
     
@@ -49060,6 +49073,7 @@ export namespace Prisma {
     id: string | null
     bruteId: string | null
     weaponName: $Enums.WeaponName | null
+    createdAt: Date | null
     expiresAt: Date | null
   }
 
@@ -49067,6 +49081,7 @@ export namespace Prisma {
     id: string | null
     bruteId: string | null
     weaponName: $Enums.WeaponName | null
+    createdAt: Date | null
     expiresAt: Date | null
   }
 
@@ -49074,6 +49089,7 @@ export namespace Prisma {
     id: number
     bruteId: number
     weaponName: number
+    createdAt: number
     expiresAt: number
     _all: number
   }
@@ -49083,6 +49099,7 @@ export namespace Prisma {
     id?: true
     bruteId?: true
     weaponName?: true
+    createdAt?: true
     expiresAt?: true
   }
 
@@ -49090,6 +49107,7 @@ export namespace Prisma {
     id?: true
     bruteId?: true
     weaponName?: true
+    createdAt?: true
     expiresAt?: true
   }
 
@@ -49097,6 +49115,7 @@ export namespace Prisma {
     id?: true
     bruteId?: true
     weaponName?: true
+    createdAt?: true
     expiresAt?: true
     _all?: true
   }
@@ -49177,6 +49196,7 @@ export namespace Prisma {
     id: string
     bruteId: string
     weaponName: $Enums.WeaponName
+    createdAt: Date
     expiresAt: Date
     _count: BruteTemporaryWeaponCountAggregateOutputType | null
     _min: BruteTemporaryWeaponMinAggregateOutputType | null
@@ -49201,6 +49221,7 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     weaponName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bruteTemporaryWeapon"]>
@@ -49209,6 +49230,7 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     weaponName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bruteTemporaryWeapon"]>
@@ -49217,6 +49239,7 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     weaponName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bruteTemporaryWeapon"]>
@@ -49225,10 +49248,11 @@ export namespace Prisma {
     id?: boolean
     bruteId?: boolean
     weaponName?: boolean
+    createdAt?: boolean
     expiresAt?: boolean
   }
 
-  export type BruteTemporaryWeaponOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bruteId" | "weaponName" | "expiresAt", ExtArgs["result"]["bruteTemporaryWeapon"]>
+  export type BruteTemporaryWeaponOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bruteId" | "weaponName" | "createdAt" | "expiresAt", ExtArgs["result"]["bruteTemporaryWeapon"]>
   export type BruteTemporaryWeaponInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brute?: boolean | BruteDefaultArgs<ExtArgs>
   }
@@ -49248,6 +49272,7 @@ export namespace Prisma {
       id: string
       bruteId: string
       weaponName: $Enums.WeaponName
+      createdAt: Date
       expiresAt: Date
     }, ExtArgs["result"]["bruteTemporaryWeapon"]>
     composites: {}
@@ -49676,6 +49701,7 @@ export namespace Prisma {
     readonly id: FieldRef<"BruteTemporaryWeapon", 'String'>
     readonly bruteId: FieldRef<"BruteTemporaryWeapon", 'String'>
     readonly weaponName: FieldRef<"BruteTemporaryWeapon", 'WeaponName'>
+    readonly createdAt: FieldRef<"BruteTemporaryWeapon", 'DateTime'>
     readonly expiresAt: FieldRef<"BruteTemporaryWeapon", 'DateTime'>
   }
     
@@ -58209,6 +58235,7 @@ export namespace Prisma {
     id: 'id',
     bruteId: 'bruteId',
     skillName: 'skillName',
+    createdAt: 'createdAt',
     expiresAt: 'expiresAt'
   };
 
@@ -58219,6 +58246,7 @@ export namespace Prisma {
     id: 'id',
     bruteId: 'bruteId',
     weaponName: 'weaponName',
+    createdAt: 'createdAt',
     expiresAt: 'expiresAt'
   };
 
@@ -61850,6 +61878,7 @@ export namespace Prisma {
     id?: UuidFilter<"BruteTemporaryEffect"> | string
     bruteId?: UuidFilter<"BruteTemporaryEffect"> | string
     skillName?: EnumSkillNameFilter<"BruteTemporaryEffect"> | $Enums.SkillName
+    createdAt?: DateTimeFilter<"BruteTemporaryEffect"> | Date | string
     expiresAt?: DateTimeFilter<"BruteTemporaryEffect"> | Date | string
     brute?: XOR<BruteScalarRelationFilter, BruteWhereInput>
   }
@@ -61858,6 +61887,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     skillName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
     brute?: BruteOrderByWithRelationInput
   }
@@ -61869,6 +61899,7 @@ export namespace Prisma {
     NOT?: BruteTemporaryEffectWhereInput | BruteTemporaryEffectWhereInput[]
     bruteId?: UuidFilter<"BruteTemporaryEffect"> | string
     skillName?: EnumSkillNameFilter<"BruteTemporaryEffect"> | $Enums.SkillName
+    createdAt?: DateTimeFilter<"BruteTemporaryEffect"> | Date | string
     expiresAt?: DateTimeFilter<"BruteTemporaryEffect"> | Date | string
     brute?: XOR<BruteScalarRelationFilter, BruteWhereInput>
   }, "id" | "id">
@@ -61877,6 +61908,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     skillName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
     _count?: BruteTemporaryEffectCountOrderByAggregateInput
     _max?: BruteTemporaryEffectMaxOrderByAggregateInput
@@ -61890,6 +61922,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"BruteTemporaryEffect"> | string
     bruteId?: UuidWithAggregatesFilter<"BruteTemporaryEffect"> | string
     skillName?: EnumSkillNameWithAggregatesFilter<"BruteTemporaryEffect"> | $Enums.SkillName
+    createdAt?: DateTimeWithAggregatesFilter<"BruteTemporaryEffect"> | Date | string
     expiresAt?: DateTimeWithAggregatesFilter<"BruteTemporaryEffect"> | Date | string
   }
 
@@ -61900,6 +61933,7 @@ export namespace Prisma {
     id?: UuidFilter<"BruteTemporaryWeapon"> | string
     bruteId?: UuidFilter<"BruteTemporaryWeapon"> | string
     weaponName?: EnumWeaponNameFilter<"BruteTemporaryWeapon"> | $Enums.WeaponName
+    createdAt?: DateTimeFilter<"BruteTemporaryWeapon"> | Date | string
     expiresAt?: DateTimeFilter<"BruteTemporaryWeapon"> | Date | string
     brute?: XOR<BruteScalarRelationFilter, BruteWhereInput>
   }
@@ -61908,6 +61942,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     weaponName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
     brute?: BruteOrderByWithRelationInput
   }
@@ -61919,6 +61954,7 @@ export namespace Prisma {
     NOT?: BruteTemporaryWeaponWhereInput | BruteTemporaryWeaponWhereInput[]
     bruteId?: UuidFilter<"BruteTemporaryWeapon"> | string
     weaponName?: EnumWeaponNameFilter<"BruteTemporaryWeapon"> | $Enums.WeaponName
+    createdAt?: DateTimeFilter<"BruteTemporaryWeapon"> | Date | string
     expiresAt?: DateTimeFilter<"BruteTemporaryWeapon"> | Date | string
     brute?: XOR<BruteScalarRelationFilter, BruteWhereInput>
   }, "id" | "id">
@@ -61927,6 +61963,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     weaponName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
     _count?: BruteTemporaryWeaponCountOrderByAggregateInput
     _max?: BruteTemporaryWeaponMaxOrderByAggregateInput
@@ -61940,6 +61977,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"BruteTemporaryWeapon"> | string
     bruteId?: UuidWithAggregatesFilter<"BruteTemporaryWeapon"> | string
     weaponName?: EnumWeaponNameWithAggregatesFilter<"BruteTemporaryWeapon"> | $Enums.WeaponName
+    createdAt?: DateTimeWithAggregatesFilter<"BruteTemporaryWeapon"> | Date | string
     expiresAt?: DateTimeWithAggregatesFilter<"BruteTemporaryWeapon"> | Date | string
   }
 
@@ -65552,6 +65590,7 @@ export namespace Prisma {
   export type BruteTemporaryEffectCreateInput = {
     id?: string
     skillName: $Enums.SkillName
+    createdAt?: Date | string
     expiresAt: Date | string
     brute: BruteCreateNestedOneWithoutBruteTemporaryEffectsInput
   }
@@ -65560,12 +65599,14 @@ export namespace Prisma {
     id?: string
     bruteId: string
     skillName: $Enums.SkillName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
   export type BruteTemporaryEffectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brute?: BruteUpdateOneRequiredWithoutBruteTemporaryEffectsNestedInput
   }
@@ -65574,6 +65615,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     bruteId?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -65581,12 +65623,14 @@ export namespace Prisma {
     id?: string
     bruteId: string
     skillName: $Enums.SkillName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
   export type BruteTemporaryEffectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -65594,12 +65638,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     bruteId?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BruteTemporaryWeaponCreateInput = {
     id?: string
     weaponName: $Enums.WeaponName
+    createdAt?: Date | string
     expiresAt: Date | string
     brute: BruteCreateNestedOneWithoutBruteTemporaryWeaponsInput
   }
@@ -65608,12 +65654,14 @@ export namespace Prisma {
     id?: string
     bruteId: string
     weaponName: $Enums.WeaponName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
   export type BruteTemporaryWeaponUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     weaponName?: EnumWeaponNameFieldUpdateOperationsInput | $Enums.WeaponName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     brute?: BruteUpdateOneRequiredWithoutBruteTemporaryWeaponsNestedInput
   }
@@ -65622,6 +65670,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     bruteId?: StringFieldUpdateOperationsInput | string
     weaponName?: EnumWeaponNameFieldUpdateOperationsInput | $Enums.WeaponName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -65629,12 +65678,14 @@ export namespace Prisma {
     id?: string
     bruteId: string
     weaponName: $Enums.WeaponName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
   export type BruteTemporaryWeaponUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     weaponName?: EnumWeaponNameFieldUpdateOperationsInput | $Enums.WeaponName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -65642,6 +65693,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     bruteId?: StringFieldUpdateOperationsInput | string
     weaponName?: EnumWeaponNameFieldUpdateOperationsInput | $Enums.WeaponName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -68970,6 +69022,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     skillName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
   }
 
@@ -68977,6 +69030,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     skillName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
   }
 
@@ -68984,6 +69038,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     skillName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
   }
 
@@ -69008,6 +69063,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     weaponName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
   }
 
@@ -69015,6 +69071,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     weaponName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
   }
 
@@ -69022,6 +69079,7 @@ export namespace Prisma {
     id?: SortOrder
     bruteId?: SortOrder
     weaponName?: SortOrder
+    createdAt?: SortOrder
     expiresAt?: SortOrder
   }
 
@@ -77805,12 +77863,14 @@ export namespace Prisma {
   export type BruteTemporaryEffectCreateWithoutBruteInput = {
     id?: string
     skillName: $Enums.SkillName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
   export type BruteTemporaryEffectUncheckedCreateWithoutBruteInput = {
     id?: string
     skillName: $Enums.SkillName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
@@ -77827,12 +77887,14 @@ export namespace Prisma {
   export type BruteTemporaryWeaponCreateWithoutBruteInput = {
     id?: string
     weaponName: $Enums.WeaponName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
   export type BruteTemporaryWeaponUncheckedCreateWithoutBruteInput = {
     id?: string
     weaponName: $Enums.WeaponName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
@@ -78858,6 +78920,7 @@ export namespace Prisma {
     id?: UuidFilter<"BruteTemporaryEffect"> | string
     bruteId?: UuidFilter<"BruteTemporaryEffect"> | string
     skillName?: EnumSkillNameFilter<"BruteTemporaryEffect"> | $Enums.SkillName
+    createdAt?: DateTimeFilter<"BruteTemporaryEffect"> | Date | string
     expiresAt?: DateTimeFilter<"BruteTemporaryEffect"> | Date | string
   }
 
@@ -78884,6 +78947,7 @@ export namespace Prisma {
     id?: UuidFilter<"BruteTemporaryWeapon"> | string
     bruteId?: UuidFilter<"BruteTemporaryWeapon"> | string
     weaponName?: EnumWeaponNameFilter<"BruteTemporaryWeapon"> | $Enums.WeaponName
+    createdAt?: DateTimeFilter<"BruteTemporaryWeapon"> | Date | string
     expiresAt?: DateTimeFilter<"BruteTemporaryWeapon"> | Date | string
   }
 
@@ -92722,12 +92786,14 @@ export namespace Prisma {
   export type BruteTemporaryEffectCreateManyBruteInput = {
     id?: string
     skillName: $Enums.SkillName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
   export type BruteTemporaryWeaponCreateManyBruteInput = {
     id?: string
     weaponName: $Enums.WeaponName
+    createdAt?: Date | string
     expiresAt: Date | string
   }
 
@@ -94083,36 +94149,42 @@ export namespace Prisma {
   export type BruteTemporaryEffectUpdateWithoutBruteInput = {
     id?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BruteTemporaryEffectUncheckedUpdateWithoutBruteInput = {
     id?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BruteTemporaryEffectUncheckedUpdateManyWithoutBruteInput = {
     id?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BruteTemporaryWeaponUpdateWithoutBruteInput = {
     id?: StringFieldUpdateOperationsInput | string
     weaponName?: EnumWeaponNameFieldUpdateOperationsInput | $Enums.WeaponName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BruteTemporaryWeaponUncheckedUpdateWithoutBruteInput = {
     id?: StringFieldUpdateOperationsInput | string
     weaponName?: EnumWeaponNameFieldUpdateOperationsInput | $Enums.WeaponName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteInput = {
     id?: StringFieldUpdateOperationsInput | string
     weaponName?: EnumWeaponNameFieldUpdateOperationsInput | $Enums.WeaponName
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

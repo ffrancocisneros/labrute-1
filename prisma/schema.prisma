@@ -1196,6 +1196,7 @@ model BruteTemporaryEffect {
   brute     Brute     @relation(fields: [bruteId], references: [id], onDelete: Cascade)
   bruteId   String    @db.Uuid
   skillName SkillName
+  createdAt DateTime  @default(now()) @db.Timestamptz
   expiresAt DateTime  @db.Timestamptz
 
   @@index([bruteId])
@@ -1207,6 +1208,7 @@ model BruteTemporaryWeapon {
   brute      Brute      @relation(fields: [bruteId], references: [id], onDelete: Cascade)
   bruteId    String     @db.Uuid
   weaponName WeaponName
+  createdAt  DateTime   @default(now()) @db.Timestamptz
   expiresAt  DateTime   @db.Timestamptz
 
   @@index([bruteId])

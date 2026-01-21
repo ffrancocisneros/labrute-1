@@ -80,6 +80,59 @@ const ShopView = () => {
   const [purchaseBruteOpen, setPurchaseBruteOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<ShopSection>('weapons');
 
+  // Helpers para bloqueo 1 vez/día UTC y tier 3 (solo para items temporales)
+  type TempSkill = { skillName: string; expiresAt: string; createdAt?: string };
+  type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
+  type BruteWithTemps = LoggedInUser['brutes'][number] & {
+    temporarySkills?: TempSkill[];
+    temporaryWeapons?: TempWeapon[];
+  };
+
+  const selectedShopItem = purchaseItemId ? items.find((i) => i.id === purchaseItemId) : null;
+  const selectedBrute = (user?.brutes ?? []).find((b) => b.id === bruteId) as BruteWithTemps | undefined;
+
+  const purchaseBlockReason = (() => {
+    if (!selectedShopItem) return null;
+    if (!needsBruteSelection(selectedShopItem)) return null;
+    if (!selectedBrute) return null;
+    if (!selectedShopItem.valueString) return null;
+
+    const utcToday = new Date();
+    const isSameUtcDay = (iso?: string) => {
+      if (!iso) return false;
+      const a = new Date(iso);
+      return a.getUTCFullYear() === utcToday.getUTCFullYear()
+        && a.getUTCMonth() === utcToday.getUTCMonth()
+        && a.getUTCDate() === utcToday.getUTCDate();
+    };
+
+    if (selectedShopItem.type === 'TEMPORARY_SKILL') {
+      const skill = selectedShopItem.valueString;
+      const permTier = (selectedBrute.skills ?? []).filter((s) => s === skill).length;
+      const activeTemps = selectedBrute.temporarySkills ?? [];
+      const activeTier = activeTemps.filter((t) => t.skillName === skill).length;
+      const currentTier = permTier + activeTier;
+      if (currentTier >= 3) return t('shop.tempTier3Skill');
+      if (activeTemps.some((t) => t.skillName === skill && isSameUtcDay(t.createdAt))) {
+        return t('shop.tempAlreadyBoughtTodaySkill');
+      }
+    }
+
+    if (selectedShopItem.type === 'TEMPORARY_WEAPON') {
+      const weapon = selectedShopItem.valueString;
+      const permTier = (selectedBrute.weapons ?? []).filter((w) => w === weapon).length;
+      const activeTemps = selectedBrute.temporaryWeapons ?? [];
+      const activeTier = activeTemps.filter((t) => t.weaponName === weapon).length;
+      const currentTier = permTier + activeTier;
+      if (currentTier >= 3) return t('shop.tempTier3Weapon');
+      if (activeTemps.some((t) => t.weaponName === weapon && isSameUtcDay(t.createdAt))) {
+        return t('shop.tempAlreadyBoughtTodayWeapon');
+      }
+    }
+
+    return null;
+  })();
+
   const load = useCallback(async () => {
     try {
       setLoading(true);
@@ -347,13 +400,18 @@ const ShopView = () => {
               ))}
             </Select>
           </FormControl>
+          {purchaseBlockReason && (
+            <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+              {purchaseBlockReason}
+            </Typography>
+          )}
           <Box sx={{ mt: 2, display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
             <Button onClick={() => { setPurchaseBruteOpen(false); setPurchaseItemId(null); setBruteId(''); }}>
               Cancelar
             </Button>
             <Button
               variant="contained"
-              disabled={!bruteId || purchasing}
+              disabled={!bruteId || purchasing || !!purchaseBlockReason}
               onClick={confirmPurchaseWithBrute}
             >
               Comprar

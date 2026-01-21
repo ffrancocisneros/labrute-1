@@ -126,5 +126,9 @@
   "eventAlreadyStarted": "Мероприятие уже началось",
   "eventMaxLevelReached": "Вы достигли максимальный уровень в этом мероприятии",
   "reportAlreadyHandled": "Жалоба уже обработана",
-  "cantFightBeforeLevelingUp": "Вы не можете сражаться до повышения уровня"
+  "cantFightBeforeLevelingUp": "Вы не можете сражаться до повышения уровня",
+  "shop.tempAlreadyBoughtTodaySkill": "You already bought this skill today. You can only increase 1 tier per day.",
+  "shop.tempAlreadyBoughtTodayWeapon": "You already bought this weapon today. You can only increase 1 tier per day.",
+  "shop.tempTier3Skill": "You already have this skill at Tier 3. You cannot buy it.",
+  "shop.tempTier3Weapon": "You already have this weapon at Tier 3. You cannot buy it."
 }

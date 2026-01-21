@@ -1645,5 +1645,9 @@
   "dayOver": "El día {{day}} ha terminado",
   "seeParticipants": "Ver participantes",
   "searchForParticipant": "Buscar un participante",
-  "outdatedVersion": "Estás usando una versión desactualizada del juego. Por favor, actualiza la página para ir a la versión más reciente. Si sigues viendo este mensaje, por favor, limpia tu caché y actualiza la página."
+  "outdatedVersion": "Estás usando una versión desactualizada del juego. Por favor, actualiza la página para ir a la versión más reciente. Si sigues viendo este mensaje, por favor, limpia tu caché y actualiza la página.",
+  "shop.tempAlreadyBoughtTodaySkill": "Ya compraste esta habilidad hoy. Solo puedes subir 1 tier por día.",
+  "shop.tempAlreadyBoughtTodayWeapon": "Ya compraste esta arma hoy. Solo puedes subir 1 tier por día.",
+  "shop.tempTier3Skill": "Ya tienes esta habilidad en Tier 3. No puedes comprarla.",
+  "shop.tempTier3Weapon": "Ya tienes esta arma en Tier 3. No puedes comprarla."
 }
