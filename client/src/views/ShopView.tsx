@@ -110,9 +110,7 @@ const ShopView = () => {
 
     if (selectedShopItem.type === 'TEMPORARY_SKILL') {
       const skill = selectedShopItem.valueString;
-      const skillsArray: string[] = selectedBrute.skills ?? [];
-      const permTier = skillsArray
-        .filter((skillName) => skillName === skill).length;
+      const permTier = selectedBrute.skills?.[skill as keyof typeof selectedBrute.skills] ?? 0;
       const activeTemps: TempSkill[] = selectedBrute.temporarySkills ?? [];
       const activeTier = activeTemps
         .filter((temp) => temp.skillName === skill).length;
@@ -126,9 +124,7 @@ const ShopView = () => {
 
     if (selectedShopItem.type === 'TEMPORARY_WEAPON') {
       const weapon = selectedShopItem.valueString;
-      const weaponsArray: string[] = selectedBrute.weapons ?? [];
-      const permTier = weaponsArray
-        .filter((weaponName) => weaponName === weapon).length;
+      const permTier = selectedBrute.weapons?.[weapon as keyof typeof selectedBrute.weapons] ?? 0;
       const activeTemps: TempWeapon[] = selectedBrute.temporaryWeapons ?? [];
       const activeTier = activeTemps
         .filter((temp) => temp.weaponName === weapon).length;
