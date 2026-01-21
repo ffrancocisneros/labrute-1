@@ -21,6 +21,8 @@ export const Objectives = {
         progress: number;
         completed: boolean;
         completedAt?: string | null;
+        claimed: boolean;
+        claimedAt?: string | null;
         rewardType: string;
         rewardValue: number;
       }>;
@@ -31,6 +33,8 @@ export const Objectives = {
         progress: number;
         completed: boolean;
         completedAt?: string | null;
+        claimed: boolean;
+        claimedAt?: string | null;
         rewardType: string;
         rewardValue: number;
       }>;
@@ -72,6 +76,8 @@ export const Objectives = {
           progress: obj.progress,
           completed: obj.completed,
           completedAt: obj.completedAt?.toISOString() || null,
+          claimed: obj.claimed,
+          claimedAt: obj.claimedAt?.toISOString() || null,
           rewardType: obj.rewardType,
           rewardValue: obj.rewardValue,
         })),
@@ -82,6 +88,8 @@ export const Objectives = {
           progress: obj.progress,
           completed: obj.completed,
           completedAt: obj.completedAt?.toISOString() || null,
+          claimed: obj.claimed,
+          claimedAt: obj.claimedAt?.toISOString() || null,
           rewardType: obj.rewardType,
           rewardValue: obj.rewardValue,
         })),

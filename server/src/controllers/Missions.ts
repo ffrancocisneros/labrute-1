@@ -21,6 +21,8 @@ export const Missions = {
         progress: number;
         completed: boolean;
         completedAt?: string | null;
+        claimed: boolean;
+        claimedAt?: string | null;
         rewardType: string;
         rewardValue: number;
       }>;
@@ -31,6 +33,8 @@ export const Missions = {
         progress: number;
         completed: boolean;
         completedAt?: string | null;
+        claimed: boolean;
+        claimedAt?: string | null;
         rewardType: string;
         rewardValue: number;
       }>;
@@ -83,7 +87,6 @@ export const Missions = {
         orderBy: { createdAt: 'asc' },
       });
 
-
       // Obtener misiones generales
       const generalMissions = await prisma.mission.findMany({
         where: {
@@ -103,6 +106,8 @@ export const Missions = {
           progress: m.progress,
           completed: m.completed,
           completedAt: m.completedAt?.toISOString() || null,
+          claimed: m.claimed,
+          claimedAt: m.claimedAt?.toISOString() || null,
           rewardType: m.rewardType,
           rewardValue: m.rewardValue,
         })),
@@ -113,6 +118,8 @@ export const Missions = {
           progress: m.progress,
           completed: m.completed,
           completedAt: m.completedAt?.toISOString() || null,
+          claimed: m.claimed,
+          claimedAt: m.claimedAt?.toISOString() || null,
           rewardType: m.rewardType,
           rewardValue: m.rewardValue,
         })),

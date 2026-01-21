@@ -692,6 +692,8 @@ model DailyObjective {
   progress    Int                 @default(0)
   completed   Boolean             @default(false)
   completedAt DateTime?
+  claimed     Boolean             @default(false)
+  claimedAt   DateTime?
   rewardType  ObjectiveRewardType
   rewardValue Int                 // Cantidad de oro o ID del título
   date        DateTime            @default(now()) @db.Date
@@ -711,6 +713,8 @@ model WeeklyObjective {
   progress    Int                 @default(0)
   completed   Boolean             @default(false)
   completedAt DateTime?
+  claimed     Boolean             @default(false)
+  claimedAt   DateTime?
   rewardType  ObjectiveRewardType
   rewardValue Int                 // Cantidad de oro o ID del título
   weekStart   DateTime            @db.Date // Inicio de la semana (lunes)

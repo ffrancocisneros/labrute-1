@@ -17,6 +17,8 @@ interface DailyMission {
   progress: number;
   completed: boolean;
   completedAt?: string | null;
+  claimed: boolean;
+  claimedAt?: string | null;
   rewardType: string;
   rewardValue: number;
 }
@@ -28,6 +30,8 @@ interface WeeklyMission {
   progress: number;
   completed: boolean;
   completedAt?: string | null;
+  claimed: boolean;
+  claimedAt?: string | null;
   rewardType: string;
   rewardValue: number;
 }
@@ -170,12 +174,12 @@ const MissionsView = () => {
   const activeGeneralMissions = filteredGeneralMissions.filter((m) => !m.completed || !m.claimed);
   const completedGeneralMissions = filteredGeneralMissions.filter((m) => m.completed && m.claimed);
 
-  // Para diarias/semanales: completadas Y con completedAt (reclamadas) van a completadas
-  const activeDailyMissions = dailyMissions.filter((m) => !m.completed || !m.completedAt);
-  const completedDailyMissions = dailyMissions.filter((m) => m.completed && m.completedAt);
+  // Para diarias/semanales: completadas Y con claimed/claimedAt van a completadas
+  const activeDailyMissions = dailyMissions.filter((m) => !m.completed || !m.claimed);
+  const completedDailyMissions = dailyMissions.filter((m) => m.completed && m.claimed);
 
-  const activeWeeklyMissions = weeklyMissions.filter((m) => !m.completed || !m.completedAt);
-  const completedWeeklyMissions = weeklyMissions.filter((m) => m.completed && m.completedAt);
+  const activeWeeklyMissions = weeklyMissions.filter((m) => !m.completed || !m.claimed);
+  const completedWeeklyMissions = weeklyMissions.filter((m) => m.completed && m.claimed);
 
   const renderMission = (
     mission: DailyMission | WeeklyMission | GeneralMission,
@@ -187,8 +191,8 @@ const MissionsView = () => {
       ? `${mission.rewardValue} de oro`
       : (titleName ?? `Título ${mission.rewardValue}`);
 
-    // Para misiones diarias/semanales, verificar si completedAt existe (indica que fue reclamado)
-    const isDailyOrWeeklyClaimed = !isGeneral && 'completedAt' in mission && mission.completedAt;
+    // Para misiones diarias/semanales, verificar si claimed=true (indica que fue reclamado)
+    const isDailyOrWeeklyClaimed = !isGeneral && 'claimed' in mission && mission.claimed;
     const isGeneralClaimed = isGeneral && 'claimed' in mission && mission.claimed;
     const isClaimed = isGeneral ? isGeneralClaimed : isDailyOrWeeklyClaimed;
     const showClaimButton = mission.completed && !isClaimed;

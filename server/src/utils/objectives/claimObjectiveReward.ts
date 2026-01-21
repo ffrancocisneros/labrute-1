@@ -21,9 +21,9 @@ export const claimDailyObjectiveReward = async (
     throw new ExpectedError('Objective not found or not completed');
   }
 
-  // Verificar si ya se reclamó (si completedAt existe, ya fue reclamado)
-  if (objective.completedAt) {
-    // Ya fue reclamado anteriormente
+  // Verificar si ya se reclamó
+  // Nota: completedAt indica cuándo se completó, NO cuándo se reclamó.
+  if (objective.claimed || objective.claimedAt) {
     throw new ExpectedError('Reward already claimed');
   }
 
@@ -48,7 +48,8 @@ export const claimDailyObjectiveReward = async (
   await prisma.dailyObjective.update({
     where: { id: objective.id },
     data: {
-      completedAt: new Date(),
+      claimed: true,
+      claimedAt: new Date(),
     },
   });
 
@@ -76,7 +77,8 @@ export const claimWeeklyObjectiveReward = async (
   }
 
   // Verificar si ya se reclamó
-  if (objective.completedAt) {
+  // Nota: completedAt indica cuándo se completó, NO cuándo se reclamó.
+  if (objective.claimed || objective.claimedAt) {
     throw new ExpectedError('Reward already claimed');
   }
 
@@ -100,7 +102,8 @@ export const claimWeeklyObjectiveReward = async (
   await prisma.weeklyObjective.update({
     where: { id: objective.id },
     data: {
-      completedAt: new Date(),
+      claimed: true,
+      claimedAt: new Date(),
     },
   });
 

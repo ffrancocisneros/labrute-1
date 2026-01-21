@@ -22544,6 +22544,8 @@ export namespace Prisma {
     progress: number | null
     completed: boolean | null
     completedAt: Date | null
+    claimed: boolean | null
+    claimedAt: Date | null
     rewardType: $Enums.ObjectiveRewardType | null
     rewardValue: number | null
     date: Date | null
@@ -22558,6 +22560,8 @@ export namespace Prisma {
     progress: number | null
     completed: boolean | null
     completedAt: Date | null
+    claimed: boolean | null
+    claimedAt: Date | null
     rewardType: $Enums.ObjectiveRewardType | null
     rewardValue: number | null
     date: Date | null
@@ -22572,6 +22576,8 @@ export namespace Prisma {
     progress: number
     completed: number
     completedAt: number
+    claimed: number
+    claimedAt: number
     rewardType: number
     rewardValue: number
     date: number
@@ -22600,6 +22606,8 @@ export namespace Prisma {
     progress?: true
     completed?: true
     completedAt?: true
+    claimed?: true
+    claimedAt?: true
     rewardType?: true
     rewardValue?: true
     date?: true
@@ -22614,6 +22622,8 @@ export namespace Prisma {
     progress?: true
     completed?: true
     completedAt?: true
+    claimed?: true
+    claimedAt?: true
     rewardType?: true
     rewardValue?: true
     date?: true
@@ -22628,6 +22638,8 @@ export namespace Prisma {
     progress?: true
     completed?: true
     completedAt?: true
+    claimed?: true
+    claimedAt?: true
     rewardType?: true
     rewardValue?: true
     date?: true
@@ -22729,6 +22741,8 @@ export namespace Prisma {
     progress: number
     completed: boolean
     completedAt: Date | null
+    claimed: boolean
+    claimedAt: Date | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     date: Date
@@ -22762,6 +22776,8 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     date?: boolean
@@ -22777,6 +22793,8 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     date?: boolean
@@ -22792,6 +22810,8 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     date?: boolean
@@ -22807,13 +22827,15 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     date?: boolean
     createdAt?: boolean
   }
 
-  export type DailyObjectiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "target" | "progress" | "completed" | "completedAt" | "rewardType" | "rewardValue" | "date" | "createdAt", ExtArgs["result"]["dailyObjective"]>
+  export type DailyObjectiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "target" | "progress" | "completed" | "completedAt" | "claimed" | "claimedAt" | "rewardType" | "rewardValue" | "date" | "createdAt", ExtArgs["result"]["dailyObjective"]>
   export type DailyObjectiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -22837,6 +22859,8 @@ export namespace Prisma {
       progress: number
       completed: boolean
       completedAt: Date | null
+      claimed: boolean
+      claimedAt: Date | null
       rewardType: $Enums.ObjectiveRewardType
       rewardValue: number
       date: Date
@@ -23272,6 +23296,8 @@ export namespace Prisma {
     readonly progress: FieldRef<"DailyObjective", 'Int'>
     readonly completed: FieldRef<"DailyObjective", 'Boolean'>
     readonly completedAt: FieldRef<"DailyObjective", 'DateTime'>
+    readonly claimed: FieldRef<"DailyObjective", 'Boolean'>
+    readonly claimedAt: FieldRef<"DailyObjective", 'DateTime'>
     readonly rewardType: FieldRef<"DailyObjective", 'ObjectiveRewardType'>
     readonly rewardValue: FieldRef<"DailyObjective", 'Int'>
     readonly date: FieldRef<"DailyObjective", 'DateTime'>
@@ -23731,6 +23757,8 @@ export namespace Prisma {
     progress: number | null
     completed: boolean | null
     completedAt: Date | null
+    claimed: boolean | null
+    claimedAt: Date | null
     rewardType: $Enums.ObjectiveRewardType | null
     rewardValue: number | null
     weekStart: Date | null
@@ -23745,6 +23773,8 @@ export namespace Prisma {
     progress: number | null
     completed: boolean | null
     completedAt: Date | null
+    claimed: boolean | null
+    claimedAt: Date | null
     rewardType: $Enums.ObjectiveRewardType | null
     rewardValue: number | null
     weekStart: Date | null
@@ -23759,6 +23789,8 @@ export namespace Prisma {
     progress: number
     completed: number
     completedAt: number
+    claimed: number
+    claimedAt: number
     rewardType: number
     rewardValue: number
     weekStart: number
@@ -23787,6 +23819,8 @@ export namespace Prisma {
     progress?: true
     completed?: true
     completedAt?: true
+    claimed?: true
+    claimedAt?: true
     rewardType?: true
     rewardValue?: true
     weekStart?: true
@@ -23801,6 +23835,8 @@ export namespace Prisma {
     progress?: true
     completed?: true
     completedAt?: true
+    claimed?: true
+    claimedAt?: true
     rewardType?: true
     rewardValue?: true
     weekStart?: true
@@ -23815,6 +23851,8 @@ export namespace Prisma {
     progress?: true
     completed?: true
     completedAt?: true
+    claimed?: true
+    claimedAt?: true
     rewardType?: true
     rewardValue?: true
     weekStart?: true
@@ -23916,6 +23954,8 @@ export namespace Prisma {
     progress: number
     completed: boolean
     completedAt: Date | null
+    claimed: boolean
+    claimedAt: Date | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     weekStart: Date
@@ -23949,6 +23989,8 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     weekStart?: boolean
@@ -23964,6 +24006,8 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     weekStart?: boolean
@@ -23979,6 +24023,8 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     weekStart?: boolean
@@ -23994,13 +24040,15 @@ export namespace Prisma {
     progress?: boolean
     completed?: boolean
     completedAt?: boolean
+    claimed?: boolean
+    claimedAt?: boolean
     rewardType?: boolean
     rewardValue?: boolean
     weekStart?: boolean
     createdAt?: boolean
   }
 
-  export type WeeklyObjectiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "target" | "progress" | "completed" | "completedAt" | "rewardType" | "rewardValue" | "weekStart" | "createdAt", ExtArgs["result"]["weeklyObjective"]>
+  export type WeeklyObjectiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "target" | "progress" | "completed" | "completedAt" | "claimed" | "claimedAt" | "rewardType" | "rewardValue" | "weekStart" | "createdAt", ExtArgs["result"]["weeklyObjective"]>
   export type WeeklyObjectiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -24024,6 +24072,8 @@ export namespace Prisma {
       progress: number
       completed: boolean
       completedAt: Date | null
+      claimed: boolean
+      claimedAt: Date | null
       rewardType: $Enums.ObjectiveRewardType
       rewardValue: number
       weekStart: Date
@@ -24459,6 +24509,8 @@ export namespace Prisma {
     readonly progress: FieldRef<"WeeklyObjective", 'Int'>
     readonly completed: FieldRef<"WeeklyObjective", 'Boolean'>
     readonly completedAt: FieldRef<"WeeklyObjective", 'DateTime'>
+    readonly claimed: FieldRef<"WeeklyObjective", 'Boolean'>
+    readonly claimedAt: FieldRef<"WeeklyObjective", 'DateTime'>
     readonly rewardType: FieldRef<"WeeklyObjective", 'ObjectiveRewardType'>
     readonly rewardValue: FieldRef<"WeeklyObjective", 'Int'>
     readonly weekStart: FieldRef<"WeeklyObjective", 'DateTime'>
@@ -56647,6 +56699,8 @@ export namespace Prisma {
     progress: 'progress',
     completed: 'completed',
     completedAt: 'completedAt',
+    claimed: 'claimed',
+    claimedAt: 'claimedAt',
     rewardType: 'rewardType',
     rewardValue: 'rewardValue',
     date: 'date',
@@ -56664,6 +56718,8 @@ export namespace Prisma {
     progress: 'progress',
     completed: 'completed',
     completedAt: 'completedAt',
+    claimed: 'claimed',
+    claimedAt: 'claimedAt',
     rewardType: 'rewardType',
     rewardValue: 'rewardValue',
     weekStart: 'weekStart',
@@ -58967,6 +59023,8 @@ export namespace Prisma {
     progress?: IntFilter<"DailyObjective"> | number
     completed?: BoolFilter<"DailyObjective"> | boolean
     completedAt?: DateTimeNullableFilter<"DailyObjective"> | Date | string | null
+    claimed?: BoolFilter<"DailyObjective"> | boolean
+    claimedAt?: DateTimeNullableFilter<"DailyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFilter<"DailyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntFilter<"DailyObjective"> | number
     date?: DateTimeFilter<"DailyObjective"> | Date | string
@@ -58982,6 +59040,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrderInput | SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrderInput | SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     date?: SortOrder
@@ -59001,6 +59061,8 @@ export namespace Prisma {
     progress?: IntFilter<"DailyObjective"> | number
     completed?: BoolFilter<"DailyObjective"> | boolean
     completedAt?: DateTimeNullableFilter<"DailyObjective"> | Date | string | null
+    claimed?: BoolFilter<"DailyObjective"> | boolean
+    claimedAt?: DateTimeNullableFilter<"DailyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFilter<"DailyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntFilter<"DailyObjective"> | number
     date?: DateTimeFilter<"DailyObjective"> | Date | string
@@ -59016,6 +59078,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrderInput | SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrderInput | SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     date?: SortOrder
@@ -59038,6 +59102,8 @@ export namespace Prisma {
     progress?: IntWithAggregatesFilter<"DailyObjective"> | number
     completed?: BoolWithAggregatesFilter<"DailyObjective"> | boolean
     completedAt?: DateTimeNullableWithAggregatesFilter<"DailyObjective"> | Date | string | null
+    claimed?: BoolWithAggregatesFilter<"DailyObjective"> | boolean
+    claimedAt?: DateTimeNullableWithAggregatesFilter<"DailyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeWithAggregatesFilter<"DailyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntWithAggregatesFilter<"DailyObjective"> | number
     date?: DateTimeWithAggregatesFilter<"DailyObjective"> | Date | string
@@ -59055,6 +59121,8 @@ export namespace Prisma {
     progress?: IntFilter<"WeeklyObjective"> | number
     completed?: BoolFilter<"WeeklyObjective"> | boolean
     completedAt?: DateTimeNullableFilter<"WeeklyObjective"> | Date | string | null
+    claimed?: BoolFilter<"WeeklyObjective"> | boolean
+    claimedAt?: DateTimeNullableFilter<"WeeklyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFilter<"WeeklyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntFilter<"WeeklyObjective"> | number
     weekStart?: DateTimeFilter<"WeeklyObjective"> | Date | string
@@ -59070,6 +59138,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrderInput | SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrderInput | SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     weekStart?: SortOrder
@@ -59089,6 +59159,8 @@ export namespace Prisma {
     progress?: IntFilter<"WeeklyObjective"> | number
     completed?: BoolFilter<"WeeklyObjective"> | boolean
     completedAt?: DateTimeNullableFilter<"WeeklyObjective"> | Date | string | null
+    claimed?: BoolFilter<"WeeklyObjective"> | boolean
+    claimedAt?: DateTimeNullableFilter<"WeeklyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFilter<"WeeklyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntFilter<"WeeklyObjective"> | number
     weekStart?: DateTimeFilter<"WeeklyObjective"> | Date | string
@@ -59104,6 +59176,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrderInput | SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrderInput | SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     weekStart?: SortOrder
@@ -59126,6 +59200,8 @@ export namespace Prisma {
     progress?: IntWithAggregatesFilter<"WeeklyObjective"> | number
     completed?: BoolWithAggregatesFilter<"WeeklyObjective"> | boolean
     completedAt?: DateTimeNullableWithAggregatesFilter<"WeeklyObjective"> | Date | string | null
+    claimed?: BoolWithAggregatesFilter<"WeeklyObjective"> | boolean
+    claimedAt?: DateTimeNullableWithAggregatesFilter<"WeeklyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeWithAggregatesFilter<"WeeklyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntWithAggregatesFilter<"WeeklyObjective"> | number
     weekStart?: DateTimeWithAggregatesFilter<"WeeklyObjective"> | Date | string
@@ -62519,6 +62595,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     date?: Date | string
@@ -62534,6 +62612,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     date?: Date | string
@@ -62547,6 +62627,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62562,6 +62644,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62576,6 +62660,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     date?: Date | string
@@ -62589,6 +62675,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62603,6 +62691,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62616,6 +62706,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     weekStart: Date | string
@@ -62631,6 +62723,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     weekStart: Date | string
@@ -62644,6 +62738,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     weekStart?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62659,6 +62755,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     weekStart?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62673,6 +62771,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     weekStart: Date | string
@@ -62686,6 +62786,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     weekStart?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62700,6 +62802,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     weekStart?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66227,6 +66331,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     date?: SortOrder
@@ -66247,6 +66353,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     date?: SortOrder
@@ -66261,6 +66369,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     date?: SortOrder
@@ -66307,6 +66417,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     weekStart?: SortOrder
@@ -66327,6 +66439,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     weekStart?: SortOrder
@@ -66341,6 +66455,8 @@ export namespace Prisma {
     progress?: SortOrder
     completed?: SortOrder
     completedAt?: SortOrder
+    claimed?: SortOrder
+    claimedAt?: SortOrder
     rewardType?: SortOrder
     rewardValue?: SortOrder
     weekStart?: SortOrder
@@ -73168,6 +73284,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     date?: Date | string
@@ -73181,6 +73299,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     date?: Date | string
@@ -73204,6 +73324,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     weekStart: Date | string
@@ -73217,6 +73339,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     weekStart: Date | string
@@ -73773,6 +73897,8 @@ export namespace Prisma {
     progress?: IntFilter<"DailyObjective"> | number
     completed?: BoolFilter<"DailyObjective"> | boolean
     completedAt?: DateTimeNullableFilter<"DailyObjective"> | Date | string | null
+    claimed?: BoolFilter<"DailyObjective"> | boolean
+    claimedAt?: DateTimeNullableFilter<"DailyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFilter<"DailyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntFilter<"DailyObjective"> | number
     date?: DateTimeFilter<"DailyObjective"> | Date | string
@@ -73806,6 +73932,8 @@ export namespace Prisma {
     progress?: IntFilter<"WeeklyObjective"> | number
     completed?: BoolFilter<"WeeklyObjective"> | boolean
     completedAt?: DateTimeNullableFilter<"WeeklyObjective"> | Date | string | null
+    claimed?: BoolFilter<"WeeklyObjective"> | boolean
+    claimedAt?: DateTimeNullableFilter<"WeeklyObjective"> | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFilter<"WeeklyObjective"> | $Enums.ObjectiveRewardType
     rewardValue?: IntFilter<"WeeklyObjective"> | number
     weekStart?: DateTimeFilter<"WeeklyObjective"> | Date | string
@@ -89294,6 +89422,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     date?: Date | string
@@ -89307,6 +89437,8 @@ export namespace Prisma {
     progress?: number
     completed?: boolean
     completedAt?: Date | string | null
+    claimed?: boolean
+    claimedAt?: Date | string | null
     rewardType: $Enums.ObjectiveRewardType
     rewardValue: number
     weekStart: Date | string
@@ -90092,6 +90224,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -90105,6 +90239,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -90118,6 +90254,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -90131,6 +90269,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     weekStart?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -90144,6 +90284,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     weekStart?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -90157,6 +90299,8 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     completed?: BoolFieldUpdateOperationsInput | boolean
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    claimed?: BoolFieldUpdateOperationsInput | boolean
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rewardType?: EnumObjectiveRewardTypeFieldUpdateOperationsInput | $Enums.ObjectiveRewardType
     rewardValue?: IntFieldUpdateOperationsInput | number
     weekStart?: DateTimeFieldUpdateOperationsInput | Date | string
