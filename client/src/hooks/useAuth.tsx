@@ -1,4 +1,4 @@
-import { CalculatedBrute, getCalculatedBrute, Modifiers, refreshChaosSeeds, TOKEN_COOKIE, USER_COOKIE, UserWithBrutesBodyColor, Version } from '@labrute/core';
+import { CalculatedBrute, getCalculatedBrute, Modifiers, refreshChaosSeeds, TemporarySkillEffect, TemporaryWeaponEffect, TOKEN_COOKIE, USER_COOKIE, UserWithBrutesBodyColor, Version } from '@labrute/core';
 import { Event } from '@labrute/prisma';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,8 +8,8 @@ import { applyTemporaryEffects } from '../utils/applyTemporaryEffects';
 import { useAlert } from './useAlert';
 import { useLanguage } from './useLanguage';
 
-type TempSkill = { skillName: string; expiresAt: string; createdAt?: string };
-type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
+type TempSkill = TemporarySkillEffect;
+type TempWeapon = TemporaryWeaponEffect;
 
 export type CalculatedBruteWithTemps = CalculatedBrute & {
   temporarySkills?: TempSkill[];

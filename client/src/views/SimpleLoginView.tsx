@@ -1,4 +1,4 @@
-import { getCalculatedBrute, TOKEN_COOKIE, USER_COOKIE } from '@labrute/core';
+import { getCalculatedBrute, TemporarySkillEffect, TemporaryWeaponEffect, TOKEN_COOKIE, USER_COOKIE } from '@labrute/core';
 import { Box, Paper, TextField, Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -52,8 +52,8 @@ const SimpleLoginView = () => {
       // Update language
       setLanguage(response.user.lang);
 
-      type TempSkill = { skillName: string; expiresAt: string; createdAt?: string };
-      type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
+      type TempSkill = TemporarySkillEffect;
+      type TempWeapon = TemporaryWeaponEffect;
       const loggedInUser: LoggedInUser = {
         ...response.user,
         brutes: response.user.brutes.map((brute) => {

@@ -1,4 +1,4 @@
-import { getCalculatedBrute, getRandomBody, getRandomColors, isNameValid, TOKEN_COOKIE, USER_COOKIE, UsersAuthenticateResponse } from '@labrute/core';
+import { getCalculatedBrute, getRandomBody, getRandomColors, isNameValid, TemporarySkillEffect, TemporaryWeaponEffect, TOKEN_COOKIE, USER_COOKIE, UsersAuthenticateResponse } from '@labrute/core';
 import { Gender } from '@labrute/prisma';
 import { Lock, LockOpen } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
@@ -67,8 +67,8 @@ const HomeView = () => {
         // Update language
         setLanguage(response.user.lang);
 
-        type TempSkill = { skillName: string; expiresAt: string; createdAt?: string };
-        type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
+        type TempSkill = TemporarySkillEffect;
+        type TempWeapon = TemporaryWeaponEffect;
         const loggedInUser: LoggedInUser = {
           ...response.user,
           brutes: response.user.brutes.map((brute) => {

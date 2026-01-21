@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Tab, Tabs, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getCalculatedBrute, USER_COOKIE, TOKEN_COOKIE } from '@labrute/core';
+import { getCalculatedBrute, TemporarySkillEffect, TemporaryWeaponEffect, USER_COOKIE, TOKEN_COOKIE } from '@labrute/core';
 import { applyTemporaryEffects } from '../utils/applyTemporaryEffects';
 import { useAlert } from '../hooks/useAlert';
 import { useAuth } from '../hooks/useAuth';
@@ -82,8 +82,8 @@ const ShopView = () => {
   const [currentSection, setCurrentSection] = useState<ShopSection>('weapons');
 
   // Helpers para bloqueo 1 vez/día UTC y tier 3 (solo para items temporales)
-  type TempSkill = { skillName: string; expiresAt: string; createdAt?: string };
-  type TempWeapon = { weaponName: string; expiresAt: string; createdAt?: string };
+  type TempSkill = TemporarySkillEffect;
+  type TempWeapon = TemporaryWeaponEffect;
   type BruteWithTemps = LoggedInUser['brutes'][number] & {
     temporarySkills?: TempSkill[];
     temporaryWeapons?: TempWeapon[];
