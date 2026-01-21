@@ -49,8 +49,12 @@ const CellSkills = ({
   return brute && (
     <Grid container spacing={1} sx={{ pt: 1, ...sx }} {...props}>
       {skillList.map((skill) => {
-        const tempSkills = (brute as unknown as { temporarySkills?: { skillName: SkillName; expiresAt: string }[] }).temporarySkills ?? [];
-        const tempForSkill = tempSkills.filter((t) => t.skillName === skill.name);
+        type TempSkill = { skillName: SkillName; expiresAt: string };
+        const bruteWithTemps = brute as unknown as {
+          temporarySkills?: TempSkill[];
+        };
+        const tempSkills: TempSkill[] = bruteWithTemps?.temporarySkills ?? [];
+        const tempForSkill = tempSkills.filter((temp) => temp.skillName === skill.name);
         const tempCount = tempForSkill.length;
         const baseTier = brute.skills[skill.name] ?? 0;
         const tier = baseTier + tempCount;
@@ -60,7 +64,7 @@ const CellSkills = ({
           if (!tempCount) return undefined;
           const now = dayjs();
           const soonest = tempForSkill
-            .map((t) => dayjs(t.expiresAt))
+            .map((temp) => dayjs(temp.expiresAt))
             .sort((a, b) => a.valueOf() - b.valueOf())[0];
           if (!soonest) return undefined;
           const totalMinutes = Math.max(0, soonest.diff(now, 'minute'));
