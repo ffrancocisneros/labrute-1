@@ -278,97 +278,85 @@ export const Fights = {
           select: { id: true, userId: true },
         });
 
-        // Update objectives progress
+        // Heavy post-processing (misiones, logros, battle-pass) en background para no bloquear la respuesta
         if (updatedBrute.userId) {
-          const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('../utils/objectives/updateObjectiveProgress.js');
-          const { ObjectiveType, AchievementType } = await import('@labrute/prisma');
+          const userId = updatedBrute.userId;
+          void (async () => {
+            try {
+              const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('../utils/objectives/updateObjectiveProgress.js');
+              const { ObjectiveType, AchievementType, MissionType } = await import('@labrute/prisma');
+              const { updateAchievementProgress, updateAchievementProgressSingleBrute, updateWinStreakAchievement, updateDamageDealtAchievement, updateConsecutiveDaysAchievement } = await import('../utils/achievements/updateAchievementProgress.js');
+              const { updateMissionProgress, updateMissionProgressSingleBrute, updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMissionIncremental } = await import('../utils/missions/updateMissionProgress.js');
 
+              // Objetivos (diario/semanal)
+              await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+              await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+              await updateAchievementProgress(prisma, userId, AchievementType.COMPLETE_FIGHTS_TOTAL, 1);
+              await updateAchievementProgressSingleBrute(
+                prisma,
+                userId,
+                AchievementType.COMPLETE_FIGHTS_SINGLE_BRUTE,
+                (brute) => (brute.victories || 0) + (brute.losses || 0),
+              );
 
-          const { updateAchievementProgress, updateAchievementProgressSingleBrute, updateWinStreakAchievement, updateDamageDealtAchievement, updateConsecutiveDaysAchievement } = await import('../utils/achievements/updateAchievementProgress.js');
-          
-          // Update complete fights objective
-          await updateDailyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.COMPLETE_FIGHTS, 1);
-          await updateWeeklyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.COMPLETE_FIGHTS, 1);
-          await updateAchievementProgress(prisma, updatedBrute.userId, AchievementType.COMPLETE_FIGHTS_TOTAL, 1);
-          // Actualizar logro de peleas completadas con un solo bruto (máximo)
-          await updateAchievementProgressSingleBrute(
-            prisma,
-            updatedBrute.userId,
-            AchievementType.COMPLETE_FIGHTS_SINGLE_BRUTE,
-            (brute) => (brute.victories || 0) + (brute.losses || 0),
-          );
-          
-          // Update win fights objective
-          if (brute1Won) {
-            await updateDailyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.WIN_FIGHTS, 1);
-            await updateWeeklyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.WIN_FIGHTS, 1);
-            await updateAchievementProgress(prisma, updatedBrute.userId, AchievementType.WIN_FIGHTS_TOTAL, 1);
-            // Actualizar logro de peleas ganadas con un solo bruto (máximo)
-            await updateAchievementProgressSingleBrute(
-              prisma,
-              updatedBrute.userId,
-              AchievementType.WIN_FIGHTS_SINGLE_BRUTE,
-              (brute) => brute.victories || 0,
-            );
-          }
-          
-          // Update gain XP objective
-          if (xpGained > 0) {
-            await updateDailyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.GAIN_XP, xpGained);
-            await updateWeeklyObjectiveProgress(prisma, updatedBrute.userId, ObjectiveType.GAIN_XP, xpGained);
-          }
-          
-          // Actualizar logros de racha de victorias, daño total y días consecutivos
-          // Racha de victorias: se actualiza incrementalmente en Brute y se refleja aquí sin escanear peleas
-          await updateWinStreakAchievement(prisma, updatedBrute.userId);
-          await updateDamageDealtAchievement(prisma, updatedBrute.userId, fightId);
-          await updateConsecutiveDaysAchievement(prisma, updatedBrute.userId);
-          
-          // Actualizar progreso de misiones
-          const { updateMissionProgress, updateMissionProgressSingleBrute } = await import('../utils/missions/updateMissionProgress.js');
-          const { MissionType } = await import('@labrute/prisma');
-          
-          // Misiones de combate
-          await updateMissionProgress(prisma, updatedBrute.userId, MissionType.COMPLETE_FIGHTS, 1);
-          if (brute1Won) {
-            await updateMissionProgress(prisma, updatedBrute.userId, MissionType.WIN_FIGHTS, 1);
-          }
-          await updateMissionProgressSingleBrute(
-            prisma,
-            updatedBrute.userId,
-            MissionType.REACH_LEVEL,
-            (brute) => brute.level || 0,
-          );
+              if (brute1Won) {
+                await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
+                await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
+                await updateAchievementProgress(prisma, userId, AchievementType.WIN_FIGHTS_TOTAL, 1);
+                await updateAchievementProgressSingleBrute(
+                  prisma,
+                  userId,
+                  AchievementType.WIN_FIGHTS_SINGLE_BRUTE,
+                  (brute) => brute.victories || 0,
+                );
+              }
 
-          // Misiones de progresión
-          if (xpGained > 0) {
-            await updateMissionProgress(prisma, updatedBrute.userId, MissionType.GAIN_XP, xpGained);
-          }
+              if (xpGained > 0) {
+                await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
+                await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
+                await updateMissionProgress(prisma, userId, MissionType.GAIN_XP, xpGained);
+              }
 
-          // Misiones de daño causado, racha de victorias y habilidades diferentes
-          const { updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMissionIncremental } = await import('../utils/missions/updateMissionProgress.js');
-          await updateDamageDealtMission(prisma, updatedBrute.userId, fightId);
-          await updateWinStreakMission(prisma, updatedBrute.userId);
-          await updateDifferentSkillsMissionIncremental(prisma, updatedBrute.userId, fightId);
+              // Racha de victorias / daño / días consecutivos
+              await updateWinStreakAchievement(prisma, userId);
+              await updateDamageDealtAchievement(prisma, userId, fightId);
+              await updateConsecutiveDaysAchievement(prisma, userId);
 
-          // Pase de batalla (peleas manuales; las automáticas no suman)
-          try {
-            const { addXp, addMissionProgress, addMissionProgressFromFight } = await import('../utils/battlePass/updateBattlePassProgress.js');
-            const { BattlePassMissionType: BP } = await import('@labrute/prisma');
-            await addXp(prisma, updatedBrute.userId, brute1Won ? BATTLE_PASS_XP.FIGHT_WIN : BATTLE_PASS_XP.FIGHT_LOSS).catch((err: Error) => {
-              LOGGER.error(`Battle Pass addXp error: ${err.message}`);
-            });
-            if (brute1Won) {
-              await addMissionProgress(prisma, updatedBrute.userId, BP.WIN_FIGHTS, 1).catch((err: Error) => {
-                LOGGER.error(`Battle Pass addMissionProgress WIN_FIGHTS error: ${err.message}`);
+              // Misiones de combate/progresión
+              await updateMissionProgress(prisma, userId, MissionType.COMPLETE_FIGHTS, 1);
+              if (brute1Won) {
+                await updateMissionProgress(prisma, userId, MissionType.WIN_FIGHTS, 1);
+              }
+              await updateMissionProgressSingleBrute(
+                prisma,
+                userId,
+                MissionType.REACH_LEVEL,
+                (brute) => brute.level || 0,
+              );
+
+              // Misiones de daño, racha, skills distintas
+              await updateDamageDealtMission(prisma, userId, fightId);
+              await updateWinStreakMission(prisma, userId);
+              await updateDifferentSkillsMissionIncremental(prisma, userId, fightId);
+
+              // Pase de batalla (peleas manuales; las automáticas no suman)
+              const { addXp, addMissionProgress, addMissionProgressFromFight } = await import('../utils/battlePass/updateBattlePassProgress.js');
+              const { BattlePassMissionType: BP } = await import('@labrute/prisma');
+              await addXp(prisma, userId, brute1Won ? BATTLE_PASS_XP.FIGHT_WIN : BATTLE_PASS_XP.FIGHT_LOSS).catch((err: Error) => {
+                LOGGER.error(`Battle Pass addXp error: ${err.message}`);
               });
+              if (brute1Won) {
+                await addMissionProgress(prisma, userId, BP.WIN_FIGHTS, 1).catch((err: Error) => {
+                  LOGGER.error(`Battle Pass addMissionProgress WIN_FIGHTS error: ${err.message}`);
+                });
+              }
+              await addMissionProgressFromFight(prisma, userId, fightId, { damage: true, winStreak: true }).catch((err: Error) => {
+                LOGGER.error(`Battle Pass addMissionProgressFromFight error: ${err.message}`);
+              });
+            } catch (err) {
+              LOGGER.error(`Post-fight async processing error: ${err instanceof Error ? err.message : String(err)}`);
             }
-            await addMissionProgressFromFight(prisma, updatedBrute.userId, fightId, { damage: true, winStreak: true }).catch((err: Error) => {
-              LOGGER.error(`Battle Pass addMissionProgressFromFight error: ${err.message}`);
-            });
-          } catch (err) {
-            LOGGER.error(`Battle Pass update error: ${err instanceof Error ? err.message : String(err)}`);
-          }
+          })();
         }
       }
 

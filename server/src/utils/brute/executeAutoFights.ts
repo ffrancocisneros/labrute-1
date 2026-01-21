@@ -18,6 +18,7 @@ import { generateFight } from '../fight/generateFight.js';
 import { ServerState } from '../ServerState.js';
 import { ilike } from '../ilike.js';
 import { getXPNeeded } from '@labrute/core';
+import { DISCORD, LOGGER } from '../../context.js';
 
 export interface AutoFightResult {
   fightsCompleted: number;
@@ -295,30 +296,38 @@ export const executeAutoFights = async (
         // Actualizar logro de peleas automáticas completadas
         await updateAchievementProgress(prisma, bruteWithUser.userId, AchievementType.AUTO_FIGHTS_COMPLETED, 1);
         
-        // Actualizar racha de victorias incrementalmente (evita escanear todas las peleas)
-        const streakBefore = await prisma.brute.findUnique({
-          where: { id: updatedBrute.id },
-          select: { winStreakCurrent: true, winStreakMax: true },
-        });
+        // Logros/objetivos/misiones se procesan en background para no bloquear
+        const userId = bruteWithUser.userId;
+        void (async () => {
+          try {
+            // Racha de victorias incremental (O(1))
+            const streakBefore = await prisma.brute.findUnique({
+              where: { id: updatedBrute.id },
+              select: { winStreakCurrent: true, winStreakMax: true },
+            });
 
-        const newCurrentStreak = brute1Won
-          ? (streakBefore?.winStreakCurrent ?? 0) + 1
-          : 0;
-        const newMaxStreak = Math.max(streakBefore?.winStreakMax ?? 0, newCurrentStreak);
+            const newCurrentStreak = brute1Won
+              ? (streakBefore?.winStreakCurrent ?? 0) + 1
+              : 0;
+            const newMaxStreak = Math.max(streakBefore?.winStreakMax ?? 0, newCurrentStreak);
 
-        await prisma.brute.update({
-          where: { id: updatedBrute.id },
-          data: {
-            winStreakCurrent: newCurrentStreak,
-            winStreakMax: newMaxStreak,
-          },
-          select: { id: true },
-        });
+            await prisma.brute.update({
+              where: { id: updatedBrute.id },
+              data: {
+                winStreakCurrent: newCurrentStreak,
+                winStreakMax: newMaxStreak,
+              },
+              select: { id: true },
+            });
 
-        // Logros permanentes de racha de victorias: leer desde Brute.winStreakMax (O(#brutes))
-        await updateWinStreakAchievement(prisma, bruteWithUser.userId);
-        await updateDamageDealtAchievement(prisma, bruteWithUser.userId, fight.id);
-        await updateConsecutiveDaysAchievement(prisma, bruteWithUser.userId);
+            // Logros permanentes (usan winStreakMax)
+            await updateWinStreakAchievement(prisma, userId);
+            await updateDamageDealtAchievement(prisma, userId, fight.id);
+            await updateConsecutiveDaysAchievement(prisma, userId);
+          } catch (err) {
+            LOGGER.error(`AutoFight post logros error: ${err instanceof Error ? err.message : String(err)}`);
+          }
+        })();
         
         // Actualizar progreso de misiones
         const { updateMissionProgress, updateMissionProgressSingleBrute } = await import('../missions/updateMissionProgress.js');
@@ -343,9 +352,15 @@ export const executeAutoFights = async (
 
         // Misiones de daño causado, racha de victorias y habilidades diferentes
         const { updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMissionIncremental } = await import('../missions/updateMissionProgress.js');
-        await updateDamageDealtMission(prisma, bruteWithUser.userId, fight.id);
-        await updateWinStreakMission(prisma, bruteWithUser.userId);
-        await updateDifferentSkillsMissionIncremental(prisma, bruteWithUser.userId, fight.id);
+        void (async () => {
+          try {
+            await updateDamageDealtMission(prisma, userId, fight.id);
+            await updateWinStreakMission(prisma, userId);
+            await updateDifferentSkillsMissionIncremental(prisma, userId, fight.id);
+          } catch (err) {
+            LOGGER.error(`AutoFight post misiones error: ${err instanceof Error ? err.message : String(err)}`);
+          }
+        })();
 
         // Pase de batalla (peleas automáticas también suman XP)
         const { addXp, addMissionProgress, addMissionProgressFromFight } = await import('../battlePass/updateBattlePassProgress.js');
