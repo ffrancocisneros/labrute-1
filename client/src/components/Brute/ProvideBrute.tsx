@@ -22,10 +22,14 @@ const ProvideBrute = () => {
         b.id === data.id || b.name.toLowerCase() === bruteName.toLowerCase()
       ));
       const calculated = getCalculatedBrute(data, modifiers);
+      const tempSkills = (data.temporarySkills
+        ?? ownedBrute?.temporarySkills ?? []) as TemporarySkillEffect[];
+      const tempWeapons = (data.temporaryWeapons
+        ?? ownedBrute?.temporaryWeapons ?? []) as TemporaryWeaponEffect[];
       updateBrute({
         ...calculated,
-        temporarySkills: (data.temporarySkills ?? ownedBrute?.temporarySkills ?? []) as TemporarySkillEffect[],
-        temporaryWeapons: (data.temporaryWeapons ?? ownedBrute?.temporaryWeapons ?? []) as TemporaryWeaponEffect[],
+        temporarySkills: tempSkills,
+        temporaryWeapons: tempWeapons,
       });
     }).catch(() => {
       window.location.href = '/unknown-brute';
