@@ -177,11 +177,17 @@ const ShopView = () => {
           if (response.user) {
             updateData({
               ...response.user,
-              brutes: response.user.brutes.map((brute) => ({
-                ...getCalculatedBrute(brute, modifiers),
-                temporarySkills: (brute as unknown as { temporarySkills?: TempSkill[] }).temporarySkills ?? [],
-                temporaryWeapons: (brute as unknown as { temporaryWeapons?: TempWeapon[] }).temporaryWeapons ?? [],
-              })),
+              brutes: response.user.brutes.map((brute) => {
+                const bruteWithTemps = brute as unknown as {
+                  temporarySkills?: TempSkill[];
+                  temporaryWeapons?: TempWeapon[];
+                };
+                return {
+                  ...getCalculatedBrute(brute, modifiers),
+                  temporarySkills: bruteWithTemps.temporarySkills ?? [],
+                  temporaryWeapons: bruteWithTemps.temporaryWeapons ?? [],
+                };
+              }),
             });
           }
         }
