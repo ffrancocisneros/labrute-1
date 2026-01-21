@@ -108,24 +108,30 @@ const ShopView = () => {
 
     if (selectedShopItem.type === 'TEMPORARY_SKILL') {
       const skill = selectedShopItem.valueString;
-      const permTier = (selectedBrute.skills ?? []).filter((s) => s === skill).length;
+      const permTier = (selectedBrute.skills ?? [])
+        .filter((skillName) => skillName === skill).length;
       const activeTemps = selectedBrute.temporarySkills ?? [];
-      const activeTier = activeTemps.filter((t) => t.skillName === skill).length;
+      const activeTier = activeTemps
+        .filter((temp) => temp.skillName === skill).length;
       const currentTier = permTier + activeTier;
       if (currentTier >= 3) return t('shop.tempTier3Skill');
-      if (activeTemps.some((t) => t.skillName === skill && isSameUtcDay(t.createdAt))) {
+      if (activeTemps.some((temp) => temp.skillName === skill
+        && isSameUtcDay(temp.createdAt))) {
         return t('shop.tempAlreadyBoughtTodaySkill');
       }
     }
 
     if (selectedShopItem.type === 'TEMPORARY_WEAPON') {
       const weapon = selectedShopItem.valueString;
-      const permTier = (selectedBrute.weapons ?? []).filter((w) => w === weapon).length;
+      const permTier = (selectedBrute.weapons ?? [])
+        .filter((weaponName) => weaponName === weapon).length;
       const activeTemps = selectedBrute.temporaryWeapons ?? [];
-      const activeTier = activeTemps.filter((t) => t.weaponName === weapon).length;
+      const activeTier = activeTemps
+        .filter((temp) => temp.weaponName === weapon).length;
       const currentTier = permTier + activeTier;
       if (currentTier >= 3) return t('shop.tempTier3Weapon');
-      if (activeTemps.some((t) => t.weaponName === weapon && isSameUtcDay(t.createdAt))) {
+      if (activeTemps.some((temp) => temp.weaponName === weapon
+        && isSameUtcDay(temp.createdAt))) {
         return t('shop.tempAlreadyBoughtTodayWeapon');
       }
     }
