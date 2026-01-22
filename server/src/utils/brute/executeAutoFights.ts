@@ -1,5 +1,6 @@
 import {
   canLevelUp,
+  type CalculatedBrute,
   getCalculatedBrute,
   getFightsLeft,
   isWinner,
@@ -187,7 +188,7 @@ export const executeAutoFights = async (
         break;
       }
       
-      const updatedBrute = await prisma.brute.findFirst({
+      const updatedBruteResult = await prisma.brute.findFirst({
         where: {
           id: brute.id,
           deletedAt: null,
@@ -206,6 +207,8 @@ export const executeAutoFights = async (
           weapons: true,
           skills: true,
           pets: true,
+          lastFight: true,
+          fightsLeft: true,
           enduranceStat: true,
           enduranceModifier: true,
           enduranceValue: true,
@@ -225,9 +228,13 @@ export const executeAutoFights = async (
         },
       });
 
-      if (!updatedBrute) {
+      if (!updatedBruteResult) {
         break;
       }
+
+      // Tipo explícito para evitar "implicitly any" y cumplir getFightsLeft/getCalculatedBrute
+      type UpdatedBruteSelect = Pick<Brute, 'id' | 'userId' | 'winStreakCurrent' | 'winStreakMax' | 'level' | 'xp' | 'eventId' | 'name' | 'victories' | 'losses' | 'weapons' | 'skills' | 'pets' | 'lastFight' | 'fightsLeft' | 'enduranceStat' | 'enduranceModifier' | 'enduranceValue' | 'strengthStat' | 'strengthModifier' | 'strengthValue' | 'agilityStat' | 'agilityModifier' | 'agilityValue' | 'speedStat' | 'speedModifier' | 'speedValue' | 'hp'>;
+      const updatedBrute: UpdatedBruteSelect = updatedBruteResult as UpdatedBruteSelect;
 
       // Verificar nuevamente si puede subir de nivel
       const updatedCalculatedBrute = getCalculatedBrute(updatedBrute, modifiers);
@@ -270,13 +277,13 @@ export const executeAutoFights = async (
       // Generar la pelea (incluir habilidades temporales usando cache)
       const opponentCalculatedBrute = getCalculatedBrute(opponentBrute, modifiers);
       await Promise.all([
-        enrichCalculatedBruteWithTemporary(prisma, updatedCalculatedBrute, bruteTemporaryEffects),
-        enrichCalculatedBruteWithTemporary(prisma, opponentCalculatedBrute, opponentTemporaryEffects),
+        enrichCalculatedBruteWithTemporary(prisma, updatedCalculatedBrute as CalculatedBrute, bruteTemporaryEffects),
+        enrichCalculatedBruteWithTemporary(prisma, opponentCalculatedBrute as CalculatedBrute, opponentTemporaryEffects),
       ]);
       const fightData = await generateFight({
         prisma,
-        team1: { brutes: [updatedCalculatedBrute] },
-        team2: { brutes: [opponentCalculatedBrute] },
+        team1: { brutes: [updatedCalculatedBrute as CalculatedBrute] },
+        team2: { brutes: [opponentCalculatedBrute as CalculatedBrute] },
         modifiers,
         backups: !updatedBrute.eventId,
         achievements: true,
@@ -312,7 +319,7 @@ export const executeAutoFights = async (
 
       // Actualizar bruto (userId ya está en updatedBrute, no necesitamos query adicional)
       const userId = updatedBrute.userId;
-      const updatedBruteAfterFight = await prisma.brute.update({
+      const updatedBruteAfterFight: Brute = await prisma.brute.update({
         where: { id: updatedBrute.id },
         data: {
           lastFight: new Date(),

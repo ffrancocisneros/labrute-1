@@ -1,6 +1,6 @@
 import { applySkillModifiers, getHP } from '@labrute/core';
 import type { CalculatedBrute } from '@labrute/core';
-import type { PrismaClient } from '@labrute/prisma';
+import type { PrismaClient, SkillName, WeaponName } from '@labrute/prisma';
 
 export interface TemporaryEffectsCache {
   skills: string[];
@@ -42,12 +42,13 @@ export const enrichCalculatedBruteWithTemporary = async (
   }
 
   for (const e of effects) {
-    const v = brute.skills[e.skillName];
+    const skillName = e.skillName as unknown as SkillName;
+    const v = brute.skills[skillName];
     if (v === undefined || v === 0) {
-      brute.skills[e.skillName] = 1;
+      brute.skills[skillName] = 1;
       // IMPORTANTE: para skills temporales, además de mostrarlas, hay que aplicar sus modificadores
       // al bruto calculado (si no, no afectan fuerza/daño/etc.)
-      applySkillModifiers(brute, e.skillName, 1, false);
+      applySkillModifiers(brute, skillName, 1, false);
     }
   }
 
@@ -60,6 +61,7 @@ export const enrichCalculatedBruteWithTemporary = async (
   for (const w of weapons) {
     // CalculatedBrute.weapons es un Partial<Record<WeaponName, number>>
     // Incrementar el tier si ya existe, o establecerlo en 1 si no existe
-    brute.weapons[w.weaponName] = (brute.weapons[w.weaponName] || 0) + 1;
+    const weaponName = w.weaponName as unknown as WeaponName;
+    brute.weapons[weaponName] = (brute.weapons[weaponName] || 0) + 1;
   }
 };
