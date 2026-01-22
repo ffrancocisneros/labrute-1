@@ -1201,6 +1201,7 @@ model BruteTemporaryEffect {
 
   @@index([bruteId])
   @@index([expiresAt])
+  @@index([bruteId, expiresAt])
 }
 
 model BruteTemporaryWeapon {
@@ -1213,6 +1214,7 @@ model BruteTemporaryWeapon {
 
   @@index([bruteId])
   @@index([expiresAt])
+  @@index([bruteId, expiresAt])
 }
 
 model CosmeticPreset {

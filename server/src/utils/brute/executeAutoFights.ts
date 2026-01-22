@@ -12,7 +12,7 @@ import {
   LogType,
   PrismaClient,
 } from '@labrute/prisma';
-import { enrichCalculatedBruteWithTemporary } from './enrichCalculatedBruteWithTemporary.js';
+import { enrichCalculatedBruteWithTemporary, type TemporaryEffectsCache } from './enrichCalculatedBruteWithTemporary.js';
 import { getOpponents } from './getOpponents.js';
 import { generateFight } from '../fight/generateFight.js';
 import { ServerState } from '../ServerState.js';
@@ -50,6 +50,9 @@ export const executeAutoFights = async (
 
   // Obtener modificadores actuales
   const modifiers = await ServerState.getModifiers(prisma);
+
+  // Cachear evento actual (no cambia durante las peleas automáticas)
+  const currentEvent = await ServerState.getCurrentEvent(prisma);
 
   // Obtener bruto calculado
   const calculatedBrute = getCalculatedBrute(brute, modifiers);
@@ -108,6 +111,41 @@ export const executeAutoFights = async (
   let currentFightsLeft = fightsLeft;
   let fightsCompleted = 0;
 
+  // Cache de habilidades temporales para optimizar queries
+  const temporaryEffectsCache = new Map<string, TemporaryEffectsCache>();
+
+  // Función helper para obtener efectos temporales desde cache o DB
+  const getTemporaryEffects = async (bruteId: string): Promise<TemporaryEffectsCache> => {
+    if (temporaryEffectsCache.has(bruteId)) {
+      return temporaryEffectsCache.get(bruteId)!;
+    }
+
+    const [skills, weapons] = await Promise.all([
+      prisma.bruteTemporaryEffect.findMany({
+        where: { bruteId, expiresAt: { gt: new Date() } },
+        select: { skillName: true },
+      }),
+      prisma.bruteTemporaryWeapon.findMany({
+        where: { bruteId, expiresAt: { gt: new Date() } },
+        select: { weaponName: true },
+      }),
+    ]);
+
+    const result: TemporaryEffectsCache = {
+      skills: skills.map((s) => s.skillName),
+      weapons: weapons.map((w) => w.weaponName),
+    };
+
+    temporaryEffectsCache.set(bruteId, result);
+    return result;
+  };
+
+  // Pre-cargar efectos temporales del bruto principal
+  const bruteTemporaryEffects = await getTemporaryEffects(brute.id);
+
+  // Pre-cargar efectos temporales de todos los oponentes en paralelo
+  await Promise.all(opponents.map((opp) => getTemporaryEffects(opp.id)));
+
   while (currentFightsLeft > 0) {
     // Si no hay oponentes disponibles, obtener nuevos
     if (opponents.length === 0) {
@@ -144,15 +182,46 @@ export const executeAutoFights = async (
     }
 
     try {
-      // Obtener el bruto actualizado antes de pelear (necesario para verificar estado actual)
+      // Obtener el bruto actualizado antes de pelear (incluir userId y winStreak para evitar queries redundantes)
       if (!brute) {
         break;
       }
       
-      const updatedBrute: Awaited<ReturnType<typeof prisma.brute.findFirst>> = await prisma.brute.findFirst({
+      const updatedBrute = await prisma.brute.findFirst({
         where: {
           id: brute.id,
           deletedAt: null,
+        },
+        select: {
+          id: true,
+          userId: true,
+          winStreakCurrent: true,
+          winStreakMax: true,
+          level: true,
+          xp: true,
+          eventId: true,
+          name: true,
+          victories: true,
+          losses: true,
+          weapons: true,
+          skills: true,
+          pets: true,
+          enduranceStat: true,
+          enduranceModifier: true,
+          enduranceValue: true,
+          strengthStat: true,
+          strengthModifier: true,
+          strengthValue: true,
+          agilityStat: true,
+          agilityModifier: true,
+          agilityValue: true,
+          speedStat: true,
+          speedModifier: true,
+          speedValue: true,
+          hp: true,
+          opponents: {
+            select: { name: true },
+          },
         },
       });
 
@@ -195,10 +264,15 @@ export const executeAutoFights = async (
         continue;
       }
 
-      // Generar la pelea (incluir habilidades temporales, p. ej. del pase)
+      // Obtener efectos temporales del oponente desde cache
+      const opponentTemporaryEffects = await getTemporaryEffects(opponentBrute.id);
+
+      // Generar la pelea (incluir habilidades temporales usando cache)
       const opponentCalculatedBrute = getCalculatedBrute(opponentBrute, modifiers);
-      await enrichCalculatedBruteWithTemporary(prisma, updatedCalculatedBrute);
-      await enrichCalculatedBruteWithTemporary(prisma, opponentCalculatedBrute);
+      await Promise.all([
+        enrichCalculatedBruteWithTemporary(prisma, updatedCalculatedBrute, bruteTemporaryEffects),
+        enrichCalculatedBruteWithTemporary(prisma, opponentCalculatedBrute, opponentTemporaryEffects),
+      ]);
       const fightData = await generateFight({
         prisma,
         team1: { brutes: [updatedCalculatedBrute] },
@@ -216,18 +290,17 @@ export const executeAutoFights = async (
       // Determinar ganador
       const brute1Won = isWinner(updatedBrute, fightData.data);
       
-      // Calcular XP ganado
+      // Calcular XP ganado (usar evento cacheado)
       const levelDifference = updatedBrute.level - opponentBrute.level;
-      const event = await ServerState.getCurrentEvent(prisma);
       
       let xpGained = brute1Won
         ? updatedBrute.eventId
-          ? updatedBrute.level >= (event?.maxLevel ?? 999)
+          ? updatedBrute.level >= (currentEvent?.maxLevel ?? 999)
             ? 0
             : getXPNeeded(updatedBrute.level + 1)
           : levelDifference > 10 ? 0 : levelDifference > 2 ? 1 : 2
         : updatedBrute.eventId
-          ? updatedBrute.level >= (event?.maxLevel ?? 999)
+          ? updatedBrute.level >= (currentEvent?.maxLevel ?? 999)
             ? 0
             : Math.ceil(getXPNeeded(updatedBrute.level + 1) / 2)
           : levelDifference > 10 ? 0 : 1;
@@ -237,14 +310,9 @@ export const executeAutoFights = async (
         xpGained *= 2;
       }
 
-      // Obtener userId antes de actualizar
-      const bruteWithUser = await prisma.brute.findFirst({
-        where: { id: updatedBrute.id },
-        select: { userId: true },
-      });
-
-      // Actualizar bruto
-      const updatedBruteAfterFight: Awaited<ReturnType<typeof prisma.brute.update>> = await prisma.brute.update({
+      // Actualizar bruto (userId ya está en updatedBrute, no necesitamos query adicional)
+      const userId = updatedBrute.userId;
+      const updatedBruteAfterFight = await prisma.brute.update({
         where: { id: updatedBrute.id },
         data: {
           lastFight: new Date(),
@@ -256,32 +324,32 @@ export const executeAutoFights = async (
       });
 
       // Actualizar progreso de objetivos
-      if (bruteWithUser?.userId) {
+      if (userId) {
         const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('../objectives/updateObjectiveProgress.js');
         const { ObjectiveType, AchievementType } = await import('@labrute/prisma');
         const { updateAchievementProgress, updateAchievementProgressSingleBrute, updateWinStreakAchievement, updateDamageDealtAchievement, updateConsecutiveDaysAchievement } = await import('../achievements/updateAchievementProgress.js');
         
         // Actualizar objetivo de peleas completadas
-        await updateDailyObjectiveProgress(prisma, bruteWithUser.userId, ObjectiveType.COMPLETE_FIGHTS, 1);
-        await updateWeeklyObjectiveProgress(prisma, bruteWithUser.userId, ObjectiveType.COMPLETE_FIGHTS, 1);
-        await updateAchievementProgress(prisma, bruteWithUser.userId, AchievementType.COMPLETE_FIGHTS_TOTAL, 1);
+        await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+        await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+        await updateAchievementProgress(prisma, userId, AchievementType.COMPLETE_FIGHTS_TOTAL, 1);
         // Actualizar logro de peleas completadas con un solo bruto (máximo)
         await updateAchievementProgressSingleBrute(
           prisma,
-          bruteWithUser.userId,
+          userId,
           AchievementType.COMPLETE_FIGHTS_SINGLE_BRUTE,
           (brute) => (brute.victories || 0) + (brute.losses || 0),
         );
         
         // Actualizar objetivo de peleas ganadas
         if (brute1Won) {
-          await updateDailyObjectiveProgress(prisma, bruteWithUser.userId, ObjectiveType.WIN_FIGHTS, 1);
-          await updateWeeklyObjectiveProgress(prisma, bruteWithUser.userId, ObjectiveType.WIN_FIGHTS, 1);
-          await updateAchievementProgress(prisma, bruteWithUser.userId, AchievementType.WIN_FIGHTS_TOTAL, 1);
+          await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
+          await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
+          await updateAchievementProgress(prisma, userId, AchievementType.WIN_FIGHTS_TOTAL, 1);
           // Actualizar logro de peleas ganadas con un solo bruto (máximo)
           await updateAchievementProgressSingleBrute(
             prisma,
-            bruteWithUser.userId,
+            userId,
             AchievementType.WIN_FIGHTS_SINGLE_BRUTE,
             (brute) => brute.victories || 0,
           );
@@ -289,27 +357,21 @@ export const executeAutoFights = async (
         
         // Actualizar objetivo de XP ganado
         if (xpGained > 0) {
-          await updateDailyObjectiveProgress(prisma, bruteWithUser.userId, ObjectiveType.GAIN_XP, xpGained);
-          await updateWeeklyObjectiveProgress(prisma, bruteWithUser.userId, ObjectiveType.GAIN_XP, xpGained);
+          await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
+          await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
         }
         
         // Actualizar logro de peleas automáticas completadas
-        await updateAchievementProgress(prisma, bruteWithUser.userId, AchievementType.AUTO_FIGHTS_COMPLETED, 1);
+        await updateAchievementProgress(prisma, userId, AchievementType.AUTO_FIGHTS_COMPLETED, 1);
         
         // Logros/objetivos/misiones se procesan en background para no bloquear
-        const userId = bruteWithUser.userId;
         void (async () => {
           try {
-            // Racha de victorias incremental (O(1))
-            const streakBefore = await prisma.brute.findUnique({
-              where: { id: updatedBrute.id },
-              select: { winStreakCurrent: true, winStreakMax: true },
-            });
-
+            // Racha de victorias incremental (O(1)) - usar valores de updatedBrute
             const newCurrentStreak = brute1Won
-              ? (streakBefore?.winStreakCurrent ?? 0) + 1
+              ? (updatedBrute.winStreakCurrent ?? 0) + 1
               : 0;
-            const newMaxStreak = Math.max(streakBefore?.winStreakMax ?? 0, newCurrentStreak);
+            const newMaxStreak = Math.max(updatedBrute.winStreakMax ?? 0, newCurrentStreak);
 
             await prisma.brute.update({
               where: { id: updatedBrute.id },
@@ -334,20 +396,20 @@ export const executeAutoFights = async (
         const { MissionType } = await import('@labrute/prisma');
         
         // Misiones de combate
-        await updateMissionProgress(prisma, bruteWithUser.userId, MissionType.COMPLETE_FIGHTS, 1);
+        await updateMissionProgress(prisma, userId, MissionType.COMPLETE_FIGHTS, 1);
         if (brute1Won) {
-          await updateMissionProgress(prisma, bruteWithUser.userId, MissionType.WIN_FIGHTS, 1);
+          await updateMissionProgress(prisma, userId, MissionType.WIN_FIGHTS, 1);
         }
         await updateMissionProgressSingleBrute(
           prisma,
-          bruteWithUser.userId,
+          userId,
           MissionType.REACH_LEVEL,
           (brute) => brute.level || 0,
         );
 
         // Misiones de progresión
         if (xpGained > 0) {
-          await updateMissionProgress(prisma, bruteWithUser.userId, MissionType.GAIN_XP, xpGained);
+          await updateMissionProgress(prisma, userId, MissionType.GAIN_XP, xpGained);
         }
 
         // Misiones de daño causado, racha de victorias y habilidades diferentes
@@ -366,15 +428,15 @@ export const executeAutoFights = async (
         const { addXp, addMissionProgress, addMissionProgressFromFight } = await import('../battlePass/updateBattlePassProgress.js');
         const { BattlePassMissionType: BP } = await import('@labrute/prisma');
         const { BATTLE_PASS_XP } = await import('@labrute/core');
-        await addXp(prisma, bruteWithUser.userId, brute1Won ? BATTLE_PASS_XP.FIGHT_WIN : BATTLE_PASS_XP.FIGHT_LOSS).catch((err: Error) => {
+        await addXp(prisma, userId, brute1Won ? BATTLE_PASS_XP.FIGHT_WIN : BATTLE_PASS_XP.FIGHT_LOSS).catch((err: Error) => {
           // Silently fail for Battle Pass updates in auto fights
         });
         if (brute1Won) {
-          await addMissionProgress(prisma, bruteWithUser.userId, BP.WIN_FIGHTS, 1).catch((err: Error) => {
+          await addMissionProgress(prisma, userId, BP.WIN_FIGHTS, 1).catch((err: Error) => {
             // Silently fail for Battle Pass updates in auto fights
           });
         }
-        await addMissionProgressFromFight(prisma, bruteWithUser.userId, fight.id, { damage: true, winStreak: true }).catch((err: Error) => {
+        await addMissionProgressFromFight(prisma, userId, fight.id, { damage: true, winStreak: true }).catch((err: Error) => {
           // Silently fail for Battle Pass updates in auto fights
         });
       }
@@ -405,12 +467,16 @@ export const executeAutoFights = async (
       fightsCompleted++;
       currentFightsLeft--;
 
-      // Actualizar referencia del brute para siguiente iteración (sin regenerar oponentes innecesariamente)
-      // Solo regenerar oponentes si se acabaron
+      // Actualizar referencia del brute para siguiente iteración
+      brute = updatedBruteAfterFight;
+
+      // Si se regeneran oponentes, pre-cargar sus efectos temporales
       if (opponents.length <= 1) {
         const freshOpponents = await getOpponents(prisma, updatedBruteAfterFight);
         if (freshOpponents.length > 0) {
           opponents = freshOpponents;
+          // Pre-cargar efectos temporales de nuevos oponentes en paralelo
+          await Promise.all(freshOpponents.map((opp) => getTemporaryEffects(opp.id)));
           await prisma.brute.update({
             where: { id: updatedBruteAfterFight.id },
             data: {
@@ -422,9 +488,6 @@ export const executeAutoFights = async (
           });
         }
       }
-
-      // Actualizar referencia del brute para siguiente iteración
-      brute = updatedBruteAfterFight;
 
     } catch (error) {
       // Remover el oponente que causó el error y continuar

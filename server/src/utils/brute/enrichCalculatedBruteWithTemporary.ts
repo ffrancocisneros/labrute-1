@@ -1,20 +1,46 @@
 import { applySkillModifiers, getHP } from '@labrute/core';
 import type { CalculatedBrute } from '@labrute/core';
 import type { PrismaClient } from '@labrute/prisma';
-import { enrichCalculatedBruteWithTemporaryWeapon } from './enrichCalculatedBruteWithTemporaryWeapon.js';
+
+export interface TemporaryEffectsCache {
+  skills: string[];
+  weapons: string[];
+}
 
 /**
  * Añade las habilidades temporales (p. ej. del pase de batalla) al bruto calculado.
  * Modifica brute.skills in-place.
+ * 
+ * @param prisma - Cliente de Prisma
+ * @param brute - Bruto calculado a enriquecer
+ * @param cache - Cache opcional de efectos temporales (para optimización)
  */
 export const enrichCalculatedBruteWithTemporary = async (
   prisma: PrismaClient,
   brute: CalculatedBrute,
+  cache?: TemporaryEffectsCache,
 ): Promise<void> => {
-  const effects = await prisma.bruteTemporaryEffect.findMany({
-    where: { bruteId: brute.id, expiresAt: { gt: new Date() } },
-    select: { skillName: true },
-  });
+  let effects: { skillName: string }[];
+  let weapons: { weaponName: string }[];
+
+  if (cache) {
+    // Usar cache si está disponible
+    effects = cache.skills.map((skillName) => ({ skillName }));
+    weapons = cache.weapons.map((weaponName) => ({ weaponName }));
+  } else {
+    // Cargar desde DB si no hay cache
+    [effects, weapons] = await Promise.all([
+      prisma.bruteTemporaryEffect.findMany({
+        where: { bruteId: brute.id, expiresAt: { gt: new Date() } },
+        select: { skillName: true },
+      }),
+      prisma.bruteTemporaryWeapon.findMany({
+        where: { bruteId: brute.id, expiresAt: { gt: new Date() } },
+        select: { weaponName: true },
+      }),
+    ]);
+  }
+
   for (const e of effects) {
     const v = brute.skills[e.skillName];
     if (v === undefined || v === 0) {
@@ -31,5 +57,9 @@ export const enrichCalculatedBruteWithTemporary = async (
   brute.hp = getHP(brute.level, brute.enduranceValue);
 
   // También añadir armas temporales
-  await enrichCalculatedBruteWithTemporaryWeapon(prisma, brute);
+  for (const w of weapons) {
+    // CalculatedBrute.weapons es un Partial<Record<WeaponName, number>>
+    // Incrementar el tier si ya existe, o establecerlo en 1 si no existe
+    brute.weapons[w.weaponName] = (brute.weapons[w.weaponName] || 0) + 1;
+  }
 };
