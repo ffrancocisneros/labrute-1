@@ -210,6 +210,8 @@ exports.Prisma.BruteScalarFieldEnum = {
   eventTournamentRoundWatched: 'eventTournamentRoundWatched',
   lastFight: 'lastFight',
   fightsLeft: 'fightsLeft',
+  bonusFightsCount: 'bonusFightsCount',
+  bonusFightsDate: 'bonusFightsDate',
   victories: 'victories',
   losses: 'losses',
   winStreakCurrent: 'winStreakCurrent',

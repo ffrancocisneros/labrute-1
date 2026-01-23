@@ -9379,6 +9379,7 @@ export namespace Prisma {
     globalTournamentRoundWatched: number | null
     eventTournamentRoundWatched: number | null
     fightsLeft: number | null
+    bonusFightsCount: number | null
     victories: number | null
     losses: number | null
     winStreakCurrent: number | null
@@ -9410,6 +9411,7 @@ export namespace Prisma {
     globalTournamentRoundWatched: number | null
     eventTournamentRoundWatched: number | null
     fightsLeft: number | null
+    bonusFightsCount: number | null
     victories: number | null
     losses: number | null
     winStreakCurrent: number | null
@@ -9459,6 +9461,8 @@ export namespace Prisma {
     eventTournamentRoundWatched: number | null
     lastFight: Date | null
     fightsLeft: number | null
+    bonusFightsCount: number | null
+    bonusFightsDate: Date | null
     victories: number | null
     losses: number | null
     winStreakCurrent: number | null
@@ -9514,6 +9518,8 @@ export namespace Prisma {
     eventTournamentRoundWatched: number | null
     lastFight: Date | null
     fightsLeft: number | null
+    bonusFightsCount: number | null
+    bonusFightsDate: Date | null
     victories: number | null
     losses: number | null
     winStreakCurrent: number | null
@@ -9577,6 +9583,8 @@ export namespace Prisma {
     eventTournamentRoundWatched: number
     lastFight: number
     fightsLeft: number
+    bonusFightsCount: number
+    bonusFightsDate: number
     victories: number
     losses: number
     winStreakCurrent: number
@@ -9616,6 +9624,7 @@ export namespace Prisma {
     globalTournamentRoundWatched?: true
     eventTournamentRoundWatched?: true
     fightsLeft?: true
+    bonusFightsCount?: true
     victories?: true
     losses?: true
     winStreakCurrent?: true
@@ -9647,6 +9656,7 @@ export namespace Prisma {
     globalTournamentRoundWatched?: true
     eventTournamentRoundWatched?: true
     fightsLeft?: true
+    bonusFightsCount?: true
     victories?: true
     losses?: true
     winStreakCurrent?: true
@@ -9696,6 +9706,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: true
     lastFight?: true
     fightsLeft?: true
+    bonusFightsCount?: true
+    bonusFightsDate?: true
     victories?: true
     losses?: true
     winStreakCurrent?: true
@@ -9751,6 +9763,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: true
     lastFight?: true
     fightsLeft?: true
+    bonusFightsCount?: true
+    bonusFightsDate?: true
     victories?: true
     losses?: true
     winStreakCurrent?: true
@@ -9814,6 +9828,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: true
     lastFight?: true
     fightsLeft?: true
+    bonusFightsCount?: true
+    bonusFightsDate?: true
     victories?: true
     losses?: true
     winStreakCurrent?: true
@@ -9964,6 +9980,8 @@ export namespace Prisma {
     eventTournamentRoundWatched: number | null
     lastFight: Date | null
     fightsLeft: number
+    bonusFightsCount: number
+    bonusFightsDate: Date | null
     victories: number
     losses: number
     winStreakCurrent: number
@@ -10046,6 +10064,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: boolean
     lastFight?: boolean
     fightsLeft?: boolean
+    bonusFightsCount?: boolean
+    bonusFightsDate?: boolean
     victories?: boolean
     losses?: boolean
     winStreakCurrent?: boolean
@@ -10140,6 +10160,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: boolean
     lastFight?: boolean
     fightsLeft?: boolean
+    bonusFightsCount?: boolean
+    bonusFightsDate?: boolean
     victories?: boolean
     losses?: boolean
     winStreakCurrent?: boolean
@@ -10208,6 +10230,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: boolean
     lastFight?: boolean
     fightsLeft?: boolean
+    bonusFightsCount?: boolean
+    bonusFightsDate?: boolean
     victories?: boolean
     losses?: boolean
     winStreakCurrent?: boolean
@@ -10276,6 +10300,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: boolean
     lastFight?: boolean
     fightsLeft?: boolean
+    bonusFightsCount?: boolean
+    bonusFightsDate?: boolean
     victories?: boolean
     losses?: boolean
     winStreakCurrent?: boolean
@@ -10290,7 +10316,7 @@ export namespace Prisma {
     resets?: boolean
   }
 
-  export type BruteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "deletedAt" | "createdAt" | "willBeDeletedAt" | "deletionReason" | "destinyPath" | "previousDestinyPath" | "level" | "xp" | "hp" | "enduranceStat" | "enduranceModifier" | "enduranceValue" | "strengthStat" | "strengthModifier" | "strengthValue" | "agilityStat" | "agilityModifier" | "agilityValue" | "speedStat" | "speedModifier" | "speedValue" | "ranking" | "gender" | "userId" | "body" | "colors" | "weapons" | "skills" | "pets" | "ascensions" | "ascendedWeapons" | "ascendedSkills" | "ascendedPets" | "masterId" | "pupilsCount" | "clanId" | "registeredForTournament" | "nextTournamentDate" | "currentTournamentDate" | "currentTournamentStepWatched" | "globalTournamentWatchedDate" | "globalTournamentRoundWatched" | "eventTournamentWatchedDate" | "eventTournamentRoundWatched" | "lastFight" | "fightsLeft" | "victories" | "losses" | "winStreakCurrent" | "winStreakMax" | "opponentsGeneratedAt" | "canRankUpSince" | "favorite" | "autoFightEnabled" | "wantToJoinClanId" | "tournamentWins" | "eventId" | "resets", ExtArgs["result"]["brute"]>
+  export type BruteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "deletedAt" | "createdAt" | "willBeDeletedAt" | "deletionReason" | "destinyPath" | "previousDestinyPath" | "level" | "xp" | "hp" | "enduranceStat" | "enduranceModifier" | "enduranceValue" | "strengthStat" | "strengthModifier" | "strengthValue" | "agilityStat" | "agilityModifier" | "agilityValue" | "speedStat" | "speedModifier" | "speedValue" | "ranking" | "gender" | "userId" | "body" | "colors" | "weapons" | "skills" | "pets" | "ascensions" | "ascendedWeapons" | "ascendedSkills" | "ascendedPets" | "masterId" | "pupilsCount" | "clanId" | "registeredForTournament" | "nextTournamentDate" | "currentTournamentDate" | "currentTournamentStepWatched" | "globalTournamentWatchedDate" | "globalTournamentRoundWatched" | "eventTournamentWatchedDate" | "eventTournamentRoundWatched" | "lastFight" | "fightsLeft" | "bonusFightsCount" | "bonusFightsDate" | "victories" | "losses" | "winStreakCurrent" | "winStreakMax" | "opponentsGeneratedAt" | "canRankUpSince" | "favorite" | "autoFightEnabled" | "wantToJoinClanId" | "tournamentWins" | "eventId" | "resets", ExtArgs["result"]["brute"]>
   export type BruteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Brute$userArgs<ExtArgs>
     master?: boolean | Brute$masterArgs<ExtArgs>
@@ -10422,6 +10448,8 @@ export namespace Prisma {
       eventTournamentRoundWatched: number | null
       lastFight: Date | null
       fightsLeft: number
+      bonusFightsCount: number
+      bonusFightsDate: Date | null
       victories: number
       losses: number
       winStreakCurrent: number
@@ -10935,6 +10963,8 @@ export namespace Prisma {
     readonly eventTournamentRoundWatched: FieldRef<"Brute", 'Int'>
     readonly lastFight: FieldRef<"Brute", 'DateTime'>
     readonly fightsLeft: FieldRef<"Brute", 'Int'>
+    readonly bonusFightsCount: FieldRef<"Brute", 'Int'>
+    readonly bonusFightsDate: FieldRef<"Brute", 'DateTime'>
     readonly victories: FieldRef<"Brute", 'Int'>
     readonly losses: FieldRef<"Brute", 'Int'>
     readonly winStreakCurrent: FieldRef<"Brute", 'Int'>
@@ -57794,6 +57824,8 @@ export namespace Prisma {
     eventTournamentRoundWatched: 'eventTournamentRoundWatched',
     lastFight: 'lastFight',
     fightsLeft: 'fightsLeft',
+    bonusFightsCount: 'bonusFightsCount',
+    bonusFightsDate: 'bonusFightsDate',
     victories: 'victories',
     losses: 'losses',
     winStreakCurrent: 'winStreakCurrent',
@@ -59241,6 +59273,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: IntNullableFilter<"Brute"> | number | null
     lastFight?: DateTimeNullableFilter<"Brute"> | Date | string | null
     fightsLeft?: IntFilter<"Brute"> | number
+    bonusFightsCount?: IntFilter<"Brute"> | number
+    bonusFightsDate?: DateTimeNullableFilter<"Brute"> | Date | string | null
     victories?: IntFilter<"Brute"> | number
     losses?: IntFilter<"Brute"> | number
     winStreakCurrent?: IntFilter<"Brute"> | number
@@ -59334,6 +59368,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: SortOrderInput | SortOrder
     lastFight?: SortOrderInput | SortOrder
     fightsLeft?: SortOrder
+    bonusFightsCount?: SortOrder
+    bonusFightsDate?: SortOrderInput | SortOrder
     victories?: SortOrder
     losses?: SortOrder
     winStreakCurrent?: SortOrder
@@ -59430,6 +59466,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: IntNullableFilter<"Brute"> | number | null
     lastFight?: DateTimeNullableFilter<"Brute"> | Date | string | null
     fightsLeft?: IntFilter<"Brute"> | number
+    bonusFightsCount?: IntFilter<"Brute"> | number
+    bonusFightsDate?: DateTimeNullableFilter<"Brute"> | Date | string | null
     victories?: IntFilter<"Brute"> | number
     losses?: IntFilter<"Brute"> | number
     winStreakCurrent?: IntFilter<"Brute"> | number
@@ -59523,6 +59561,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: SortOrderInput | SortOrder
     lastFight?: SortOrderInput | SortOrder
     fightsLeft?: SortOrder
+    bonusFightsCount?: SortOrder
+    bonusFightsDate?: SortOrderInput | SortOrder
     victories?: SortOrder
     losses?: SortOrder
     winStreakCurrent?: SortOrder
@@ -59594,6 +59634,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: IntNullableWithAggregatesFilter<"Brute"> | number | null
     lastFight?: DateTimeNullableWithAggregatesFilter<"Brute"> | Date | string | null
     fightsLeft?: IntWithAggregatesFilter<"Brute"> | number
+    bonusFightsCount?: IntWithAggregatesFilter<"Brute"> | number
+    bonusFightsDate?: DateTimeNullableWithAggregatesFilter<"Brute"> | Date | string | null
     victories?: IntWithAggregatesFilter<"Brute"> | number
     losses?: IntWithAggregatesFilter<"Brute"> | number
     winStreakCurrent?: IntWithAggregatesFilter<"Brute"> | number
@@ -62762,6 +62804,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -62853,6 +62897,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -62938,6 +62984,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -63029,6 +63077,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -63117,6 +63167,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -63177,6 +63229,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -63238,6 +63292,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -66969,6 +67025,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: SortOrder
     lastFight?: SortOrder
     fightsLeft?: SortOrder
+    bonusFightsCount?: SortOrder
+    bonusFightsDate?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
     winStreakCurrent?: SortOrder
@@ -67006,6 +67064,7 @@ export namespace Prisma {
     globalTournamentRoundWatched?: SortOrder
     eventTournamentRoundWatched?: SortOrder
     fightsLeft?: SortOrder
+    bonusFightsCount?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
     winStreakCurrent?: SortOrder
@@ -67055,6 +67114,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: SortOrder
     lastFight?: SortOrder
     fightsLeft?: SortOrder
+    bonusFightsCount?: SortOrder
+    bonusFightsDate?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
     winStreakCurrent?: SortOrder
@@ -67110,6 +67171,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: SortOrder
     lastFight?: SortOrder
     fightsLeft?: SortOrder
+    bonusFightsCount?: SortOrder
+    bonusFightsDate?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
     winStreakCurrent?: SortOrder
@@ -67147,6 +67210,7 @@ export namespace Prisma {
     globalTournamentRoundWatched?: SortOrder
     eventTournamentRoundWatched?: SortOrder
     fightsLeft?: SortOrder
+    bonusFightsCount?: SortOrder
     victories?: SortOrder
     losses?: SortOrder
     winStreakCurrent?: SortOrder
@@ -74252,6 +74316,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -74341,6 +74407,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -74580,6 +74648,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -74670,6 +74740,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -75167,6 +75239,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: IntNullableFilter<"Brute"> | number | null
     lastFight?: DateTimeNullableFilter<"Brute"> | Date | string | null
     fightsLeft?: IntFilter<"Brute"> | number
+    bonusFightsCount?: IntFilter<"Brute"> | number
+    bonusFightsDate?: DateTimeNullableFilter<"Brute"> | Date | string | null
     victories?: IntFilter<"Brute"> | number
     losses?: IntFilter<"Brute"> | number
     winStreakCurrent?: IntFilter<"Brute"> | number
@@ -75842,6 +75916,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -75932,6 +76008,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -76131,6 +76209,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -76221,6 +76301,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -76398,6 +76480,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -76488,6 +76572,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -76577,6 +76663,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -76666,6 +76754,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -77007,6 +77097,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -77097,6 +77189,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -77186,6 +77280,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -77276,6 +77372,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -78064,6 +78162,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -78154,6 +78254,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -79189,6 +79291,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -79279,6 +79383,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -79379,6 +79485,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -79469,6 +79577,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -79553,6 +79663,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -79643,6 +79755,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -79732,6 +79846,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -79822,6 +79938,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -80111,6 +80229,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -80201,6 +80321,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -80296,6 +80418,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -80386,6 +80510,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -80574,6 +80700,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -80664,6 +80792,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -80848,6 +80978,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -80938,6 +81070,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -81118,6 +81252,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -81208,6 +81344,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -81344,6 +81482,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -81434,6 +81574,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -81534,6 +81676,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -81624,6 +81768,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -81863,6 +82009,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -81953,6 +82101,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -82053,6 +82203,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -82143,6 +82295,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -82419,6 +82573,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -82509,6 +82665,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -82609,6 +82767,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -82699,6 +82859,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -82783,6 +82945,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -82873,6 +83037,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -83066,6 +83232,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -83156,6 +83324,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -84299,6 +84469,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -84389,6 +84561,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -84675,6 +84849,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -84765,6 +84941,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -84964,6 +85142,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -85054,6 +85234,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -85143,6 +85325,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -85232,6 +85416,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -85327,6 +85513,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -85417,6 +85605,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -85704,6 +85894,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -85794,6 +85986,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -86051,6 +86245,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -86141,6 +86337,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -86314,6 +86512,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -86404,6 +86604,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -86533,6 +86735,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -86623,6 +86827,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -86758,6 +86964,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -86848,6 +87056,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -86932,6 +87142,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -87022,6 +87234,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -87165,6 +87379,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -87255,6 +87471,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -87807,6 +88025,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -87897,6 +88117,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -87986,6 +88208,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -88076,6 +88300,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -88240,6 +88466,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -88330,6 +88558,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -88523,6 +88753,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -88613,6 +88845,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -89576,6 +89810,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -89666,6 +89902,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -89766,6 +90004,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -89856,6 +90096,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -89940,6 +90182,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -90030,6 +90274,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -90130,6 +90376,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -90220,6 +90468,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -90572,6 +90822,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -90662,6 +90914,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -90779,6 +91033,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -90869,6 +91125,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -91014,6 +91272,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -91104,6 +91364,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -91382,6 +91644,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -91594,6 +91858,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -91683,6 +91949,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -91770,6 +92038,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -91985,6 +92255,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -92075,6 +92347,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -92162,6 +92436,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -92622,6 +92898,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -92843,6 +93121,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -92932,6 +93212,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -93019,6 +93301,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -93310,6 +93594,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -93400,6 +93686,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -93487,6 +93775,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -93547,6 +93837,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -93637,6 +93929,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -93724,6 +94018,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -94470,6 +94766,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -94560,6 +94858,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -94647,6 +94947,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -94881,6 +95183,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -94944,6 +95248,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -95062,6 +95368,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -95151,6 +95459,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -95238,6 +95548,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -95298,6 +95610,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -95388,6 +95702,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -95475,6 +95791,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -95853,6 +96171,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -95943,6 +96263,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -96030,6 +96352,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -96090,6 +96414,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -96180,6 +96506,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -96267,6 +96595,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -96464,6 +96794,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: number | null
     lastFight?: Date | string | null
     fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
     victories?: number
     losses?: number
     winStreakCurrent?: number
@@ -96523,6 +96855,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -96613,6 +96947,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number
@@ -96700,6 +97036,8 @@ export namespace Prisma {
     eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
     lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     victories?: IntFieldUpdateOperationsInput | number
     losses?: IntFieldUpdateOperationsInput | number
     winStreakCurrent?: IntFieldUpdateOperationsInput | number

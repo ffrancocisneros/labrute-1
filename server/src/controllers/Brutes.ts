@@ -1622,6 +1622,8 @@ export const Brutes = {
           lastFight: true,
           skills: true,
           eventId: true,
+          bonusFightsCount: true,
+          bonusFightsDate: true,
         },
       });
 
@@ -1638,13 +1640,9 @@ export const Brutes = {
       try {
         const user = await auth(prisma, req);
         if (brute.userId && brute.userId === user.id) {
-          const u = await prisma.user.findUnique({
-            where: { id: user.id },
-            select: { bonusFightsCount: true, bonusFightsDate: true },
-          });
-          const isToday = u?.bonusFightsDate
-            && dayjs.utc(u.bonusFightsDate).isSame(dayjs.utc(), 'day');
-          bonusFights = isToday ? (u?.bonusFightsCount ?? 0) : 0;
+          const isToday = brute.bonusFightsDate
+            && dayjs.utc(brute.bonusFightsDate).isSame(dayjs.utc(), 'day');
+          bonusFights = isToday ? (brute.bonusFightsCount ?? 0) : 0;
         }
       } catch {
         // no auth: no bonus

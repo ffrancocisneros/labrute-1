@@ -47,7 +47,7 @@ export const purchaseItem = async ({
   }
 
   // Validaciones específicas por tipo
-  if ((item.type === 'TEMPORARY_WEAPON' || item.type === 'TEMPORARY_SKILL') && !bruteId) {
+  if ((item.type === 'TEMPORARY_WEAPON' || item.type === 'TEMPORARY_SKILL' || item.type === 'BONUS_FIGHTS') && !bruteId) {
     throw new ExpectedError('Debes elegir un bruto para este item');
   }
 
@@ -101,16 +101,19 @@ export const purchaseItem = async ({
       if (item.valueInt == null || item.valueInt <= 0) {
         throw new ExpectedError('Item de peleas extra inválido');
       }
-      // Obtener estado actual de peleas bonus
-      const u = await prisma.user.findUnique({
-        where: { id: userId },
+      if (!bruteId || !brute) {
+        throw new ExpectedError('Debes elegir un bruto para comprar peleas extra');
+      }
+      // Obtener estado actual de peleas bonus del bruto
+      const bruteWithBonus = await prisma.brute.findUnique({
+        where: { id: bruteId },
         select: { bonusFightsCount: true, bonusFightsDate: true },
       });
-      const isToday = u?.bonusFightsDate
-        && dayjs.utc(u.bonusFightsDate).isSame(dayjs.utc(), 'day');
-      // Agregar peleas extra (igual que pase de batalla)
-      await prisma.user.update({
-        where: { id: userId },
+      const isToday = bruteWithBonus?.bonusFightsDate
+        && dayjs.utc(bruteWithBonus.bonusFightsDate).isSame(dayjs.utc(), 'day');
+      // Agregar peleas extra al bruto
+      await prisma.brute.update({
+        where: { id: bruteId },
         data: isToday
           ? { bonusFightsCount: { increment: item.valueInt } }
           : { bonusFightsCount: item.valueInt, bonusFightsDate: today },

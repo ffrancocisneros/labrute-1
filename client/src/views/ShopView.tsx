@@ -64,7 +64,7 @@ const formatShopItemName = (item: ShopItem, t: (key: string) => string): string 
 };
 
 const needsBruteSelection = (item: ShopItem): boolean => (
-  item.type === 'TEMPORARY_WEAPON' || item.type === 'TEMPORARY_SKILL'
+  item.type === 'TEMPORARY_WEAPON' || item.type === 'TEMPORARY_SKILL' || item.type === 'BONUS_FIGHTS'
 );
 
 type ShopSection = 'weapons' | 'skills' | 'cosmetics' | 'fights';

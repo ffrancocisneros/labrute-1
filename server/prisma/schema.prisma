@@ -277,6 +277,8 @@ model Brute {
   eventTournamentRoundWatched  Int?
   lastFight                    DateTime?               @db.Date
   fightsLeft                   Int                     @default(12)
+  bonusFightsCount             Int                     @default(0)
+  bonusFightsDate              DateTime?               @db.Date
   victories                    Int                     @default(0)
   losses                       Int                     @default(0)
   winStreakCurrent             Int                     @default(0)

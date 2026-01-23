@@ -82,15 +82,7 @@ export const Fights = {
   ) => {
     try {
       const user = await auth(prisma, req);
-      const userBonus = await prisma.user.findUnique({
-        where: { id: user.id },
-        select: { bonusFightsCount: true, bonusFightsDate: true },
-      });
-      const hasBonusToday = (userBonus?.bonusFightsDate
-        && dayjs.utc(userBonus.bonusFightsDate).isSame(dayjs.utc(), 'day'))
-        ?? false;
-      const bonusCount = hasBonusToday ? (userBonus?.bonusFightsCount ?? 0) : 0;
-
+      
       if (!req.body.brute1 || !req.body.brute2) {
         throw new MissingElementError(translate('missingParameters', user));
       }
@@ -102,7 +94,52 @@ export const Fights = {
           deletedAt: null,
           userId: user.id,
         },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          userId: true,
+          level: true,
+          xp: true,
+          hp: true,
+          enduranceStat: true,
+          enduranceModifier: true,
+          enduranceValue: true,
+          strengthStat: true,
+          strengthModifier: true,
+          strengthValue: true,
+          agilityStat: true,
+          agilityModifier: true,
+          agilityValue: true,
+          speedStat: true,
+          speedModifier: true,
+          speedValue: true,
+          weapons: true,
+          skills: true,
+          pets: true,
+          masterId: true,
+          pupilsCount: true,
+          clanId: true,
+          registeredForTournament: true,
+          nextTournamentDate: true,
+          currentTournamentDate: true,
+          currentTournamentStepWatched: true,
+          globalTournamentWatchedDate: true,
+          globalTournamentRoundWatched: true,
+          eventTournamentWatchedDate: true,
+          eventTournamentRoundWatched: true,
+          lastFight: true,
+          fightsLeft: true,
+          bonusFightsCount: true,
+          bonusFightsDate: true,
+          victories: true,
+          losses: true,
+          winStreakCurrent: true,
+          winStreakMax: true,
+          opponentsGeneratedAt: true,
+          canRankUpSince: true,
+          favorite: true,
+          autoFightEnabled: true,
+          eventId: true,
           opponents: {
             select: { name: true },
           },
@@ -111,6 +148,12 @@ export const Fights = {
       if (!baseBrute1) {
         throw new NotFoundError(translate('bruteNotFound', user));
       }
+
+      // Obtener peleas bonus del bruto
+      const hasBonusToday = (baseBrute1.bonusFightsDate
+        && dayjs.utc(baseBrute1.bonusFightsDate).isSame(dayjs.utc(), 'day'))
+        ?? false;
+      const bonusCount = hasBonusToday ? (baseBrute1.bonusFightsCount ?? 0) : 0;
 
       const baseBrute2 = await prisma.brute.findFirst({
         where: {
@@ -151,13 +194,12 @@ export const Fights = {
       if (arenaFight) {
         if (bonusCount > 0) {
           usedBonus = true;
-          await prisma.user.update({
-            where: { id: user.id },
-            data: { bonusFightsCount: { decrement: 1 } },
-          });
           await prisma.brute.update({
             where: { id: brute1.id },
-            data: { lastFight: new Date() },
+            data: {
+              lastFight: new Date(),
+              bonusFightsCount: { decrement: 1 },
+            },
             select: { id: true },
           });
         } else {

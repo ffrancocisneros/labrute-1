@@ -20,6 +20,7 @@ import { ServerState } from '../ServerState.js';
 import { ilike } from '../ilike.js';
 import { getXPNeeded } from '@labrute/core';
 import { DISCORD, LOGGER } from '../../context.js';
+import dayjs from 'dayjs';
 
 export interface AutoFightResult {
   fightsCompleted: number;
@@ -42,6 +43,53 @@ export const executeAutoFights = async (
     where: {
       id: bruteId,
       deletedAt: null,
+    },
+    select: {
+      id: true,
+      userId: true,
+      name: true,
+      level: true,
+      xp: true,
+      hp: true,
+      enduranceStat: true,
+      enduranceModifier: true,
+      enduranceValue: true,
+      strengthStat: true,
+      strengthModifier: true,
+      strengthValue: true,
+      agilityStat: true,
+      agilityModifier: true,
+      agilityValue: true,
+      speedStat: true,
+      speedModifier: true,
+      speedValue: true,
+      weapons: true,
+      skills: true,
+      pets: true,
+      masterId: true,
+      pupilsCount: true,
+      clanId: true,
+      registeredForTournament: true,
+      nextTournamentDate: true,
+      currentTournamentDate: true,
+      currentTournamentStepWatched: true,
+      globalTournamentWatchedDate: true,
+      globalTournamentRoundWatched: true,
+      eventTournamentWatchedDate: true,
+      eventTournamentRoundWatched: true,
+      lastFight: true,
+      fightsLeft: true,
+      bonusFightsCount: true,
+      bonusFightsDate: true,
+      victories: true,
+      losses: true,
+      winStreakCurrent: true,
+      winStreakMax: true,
+      opponentsGeneratedAt: true,
+      canRankUpSince: true,
+      favorite: true,
+      autoFightEnabled: true,
+      eventId: true,
     },
   });
 
@@ -69,10 +117,18 @@ export const executeAutoFights = async (
     };
   }
 
-  // Obtener peleas disponibles
+  // Obtener peleas disponibles (diarias + bonus)
   let fightsLeft = getFightsLeft(calculatedBrute, modifiers);
+  
+  // Obtener peleas bonus del bruto
+  const hasBonusToday = (brute.bonusFightsDate
+    && dayjs.utc(brute.bonusFightsDate).isSame(dayjs.utc(), 'day'))
+    ?? false;
+  const bonusFightsCount = hasBonusToday ? (brute.bonusFightsCount ?? 0) : 0;
+  const totalAvailableFights = fightsLeft + bonusFightsCount;
 
-  if (fightsLeft <= 0) {
+  // Validar que tenga peleas disponibles (diarias o bonus)
+  if (totalAvailableFights <= 0) {
     return {
       fightsCompleted: 0,
       fightsLeft: 0,
@@ -108,8 +164,9 @@ export const executeAutoFights = async (
     };
   }
 
-  // Pelear hasta agotar las peleas disponibles
+  // Pelear hasta agotar las peleas disponibles (diarias + bonus)
   let currentFightsLeft = fightsLeft;
+  let currentBonusFights = bonusFightsCount;
   let fightsCompleted = 0;
 
   // Cache de habilidades temporales para optimizar queries
@@ -147,7 +204,7 @@ export const executeAutoFights = async (
   // Pre-cargar efectos temporales de todos los oponentes en paralelo
   await Promise.all(opponents.map((opp) => getTemporaryEffects(opp.id)));
 
-  while (currentFightsLeft > 0) {
+  while (currentFightsLeft > 0 || currentBonusFights > 0) {
     // Si no hay oponentes disponibles, obtener nuevos
     if (opponents.length === 0) {
       if (!brute) {
@@ -209,6 +266,8 @@ export const executeAutoFights = async (
           pets: true,
           lastFight: true,
           fightsLeft: true,
+          bonusFightsCount: true,
+          bonusFightsDate: true,
           enduranceStat: true,
           enduranceModifier: true,
           enduranceValue: true,
@@ -233,7 +292,7 @@ export const executeAutoFights = async (
       }
 
       // Tipo explícito para evitar "implicitly any" y cumplir getFightsLeft/getCalculatedBrute
-      type UpdatedBruteSelect = Pick<Brute, 'id' | 'userId' | 'winStreakCurrent' | 'winStreakMax' | 'level' | 'xp' | 'eventId' | 'name' | 'victories' | 'losses' | 'weapons' | 'skills' | 'pets' | 'lastFight' | 'fightsLeft' | 'enduranceStat' | 'enduranceModifier' | 'enduranceValue' | 'strengthStat' | 'strengthModifier' | 'strengthValue' | 'agilityStat' | 'agilityModifier' | 'agilityValue' | 'speedStat' | 'speedModifier' | 'speedValue' | 'hp'>;
+      type UpdatedBruteSelect = Pick<Brute, 'id' | 'userId' | 'winStreakCurrent' | 'winStreakMax' | 'level' | 'xp' | 'eventId' | 'name' | 'victories' | 'losses' | 'weapons' | 'skills' | 'pets' | 'lastFight' | 'fightsLeft' | 'bonusFightsCount' | 'bonusFightsDate' | 'enduranceStat' | 'enduranceModifier' | 'enduranceValue' | 'strengthStat' | 'strengthModifier' | 'strengthValue' | 'agilityStat' | 'agilityModifier' | 'agilityValue' | 'speedStat' | 'speedModifier' | 'speedValue' | 'hp'>;
       const updatedBrute: UpdatedBruteSelect = updatedBruteResult as UpdatedBruteSelect;
 
       // Verificar nuevamente si puede subir de nivel
@@ -317,13 +376,24 @@ export const executeAutoFights = async (
         xpGained *= 2;
       }
 
+      // Consumir pelea: priorizar bonus para no gastar las diarias del bruto
+      let usedBonus = false;
+      if (currentBonusFights > 0) {
+        usedBonus = true;
+        currentBonusFights--;
+      } else {
+        currentFightsLeft--;
+      }
+
       // Actualizar bruto (userId ya está en updatedBrute, no necesitamos query adicional)
       const userId = updatedBrute.userId;
       const updatedBruteAfterFight: Brute = await prisma.brute.update({
         where: { id: updatedBrute.id },
         data: {
           lastFight: new Date(),
-          fightsLeft: updatedFightsLeft - 1,
+          ...(usedBonus
+            ? { bonusFightsCount: { decrement: 1 } }
+            : { fightsLeft: currentFightsLeft }),
           xp: { increment: xpGained },
           victories: { increment: brute1Won ? 1 : 0 },
           losses: { increment: brute1Won ? 0 : 1 },
@@ -472,10 +542,14 @@ export const executeAutoFights = async (
       });
 
       fightsCompleted++;
-      currentFightsLeft--;
 
-      // Actualizar referencia del brute para siguiente iteración
-      brute = updatedBruteAfterFight;
+      // Actualizar referencia del brute para siguiente iteración (incluir valores actualizados)
+      brute = {
+        ...updatedBruteAfterFight,
+        bonusFightsCount: usedBonus ? (brute.bonusFightsCount ?? 0) - 1 : (brute.bonusFightsCount ?? 0),
+        bonusFightsDate: brute.bonusFightsDate,
+        fightsLeft: usedBonus ? brute.fightsLeft : currentFightsLeft,
+      } as Brute;
 
       // Si se regeneran oponentes, pre-cargar sus efectos temporales
       if (opponents.length <= 1) {
@@ -506,6 +580,40 @@ export const executeAutoFights = async (
   // Obtener estado final del bruto
   const finalBrute = await prisma.brute.findFirst({
     where: { id: bruteId },
+    select: {
+      fightsLeft: true,
+      bonusFightsCount: true,
+      bonusFightsDate: true,
+      lastFight: true,
+      skills: true,
+      eventId: true,
+      level: true,
+      xp: true,
+      hp: true,
+      enduranceStat: true,
+      enduranceModifier: true,
+      enduranceValue: true,
+      strengthStat: true,
+      strengthModifier: true,
+      strengthValue: true,
+      agilityStat: true,
+      agilityModifier: true,
+      agilityValue: true,
+      speedStat: true,
+      speedModifier: true,
+      speedValue: true,
+      masterId: true,
+      pupilsCount: true,
+      clanId: true,
+      registeredForTournament: true,
+      nextTournamentDate: true,
+      currentTournamentDate: true,
+      currentTournamentStepWatched: true,
+      globalTournamentWatchedDate: true,
+      globalTournamentRoundWatched: true,
+      eventTournamentWatchedDate: true,
+      eventTournamentRoundWatched: true,
+    },
   });
 
   if (!finalBrute) {
@@ -518,15 +626,23 @@ export const executeAutoFights = async (
     };
   }
 
-  const finalCalculatedBrute = getCalculatedBrute(finalBrute, modifiers);
+  const finalCalculatedBrute = getCalculatedBrute(finalBrute as Brute, modifiers);
   const finalFightsLeft = getFightsLeft(finalCalculatedBrute, modifiers);
+  
+  // Obtener peleas bonus finales
+  const finalHasBonusToday = (finalBrute.bonusFightsDate
+    && dayjs.utc(finalBrute.bonusFightsDate).isSame(dayjs.utc(), 'day'))
+    ?? false;
+  const finalBonusFights = finalHasBonusToday ? (finalBrute.bonusFightsCount ?? 0) : 0;
+  const totalFinalFights = finalFightsLeft + finalBonusFights;
+  
   const finalCanLevelUp = canLevelUp(finalCalculatedBrute);
 
   return {
     fightsCompleted,
-    fightsLeft: finalFightsLeft,
+    fightsLeft: totalFinalFights,
     canLevelUp: finalCanLevelUp,
-    stopped: finalFightsLeft === 0 || finalCanLevelUp,
-    reason: finalCanLevelUp ? 'canLevelUp' : finalFightsLeft === 0 ? 'noFightsLeft' : undefined,
+    stopped: totalFinalFights === 0 || finalCanLevelUp,
+    reason: finalCanLevelUp ? 'canLevelUp' : totalFinalFights === 0 ? 'noFightsLeft' : undefined,
   };
 };
