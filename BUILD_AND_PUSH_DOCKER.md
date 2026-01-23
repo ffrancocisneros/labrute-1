@@ -175,6 +175,75 @@ const baseBrute1 = await prisma.brute.findFirst({
 - [x] Causa raíz determinada
 - [x] Solución implementada
 - [x] Compilación local verificada
-- [ ] Build de Docker verificado
-- [ ] Commit y push realizado
-- [ ] CI build exitoso
+- [x] Build de Docker verificado
+- [x] Commit y push realizado
+- [x] CI build exitoso
+
+---
+
+## 🚂 Railway Auto-Deploy - Problema y Solución
+
+### Problema Reportado
+
+**Situación:** La imagen Docker se publicó exitosamente en `ghcr.io` con tag `latest`, pero Railway no hizo el deploy automático.
+
+### Causa
+
+Railway **no detecta automáticamente** cambios en imágenes Docker con tag `:latest`. Esto es un comportamiento conocido de Railway cuando se usa una imagen Docker como source en lugar de conectarlo directamente al repositorio.
+
+### Solución Implementada
+
+El workflow `publish-ghcr.yml` ya incluye un job `railway-redeploy` (líneas 45-56) que debería disparar el redeploy automático después de publicar la imagen. Sin embargo, este job requiere **3 secrets configurados en GitHub**:
+
+| Secret | Descripción | Cómo obtenerlo |
+|--------|-------------|----------------|
+| `RAILWAY_TOKEN` | Token de API de Railway | [railway.com/account/tokens](https://railway.com/account/tokens) → Crear token (Team o Personal) |
+| `RAILWAY_SERVICE_ID` | ID del servicio en Railway | En Railway dashboard → Servicio → CMD/CTRL+K → Copy → Service ID |
+| `RAILWAY_ENVIRONMENT_ID` | ID del environment en Railway | En Railway dashboard → Environment → CMD/CTRL+K → Copy → Environment ID |
+
+### Verificación del Job
+
+1. **Verificar si el job se ejecutó:**
+   - Ir a GitHub Actions → Último workflow run (`c93ba826` o más reciente)
+   - Buscar el job `railway-redeploy`
+   - Verificar si se ejecutó y si falló
+
+2. **Si el job no existe o falló:**
+   - El job tiene `continue-on-error: true` (línea 49), así que puede fallar silenciosamente
+   - Verificar los logs del job para ver el error específico
+   - Probablemente falta alguno de los 3 secrets
+
+3. **Si los secrets no están configurados:**
+   - Ir a GitHub → Settings → Secrets and variables → Actions
+   - Agregar los 3 secrets según la tabla anterior
+   - El próximo push a `main` debería disparar el redeploy automático
+
+### Deploy Manual (Alternativa Temporal)
+
+Si los secrets no están configurados o el job falla, se puede hacer deploy manual:
+
+1. **Desde Railway Dashboard:**
+   - Ir al servicio en Railway
+   - Click en "Deploy" o "Redeploy"
+   - Railway detectará la nueva imagen `:latest`
+
+2. **Desde Railway CLI:**
+   ```bash
+   railway up
+   ```
+
+### Próximos Pasos Recomendados
+
+1. ⏳ Verificar en GitHub Actions si el job `railway-redeploy` se ejecutó
+2. ⏳ Si no se ejecutó o falló, revisar los logs para identificar el problema
+3. ⏳ Configurar los 3 secrets requeridos si no están configurados
+4. ⏳ Hacer un push de prueba o deploy manual para verificar que funcione
+
+### Nota Importante
+
+El workflow está diseñado para que el job `railway-redeploy` falle silenciosamente (`continue-on-error: true`) si los secrets no están configurados, para que el build de la imagen Docker no falle. Esto significa que el workflow puede completarse exitosamente incluso si el redeploy no se ejecuta.
+
+### Referencias
+
+- Workflow: `.github/workflows/publish-ghcr.yml` (líneas 43-56)
+- Documentación: `DEPLOYMENT.md` (líneas 84-94)
