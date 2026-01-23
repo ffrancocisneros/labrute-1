@@ -13,16 +13,18 @@ if yarn db:sync:prod; then
 else
   echo "Database migrations failed. Attempting automatic recovery..."
 
-  # Caso específico: migración 20260119000000_add_shop_system quedó en estado \"failed\"
-  # pero partes del SQL ya se aplicaron (el tipo ShopItemType ya existe).
-  # En este caso NO queremos reintentar esa migración (siempre fallará),
-  # sino marcarla como aplicada y dejar que la migración v2 (idempotente) repare el esquema.
+  # Casos específicos: migraciones que quedaron en estado "failed" pero partes del SQL ya se aplicaron.
+  # En estos casos NO queremos reintentar esas migraciones (siempre fallarán),
+  # sino marcarlas como aplicadas y dejar que las migraciones v2 (idempotentes) reparen el esquema.
 
-  # Marcar la migración problemática como aplicada en el historial de Prisma
+  # Migración 20260119000000_add_shop_system: el tipo ShopItemType ya existe
   yarn prisma migrate resolve --applied 20260119000000_add_shop_system || true
 
-  # Segundo intento: ahora Prisma ya no volverá a ejecutar 20260119000000,
-  # y podrá aplicar la migración v2 (20260120000000_add_shop_system_v2).
+  # Migración 20260116000000_add_bonus_fights_to_brute: las columnas bonusFightsCount y bonusFightsDate ya existen
+  yarn prisma migrate resolve --applied 20260116000000_add_bonus_fights_to_brute || true
+
+  # Segundo intento: ahora Prisma ya no volverá a ejecutar las migraciones problemáticas,
+  # y podrá aplicar las migraciones v2 (idempotentes) que reparan el esquema.
   yarn db:sync:prod
 fi
 

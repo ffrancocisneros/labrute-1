@@ -283,3 +283,173 @@ El workflow está diseñado para que el job `railway-redeploy` falle silenciosam
 
 - Workflow: `.github/workflows/publish-ghcr.yml` (líneas 43-56)
 - Documentación: `DEPLOYMENT.md` (líneas 84-94)
+
+---
+
+## 🚨 Error de Migración en Producción - Bonus Fights
+
+### Problema Reportado
+
+**Fecha:** 23 de Enero 2026  
+**Error:** Migración `20260116000000_add_bonus_fights_to_brute` falló en producción  
+**Síntoma:** Container crasheó con error `P3009` - migración fallida bloquea nuevas migraciones  
+**Causa:** Las columnas `bonusFightsCount` y `bonusFightsDate` ya existían en la tabla `Brute`
+
+### Logs del Error
+
+```
+Error: P3018
+A migration failed to apply. New migrations cannot be applied before the error is recovered from.
+Migration name: 20260116000000_add_bonus_fights_to_brute
+Database error code: 42701
+Database error:
+ERROR: column "bonusFightsCount" of relation "Brute" already exists
+```
+
+### Análisis del Problema
+
+1. **Migración falló parcialmente:**
+   - La migración `20260116000000_add_bonus_fights_to_brute` intentó agregar las columnas
+   - Las columnas ya existían (probablemente agregadas manualmente o por otro proceso)
+   - Prisma marcó la migración como `failed` en `_prisma_migrations`
+
+2. **Bloqueo de nuevas migraciones:**
+   - Prisma detecta migraciones fallidas y bloquea todas las migraciones siguientes (error `P3009`)
+   - El container no puede iniciar porque las migraciones fallan
+
+3. **Auto-recovery falló:**
+   - El script `start-production.sh` tenía recovery solo para `20260119000000_add_shop_system`
+   - No manejaba el caso de `20260116000000_add_bonus_fights_to_brute`
+
+### Solución Implementada
+
+#### 1. Migración V2 Idempotente
+
+**Archivo:** `server/prisma/migrations/20260123000000_add_bonus_fights_to_brute_v2/migration.sql`
+
+**Características:**
+- Usa `DO $$ BEGIN ... END $$` para verificar existencia de columnas
+- Solo agrega columnas si no existen (`IF NOT EXISTS`)
+- Idempotente: puede ejecutarse múltiples veces sin errores
+
+**Código:**
+```sql
+-- Add bonusFightsCount column (idempotent)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'Brute' 
+    AND column_name = 'bonusFightsCount'
+  ) THEN
+    ALTER TABLE "Brute" ADD COLUMN "bonusFightsCount" INTEGER NOT NULL DEFAULT 0;
+  END IF;
+END $$;
+
+-- Add bonusFightsDate column (idempotent)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'Brute' 
+    AND column_name = 'bonusFightsDate'
+  ) THEN
+    ALTER TABLE "Brute" ADD COLUMN "bonusFightsDate" DATE;
+  END IF;
+END $$;
+```
+
+#### 2. Actualización del Auto-Recovery
+
+**Archivo:** `scripts/start-production.sh`
+
+**Cambios:**
+- Agregado manejo de `20260116000000_add_bonus_fights_to_brute` en el recovery
+- Marca la migración fallida como `applied` sin ejecutar SQL
+- Permite que la migración v2 (idempotente) repare el esquema
+
+**Código agregado:**
+```bash
+# Migración 20260116000000_add_bonus_fights_to_brute: las columnas ya existen
+yarn prisma migrate resolve --applied 20260116000000_add_bonus_fights_to_brute || true
+```
+
+#### 3. Script SQL Manual (Opcional)
+
+**Archivo:** `scripts/resolve_bonus_fights_migration.sql`
+
+**Propósito:** Resolver manualmente la migración si el auto-recovery no funciona
+
+**Uso:**
+```sql
+-- Ejecutar en DBeaver o psql si es necesario
+-- Marca la migración como aplicada sin ejecutar SQL
+```
+
+### Flujo de Solución
+
+1. **Deploy con nueva migración v2:**
+   - La migración v2 es idempotente y puede ejecutarse aunque las columnas existan
+   - Si las columnas no existen, las crea
+   - Si ya existen, no hace nada (no falla)
+
+2. **Auto-recovery en startup:**
+   - `start-production.sh` detecta migración fallida
+   - Marca `20260116000000_add_bonus_fights_to_brute` como `applied`
+   - Prisma puede aplicar la migración v2 sin problemas
+
+3. **Resultado:**
+   - Sistema se auto-repara en cada deploy
+   - No requiere intervención manual
+   - Migración v2 repara cualquier inconsistencia
+
+### Verificación Post-Fix
+
+Después del deploy, verificar:
+
+1. **Logs del container:**
+   ```
+   Database migrations completed.
+   Starting server...
+   ```
+
+2. **Estado de las migraciones:**
+   ```sql
+   SELECT migration_name, finished_at, applied_steps_count 
+   FROM "_prisma_migrations" 
+   WHERE migration_name LIKE '%bonus_fights%';
+   ```
+
+3. **Columnas en la tabla:**
+   ```sql
+   SELECT column_name, data_type, column_default
+   FROM information_schema.columns
+   WHERE table_name = 'Brute'
+   AND column_name IN ('bonusFightsCount', 'bonusFightsDate');
+   ```
+
+### Lecciones Aprendidas
+
+1. **Migraciones idempotentes:**
+   - Siempre usar `IF NOT EXISTS` o bloques `DO $$` para verificar existencia
+   - Evita fallos cuando objetos ya existen
+
+2. **Auto-recovery:**
+   - Actualizar `start-production.sh` para manejar todas las migraciones problemáticas conocidas
+   - Usar `prisma migrate resolve --applied` para marcar migraciones fallidas como aplicadas
+
+3. **Patrón de migración v2:**
+   - Cuando una migración falla parcialmente, crear una v2 idempotente
+   - La v2 repara inconsistencias sin fallar si ya están aplicadas
+
+4. **Verificación en producción:**
+   - Verificar logs después de cada deploy
+   - Monitorear estado de migraciones en `_prisma_migrations`
+
+### Referencias
+
+- Migración original: `server/prisma/migrations/20260116000000_add_bonus_fights_to_brute/migration.sql`
+- Migración v2: `server/prisma/migrations/20260123000000_add_bonus_fights_to_brute_v2/migration.sql`
+- Script de recovery: `scripts/start-production.sh` (líneas 16-26)
+- Script manual: `scripts/resolve_bonus_fights_migration.sql`
+- Patrón similar: `server/prisma/migrations/20260120000000_add_shop_system_v2/migration.sql`
