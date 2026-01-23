@@ -218,19 +218,55 @@ El workflow `publish-ghcr.yml` ya incluye un job `railway-redeploy` (líneas 45-
    - Agregar los 3 secrets según la tabla anterior
    - El próximo push a `main` debería disparar el redeploy automático
 
-### Deploy Manual (Alternativa Temporal)
+### Verificación: ¿Railway está usando la imagen Docker o haciendo build?
 
-Si los secrets no están configurados o el job falla, se puede hacer deploy manual:
+**IMPORTANTE:** El mensaje "rebuild and deploy" puede ser confuso. Depende de cómo esté configurado Railway:
 
-1. **Desde Railway Dashboard:**
-   - Ir al servicio en Railway
-   - Click en "Deploy" o "Redeploy"
-   - Railway detectará la nueva imagen `:latest`
+#### Si Railway está usando imagen Docker (GHCR):
+- **Source:** Docker Image
+- **Image:** `ghcr.io/ffrancocisneros/labrute:latest`
+- **Al hacer redeploy:** Railway hará `docker pull` de la nueva imagen `:latest` y la desplegará
+- **No hará rebuild** del código, solo pull de la imagen
 
-2. **Desde Railway CLI:**
-   ```bash
-   railway up
-   ```
+#### Si Railway está conectado al repositorio GitHub:
+- **Source:** GitHub Repository
+- **Builder:** Nixpacks (según `railway.json`)
+- **Al hacer redeploy:** Railway hará build desde el código fuente del último commit
+- **Sí hará rebuild** del código
+
+### Cómo verificar qué está usando Railway
+
+1. **En Railway Dashboard:**
+   - Ir a tu servicio
+   - Ver la sección "Source" o "Settings"
+   - Verificar si dice "Docker Image" o "GitHub Repository"
+
+2. **Si dice "Docker Image":**
+   - El redeploy debería hacer pull de `ghcr.io/ffrancocisneros/labrute:latest`
+   - La nueva imagen con los cambios debería aplicarse
+   - El mensaje "rebuild" es engañoso, en realidad hace pull de la imagen
+
+3. **Si dice "GitHub Repository":**
+   - El redeploy hará build desde el código del último commit
+   - También aplicará los cambios, pero construyendo desde cero
+
+### Respuesta Directa
+
+**Si Railway está configurado para usar `ghcr.io/ffrancocisneros/labrute:latest` como source:**
+- ✅ **Sí, está bien hacer redeploy**
+- ✅ **Sí, va a aplicar los cambios** - Railway hará pull de la nueva imagen `:latest` que contiene los cambios
+- ✅ **Sí, toma la imagen desde `ghcr.io/ffrancocisneros/labrute:latest`**
+
+El mensaje "rebuild and deploy" es un texto genérico de Railway, pero si el source es una imagen Docker, en realidad hace `docker pull` de la nueva imagen, no rebuild del código.
+
+### Verificación Post-Deploy
+
+Después del redeploy, verificar:
+1. Los logs del deploy deberían mostrar que está usando la imagen Docker
+2. Los cambios deberían estar aplicados (peleas bonus funcionando correctamente)
+3. El commit SHA en los logs debería coincidir con `c93ba826` o más reciente
+
+---
 
 ### Próximos Pasos Recomendados
 
