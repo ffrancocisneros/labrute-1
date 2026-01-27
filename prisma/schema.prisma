@@ -374,6 +374,7 @@ enum FightModifier {
   noPets
   allHaveBear
   doubleFights
+  crazyDay
 }
 
 model Fight {

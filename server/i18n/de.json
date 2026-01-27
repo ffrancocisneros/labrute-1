@@ -107,6 +107,8 @@
   "modifier.startWithWeapon.desc": "Keine Zeit für Höflichkeiten, es ist Zeit zu kämpfen! Du startest den Kampf mit einer bereits gezogenen Waffe.",
   "modifier.chaos": "Kontrolliertes Chaos",
   "modifier.chaos.desc": "Heute ist alles irgendwie seltsam. Alle Werte sind zufällig verteilt.",
+  "modifier.crazyDay": "Heute bin ich verrückt aufgewacht",
+  "modifier.crazyDay.desc": "Der Admin hatte genug von den Beschwerden. Viel Spaß.",
   "bannedAccount": "Dein Account wurde aus folgendem Grund gebannt: {{reason}}",
   "userNotBanned": "Nutzer nicht gebannt",
   "userAlreadyBanned": "Nutzer bereits gebannt",

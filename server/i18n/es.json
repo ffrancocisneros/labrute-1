@@ -117,6 +117,8 @@
   "modifier.allHaveBear.desc": "¡Los osos del bosque han decidido unirse a la batalla! Todos los brutos pelean con un oso.",
   "modifier.doubleFights": "Sed de batalla",
   "modifier.doubleFights.desc": "La adrenalina corre por tus venas. Tienes el doble de peleas disponibles hoy.",
+  "modifier.crazyDay": "Hoy me levanté re loco",
+  "modifier.crazyDay.desc": "El admin se cansó de leer lloros. Disfruten.",
   "bannedAccount": "Tu cuenta ha sido baneada por el siguiente motivo: {{reason}}",
   "userNotBanned": "Usuario no baneado",
   "userAlreadyBanned": "El usuario ya está baneado",

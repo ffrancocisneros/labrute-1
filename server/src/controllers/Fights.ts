@@ -242,6 +242,11 @@ export const Fights = {
         xpGained *= 2;
       }
 
+      // Crazy day modifier: x10 XP
+      if (modifiers[FightModifier.crazyDay]) {
+        xpGained *= 10;
+      }
+
       // Update brute XP, victories and losses if arena fight
       if (arenaFight) {
         // Actualizar racha de victorias incrementalmente (evita escanear todas las peleas)

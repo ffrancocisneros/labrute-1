@@ -1505,6 +1505,8 @@
   "modifier.startWithWeapon.desc": "Pas de temps pour les plaisanteries, il est temps de se battre ! Vous commencerez le combat avec une arme déjà tirée.",
   "modifier.chaos": "Chaos Contrôlé",
   "modifier.chaos.desc": "Tout semble étrange aujourd'hui. Toutes les statistiques sont aléatoires.",
+  "modifier.crazyDay": "Je me suis réveillé fou aujourd'hui",
+  "modifier.crazyDay.desc": "L'admin en a marre de lire les plaintes. Profitez.",
   "patchNotes": "Notes de patch",
   "patchNotes.desc": "Reste à jour et regarde ce qui est nouveau dans la version {{version}} de LaBrute.",
   "newPatchNotesAvailable": "Une nouvelle version a été publiée.",

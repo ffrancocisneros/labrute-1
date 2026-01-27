@@ -13,6 +13,11 @@ export const getMaxFightsPerDay = (
     base *= 2;
   }
 
+  // Crazy day modifier: x10 fights
+  if (modifiers[FightModifier.crazyDay]) {
+    base *= 10;
+  }
+
   return (brute.skills[SkillName.regeneration]
     ? base + 2
     : base);

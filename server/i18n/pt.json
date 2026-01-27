@@ -107,6 +107,8 @@
   "modifier.startWithWeapon.desc": "No time for pleasantries, it's time to fight! You will start the fight with a weapon already drawn.",
   "modifier.chaos": "Controlled Chaos",
   "modifier.chaos.desc": "Everything seems weird today. All stats are randomized.",
+  "modifier.crazyDay": "Acordei bem louco hoje",
+  "modifier.crazyDay.desc": "O admin se cansou de ler reclamações. Aproveitem.",
   "bannedAccount": "Your account has been banned for the following reason: {{reason}}",
   "userNotBanned": "User not banned",
   "userAlreadyBanned": "User already banned",

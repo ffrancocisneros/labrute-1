@@ -1515,6 +1515,8 @@
   "modifier.allHaveBear.desc": "The forest bears have decided to join the battle! All brutes fight with a bear.",
   "modifier.doubleFights": "Battle Thirst",
   "modifier.doubleFights.desc": "Adrenaline rushes through your veins. You have double the fights available today.",
+  "modifier.crazyDay": "I woke up crazy today",
+  "modifier.crazyDay.desc": "The admin got tired of reading complaints. Enjoy.",
   "patchNotes": "Patch notes",
   "patchNotes.desc": "Stay up to date and see what's new in version {{version}} of MyBrute.",
   "newPatchNotesAvailable": "A new version has been released.",

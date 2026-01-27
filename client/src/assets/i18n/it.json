@@ -1497,6 +1497,8 @@
   "modifier.startWithWeapon.desc": "No time for pleasantries, it's time to fight! You will start the fight with a weapon already drawn.",
   "modifier.chaos": "Controlled Chaos",
   "modifier.chaos.desc": "Everything seems weird today. All stats are randomized.",
+  "modifier.crazyDay": "Oggi mi sono svegliato matto",
+  "modifier.crazyDay.desc": "L'admin si è stancato di leggere lamentele. Godetevela.",
   "patchNotes": "Patch notes",
   "patchNotes.desc": "Stay up to date and see what's new in version {{version}} of MyBrute.",
   "newPatchNotesAvailable": "A new version has been released.",

@@ -117,6 +117,8 @@
   "modifier.allHaveBear.desc": "The forest bears have decided to join the battle! All brutes fight with a bear.",
   "modifier.doubleFights": "Battle Thirst",
   "modifier.doubleFights.desc": "Adrenaline rushes through your veins. You have double the fights available today.",
+  "modifier.crazyDay": "I woke up crazy today",
+  "modifier.crazyDay.desc": "The admin got tired of reading complaints. Enjoy.",
   "bannedAccount": "Your account has been banned for the following reason: {{reason}}",
   "userNotBanned": "User not banned",
   "userAlreadyBanned": "User already banned",

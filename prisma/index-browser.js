@@ -777,7 +777,8 @@ exports.FightModifier = exports.$Enums.FightModifier = {
   doubleHP: 'doubleHP',
   noPets: 'noPets',
   allHaveBear: 'allHaveBear',
-  doubleFights: 'doubleFights'
+  doubleFights: 'doubleFights',
+  crazyDay: 'crazyDay'
 };
 
 exports.LogType = exports.$Enums.LogType = {

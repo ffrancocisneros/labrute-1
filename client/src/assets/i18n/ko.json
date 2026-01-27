@@ -1497,6 +1497,8 @@
   "modifier.startWithWeapon.desc": "No time for pleasantries, it's time to fight! You will start the fight with a weapon already drawn.",
   "modifier.chaos": "Controlled Chaos",
   "modifier.chaos.desc": "Everything seems weird today. All stats are randomized.",
+  "modifier.crazyDay": "오늘 미친 것처럼 일어났어",
+  "modifier.crazyDay.desc": "관리자가 불만 읽기에 지쳤습니다. 즐기세요.",
   "patchNotes": "Patch notes",
   "patchNotes.desc": "Stay up to date and see what's new in version {{version}} of MyBrute.",
   "newPatchNotesAvailable": "A new version has been released.",

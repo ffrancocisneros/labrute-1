@@ -352,6 +352,11 @@ async function main() {
               xpGained *= 2;
             }
 
+            // Crazy day modifier: x10 XP
+            if (modifiers[FightModifier.crazyDay]) {
+              xpGained *= 10;
+            }
+
             // Actualizar bruto
             const updatedBruteAfterFight = await prisma.brute.update({
               where: { id: updatedBrute.id },

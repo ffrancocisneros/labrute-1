@@ -397,7 +397,8 @@ export const FightModifier: {
   doubleHP: 'doubleHP',
   noPets: 'noPets',
   allHaveBear: 'allHaveBear',
-  doubleFights: 'doubleFights'
+  doubleFights: 'doubleFights',
+  crazyDay: 'crazyDay'
 };
 
 export type FightModifier = (typeof FightModifier)[keyof typeof FightModifier]

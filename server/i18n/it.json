@@ -107,6 +107,8 @@
   "modifier.startWithWeapon.desc": "Basta con le smancerie, è ora di combattere! Inizierai il combattimento con un arma già estratta.",
   "modifier.chaos": "Controlled Chaos",
   "modifier.chaos.desc": "Everything seems weird today. All stats are randomized.",
+  "modifier.crazyDay": "Oggi mi sono svegliato matto",
+  "modifier.crazyDay.desc": "L'admin si è stancato di leggere lamentele. Godetevela.",
   "bannedAccount": "Il tuo account è stato bannato per il seguente motivo: {{reason}}",
   "userNotBanned": "Utente non bannato",
   "userAlreadyBanned": "Utente già bannato",

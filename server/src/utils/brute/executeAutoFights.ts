@@ -376,6 +376,11 @@ export const executeAutoFights = async (
         xpGained *= 2;
       }
 
+      // Crazy day modifier: x10 XP
+      if (modifiers[FightModifier.crazyDay]) {
+        xpGained *= 10;
+      }
+
       // Consumir pelea: priorizar bonus para no gastar las diarias del bruto
       let usedBonus = false;
       if (currentBonusFights > 0) {
