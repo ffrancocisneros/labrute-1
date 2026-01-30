@@ -1,4 +1,4 @@
-import { BruteRanking, getFightsLeft, getMaxFightsPerDay, getWinsNeededToRankUp, getXPNeeded } from '@labrute/core';
+import { BruteRanking, getMaxFightsPerDay, getTotalFightsLeft, getWinsNeededToRankUp, getXPNeeded } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
 import { PlayArrow } from '@mui/icons-material';
 import { AlertTitle, Box, BoxProps, Alert as MuiAlert, Stack, Tooltip, Typography } from '@mui/material';
@@ -52,7 +52,7 @@ const CellMain = ({
   );
 
   const fightsLeft = useMemo(
-    () => (brute ? getFightsLeft(brute) : 0),
+    () => (brute ? getTotalFightsLeft(brute) : 0),
     [brute],
   );
 

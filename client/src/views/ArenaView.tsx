@@ -1,4 +1,4 @@
-import { BrutesGetOpponentsResponse, getCalculatedBrute, getFightsLeft, getXPNeeded } from '@labrute/core';
+import { BrutesGetOpponentsResponse, getCalculatedBrute, getTotalFightsLeft, getXPNeeded } from '@labrute/core';
 import { Alert as MuiAlert, Box, Button, Grid, Paper, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -39,7 +39,7 @@ const ArenaView = () => {
     && getXPNeeded(brute.level + 1), [brute]);
 
   const fightsLeft = useMemo(
-    () => (brute && getFightsLeft(brute)) ?? 0,
+    () => (brute && getTotalFightsLeft(brute)) ?? 0,
     [brute]
   );
 
@@ -158,7 +158,7 @@ const ArenaView = () => {
       }}
       >
         <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>{t('arena')}</Text>
-        <Text bold color="secondary">{fightsLeft > 1 ? t('youHaveXFightsLeft', { value: getFightsLeft(brute) }) : t('youHaveOneFightLeft')}</Text>
+        <Text bold color="secondary">{fightsLeft > 1 ? t('youHaveXFightsLeft', { value: getTotalFightsLeft(brute) }) : t('youHaveOneFightLeft')}</Text>
       </Paper>
       <Paper sx={{ bgcolor: 'background.paperLight', mt: -2 }}>
         {/* No XP won for event brutes at max level */}

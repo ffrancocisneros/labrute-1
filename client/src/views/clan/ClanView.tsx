@@ -1,4 +1,4 @@
-import { BruteRanking, BrutesGetClanIdAsMasterResponse, CalculatedBrute, ClanGetResponse, bosses, getCalculatedBrute, getFightsLeft } from '@labrute/core';
+import { BruteRanking, BrutesGetClanIdAsMasterResponse, CalculatedBrute, ClanGetResponse, bosses, getCalculatedBrute, getFightsLeft, getTotalFightsLeft } from '@labrute/core';
 import { BossName, ClanWarStatus, ClanWarType } from '@labrute/prisma';
 import { HighlightOff, History, PlayCircleOutline, Policy } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Checkbox, FormControlLabel, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme } from '@mui/material';
@@ -306,7 +306,7 @@ const ClanView = () => {
     if (!clan || !brute) return;
 
     // Check if brute still has fights left
-    if (getFightsLeft(brute) <= 0) {
+    if (getTotalFightsLeft(brute) <= 0) {
       Alert.open('error', t('noFightsLeft'));
       return;
     }

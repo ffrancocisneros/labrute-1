@@ -1,4 +1,4 @@
-import { getFightsLeft, UserUpdateSettingsRequest } from '@labrute/core';
+import { getTotalFightsLeft, UserUpdateSettingsRequest } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
 import { Add, AdminPanelSettings, BarChart, CardGiftcard, DarkMode, Event, Info, LightMode, Logout, Menu, MilitaryTech, MoreHoriz, MusicNote, NewReleases, Person, PersonSearch, Policy, RssFeed, ShoppingCart, Speed, SportsKabaddi, Assignment } from '@mui/icons-material';
 import { Badge, Box, Button, Divider, Drawer, GlobalStyles, IconButton, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Alert as MuiAlert, Switch, ThemeProvider, Tooltip, useMediaQuery, useTheme } from '@mui/material';
@@ -197,7 +197,7 @@ const Main = () => {
               mr={1}
             >
               <Badge
-                badgeContent={getFightsLeft(b)}
+                badgeContent={getTotalFightsLeft(b)}
                 color="info"
                 componentsProps={{
                   badge: { style: { marginTop: 4 } },

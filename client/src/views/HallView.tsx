@@ -1,4 +1,4 @@
-import { CalculatedBrute, FightStat, MAX_FAVORITE_BRUTES, getFightsLeft } from '@labrute/core';
+import { CalculatedBrute, FightStat, MAX_FAVORITE_BRUTES, getTotalFightsLeft } from '@labrute/core';
 import { Check, CrisisAlert, Stars } from '@mui/icons-material';
 import { Box, Paper, Tooltip, useTheme } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
@@ -23,7 +23,7 @@ const HallView = () => {
   const { palette: { mode } } = useTheme();
 
   const fightsLeft = useMemo(() => user && user.brutes
-    .reduce((acc, brute) => acc + getFightsLeft(brute), 0), [user]);
+    .reduce((acc, brute) => acc + getTotalFightsLeft(brute), 0), [user]);
 
   // Go to cell page
   const goToCell = useCallback((bruteName: string) => () => {
@@ -85,7 +85,7 @@ const HallView = () => {
       }}
       >
         {user && user.brutes.map((brute) => {
-          const bruteFightsLeft = getFightsLeft(brute);
+          const bruteFightsLeft = getTotalFightsLeft(brute);
 
           return (
             <StyledButton
