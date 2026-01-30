@@ -643,9 +643,12 @@ export const executeAutoFights = async (
   
   const finalCanLevelUp = canLevelUp(finalCalculatedBrute);
 
+  // Devolver solo peleas DIARIAS: la columna fightsLeft en DB es solo diarias.
+  // El controlador escribe result.fightsLeft en la DB; si devolvemos total (diarias+bonus)
+  // duplicamos las bonus (ej: 0 diarias + 10 bonus -> escribíamos 10 en fightsLeft y quedaban 20 total).
   return {
     fightsCompleted,
-    fightsLeft: totalFinalFights,
+    fightsLeft: finalFightsLeft,
     canLevelUp: finalCanLevelUp,
     stopped: totalFinalFights === 0 || finalCanLevelUp,
     reason: finalCanLevelUp ? 'canLevelUp' : totalFinalFights === 0 ? 'noFightsLeft' : undefined,
