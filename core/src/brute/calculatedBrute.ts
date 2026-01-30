@@ -8,10 +8,13 @@ import { getScaledStat } from './scaledStat';
 import { getHP } from './getHP';
 import { applySkillModifiers } from './applySkillModifiers';
 
+const asArray = <T>(v: unknown): T[] => (Array.isArray(v) ? v : []);
+
 export const getTieredSkills = (brute: Pick<Brute, 'id' | 'skills'>, modifiers: Modifiers) => {
   const tieredSkills: TieredPerks['skills'] = {};
+  const skills = asArray<SkillName>(brute.skills);
 
-  for (const skill of brute.skills) {
+  for (const skill of skills) {
     tieredSkills[skill] = tieredSkills[skill]
       ? tieredSkills[skill] + 1
       : 1;
@@ -30,8 +33,9 @@ export const getTieredSkills = (brute: Pick<Brute, 'id' | 'skills'>, modifiers: 
 
 export const getTieredWeapons = (brute: Pick<Brute, 'id' | 'weapons'>, modifiers: Modifiers) => {
   const tieredWeapons: TieredPerks['weapons'] = {};
+  const weapons = asArray<WeaponName>(brute.weapons);
 
-  for (const weapon of brute.weapons) {
+  for (const weapon of weapons) {
     tieredWeapons[weapon] = tieredWeapons[weapon]
       ? tieredWeapons[weapon] + 1
       : 1;
@@ -50,8 +54,9 @@ export const getTieredWeapons = (brute: Pick<Brute, 'id' | 'weapons'>, modifiers
 
 export const getTieredPets = (brute: Pick<Brute, 'pets'>) => {
   const tieredPets: TieredPerks['pets'] = {};
+  const pets = asArray<PetName>(brute.pets);
 
-  for (const pet of brute.pets) {
+  for (const pet of pets) {
     tieredPets[pet] = tieredPets[pet]
       ? tieredPets[pet] + 1
       : 1;
@@ -76,8 +81,12 @@ export const getCalculatedBrute = <T extends Pick<Brute, 'id' | 'weapons' | 'ski
     pets: {},
   };
 
+  const weaponsArr = asArray<WeaponName>(brute.weapons);
+  const skillsArr = asArray<SkillName>(brute.skills);
+  const petsArr = asArray<PetName>(brute.pets);
+
   // Weapons
-  for (const weapon of brute.weapons) {
+  for (const weapon of weaponsArr) {
     calculatedBrute.weapons[weapon] = calculatedBrute.weapons[weapon]
       ? calculatedBrute.weapons[weapon] + 1
       : 1;
@@ -93,7 +102,7 @@ export const getCalculatedBrute = <T extends Pick<Brute, 'id' | 'weapons' | 'ski
   }
 
   // Skills
-  for (const skill of brute.skills) {
+  for (const skill of skillsArr) {
     calculatedBrute.skills[skill] = calculatedBrute.skills[skill]
       ? calculatedBrute.skills[skill] + 1
       : 1;
@@ -111,7 +120,7 @@ export const getCalculatedBrute = <T extends Pick<Brute, 'id' | 'weapons' | 'ski
   }
 
   // Pets
-  for (const pet of brute.pets) {
+  for (const pet of petsArr) {
     calculatedBrute.pets[pet] = calculatedBrute.pets[pet]
       ? calculatedBrute.pets[pet] + 1
       : 1;
