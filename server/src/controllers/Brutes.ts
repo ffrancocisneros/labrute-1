@@ -27,6 +27,7 @@ import {
   getBruteToSave,
   getFightsLeft,
   getLevelUpChoices,
+  getTotalFightsLeft,
   getRandomStartingStats,
   getTieredPets,
   getTieredSkills,
@@ -2214,9 +2215,9 @@ export const Brutes = {
           return;
         }
 
-        // Validar si tiene peleas disponibles
-        const fightsLeft = getFightsLeft(calculatedBrute, modifiers);
-        if (fightsLeft <= 0) {
+        // Validar si tiene peleas disponibles (diarias + bonus de hoy)
+        const totalFightsLeft = getTotalFightsLeft(calculatedBrute, modifiers);
+        if (totalFightsLeft <= 0) {
           res.status(400).send({
             success: false,
             autoFightEnabled: false,
