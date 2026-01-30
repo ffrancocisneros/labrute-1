@@ -240,60 +240,13 @@ export const executeAutoFights = async (
     }
 
     try {
-      // Obtener el bruto actualizado antes de pelear (incluir userId y winStreak para evitar queries redundantes)
+      // Usar el bruto del estado del loop (inicial o actualizado en iteración anterior). Evita 1 query por pelea (ver ANALISIS_LENTITUD_PELEAS_AUTOMATICAS.md).
       if (!brute) {
         break;
       }
-      
-      const updatedBruteResult = await prisma.brute.findFirst({
-        where: {
-          id: brute.id,
-          deletedAt: null,
-        },
-        select: {
-          id: true,
-          userId: true,
-          winStreakCurrent: true,
-          winStreakMax: true,
-          level: true,
-          xp: true,
-          eventId: true,
-          name: true,
-          victories: true,
-          losses: true,
-          weapons: true,
-          skills: true,
-          pets: true,
-          lastFight: true,
-          fightsLeft: true,
-          bonusFightsCount: true,
-          bonusFightsDate: true,
-          enduranceStat: true,
-          enduranceModifier: true,
-          enduranceValue: true,
-          strengthStat: true,
-          strengthModifier: true,
-          strengthValue: true,
-          agilityStat: true,
-          agilityModifier: true,
-          agilityValue: true,
-          speedStat: true,
-          speedModifier: true,
-          speedValue: true,
-          hp: true,
-          opponents: {
-            select: { name: true },
-          },
-        },
-      });
 
-      if (!updatedBruteResult) {
-        break;
-      }
-
-      // Tipo explícito para evitar "implicitly any" y cumplir getFightsLeft/getCalculatedBrute
       type UpdatedBruteSelect = Pick<Brute, 'id' | 'userId' | 'winStreakCurrent' | 'winStreakMax' | 'level' | 'xp' | 'eventId' | 'name' | 'victories' | 'losses' | 'weapons' | 'skills' | 'pets' | 'lastFight' | 'fightsLeft' | 'bonusFightsCount' | 'bonusFightsDate' | 'enduranceStat' | 'enduranceModifier' | 'enduranceValue' | 'strengthStat' | 'strengthModifier' | 'strengthValue' | 'agilityStat' | 'agilityModifier' | 'agilityValue' | 'speedStat' | 'speedModifier' | 'speedValue' | 'hp'>;
-      const updatedBrute: UpdatedBruteSelect = updatedBruteResult as UpdatedBruteSelect;
+      const updatedBrute = brute as UpdatedBruteSelect;
 
       // Verificar nuevamente si puede subir de nivel
       const updatedCalculatedBrute = getCalculatedBrute(updatedBrute, modifiers);
@@ -390,7 +343,10 @@ export const executeAutoFights = async (
         currentFightsLeft--;
       }
 
-      // Actualizar bruto (userId ya está en updatedBrute, no necesitamos query adicional)
+      // Racha de victorias: calcular aquí para un solo update (evita 1 query por pelea; ver ANALISIS_LENTITUD_PELEAS_AUTOMATICAS.md)
+      const newCurrentStreak = brute1Won ? (updatedBrute.winStreakCurrent ?? 0) + 1 : 0;
+      const newMaxStreak = Math.max(updatedBrute.winStreakMax ?? 0, newCurrentStreak);
+
       const userId = updatedBrute.userId;
       const updatedBruteAfterFight: Brute = await prisma.brute.update({
         where: { id: updatedBrute.id },
@@ -402,125 +358,64 @@ export const executeAutoFights = async (
           xp: { increment: xpGained },
           victories: { increment: brute1Won ? 1 : 0 },
           losses: { increment: brute1Won ? 0 : 1 },
+          winStreakCurrent: newCurrentStreak,
+          winStreakMax: newMaxStreak,
         },
       });
 
-      // Actualizar progreso de objetivos
+      // Objetivos, logros, misiones y battle pass en background para no bloquear la siguiente pelea (ANALISIS_LENTITUD_PELEAS_AUTOMATICAS.md)
       if (userId) {
-        const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('../objectives/updateObjectiveProgress.js');
-        const { ObjectiveType, AchievementType } = await import('@labrute/prisma');
-        const { updateAchievementProgress, updateAchievementProgressSingleBrute, updateWinStreakAchievement, updateDamageDealtAchievement, updateConsecutiveDaysAchievement } = await import('../achievements/updateAchievementProgress.js');
-        
-        // Actualizar objetivo de peleas completadas
-        await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
-        await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
-        await updateAchievementProgress(prisma, userId, AchievementType.COMPLETE_FIGHTS_TOTAL, 1);
-        // Actualizar logro de peleas completadas con un solo bruto (máximo)
-        await updateAchievementProgressSingleBrute(
-          prisma,
-          userId,
-          AchievementType.COMPLETE_FIGHTS_SINGLE_BRUTE,
-          (brute) => (brute.victories || 0) + (brute.losses || 0),
-        );
-        
-        // Actualizar objetivo de peleas ganadas
-        if (brute1Won) {
-          await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
-          await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
-          await updateAchievementProgress(prisma, userId, AchievementType.WIN_FIGHTS_TOTAL, 1);
-          // Actualizar logro de peleas ganadas con un solo bruto (máximo)
-          await updateAchievementProgressSingleBrute(
-            prisma,
-            userId,
-            AchievementType.WIN_FIGHTS_SINGLE_BRUTE,
-            (brute) => brute.victories || 0,
-          );
-        }
-        
-        // Actualizar objetivo de XP ganado
-        if (xpGained > 0) {
-          await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
-          await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
-        }
-        
-        // Actualizar logro de peleas automáticas completadas
-        await updateAchievementProgress(prisma, userId, AchievementType.AUTO_FIGHTS_COMPLETED, 1);
-        
-        // Logros/objetivos/misiones se procesan en background para no bloquear
         void (async () => {
           try {
-            // Racha de victorias incremental (O(1)) - usar valores de updatedBrute
-            const newCurrentStreak = brute1Won
-              ? (updatedBrute.winStreakCurrent ?? 0) + 1
-              : 0;
-            const newMaxStreak = Math.max(updatedBrute.winStreakMax ?? 0, newCurrentStreak);
+            const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('../objectives/updateObjectiveProgress.js');
+            const { ObjectiveType, AchievementType } = await import('@labrute/prisma');
+            const { updateAchievementProgress, updateAchievementProgressSingleBrute, updateWinStreakAchievement, updateDamageDealtAchievement, updateConsecutiveDaysAchievement } = await import('../achievements/updateAchievementProgress.js');
 
-            await prisma.brute.update({
-              where: { id: updatedBrute.id },
-              data: {
-                winStreakCurrent: newCurrentStreak,
-                winStreakMax: newMaxStreak,
-              },
-              select: { id: true },
-            });
+            await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+            await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.COMPLETE_FIGHTS, 1);
+            await updateAchievementProgress(prisma, userId, AchievementType.COMPLETE_FIGHTS_TOTAL, 1);
+            await updateAchievementProgressSingleBrute(
+              prisma,
+              userId,
+              AchievementType.COMPLETE_FIGHTS_SINGLE_BRUTE,
+              (b) => (b.victories || 0) + (b.losses || 0),
+            );
+            if (brute1Won) {
+              await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
+              await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.WIN_FIGHTS, 1);
+              await updateAchievementProgress(prisma, userId, AchievementType.WIN_FIGHTS_TOTAL, 1);
+              await updateAchievementProgressSingleBrute(prisma, userId, AchievementType.WIN_FIGHTS_SINGLE_BRUTE, (b) => b.victories || 0);
+            }
+            if (xpGained > 0) {
+              await updateDailyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
+              await updateWeeklyObjectiveProgress(prisma, userId, ObjectiveType.GAIN_XP, xpGained);
+            }
+            await updateAchievementProgress(prisma, userId, AchievementType.AUTO_FIGHTS_COMPLETED, 1);
 
-            // Logros permanentes (usan winStreakMax)
             await updateWinStreakAchievement(prisma, userId);
             await updateDamageDealtAchievement(prisma, userId, fight.id);
             await updateConsecutiveDaysAchievement(prisma, userId);
-          } catch (err) {
-            LOGGER.error(`AutoFight post logros error: ${err instanceof Error ? err.message : String(err)}`);
-          }
-        })();
-        
-        // Actualizar progreso de misiones
-        const { updateMissionProgress, updateMissionProgressSingleBrute } = await import('../missions/updateMissionProgress.js');
-        const { MissionType } = await import('@labrute/prisma');
-        
-        // Misiones de combate
-        await updateMissionProgress(prisma, userId, MissionType.COMPLETE_FIGHTS, 1);
-        if (brute1Won) {
-          await updateMissionProgress(prisma, userId, MissionType.WIN_FIGHTS, 1);
-        }
-        await updateMissionProgressSingleBrute(
-          prisma,
-          userId,
-          MissionType.REACH_LEVEL,
-          (brute) => brute.level || 0,
-        );
 
-        // Misiones de progresión
-        if (xpGained > 0) {
-          await updateMissionProgress(prisma, userId, MissionType.GAIN_XP, xpGained);
-        }
-
-        // Misiones de daño causado, racha de victorias y habilidades diferentes
-        const { updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMissionIncremental } = await import('../missions/updateMissionProgress.js');
-        void (async () => {
-          try {
+            const { updateMissionProgress, updateMissionProgressSingleBrute, updateDamageDealtMission, updateWinStreakMission, updateDifferentSkillsMissionIncremental } = await import('../missions/updateMissionProgress.js');
+            const { MissionType } = await import('@labrute/prisma');
+            await updateMissionProgress(prisma, userId, MissionType.COMPLETE_FIGHTS, 1);
+            if (brute1Won) await updateMissionProgress(prisma, userId, MissionType.WIN_FIGHTS, 1);
+            await updateMissionProgressSingleBrute(prisma, userId, MissionType.REACH_LEVEL, (b) => b.level || 0);
+            if (xpGained > 0) await updateMissionProgress(prisma, userId, MissionType.GAIN_XP, xpGained);
             await updateDamageDealtMission(prisma, userId, fight.id);
             await updateWinStreakMission(prisma, userId);
             await updateDifferentSkillsMissionIncremental(prisma, userId, fight.id);
+
+            const { addXp, addMissionProgress, addMissionProgressFromFight } = await import('../battlePass/updateBattlePassProgress.js');
+            const { BattlePassMissionType: BP } = await import('@labrute/prisma');
+            const { BATTLE_PASS_XP } = await import('@labrute/core');
+            await addXp(prisma, userId, brute1Won ? BATTLE_PASS_XP.FIGHT_WIN : BATTLE_PASS_XP.FIGHT_LOSS).catch(() => {});
+            if (brute1Won) await addMissionProgress(prisma, userId, BP.WIN_FIGHTS, 1).catch(() => {});
+            await addMissionProgressFromFight(prisma, userId, fight.id, { damage: true, winStreak: true }).catch(() => {});
           } catch (err) {
-            LOGGER.error(`AutoFight post misiones error: ${err instanceof Error ? err.message : String(err)}`);
+            LOGGER.error(`AutoFight background error: ${err instanceof Error ? err.message : String(err)}`);
           }
         })();
-
-        // Pase de batalla (peleas automáticas también suman XP)
-        const { addXp, addMissionProgress, addMissionProgressFromFight } = await import('../battlePass/updateBattlePassProgress.js');
-        const { BattlePassMissionType: BP } = await import('@labrute/prisma');
-        const { BATTLE_PASS_XP } = await import('@labrute/core');
-        await addXp(prisma, userId, brute1Won ? BATTLE_PASS_XP.FIGHT_WIN : BATTLE_PASS_XP.FIGHT_LOSS).catch((err: Error) => {
-          // Silently fail for Battle Pass updates in auto fights
-        });
-        if (brute1Won) {
-          await addMissionProgress(prisma, userId, BP.WIN_FIGHTS, 1).catch((err: Error) => {
-            // Silently fail for Battle Pass updates in auto fights
-          });
-        }
-        await addMissionProgressFromFight(prisma, userId, fight.id, { damage: true, winStreak: true }).catch((err: Error) => {
-          // Silently fail for Battle Pass updates in auto fights
-        });
       }
 
       // Crear logs
