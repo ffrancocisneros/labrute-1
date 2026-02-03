@@ -492,6 +492,8 @@ enum TournamentType {
   UNLIMITED_GLOBAL
   CUSTOM
   BATTLE_ROYALE
+  COPA_DEL_REY_SEMIFINAL
+  COPA_DEL_REY
 }
 
 model Tournament {

@@ -1,0 +1,3 @@
+-- AlterEnum
+ALTER TYPE "TournamentType" ADD VALUE 'COPA_DEL_REY_SEMIFINAL';
+ALTER TYPE "TournamentType" ADD VALUE 'COPA_DEL_REY';

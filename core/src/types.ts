@@ -567,6 +567,20 @@ export type TournamentsGetDailyResponse = Tournament & {
     brute2: Brute | null,
   })[]
 };
+export type TournamentsGetCopaDelReyResponse = {
+  semifinal: (Tournament & {
+    fights: (Pick<Fight, 'id' | 'winner' | 'loser' | 'winnerId' | 'loserId' | 'tournamentStep' | 'fighters'> & {
+      brute1: Brute | null,
+      brute2: Brute | null,
+    })[]
+  }) | null,
+  final: (Tournament & {
+    fights: (Pick<Fight, 'id' | 'winner' | 'loser' | 'winnerId' | 'loserId' | 'tournamentStep' | 'fighters'> & {
+      brute1: Brute | null,
+      brute2: Brute | null,
+    })[]
+  }) | null,
+};
 export type TournamentsUpdateStepWatchedResponse = {
   step: number,
 };

@@ -446,7 +446,9 @@ export const TournamentType: {
   GLOBAL: 'GLOBAL',
   UNLIMITED_GLOBAL: 'UNLIMITED_GLOBAL',
   CUSTOM: 'CUSTOM',
-  BATTLE_ROYALE: 'BATTLE_ROYALE'
+  BATTLE_ROYALE: 'BATTLE_ROYALE',
+  COPA_DEL_REY_SEMIFINAL: 'COPA_DEL_REY_SEMIFINAL',
+  COPA_DEL_REY: 'COPA_DEL_REY'
 };
 
 export type TournamentType = (typeof TournamentType)[keyof typeof TournamentType]

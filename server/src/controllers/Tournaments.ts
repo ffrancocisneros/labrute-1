@@ -1,7 +1,7 @@
 import {
   ExpectedError, ForbiddenError, GLOBAL_TOURNAMENT_START_HOUR,
   NotFoundError,
-  TournamentHistoryResponse, TournamentsGetDailyResponse, TournamentsGetGlobalResponse,
+  TournamentHistoryResponse, TournamentsGetCopaDelReyResponse, TournamentsGetDailyResponse, TournamentsGetGlobalResponse,
   TournamentsUpdateStepWatchedResponse,
   TournementsUpdateGlobalRoundWatchedResponse,
 } from '@labrute/core';
@@ -60,6 +60,70 @@ export const Tournaments = {
       }
 
       res.send(tournament);
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
+  getCopaDelRey: (prisma: PrismaClient) => async (
+    req: Request,
+    res: Response<TournamentsGetCopaDelReyResponse>,
+  ) => {
+    try {
+      if (!req.params.date || !dayjs.utc(req.params.date, 'YYYY-MM-DD').isValid()) {
+        throw new ExpectedError(translate('invalidParameters'));
+      }
+
+      const date = dayjs.utc(req.params.date, 'YYYY-MM-DD').toDate();
+
+      const [semifinal, final] = await Promise.all([
+        prisma.tournament.findFirst({
+          where: {
+            date: { equals: date },
+            type: TournamentType.COPA_DEL_REY_SEMIFINAL,
+          },
+          include: {
+            fights: {
+              select: {
+                id: true,
+                brute1: true,
+                brute2: true,
+                winner: true,
+                winnerId: true,
+                loser: true,
+                loserId: true,
+                tournamentStep: true,
+                fighters: true,
+              },
+            },
+          },
+        }),
+        prisma.tournament.findFirst({
+          where: {
+            date: { equals: date },
+            type: TournamentType.COPA_DEL_REY,
+          },
+          include: {
+            fights: {
+              select: {
+                id: true,
+                brute1: true,
+                brute2: true,
+                winner: true,
+                winnerId: true,
+                loser: true,
+                loserId: true,
+                tournamentStep: true,
+                fighters: true,
+              },
+            },
+          },
+        }),
+      ]);
+
+      res.send({
+        semifinal: semifinal ?? null,
+        final: final ?? null,
+      });
     } catch (error) {
       sendError(res, error);
     }

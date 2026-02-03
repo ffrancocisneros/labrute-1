@@ -2,6 +2,7 @@ import {
   BruteDeletionReason,
   ClanWarMaxParticipants,
   ClanWarPointReward,
+  CopaDelReyGoldReward,
   DailyModifierCountOdds,
   DailyModifierOdds,
   DailyModifierSpawnChance,
@@ -143,8 +144,9 @@ const handleDailyTournaments = async (
   prisma: PrismaClient,
   modifiers: Modifiers,
 ) => {
-  // Keep track of gains (xp, gold)
+  // Keep track of gains (xp, gold) and daily tournament winners
   const gains: Record<string, [number, number]> = {};
+  const dailyWinners: string[] = [];
 
   const today = dayjs.utc().startOf('day');
   const tomorrow = dayjs.utc(today).add(1, 'day');
@@ -181,7 +183,7 @@ const handleDailyTournaments = async (
 
   // All brutes are assigned, do nothing
   if (registeredBrutes.length === 0) {
-    return { registeredBrutes, gains };
+    return { registeredBrutes, gains, dailyWinners };
   }
 
   // Shuffle brutes
@@ -401,6 +403,8 @@ const handleDailyTournaments = async (
       throw new Error('No winner');
     }
 
+    dailyWinners.push(winner.id);
+
     const loser = (JSON.parse(lastFight.fighters) as Fighter[])
       .find((fighter) => !fighter.master && fighter.id !== winner.id);
     if (!loser) {
@@ -503,6 +507,7 @@ const handleDailyTournaments = async (
   return {
     registeredBrutes,
     gains,
+    dailyWinners,
   };
 };
 
@@ -525,14 +530,14 @@ const handleGlobalTournament = async (
   });
 
   if (globalTournament) {
-    return gains;
+    return { gains, globalWinnerId: null };
   }
 
   // Set tournament as invalid until it's finished
   await ServerState.setGlobalTournamentValid(prisma, false);
 
   if (brutes.length < 2) {
-    return gains;
+    return { gains, globalWinnerId: null };
   }
 
   LOGGER.log(`${brutes.length} brutes for global tournament`);
@@ -741,6 +746,209 @@ const handleGlobalTournament = async (
 
   LOGGER.log('Global tournament created');
 
+  return { gains, globalWinnerId: winnerBrute.id };
+};
+
+const handleCopaDelRey = async (
+  prisma: PrismaClient,
+  modifiers: Modifiers,
+  dailyWinners: string[],
+  globalWinnerId: string | null,
+): Promise<Record<string, [number, number]>> => {
+  const gains: Record<string, [number, number]> = {};
+  const today = dayjs.utc().startOf('day');
+
+  if (dailyWinners.length === 0 || !globalWinnerId) {
+    return gains;
+  }
+
+  // Check if Copa del Rey already handled today
+  const existingCopa = await prisma.tournament.count({
+    where: {
+      date: today.toDate(),
+      type: { in: [TournamentType.COPA_DEL_REY, TournamentType.COPA_DEL_REY_SEMIFINAL] },
+    },
+  });
+  if (existingCopa) {
+    return gains;
+  }
+
+  let dailyChampionId: string;
+
+  if (dailyWinners.length >= 2) {
+    // Mini-tournament among daily winners to pick champion
+    const shuffledWinners = shuffle(dailyWinners);
+    const semifinalTournament = await prisma.tournament.create({
+      data: {
+        date: today.toDate(),
+        type: TournamentType.COPA_DEL_REY_SEMIFINAL,
+        rounds: 0,
+      },
+      select: { id: true },
+    });
+    await prisma.tournament.update({
+      where: { id: semifinalTournament.id },
+      data: {
+        participants: {
+          connect: shuffledWinners.map((id) => ({ id })),
+        },
+      },
+      select: { id: true },
+    });
+
+    let roundBrutes = shuffledWinners.map((id) => ({ id }));
+    let round = 1;
+
+    while (roundBrutes.length > 1) {
+      const nextBrutes: { id: string }[] = [];
+
+      for (let i = 0; i < roundBrutes.length - 1; i += 2) {
+        const id1 = roundBrutes[i]?.id;
+        const id2 = roundBrutes[i + 1]?.id;
+        if (!id1 || !id2) continue;
+
+        const brute1 = await prisma.brute.findUnique({ where: { id: id1 } });
+        const brute2 = await prisma.brute.findUnique({ where: { id: id2 } });
+        if (!brute1 || !brute2 || brute1.id === brute2.id) continue;
+
+        let generatedFight: Prisma.FightCreateInput | null = null;
+        let retries = 0;
+        while (!generatedFight && retries <= 10) {
+          try {
+            const result = await generateFight({
+              prisma,
+              team1: { brutes: [getCalculatedBrute(brute1, modifiers)] },
+              team2: { brutes: [getCalculatedBrute(brute2, modifiers)] },
+              modifiers,
+              backups: false,
+              achievements: true,
+              tournament: roundBrutes.length === 2 ? 'finals' : 'fight',
+            });
+            generatedFight = result.data;
+          } catch (err) {
+            LOGGER.log(`Copa del Rey semifinal fight error, retry ${retries}`);
+            retries++;
+          }
+        }
+        if (!generatedFight) throw new Error('Failed to generate Copa del Rey semifinal fight');
+
+        await prisma.fight.create({
+          data: {
+            ...generatedFight,
+            tournamentStep: round,
+            tournament: { connect: { id: semifinalTournament.id } },
+          },
+          select: { id: true },
+        });
+
+        const winnerId = brute1.name === generatedFight.winner ? brute1.id : brute2.id;
+        nextBrutes.push({ id: winnerId });
+      }
+
+      roundBrutes = nextBrutes;
+      round++;
+    }
+
+    dailyChampionId = roundBrutes[0]?.id ?? '';
+    if (!dailyChampionId) throw new Error('No daily champion from semifinal');
+
+    await prisma.tournament.update({
+      where: { id: semifinalTournament.id },
+      data: { rounds: round },
+      select: { id: true },
+    });
+  } else {
+    dailyChampionId = dailyWinners[0] ?? '';
+  }
+
+  if (!dailyChampionId) return gains;
+
+  // Same brute won both: give reward directly, no final
+  if (dailyChampionId === globalWinnerId) {
+    const winnerBrute = await prisma.brute.findUnique({
+      where: { id: dailyChampionId },
+      select: { userId: true },
+    });
+    if (winnerBrute?.userId) {
+      await prisma.tournamentGold.create({
+        data: {
+          userId: winnerBrute.userId,
+          date: today.toDate(),
+          gold: CopaDelReyGoldReward,
+        },
+        select: { id: true },
+      });
+      gains[dailyChampionId] = [0, CopaDelReyGoldReward];
+    }
+    LOGGER.log('Copa del Rey: same brute won daily and global, reward granted');
+    return gains;
+  }
+
+  // Final: daily champion vs global winner
+  const dailyChampion = await prisma.brute.findUnique({ where: { id: dailyChampionId } });
+  const globalWinner = await prisma.brute.findUnique({ where: { id: globalWinnerId } });
+  if (!dailyChampion || !globalWinner) return gains;
+
+  const finalTournament = await prisma.tournament.create({
+    data: {
+      date: today.toDate(),
+      type: TournamentType.COPA_DEL_REY,
+      rounds: 1,
+      participants: {
+        connect: [{ id: dailyChampionId }, { id: globalWinnerId }],
+      },
+    },
+    select: { id: true },
+  });
+
+  let generatedFight: Prisma.FightCreateInput | null = null;
+  let retries = 0;
+  while (!generatedFight && retries <= 10) {
+    try {
+      const result = await generateFight({
+        prisma,
+        team1: { brutes: [getCalculatedBrute(dailyChampion, modifiers)] },
+        team2: { brutes: [getCalculatedBrute(globalWinner, modifiers)] },
+        modifiers,
+        backups: false,
+        achievements: true,
+        tournament: 'finals',
+      });
+      generatedFight = result.data;
+    } catch (err) {
+      LOGGER.log(`Copa del Rey final fight error, retry ${retries}`);
+      retries++;
+    }
+  }
+  if (!generatedFight) throw new Error('Failed to generate Copa del Rey final');
+
+  await prisma.fight.create({
+    data: {
+      ...generatedFight,
+      tournamentStep: 1,
+      tournament: { connect: { id: finalTournament.id } },
+    },
+    select: { id: true },
+  });
+
+  const winnerId = dailyChampion.name === generatedFight.winner ? dailyChampionId : globalWinnerId;
+  const winnerBrute = await prisma.brute.findUnique({
+    where: { id: winnerId },
+    select: { userId: true },
+  });
+  if (winnerBrute?.userId) {
+    await prisma.tournamentGold.create({
+      data: {
+        userId: winnerBrute.userId,
+        date: today.toDate(),
+        gold: CopaDelReyGoldReward,
+      },
+      select: { id: true },
+    });
+    gains[winnerId] = [0, CopaDelReyGoldReward];
+  }
+
+  LOGGER.log('Copa del Rey created');
   return gains;
 };
 
@@ -2313,13 +2521,19 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
       const {
         registeredBrutes,
         gains: dailyGains,
+        dailyWinners,
       } = await handleDailyTournaments(prisma, modifiers);
       logMemory('After daily tournaments');
       triggerGC();
 
       // Handle global tournament
-      const globalGains = await handleGlobalTournament(prisma, modifiers, registeredBrutes);
+      const { gains: globalGains, globalWinnerId } = await handleGlobalTournament(prisma, modifiers, registeredBrutes);
       logMemory('After global tournament');
+      triggerGC();
+
+      // Handle Copa del Rey (daily champion vs global winner)
+      const copaGains = await handleCopaDelRey(prisma, modifiers, dailyWinners, globalWinnerId);
+      logMemory('After Copa del Rey');
       triggerGC();
 
       // Handle unlimited global tournament
@@ -2327,8 +2541,17 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
       logMemory('After unlimited global tournament');
       triggerGC();
 
-      // Store gains
-      await storeGains(prisma, dailyGains, globalGains);
+      // Store gains (merge daily, global, and Copa del Rey)
+      const mergedGlobalGains = { ...globalGains };
+      for (const [bruteId, [xp, gold]] of Object.entries(copaGains)) {
+        const existing = mergedGlobalGains[bruteId];
+        if (!existing) {
+          mergedGlobalGains[bruteId] = [xp, gold];
+        } else {
+          mergedGlobalGains[bruteId] = [existing[0] + xp, existing[1] + gold];
+        }
+      }
+      await storeGains(prisma, dailyGains, mergedGlobalGains);
       logMemory('After storing gains');
     }
 

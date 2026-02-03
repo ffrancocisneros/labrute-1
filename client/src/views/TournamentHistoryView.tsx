@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+import FantasyButton from '../components/FantasyButton';
 import Link from '../components/Link';
 import Loader from '../components/Loader';
 import Page from '../components/Page';
@@ -18,6 +19,11 @@ const TournamentHistoryView = () => {
   const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const { data: tournaments } = useStateAsync(null, Server.Tournament.getHistory, bruteName || '');
+  const todayStr = dayjs.utc().format('YYYY-MM-DD');
+  const { data: copaDelRey } = useStateAsync(null, Server.Tournament.getCopaDelRey, todayStr);
+
+  const hasCopaSemifinal = !!copaDelRey?.semifinal;
+  const hasCopaFinal = !!copaDelRey?.final;
 
   return (
     <Page
@@ -28,6 +34,27 @@ const TournamentHistoryView = () => {
       <Paper sx={{ mx: 4 }}>
         <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>{t('tournamentHistory')}</Text>
       </Paper>
+      {(hasCopaSemifinal || hasCopaFinal) && (
+        <Paper sx={{ mx: 4, mt: 2, p: 2, bgcolor: 'background.paperAccent' }}>
+          <Text bold sx={{ mb: 1 }}>{t('copaDelRey')} - {dayjs.utc().format('DD/MM/YYYY')}</Text>
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+            {hasCopaSemifinal && (
+              <Link to={`/${bruteName || ''}/tournament/copa-del-rey/semifinal/${todayStr}`}>
+                <FantasyButton color="secondary" sx={{ mr: 1 }}>
+                  {t('copaDelReySemifinal')}
+                </FantasyButton>
+              </Link>
+            )}
+            {hasCopaFinal && (
+              <Link to={`/${bruteName || ''}/tournament/copa-del-rey/final/${todayStr}`}>
+                <FantasyButton color="primary">
+                  {t('copaDelReyFinal')}
+                </FantasyButton>
+              </Link>
+            )}
+          </Box>
+        </Paper>
+      )}
       <Paper sx={{ bgcolor: 'background.paperLight', mt: -2 }}>
         <Grid container spacing={1}>
           <Grid item xs={12} md={3} />

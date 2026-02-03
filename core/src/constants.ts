@@ -143,6 +143,7 @@ export const DailyTournamentGoldReward = 100;
 export const DailyTournamentXpReward = 1;
 export const GlobalTournamentGoldReward = 150;
 export const GlobalTournamentXpReward = 1;
+export const CopaDelReyGoldReward = 500;
 
 export const DEFAULT_LANGUAGE = Lang.es;
 

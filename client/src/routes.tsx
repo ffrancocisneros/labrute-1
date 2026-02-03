@@ -43,6 +43,7 @@ import PatchNotesView from './views/PatchNotesView';
 import RankingView from './views/RankingView';
 import ReportAdminView from './views/admin/ReportAdminView';
 import ResetVisualsView from './views/ResetVisualsView';
+import CopaDelReyView from './views/CopaDelReyView';
 import TournamentHistoryView from './views/TournamentHistoryView';
 import TournamentView from './views/TournamentView';
 import UserAdminView from './views/admin/UserAdminView';
@@ -96,6 +97,7 @@ const routes: RouteObject[] = [
           { path: 'versus/:opponentName', element: <VersusView /> },
           { path: 'fight/:fightId', element: <FightView /> },
           { path: 'tournament/global/:date', element: <GlobalTournamentView /> },
+          { path: 'tournament/copa-del-rey/:type/:date', element: <CopaDelReyView /> },
           { path: 'tournament/:date', element: <TournamentView /> },
           { path: 'ranking', element: <RankingView /> },
           { path: 'ranking/:rank', element: <RankingView /> },

@@ -814,7 +814,9 @@ exports.TournamentType = exports.$Enums.TournamentType = {
   GLOBAL: 'GLOBAL',
   UNLIMITED_GLOBAL: 'UNLIMITED_GLOBAL',
   CUSTOM: 'CUSTOM',
-  BATTLE_ROYALE: 'BATTLE_ROYALE'
+  BATTLE_ROYALE: 'BATTLE_ROYALE',
+  COPA_DEL_REY_SEMIFINAL: 'COPA_DEL_REY_SEMIFINAL',
+  COPA_DEL_REY: 'COPA_DEL_REY'
 };
 
 exports.AchievementName = exports.$Enums.AchievementName = {
