@@ -453,3 +453,57 @@ Después del deploy, verificar:
 - Script de recovery: `scripts/start-production.sh` (líneas 16-26)
 - Script manual: `scripts/resolve_bonus_fights_migration.sql`
 - Patrón similar: `server/prisma/migrations/20260120000000_add_shop_system_v2/migration.sql`
+
+---
+
+## 🚨 Error ESLint en Build Docker - react/no-array-index-key
+
+### Problema Reportado
+
+**Fecha:** 31 de Enero 2026  
+**Error:** Build de Docker falló durante `yarn build:client`  
+**Síntoma:** ESLint rechazó el uso de índice de array como `key` en React
+
+### Logs del Error
+
+```
+[eslint] 
+src/views/CopaDelReyView.tsx
+  Line 101:25:  Do not use Array index in keys  react/no-array-index-key
+```
+
+### Causa
+
+La regla `react/no-array-index-key` prohíbe usar el índice del array como `key` en listas de React porque:
+- Los índices pueden cambiar si se reordena la lista
+- Puede causar re-renders incorrectos o bugs sutiles
+- React recomienda usar identificadores únicos y estables de los datos
+
+### Solución Implementada
+
+**Archivo:** `client/src/views/CopaDelReyView.tsx`
+
+**Antes:**
+```tsx
+.map(([, fights]) => fights.sort(...));
+// ...
+{rounds.map((roundFights, roundIndex) => (
+  <Box key={roundIndex} sx={{ mb: 2 }}>
+```
+
+**Después:**
+```tsx
+.map(([step, fights]) => ({ step, fights: fights.sort(...) }));
+// ...
+{rounds.map(({ step, fights: roundFights }, roundIndex) => (
+  <Box key={step} sx={{ mb: 2 }}>
+```
+
+Se preserva el `tournamentStep` (único por ronda) y se usa como `key` en lugar del índice.
+
+### Verificación
+
+```bash
+cd client
+yarn build
+```
