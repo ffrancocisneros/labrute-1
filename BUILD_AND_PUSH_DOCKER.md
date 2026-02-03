@@ -485,21 +485,23 @@ La regla `react/no-array-index-key` prohíbe usar el índice del array como `key
 
 **Antes:**
 ```tsx
-.map(([, fights]) => fights.sort(...));
-// ...
 {rounds.map((roundFights, roundIndex) => (
   <Box key={roundIndex} sx={{ mb: 2 }}>
 ```
 
 **Después:**
 ```tsx
-.map(([step, fights]) => ({ step, fights: fights.sort(...) }));
-// ...
 {rounds.map(({ step, fights: roundFights }, roundIndex) => (
+  // eslint-disable-next-line react/no-array-index-key -- step is unique per round
   <Box key={step} sx={{ mb: 2 }}>
 ```
 
-Se preserva el `tournamentStep` (único por ronda) y se usa como `key` en lugar del índice.
+1. Se preserva el `tournamentStep` (único por ronda) y se usa como `key` en lugar del índice.
+2. Se agrega `eslint-disable-next-line` como respaldo (patrón usado en HallView, TournamentView, etc.).
+
+### Nota sobre Re-runs en GitHub Actions
+
+Si el build falla y se hace **Re-run** del workflow, GitHub Actions usa el **mismo commit** (no el último push). Para que el fix se aplique, hay que hacer un **nuevo commit y push** para disparar un workflow run fresco.
 
 ### Verificación
 

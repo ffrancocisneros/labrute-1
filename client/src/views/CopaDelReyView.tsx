@@ -51,7 +51,10 @@ const CopaDelReyView = () => {
     }
     return Array.from(byStep.entries())
       .sort(([a], [b]) => a - b)
-      .map(([step, fights]) => ({ step, fights: fights.sort((a, b) => a.tournamentStep - b.tournamentStep) }));
+      .map(([step, fights]) => ({
+        step,
+        fights: fights.sort((a, b) => a.tournamentStep - b.tournamentStep),
+      }));
   }, [tournament]);
 
   const title = type === 'semifinal'
@@ -98,6 +101,7 @@ const CopaDelReyView = () => {
           <Grid item xs={12} md={3} />
           <Grid item xs={12} md={6} sx={{ p: 2 }}>
             {rounds.map(({ step, fights: roundFights }, roundIndex) => (
+              // eslint-disable-next-line react/no-array-index-key
               <Box key={step} sx={{ mb: 2 }}>
                 <Text bold sx={{ mb: 1 }}>{t('round', { value: roundIndex + 1 })}</Text>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
