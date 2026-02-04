@@ -110,8 +110,11 @@ const BalanceView = () => {
               value={filter}
               onChange={(_, value: FilterType) => {
                 setFilter(value);
-                setPage(1);
-                setTransactions([]);
+                // Resetear página cuando cambias el filtro para empezar desde el principio
+                if (page !== 1) {
+                  setPage(1);
+                  setTransactions([]);
+                }
               }}
               sx={{ borderBottom: 1, borderColor: 'divider' }}
             >
@@ -135,27 +138,29 @@ const BalanceView = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        bgcolor: transaction.amount > 0 ? 'success.light' : 'error.light',
+                        border: 1,
+                        borderColor: transaction.amount > 0 ? 'success.main' : 'error.main',
                       }}
                     >
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flex: 1 }}>
                         {transaction.amount > 0 ? (
                           <Add sx={{ color: 'success.main' }} />
                         ) : (
                           <Remove sx={{ color: 'error.main' }} />
                         )}
-                        <Box>
-                          <Text bold body1>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                          <Text bold body1 sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                             {transaction.amount > 0 ? '+' : ''}{transaction.amount} {t('gold')}
+                            <Box component="img" src="/images/gold.png" sx={{ width: 12, height: 12 }} />
                           </Text>
                           <Text body2>
-                            {formatSource(transaction.source, transaction.sourceData)}
-                          </Text>
-                          <Text body2 sx={{ opacity: 0.7 }}>
-                            {dayjs(transaction.createdAt).format('DD/MM/YYYY HH:mm')}
+                            - {formatSource(transaction.source, transaction.sourceData)}
                           </Text>
                         </Box>
                       </Box>
+                      <Text body2 sx={{ opacity: 0.7, whiteSpace: 'nowrap' }}>
+                        {dayjs(transaction.createdAt).format('DD/MM/YYYY HH:mm')}
+                      </Text>
                     </Paper>
                   ))
                 )}
