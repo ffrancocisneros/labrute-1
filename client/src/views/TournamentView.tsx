@@ -3,7 +3,7 @@ import { Gender } from '@labrute/prisma';
 import { Close } from '@mui/icons-material';
 import { Box, Paper, useMediaQuery, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 import BruteRender from '../components/Brute/Body/BruteRender';
@@ -12,6 +12,7 @@ import FantasyButton from '../components/FantasyButton';
 import Page from '../components/Page';
 import StyledButton, { StyledButtonHeight, StyledButtonWidth } from '../components/StyledButton';
 import Text from '../components/Text';
+import TournamentBracketLines, { BracketLine } from '../components/TournamentBracketLines';
 import { useAuth } from '../hooks/useAuth';
 import { useBrute } from '../hooks/useBrute';
 import useStateAsync from '../hooks/useStateAsync';
@@ -76,6 +77,10 @@ const TournamentView = () => {
     : undefined), [winnerFight]);
 
   const [display, setDisplay] = React.useState(false);
+  const [bracketLines, setBracketLines] = useState<BracketLine[]>([]);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const fightRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
   // Wait 1s before displaying the tournament
   React.useEffect(() => {
@@ -165,6 +170,142 @@ const TournamentView = () => {
     } : null));
   }, [brute, updateBrute]);
 
+  // Calculate bracket lines
+  const calculateBracketLines = useCallback(() => {
+    if (!containerRef.current || !display || !tournament) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const lines: BracketLine[] = [];
+
+    // Map of round index to next round index
+    const roundConnections: Record<number, number> = {
+      0: 1,   // Ronda 0 -> Ronda 1 (izquierda)
+      10: 9,  // Ronda 10 -> Ronda 9 (derecha)
+      1: 2,   // Ronda 1 -> Ronda 2 (izquierda)
+      9: 8,   // Ronda 9 -> Ronda 8 (derecha)
+      2: 3,   // Ronda 2 -> Ronda 3 (izquierda)
+      8: 7,   // Ronda 8 -> Ronda 7 (derecha)
+      3: 4,   // Ronda 3 -> Ronda 4 (izquierda)
+      7: 6,   // Ronda 7 -> Ronda 6 (derecha)
+      4: 5,   // Ronda 4 -> Ronda 5 (final)
+      6: 5,   // Ronda 6 -> Ronda 5 (final)
+    };
+
+    // Calculate lines for each round connection
+    Object.entries(roundConnections).forEach(([fromRoundStr, toRound]) => {
+      const fromRound = parseInt(fromRoundStr, 10);
+      const fromRoundNumber = fromRound < 6 ? fromRound : 10 - fromRound;
+      const toRoundNumber = toRound < 6 ? toRound : 10 - toRound;
+
+      // Check if rounds should be displayed
+      const fromShouldDisplay = ownsBrute
+        ? stepWatched >= fromRoundNumber
+        : true;
+      const toShouldDisplay = ownsBrute
+        ? stepWatched >= toRoundNumber
+        : true;
+
+      if (!fromShouldDisplay || !toShouldDisplay) return;
+
+      const fromRoundFights = rounds[fromRound] || [];
+      const toRoundFights = rounds[toRound] || [];
+
+      if (fromRoundFights.length === 0 || toRoundFights.length === 0) return;
+
+      // Each fight in the next round comes from 2 fights in the previous round
+      toRoundFights.forEach((toFight, toIndex) => {
+        const fromIndex1 = toIndex * 2;
+        const fromIndex2 = toIndex * 2 + 1;
+
+        if (fromIndex1 >= fromRoundFights.length || fromIndex2 >= fromRoundFights.length) return;
+
+        const fromFight1 = fromRoundFights[fromIndex1];
+        const fromFight2 = fromRoundFights[fromIndex2];
+
+        if (!fromFight1 || !fromFight2) return;
+
+        const fromKey1 = `${fromRound}-${fromFight1.id}`;
+        const fromKey2 = `${fromRound}-${fromFight2.id}`;
+        const toKey = `${toRound}-${toFight.id}`;
+
+        const fromEl1 = fightRefs.current.get(fromKey1);
+        const fromEl2 = fightRefs.current.get(fromKey2);
+        const toEl = fightRefs.current.get(toKey);
+
+        if (!fromEl1 || !fromEl2 || !toEl) return;
+
+        const fromRect1 = fromEl1.getBoundingClientRect();
+        const fromRect2 = fromEl2.getBoundingClientRect();
+        const toRect = toEl.getBoundingClientRect();
+
+        // Calculate positions relative to container
+        const from1 = {
+          x: fromRect1.left + fromRect1.width / 2 - containerRect.left,
+          y: fromRect1.top + fromRect1.height / 2 - containerRect.top,
+        };
+        const from2 = {
+          x: fromRect2.left + fromRect2.width / 2 - containerRect.left,
+          y: fromRect2.top + fromRect2.height / 2 - containerRect.top,
+        };
+        const to = {
+          x: toRect.left + toRect.width / 2 - containerRect.left,
+          y: toRect.top + toRect.height / 2 - containerRect.top,
+        };
+
+        // Calculate intermediate point (midpoint between the two source fights)
+        const intermediateY = (from1.y + from2.y) / 2;
+        const intermediateX = fromRound < 6
+          ? (from1.x + from2.x) / 2 + (to.x - (from1.x + from2.x) / 2) * 0.5
+          : (from1.x + from2.x) / 2 - ((from1.x + from2.x) / 2 - to.x) * 0.5;
+
+        // Add bracket lines: from each source fight to intermediate, then to destination
+        // Line from first source to intermediate
+        lines.push({
+          from: from1,
+          to: { x: intermediateX, y: intermediateY },
+        });
+        // Line from second source to intermediate
+        lines.push({
+          from: from2,
+          to: { x: intermediateX, y: intermediateY },
+        });
+        // Line from intermediate to destination (with intermediate point for bracket shape)
+        lines.push({
+          from: { x: intermediateX, y: intermediateY },
+          to,
+          intermediate: { x: intermediateX, y: intermediateY },
+        });
+      });
+    });
+
+    setBracketLines(lines);
+    setContainerSize({
+      width: containerRect.width,
+      height: containerRect.height,
+    });
+  }, [display, tournament, rounds, ownsBrute, stepWatched]);
+
+  // Recalculate lines when display changes, rounds change, or window resizes
+  useEffect(() => {
+    if (!display || !tournament) return;
+
+    // Calculate after a delay to ensure DOM is ready and all refs are set
+    const timeout = setTimeout(() => {
+      calculateBracketLines();
+    }, 200);
+
+    const handleResize = () => {
+      calculateBracketLines();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [display, tournament, rounds, calculateBracketLines]);
+
   return tournament && (smallScreen
     ? (
       <TournamentMobileView
@@ -195,7 +336,10 @@ const TournamentView = () => {
         >
           <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>{t('tournamentOf')} {dayjs.utc(tournament.date).format('DD MMMM YYYY')}</Text>
         </Paper>
-        <Paper sx={{ position: 'relative', bgcolor: 'background.paperLight', mt: -2 }}>
+        <Paper
+          ref={containerRef}
+          sx={{ position: 'relative', bgcolor: 'background.paperLight', mt: -2 }}
+        >
           {ownsBrute && stepWatched < 6 && (
             <FantasyButton onClick={setWatched} color="success">
               {t('setAsWatched')}
@@ -274,10 +418,18 @@ const TournamentView = () => {
                     const fighters = JSON.parse(fight.fighters) as Fighter[];
                     const brute1 = fighters.find((fighter) => !fighter.master && fighter.type === 'brute' && fighter.team === 'L');
                     const brute2 = fighters.find((fighter) => !fighter.master && fighter.type === 'brute' && fighter.team === 'R');
+                    const fightKey = `${index}-${fight.id}`;
                     return (
                       // Fight button
                       <StyledButton
                         key={fight.id}
+                        ref={(el) => {
+                          if (el) {
+                            fightRefs.current.set(fightKey, el);
+                          } else {
+                            fightRefs.current.delete(fightKey);
+                          }
+                        }}
                         onClick={goToFight(fight, index < 6 ? index + 1 : 10 - index + 1)}
                         shadowColor={fighters.some((fighter) => fighter.name === bruteName)
                           ? '#006CD1'
@@ -290,6 +442,8 @@ const TournamentView = () => {
                           height: scale(StyledButtonHeight, index),
                           m: `${scale(8, index)}px`,
                           overflow: 'hidden',
+                          position: 'relative',
+                          zIndex: 1,
                         }}
                       >
                         {/* Left fighter */}
@@ -445,6 +599,14 @@ const TournamentView = () => {
                 />
               </Box>
             )}
+          {/* Bracket lines */}
+          {display && bracketLines.length > 0 && containerSize.width > 0 && containerSize.height > 0 && (
+            <TournamentBracketLines
+              lines={bracketLines}
+              containerWidth={containerSize.width}
+              containerHeight={containerSize.height}
+            />
+          )}
         </Paper>
       </Page>
     ));
