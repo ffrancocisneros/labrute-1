@@ -179,16 +179,16 @@ const TournamentView = () => {
 
     // Map of round index to next round index
     const roundConnections: Record<number, number> = {
-      0: 1,   // Ronda 0 -> Ronda 1 (izquierda)
-      10: 9,  // Ronda 10 -> Ronda 9 (derecha)
-      1: 2,   // Ronda 1 -> Ronda 2 (izquierda)
-      9: 8,   // Ronda 9 -> Ronda 8 (derecha)
-      2: 3,   // Ronda 2 -> Ronda 3 (izquierda)
-      8: 7,   // Ronda 8 -> Ronda 7 (derecha)
-      3: 4,   // Ronda 3 -> Ronda 4 (izquierda)
-      7: 6,   // Ronda 7 -> Ronda 6 (derecha)
-      4: 5,   // Ronda 4 -> Ronda 5 (final)
-      6: 5,   // Ronda 6 -> Ronda 5 (final)
+      0: 1, // Ronda 0 -> Ronda 1 (izquierda)
+      10: 9, // Ronda 10 -> Ronda 9 (derecha)
+      1: 2, // Ronda 1 -> Ronda 2 (izquierda)
+      9: 8, // Ronda 9 -> Ronda 8 (derecha)
+      2: 3, // Ronda 2 -> Ronda 3 (izquierda)
+      8: 7, // Ronda 8 -> Ronda 7 (derecha)
+      3: 4, // Ronda 3 -> Ronda 4 (izquierda)
+      7: 6, // Ronda 7 -> Ronda 6 (derecha)
+      4: 5, // Ronda 4 -> Ronda 5 (final)
+      6: 5, // Ronda 6 -> Ronda 5 (final)
     };
 
     // Calculate lines for each round connection
@@ -300,6 +300,7 @@ const TournamentView = () => {
 
     window.addEventListener('resize', handleResize);
 
+    // eslint-disable-next-line consistent-return -- cleanup function doesn't need return value
     return () => {
       clearTimeout(timeout);
       window.removeEventListener('resize', handleResize);
@@ -600,13 +601,17 @@ const TournamentView = () => {
               </Box>
             )}
           {/* Bracket lines */}
-          {display && bracketLines.length > 0 && containerSize.width > 0 && containerSize.height > 0 && (
-            <TournamentBracketLines
-              lines={bracketLines}
-              containerWidth={containerSize.width}
-              containerHeight={containerSize.height}
-            />
-          )}
+          {display
+            && bracketLines.length > 0
+            && containerSize.width > 0
+            && containerSize.height > 0
+            && (
+              <TournamentBracketLines
+                lines={bracketLines}
+                containerWidth={containerSize.width}
+                containerHeight={containerSize.height}
+              />
+            )}
         </Paper>
       </Page>
     ));

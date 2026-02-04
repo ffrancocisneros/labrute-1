@@ -509,3 +509,139 @@ Si el build falla y se hace **Re-run** del workflow, GitHub Actions usa el **mis
 cd client
 yarn build
 ```
+
+---
+
+## 🚨 Error ESLint en Build Docker - Líneas de Conexión del Torneo
+
+### Problema Reportado
+
+**Fecha:** 4 de Febrero 2026  
+**Error:** Build de Docker falló durante `yarn build:client`  
+**Commit:** `31c83caa` - feat: Agregar líneas de conexión visual al torneo  
+**Síntoma:** ESLint rechazó múltiples violaciones de reglas en archivos nuevos
+
+### Logs del Error
+
+```
+Failed to compile.
+
+[eslint]
+src/components/TournamentBracketLines.tsx
+  Line 53:1:   Trailing spaces not allowed        no-trailing-spaces
+  Line 56:20:  Do not use Array index in keys     react/no-array-index-key
+  Line 65:16:  Unnecessary 'else' after 'return'  no-else-return
+  Line 69:20:  Do not use Array index in keys     react/no-array-index-key
+
+src/views/TournamentView.tsx
+  Line 182:12:  Multiple spaces found before '// Ronda 0 -> ...'       no-multi-spaces
+  Line 183:13:  Multiple spaces found before '// Ronda 10 ->...'       no-multi-spaces
+  Line 184:12:  Multiple spaces found before '// Ronda 1 -> ...'       no-multi-spaces
+  Line 185:12:  Multiple spaces found before '// Ronda 9 -> ...'       no-multi-spaces
+  Line 186:12:  Multiple spaces found before '// Ronda 2 -> ...'       no-multi-spaces
+  Line 187:12:  Multiple spaces found before '// Ronda 8 -> ...'       no-multi-spaces
+  Line 188:12:  Multiple spaces found before '// Ronda 3 -> ...'       no-multi-spaces
+  Line 189:12:  Multiple spaces found before '// Ronda 7 -> ...'       no-multi-spaces
+  Line 190:12:  Multiple spaces found before '// Ronda 4 -> ...'       no-multi-spaces
+  Line 191:12:  Multiple spaces found before '// Ronda 6 -> ...'       no-multi-spaces
+  Line 303:5:   Arrow function expected no return value                consistent-return
+  Line 603:1:   This line has a length of 105. Maximum allowed is 100  max-len
+```
+
+### Causa
+
+Errores de ESLint en código nuevo:
+1. **Trailing spaces:** Espacios en blanco al final de líneas
+2. **Array index in keys:** Uso de índice de array como `key` en React (aunque aceptable en este caso)
+3. **Unnecessary else:** Uso de `else` después de `return` (no necesario)
+4. **Multiple spaces:** Espacios múltiples antes de comentarios
+5. **Consistent return:** Función arrow que debería retornar consistentemente
+6. **Max line length:** Línea excede 100 caracteres
+
+### Solución Implementada
+
+#### 1. TournamentBracketLines.tsx
+
+**Cambios:**
+- Eliminar trailing spaces en línea 53
+- Agregar `eslint-disable-next-line` para uso de índice como key (justificado: array es estable)
+- Eliminar `else` innecesario después de `return`
+- Agregar comentario explicativo para justificar el uso de índice
+
+**Código corregido:**
+```tsx
+{lines.map((line, index) => {
+  if (line.intermediate) {
+    const path = `M ${line.from.x} ${line.from.y}
+                 L ${line.from.x} ${line.intermediate.y}
+                 L ${line.to.x} ${line.intermediate.y}
+                 L ${line.to.x} ${line.to.y}`;
+    // eslint-disable-next-line react/no-array-index-key -- lines array is stable
+    return (
+      <path key={index} ... />
+    );
+  }
+  // Simple straight line
+  // eslint-disable-next-line react/no-array-index-key -- lines array is stable
+  return (
+    <line key={index} ... />
+  );
+})}
+```
+
+#### 2. TournamentView.tsx
+
+**Cambios:**
+- Eliminar espacios múltiples antes de comentarios (líneas 182-191)
+- Agregar `return undefined;` explícito en cleanup de useEffect para consistencia
+- Dividir línea larga (603) en múltiples líneas
+
+**Código corregido:**
+```tsx
+const roundConnections: Record<number, number> = {
+  0: 1, // Ronda 0 -> Ronda 1 (izquierda)
+  10: 9, // Ronda 10 -> Ronda 9 (derecha)
+  // ... etc
+};
+
+// En useEffect cleanup:
+return () => {
+  clearTimeout(timeout);
+  window.removeEventListener('resize', handleResize);
+  return undefined;
+};
+
+// Línea dividida:
+{display
+  && bracketLines.length > 0
+  && containerSize.width > 0
+  && containerSize.height > 0
+  && (
+    <TournamentBracketLines ... />
+  )}
+```
+
+### Lecciones Aprendidas
+
+1. **Verificar ESLint localmente antes de push:**
+   - Ejecutar `yarn build` o `yarn lint` antes de hacer commit
+   - Los errores de ESLint bloquean el build en CI
+
+2. **Patrones comunes:**
+   - Usar `eslint-disable-next-line` con justificación cuando sea necesario
+   - Evitar `else` después de `return`
+   - Mantener líneas bajo 100 caracteres
+   - Eliminar trailing spaces
+
+3. **Testing en CI:**
+   - Los errores de ESLint aparecen primero en CI si no se verifican localmente
+   - Siempre ejecutar `yarn build:client` antes de hacer push
+
+### Verificación Post-Fix
+
+```bash
+cd client
+yarn build
+```
+
+Debe compilar sin errores de ESLint.

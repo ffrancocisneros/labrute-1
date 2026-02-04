@@ -43,14 +43,15 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
       viewBox={`0 0 ${containerWidth} ${containerHeight}`}
       preserveAspectRatio="none"
     >
+      {/* eslint-disable react/no-array-index-key -- lines array is stable, index is appropriate */}
       {lines.map((line, index) => {
         if (line.intermediate) {
           // Draw bracket shape: vertical from source, horizontal connection, vertical to destination
-          const path = `M ${line.from.x} ${line.from.y} 
-                       L ${line.from.x} ${line.intermediate.y} 
-                       L ${line.to.x} ${line.intermediate.y} 
+          const path = `M ${line.from.x} ${line.from.y}
+                       L ${line.from.x} ${line.intermediate.y}
+                       L ${line.to.x} ${line.intermediate.y}
                        L ${line.to.x} ${line.to.y}`;
-          
+          // eslint-disable-next-line react/no-array-index-key
           return (
             <path
               key={index}
@@ -62,22 +63,23 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
               strokeLinejoin="round"
             />
           );
-        } else {
-          // Simple straight line
-          return (
-            <line
-              key={index}
-              x1={line.from.x}
-              y1={line.from.y}
-              x2={line.to.x}
-              y2={line.to.y}
-              stroke={lineColor}
-              strokeWidth={strokeWidth}
-              strokeLinecap="round"
-            />
-          );
         }
+        // Simple straight line
+        // eslint-disable-next-line react/no-array-index-key
+        return (
+          <line
+            key={index}
+            x1={line.from.x}
+            y1={line.from.y}
+            x2={line.to.x}
+            y2={line.to.y}
+            stroke={lineColor}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+          />
+        );
       })}
+      {/* eslint-enable react/no-array-index-key */}
     </Box>
   );
 };
