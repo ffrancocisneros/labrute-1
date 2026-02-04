@@ -2,6 +2,8 @@
 
 This guide explains how to deploy a private instance of LaBrute on Railway with local authentication (no Eternal-Twin required).
 
+**Alternativa sin tarjeta de crédito / débito:** Si Railway no acepta tu método de pago (p. ej. tarjetas de débito o prepagas), podés desplegar en [Koyeb](https://www.koyeb.com/) con el mismo esquema (Docker + Postgres). Ver **[DEPLOYMENT_KOYEB.md](./DEPLOYMENT_KOYEB.md)** para la guía de migración Railway → Koyeb (plan gratuito con limitaciones de cold start y horas de compute).
+
 ## Architecture
 
 ```
@@ -80,6 +82,18 @@ The start script runs migrations and seeds before starting the server.
 2. Wait for the build to complete (may take 5-10 minutes)
 3. The first run will execute database migrations and seed data
 4. Access your app at the Railway-provided URL
+
+### 5. Deploy desde imagen Docker (GHCR) y redeploy automático en Railway
+
+Si usás **imagen Docker** como source en Railway (p. ej. `ghcr.io/tu-usuario/labrute:latest`), Railway **no** hace redeploy automático cuando se publica una nueva imagen con el tag `:latest`. El workflow `publish-ghcr.yml` construye y sube la imagen en cada push a `main`; para que Railway redeploye tras eso, hay que configurar estos **secrets en GitHub** (Settings → Secrets and variables → Actions):
+
+| Secret | Descripción |
+|--------|-------------|
+| `RAILWAY_TOKEN` | Token de API (Team/Personal en [railway.com/account/tokens](https://railway.com/account/tokens)) |
+| `RAILWAY_SERVICE_ID` | ID del servicio: en el servicio, CMD/CTRL+K → Copy → Service ID |
+| `RAILWAY_ENVIRONMENT_ID` | ID del environment: CMD/CTRL+K → Copy → Environment ID |
+
+Con esos tres secrets, el job `railway-redeploy` del workflow llama a la API de Railway (`serviceInstanceRedeploy`) después de publicar la imagen, y se dispara un nuevo deploy. Si no los configurás, el job falla en silencio (`continue-on-error: true`) y el workflow sigue en verde.
 
 ## Authentication
 

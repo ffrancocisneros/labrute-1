@@ -25,6 +25,7 @@ import { BattlePass } from './controllers/BattlePass.js';
 import { Shop } from './controllers/Shop.js';
 import { Configs } from './controllers/Configs.js';
 import { UserLogs } from './controllers/UserLogs.js';
+import { GoldTransactions } from './controllers/GoldTransactions.js';
 
 export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) => {
   app.get('/api', (_req: Request, res: Response) => res.status(200).send({
@@ -229,4 +230,5 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
 
   // User logs
   app.post('/api/user-log/list', UserLogs.list(prisma));
+  app.post('/api/gold-transactions/list', GoldTransactions.list(prisma));
 };

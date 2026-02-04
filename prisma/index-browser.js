@@ -161,6 +161,16 @@ exports.Prisma.UserLogScalarFieldEnum = {
   oldName: 'oldName'
 };
 
+exports.Prisma.GoldTransactionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  amount: 'amount',
+  source: 'source',
+  sourceData: 'sourceData',
+  bruteId: 'bruteId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.BruteScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -312,7 +322,8 @@ exports.Prisma.TournamentGoldScalarFieldEnum = {
   id: 'id',
   date: 'date',
   userId: 'userId',
-  gold: 'gold'
+  gold: 'gold',
+  source: 'source'
 };
 
 exports.Prisma.TournamentXpScalarFieldEnum = {
@@ -1126,6 +1137,7 @@ exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
 exports.Prisma.ModelName = {
   User: 'User',
   UserLog: 'UserLog',
+  GoldTransaction: 'GoldTransaction',
   Brute: 'Brute',
   UserUsedSkill: 'UserUsedSkill',
   BruteStartingStats: 'BruteStartingStats',

@@ -1,6 +1,6 @@
 import { getTotalFightsLeft, UserUpdateSettingsRequest } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
-import { Add, AdminPanelSettings, BarChart, CardGiftcard, DarkMode, Event, Info, LightMode, Logout, Menu, MilitaryTech, MoreHoriz, MusicNote, NewReleases, Person, PersonSearch, Policy, RssFeed, ShoppingCart, Speed, SportsKabaddi, Assignment } from '@mui/icons-material';
+import { AccountBalance, Add, AdminPanelSettings, BarChart, CardGiftcard, DarkMode, Event, Info, LightMode, Logout, Menu, MilitaryTech, MoreHoriz, MusicNote, NewReleases, Person, PersonSearch, Policy, RssFeed, ShoppingCart, Speed, SportsKabaddi, Assignment } from '@mui/icons-material';
 import { Badge, Box, Button, Divider, Drawer, GlobalStyles, IconButton, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Alert as MuiAlert, Switch, ThemeProvider, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -259,10 +259,23 @@ const Main = () => {
           {user && (
             <>
               <Tooltip title={t('yourGold')}>
-                <Text color={theme.palette.topbar.contrast} whiteSpace="nowrap" sx={{ display: 'flex', alignItems: 'center' }}>
-                  {user.gold}
-                  <Box component="img" src="/images/gold.png" sx={{ ml: 0.5, width: 12, height: 12 }} />
-                </Text>
+                <Link
+                  to="/balance"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    textDecoration: 'none',
+                    color: theme.palette.topbar.contrast,
+                    '&:hover': {
+                      opacity: 0.8,
+                    },
+                  }}
+                >
+                  <Text color={theme.palette.topbar.contrast} whiteSpace="nowrap" sx={{ display: 'flex', alignItems: 'center' }}>
+                    {user.gold}
+                    <Box component="img" src="/images/gold.png" sx={{ ml: 0.5, width: 12, height: 12 }} />
+                  </Text>
+                </Link>
               </Tooltip>
               <Divider
                 orientation="vertical"
@@ -550,6 +563,11 @@ const Main = () => {
                   to="/shop"
                   Icon={ShoppingCart}
                   title="Tienda"
+                />
+                <ActionButton
+                  to="/balance"
+                  Icon={AccountBalance}
+                  title="Historial de oro"
                 />
                 <ActionButton
                   to="/statistics"

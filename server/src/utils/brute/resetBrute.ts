@@ -26,6 +26,7 @@ import {
 } from '@labrute/prisma';
 import dayjs from 'dayjs';
 import { createUserLog } from '../createUserLog.js';
+import { createGoldTransaction } from '../createGoldTransaction.js';
 import { translate } from '../translate.js';
 import { checkLevelUpAchievements } from './checkLevelUpAchievements.js';
 import { getOpponents } from './getOpponents.js';
@@ -103,6 +104,20 @@ export const resetBrute = async ({
       type: UserLogType.GOLD_LOSS,
       userId: user.id,
       gold: RESET_PRICE,
+    });
+
+    // Obtener nombre del bruto para la transacción
+    const bruteWithName = await prisma.brute.findUnique({
+      where: { id: brute.id },
+      select: { name: true },
+    });
+
+    createGoldTransaction(prisma, {
+      userId: user.id,
+      amount: -RESET_PRICE, // negativo = gasto
+      source: 'reset_visual',
+      bruteId: brute.id,
+      sourceData: bruteWithName ? JSON.stringify({ bruteName: bruteWithName.name }) : null,
     });
   }
 

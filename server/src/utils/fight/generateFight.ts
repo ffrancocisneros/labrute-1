@@ -24,6 +24,7 @@ import {
   WeaponName,
 } from '@labrute/prisma';
 import { createManyUserLogs } from '../createUserLog.js';
+import { createGoldTransaction } from '../createGoldTransaction.js';
 import { applySpy } from './applySpy.js';
 import {
   Stats,
@@ -551,6 +552,21 @@ export const generateFight = async ({
         userId,
         gold: goldGains,
       })));
+
+      // Crear transacciones de oro para clan boss
+      // Obtener boss del clan
+      const clanWithBoss = await prisma.clan.findUnique({
+        where: { id: clanId },
+        select: { boss: true },
+      });
+      Array.from(userIds).forEach((userId) => {
+        createGoldTransaction(prisma, {
+          userId,
+          amount: goldGains,
+          source: 'clan_boss',
+          sourceData: clanWithBoss ? JSON.stringify({ bossName: clanWithBoss.boss }) : null,
+        });
+      });
 
       result.boss = {
         defeated: true,

@@ -855,6 +855,26 @@ export type UserLogsListResponse = (UserLog & {
   brute: Pick<Brute, 'name'> | null,
 })[];
 
+export type GoldTransaction = {
+  id: string;
+  userId: string;
+  amount: number;
+  source: string;
+  sourceData: string | null;
+  bruteId: string | null;
+  createdAt: Date;
+};
+
+export type GoldTransactionsListRequest = {
+  page: number;
+  limit?: number;
+};
+
+export type GoldTransactionsListResponse = {
+  transactions: GoldTransaction[];
+  total: number;
+};
+
 export type Tiered<T> = T & {
   tier: number;
 };

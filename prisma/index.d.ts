@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type UserLog = $Result.DefaultSelection<Prisma.$UserLogPayload>
 /**
+ * Model GoldTransaction
+ * 
+ */
+export type GoldTransaction = $Result.DefaultSelection<Prisma.$GoldTransactionPayload>
+/**
  * Model Brute
  * 
  */
@@ -1111,6 +1116,16 @@ export class PrismaClient<
   get userLog(): Prisma.UserLogDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.goldTransaction`: Exposes CRUD operations for the **GoldTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GoldTransactions
+    * const goldTransactions = await prisma.goldTransaction.findMany()
+    * ```
+    */
+  get goldTransaction(): Prisma.GoldTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.brute`: Exposes CRUD operations for the **Brute** model.
     * Example usage:
     * ```ts
@@ -1961,6 +1976,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     UserLog: 'UserLog',
+    GoldTransaction: 'GoldTransaction',
     Brute: 'Brute',
     UserUsedSkill: 'UserUsedSkill',
     BruteStartingStats: 'BruteStartingStats',
@@ -2020,7 +2036,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userLog" | "brute" | "userUsedSkill" | "bruteStartingStats" | "fight" | "log" | "destinyChoice" | "tournament" | "tournamentAchievement" | "tournamentGold" | "tournamentXp" | "achievement" | "dailyObjective" | "weeklyObjective" | "mission" | "missionAchievement" | "permanentAchievement" | "bruteReport" | "serverState" | "bannedWord" | "bannedIp" | "clan" | "clanThread" | "clanPost" | "bossDamage" | "clanWar" | "clanWarFighters" | "inventoryItem" | "battlePassSeason" | "battlePassReward" | "battlePassMission" | "userBattlePassProgress" | "userBattlePassMissionProgress" | "bruteTemporaryEffect" | "bruteTemporaryWeapon" | "cosmeticPreset" | "userUnlockedCosmetic" | "shopItem" | "release" | "event" | "notification" | "config"
+      modelProps: "user" | "userLog" | "goldTransaction" | "brute" | "userUsedSkill" | "bruteStartingStats" | "fight" | "log" | "destinyChoice" | "tournament" | "tournamentAchievement" | "tournamentGold" | "tournamentXp" | "achievement" | "dailyObjective" | "weeklyObjective" | "mission" | "missionAchievement" | "permanentAchievement" | "bruteReport" | "serverState" | "bannedWord" | "bannedIp" | "clan" | "clanThread" | "clanPost" | "bossDamage" | "clanWar" | "clanWarFighters" | "inventoryItem" | "battlePassSeason" | "battlePassReward" | "battlePassMission" | "userBattlePassProgress" | "userBattlePassMissionProgress" | "bruteTemporaryEffect" | "bruteTemporaryWeapon" | "cosmeticPreset" | "userUnlockedCosmetic" | "shopItem" | "release" | "event" | "notification" | "config"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2169,6 +2185,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserLogCountArgs<ExtArgs>
             result: $Utils.Optional<UserLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      GoldTransaction: {
+        payload: Prisma.$GoldTransactionPayload<ExtArgs>
+        fields: Prisma.GoldTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GoldTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GoldTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.GoldTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GoldTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.GoldTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.GoldTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.GoldTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GoldTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.GoldTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>
+          }
+          update: {
+            args: Prisma.GoldTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.GoldTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GoldTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GoldTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.GoldTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GoldTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.GoldTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGoldTransaction>
+          }
+          groupBy: {
+            args: Prisma.GoldTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GoldTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GoldTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<GoldTransactionCountAggregateOutputType> | number
           }
         }
       }
@@ -5304,6 +5394,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     userLog?: UserLogOmit
+    goldTransaction?: GoldTransactionOmit
     brute?: BruteOmit
     userUsedSkill?: UserUsedSkillOmit
     bruteStartingStats?: BruteStartingStatsOmit
@@ -5435,6 +5526,7 @@ export namespace Prisma {
     notifications: number
     reportsHandled: number
     logs: number
+    goldTransactions: number
     dailyObjectives: number
     weeklyObjectives: number
     permanentAchievements: number
@@ -5457,6 +5549,7 @@ export namespace Prisma {
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
     reportsHandled?: boolean | UserCountOutputTypeCountReportsHandledArgs
     logs?: boolean | UserCountOutputTypeCountLogsArgs
+    goldTransactions?: boolean | UserCountOutputTypeCountGoldTransactionsArgs
     dailyObjectives?: boolean | UserCountOutputTypeCountDailyObjectivesArgs
     weeklyObjectives?: boolean | UserCountOutputTypeCountWeeklyObjectivesArgs
     permanentAchievements?: boolean | UserCountOutputTypeCountPermanentAchievementsArgs
@@ -5552,6 +5645,13 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountGoldTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GoldTransactionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountDailyObjectivesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DailyObjectiveWhereInput
   }
@@ -5639,6 +5739,7 @@ export namespace Prisma {
     inClanWarDefenderFighters: number
     wonEvents: number
     userlogs: number
+    goldTransactions: number
     bruteTemporaryEffects: number
     bruteTemporaryWeapons: number
   }
@@ -5665,6 +5766,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: boolean | BruteCountOutputTypeCountInClanWarDefenderFightersArgs
     wonEvents?: boolean | BruteCountOutputTypeCountWonEventsArgs
     userlogs?: boolean | BruteCountOutputTypeCountUserlogsArgs
+    goldTransactions?: boolean | BruteCountOutputTypeCountGoldTransactionsArgs
     bruteTemporaryEffects?: boolean | BruteCountOutputTypeCountBruteTemporaryEffectsArgs
     bruteTemporaryWeapons?: boolean | BruteCountOutputTypeCountBruteTemporaryWeaponsArgs
   }
@@ -5825,6 +5927,13 @@ export namespace Prisma {
    */
   export type BruteCountOutputTypeCountUserlogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserLogWhereInput
+  }
+
+  /**
+   * BruteCountOutputType without action
+   */
+  export type BruteCountOutputTypeCountGoldTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GoldTransactionWhereInput
   }
 
   /**
@@ -6694,6 +6803,7 @@ export namespace Prisma {
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     reportsHandled?: boolean | User$reportsHandledArgs<ExtArgs>
     logs?: boolean | User$logsArgs<ExtArgs>
+    goldTransactions?: boolean | User$goldTransactionsArgs<ExtArgs>
     dailyObjectives?: boolean | User$dailyObjectivesArgs<ExtArgs>
     weeklyObjectives?: boolean | User$weeklyObjectivesArgs<ExtArgs>
     permanentAchievements?: boolean | User$permanentAchievementsArgs<ExtArgs>
@@ -6796,6 +6906,7 @@ export namespace Prisma {
     notifications?: boolean | User$notificationsArgs<ExtArgs>
     reportsHandled?: boolean | User$reportsHandledArgs<ExtArgs>
     logs?: boolean | User$logsArgs<ExtArgs>
+    goldTransactions?: boolean | User$goldTransactionsArgs<ExtArgs>
     dailyObjectives?: boolean | User$dailyObjectivesArgs<ExtArgs>
     weeklyObjectives?: boolean | User$weeklyObjectivesArgs<ExtArgs>
     permanentAchievements?: boolean | User$permanentAchievementsArgs<ExtArgs>
@@ -6823,6 +6934,7 @@ export namespace Prisma {
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
       reportsHandled: Prisma.$BruteReportPayload<ExtArgs>[]
       logs: Prisma.$UserLogPayload<ExtArgs>[]
+      goldTransactions: Prisma.$GoldTransactionPayload<ExtArgs>[]
       dailyObjectives: Prisma.$DailyObjectivePayload<ExtArgs>[]
       weeklyObjectives: Prisma.$WeeklyObjectivePayload<ExtArgs>[]
       permanentAchievements: Prisma.$PermanentAchievementPayload<ExtArgs>[]
@@ -7261,6 +7373,7 @@ export namespace Prisma {
     notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reportsHandled<T extends User$reportsHandledArgs<ExtArgs> = {}>(args?: Subset<T, User$reportsHandledArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BruteReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     logs<T extends User$logsArgs<ExtArgs> = {}>(args?: Subset<T, User$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    goldTransactions<T extends User$goldTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$goldTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dailyObjectives<T extends User$dailyObjectivesArgs<ExtArgs> = {}>(args?: Subset<T, User$dailyObjectivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyObjectivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     weeklyObjectives<T extends User$weeklyObjectivesArgs<ExtArgs> = {}>(args?: Subset<T, User$weeklyObjectivesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WeeklyObjectivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     permanentAchievements<T extends User$permanentAchievementsArgs<ExtArgs> = {}>(args?: Subset<T, User$permanentAchievementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermanentAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7956,6 +8069,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserLogScalarFieldEnum | UserLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.goldTransactions
+   */
+  export type User$goldTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    where?: GoldTransactionWhereInput
+    orderBy?: GoldTransactionOrderByWithRelationInput | GoldTransactionOrderByWithRelationInput[]
+    cursor?: GoldTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GoldTransactionScalarFieldEnum | GoldTransactionScalarFieldEnum[]
   }
 
   /**
@@ -9348,6 +9485,1160 @@ export namespace Prisma {
 
 
   /**
+   * Model GoldTransaction
+   */
+
+  export type AggregateGoldTransaction = {
+    _count: GoldTransactionCountAggregateOutputType | null
+    _avg: GoldTransactionAvgAggregateOutputType | null
+    _sum: GoldTransactionSumAggregateOutputType | null
+    _min: GoldTransactionMinAggregateOutputType | null
+    _max: GoldTransactionMaxAggregateOutputType | null
+  }
+
+  export type GoldTransactionAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type GoldTransactionSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type GoldTransactionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    amount: number | null
+    source: string | null
+    sourceData: string | null
+    bruteId: string | null
+    createdAt: Date | null
+  }
+
+  export type GoldTransactionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    amount: number | null
+    source: string | null
+    sourceData: string | null
+    bruteId: string | null
+    createdAt: Date | null
+  }
+
+  export type GoldTransactionCountAggregateOutputType = {
+    id: number
+    userId: number
+    amount: number
+    source: number
+    sourceData: number
+    bruteId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type GoldTransactionAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type GoldTransactionSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type GoldTransactionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    amount?: true
+    source?: true
+    sourceData?: true
+    bruteId?: true
+    createdAt?: true
+  }
+
+  export type GoldTransactionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    amount?: true
+    source?: true
+    sourceData?: true
+    bruteId?: true
+    createdAt?: true
+  }
+
+  export type GoldTransactionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    amount?: true
+    source?: true
+    sourceData?: true
+    bruteId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type GoldTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GoldTransaction to aggregate.
+     */
+    where?: GoldTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GoldTransactions to fetch.
+     */
+    orderBy?: GoldTransactionOrderByWithRelationInput | GoldTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GoldTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GoldTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GoldTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GoldTransactions
+    **/
+    _count?: true | GoldTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GoldTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GoldTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GoldTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GoldTransactionMaxAggregateInputType
+  }
+
+  export type GetGoldTransactionAggregateType<T extends GoldTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateGoldTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGoldTransaction[P]>
+      : GetScalarType<T[P], AggregateGoldTransaction[P]>
+  }
+
+
+
+
+  export type GoldTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GoldTransactionWhereInput
+    orderBy?: GoldTransactionOrderByWithAggregationInput | GoldTransactionOrderByWithAggregationInput[]
+    by: GoldTransactionScalarFieldEnum[] | GoldTransactionScalarFieldEnum
+    having?: GoldTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GoldTransactionCountAggregateInputType | true
+    _avg?: GoldTransactionAvgAggregateInputType
+    _sum?: GoldTransactionSumAggregateInputType
+    _min?: GoldTransactionMinAggregateInputType
+    _max?: GoldTransactionMaxAggregateInputType
+  }
+
+  export type GoldTransactionGroupByOutputType = {
+    id: string
+    userId: string
+    amount: number
+    source: string
+    sourceData: string | null
+    bruteId: string | null
+    createdAt: Date
+    _count: GoldTransactionCountAggregateOutputType | null
+    _avg: GoldTransactionAvgAggregateOutputType | null
+    _sum: GoldTransactionSumAggregateOutputType | null
+    _min: GoldTransactionMinAggregateOutputType | null
+    _max: GoldTransactionMaxAggregateOutputType | null
+  }
+
+  type GetGoldTransactionGroupByPayload<T extends GoldTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GoldTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GoldTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GoldTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], GoldTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GoldTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    amount?: boolean
+    source?: boolean
+    sourceData?: boolean
+    bruteId?: boolean
+    createdAt?: boolean
+    brute?: boolean | GoldTransaction$bruteArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["goldTransaction"]>
+
+  export type GoldTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    amount?: boolean
+    source?: boolean
+    sourceData?: boolean
+    bruteId?: boolean
+    createdAt?: boolean
+    brute?: boolean | GoldTransaction$bruteArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["goldTransaction"]>
+
+  export type GoldTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    amount?: boolean
+    source?: boolean
+    sourceData?: boolean
+    bruteId?: boolean
+    createdAt?: boolean
+    brute?: boolean | GoldTransaction$bruteArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["goldTransaction"]>
+
+  export type GoldTransactionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    amount?: boolean
+    source?: boolean
+    sourceData?: boolean
+    bruteId?: boolean
+    createdAt?: boolean
+  }
+
+  export type GoldTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "amount" | "source" | "sourceData" | "bruteId" | "createdAt", ExtArgs["result"]["goldTransaction"]>
+  export type GoldTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brute?: boolean | GoldTransaction$bruteArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GoldTransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brute?: boolean | GoldTransaction$bruteArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type GoldTransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    brute?: boolean | GoldTransaction$bruteArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $GoldTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GoldTransaction"
+    objects: {
+      brute: Prisma.$BrutePayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      amount: number
+      source: string
+      sourceData: string | null
+      bruteId: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["goldTransaction"]>
+    composites: {}
+  }
+
+  type GoldTransactionGetPayload<S extends boolean | null | undefined | GoldTransactionDefaultArgs> = $Result.GetResult<Prisma.$GoldTransactionPayload, S>
+
+  type GoldTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GoldTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: GoldTransactionCountAggregateInputType | true
+    }
+
+  export interface GoldTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GoldTransaction'], meta: { name: 'GoldTransaction' } }
+    /**
+     * Find zero or one GoldTransaction that matches the filter.
+     * @param {GoldTransactionFindUniqueArgs} args - Arguments to find a GoldTransaction
+     * @example
+     * // Get one GoldTransaction
+     * const goldTransaction = await prisma.goldTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GoldTransactionFindUniqueArgs>(args: SelectSubset<T, GoldTransactionFindUniqueArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GoldTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GoldTransactionFindUniqueOrThrowArgs} args - Arguments to find a GoldTransaction
+     * @example
+     * // Get one GoldTransaction
+     * const goldTransaction = await prisma.goldTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GoldTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, GoldTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GoldTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GoldTransactionFindFirstArgs} args - Arguments to find a GoldTransaction
+     * @example
+     * // Get one GoldTransaction
+     * const goldTransaction = await prisma.goldTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GoldTransactionFindFirstArgs>(args?: SelectSubset<T, GoldTransactionFindFirstArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GoldTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GoldTransactionFindFirstOrThrowArgs} args - Arguments to find a GoldTransaction
+     * @example
+     * // Get one GoldTransaction
+     * const goldTransaction = await prisma.goldTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GoldTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, GoldTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GoldTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GoldTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GoldTransactions
+     * const goldTransactions = await prisma.goldTransaction.findMany()
+     * 
+     * // Get first 10 GoldTransactions
+     * const goldTransactions = await prisma.goldTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const goldTransactionWithIdOnly = await prisma.goldTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GoldTransactionFindManyArgs>(args?: SelectSubset<T, GoldTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GoldTransaction.
+     * @param {GoldTransactionCreateArgs} args - Arguments to create a GoldTransaction.
+     * @example
+     * // Create one GoldTransaction
+     * const GoldTransaction = await prisma.goldTransaction.create({
+     *   data: {
+     *     // ... data to create a GoldTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends GoldTransactionCreateArgs>(args: SelectSubset<T, GoldTransactionCreateArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GoldTransactions.
+     * @param {GoldTransactionCreateManyArgs} args - Arguments to create many GoldTransactions.
+     * @example
+     * // Create many GoldTransactions
+     * const goldTransaction = await prisma.goldTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GoldTransactionCreateManyArgs>(args?: SelectSubset<T, GoldTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GoldTransactions and returns the data saved in the database.
+     * @param {GoldTransactionCreateManyAndReturnArgs} args - Arguments to create many GoldTransactions.
+     * @example
+     * // Create many GoldTransactions
+     * const goldTransaction = await prisma.goldTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GoldTransactions and only return the `id`
+     * const goldTransactionWithIdOnly = await prisma.goldTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GoldTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, GoldTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GoldTransaction.
+     * @param {GoldTransactionDeleteArgs} args - Arguments to delete one GoldTransaction.
+     * @example
+     * // Delete one GoldTransaction
+     * const GoldTransaction = await prisma.goldTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one GoldTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GoldTransactionDeleteArgs>(args: SelectSubset<T, GoldTransactionDeleteArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GoldTransaction.
+     * @param {GoldTransactionUpdateArgs} args - Arguments to update one GoldTransaction.
+     * @example
+     * // Update one GoldTransaction
+     * const goldTransaction = await prisma.goldTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GoldTransactionUpdateArgs>(args: SelectSubset<T, GoldTransactionUpdateArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GoldTransactions.
+     * @param {GoldTransactionDeleteManyArgs} args - Arguments to filter GoldTransactions to delete.
+     * @example
+     * // Delete a few GoldTransactions
+     * const { count } = await prisma.goldTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GoldTransactionDeleteManyArgs>(args?: SelectSubset<T, GoldTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GoldTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GoldTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GoldTransactions
+     * const goldTransaction = await prisma.goldTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GoldTransactionUpdateManyArgs>(args: SelectSubset<T, GoldTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GoldTransactions and returns the data updated in the database.
+     * @param {GoldTransactionUpdateManyAndReturnArgs} args - Arguments to update many GoldTransactions.
+     * @example
+     * // Update many GoldTransactions
+     * const goldTransaction = await prisma.goldTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GoldTransactions and only return the `id`
+     * const goldTransactionWithIdOnly = await prisma.goldTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GoldTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, GoldTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GoldTransaction.
+     * @param {GoldTransactionUpsertArgs} args - Arguments to update or create a GoldTransaction.
+     * @example
+     * // Update or create a GoldTransaction
+     * const goldTransaction = await prisma.goldTransaction.upsert({
+     *   create: {
+     *     // ... data to create a GoldTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GoldTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GoldTransactionUpsertArgs>(args: SelectSubset<T, GoldTransactionUpsertArgs<ExtArgs>>): Prisma__GoldTransactionClient<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GoldTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GoldTransactionCountArgs} args - Arguments to filter GoldTransactions to count.
+     * @example
+     * // Count the number of GoldTransactions
+     * const count = await prisma.goldTransaction.count({
+     *   where: {
+     *     // ... the filter for the GoldTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends GoldTransactionCountArgs>(
+      args?: Subset<T, GoldTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GoldTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GoldTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GoldTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GoldTransactionAggregateArgs>(args: Subset<T, GoldTransactionAggregateArgs>): Prisma.PrismaPromise<GetGoldTransactionAggregateType<T>>
+
+    /**
+     * Group by GoldTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GoldTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GoldTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GoldTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: GoldTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GoldTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGoldTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GoldTransaction model
+   */
+  readonly fields: GoldTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GoldTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GoldTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    brute<T extends GoldTransaction$bruteArgs<ExtArgs> = {}>(args?: Subset<T, GoldTransaction$bruteArgs<ExtArgs>>): Prisma__BruteClient<$Result.GetResult<Prisma.$BrutePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GoldTransaction model
+   */
+  interface GoldTransactionFieldRefs {
+    readonly id: FieldRef<"GoldTransaction", 'String'>
+    readonly userId: FieldRef<"GoldTransaction", 'String'>
+    readonly amount: FieldRef<"GoldTransaction", 'Int'>
+    readonly source: FieldRef<"GoldTransaction", 'String'>
+    readonly sourceData: FieldRef<"GoldTransaction", 'String'>
+    readonly bruteId: FieldRef<"GoldTransaction", 'String'>
+    readonly createdAt: FieldRef<"GoldTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GoldTransaction findUnique
+   */
+  export type GoldTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which GoldTransaction to fetch.
+     */
+    where: GoldTransactionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction findUniqueOrThrow
+   */
+  export type GoldTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which GoldTransaction to fetch.
+     */
+    where: GoldTransactionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction findFirst
+   */
+  export type GoldTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which GoldTransaction to fetch.
+     */
+    where?: GoldTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GoldTransactions to fetch.
+     */
+    orderBy?: GoldTransactionOrderByWithRelationInput | GoldTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GoldTransactions.
+     */
+    cursor?: GoldTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GoldTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GoldTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GoldTransactions.
+     */
+    distinct?: GoldTransactionScalarFieldEnum | GoldTransactionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction findFirstOrThrow
+   */
+  export type GoldTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which GoldTransaction to fetch.
+     */
+    where?: GoldTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GoldTransactions to fetch.
+     */
+    orderBy?: GoldTransactionOrderByWithRelationInput | GoldTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GoldTransactions.
+     */
+    cursor?: GoldTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GoldTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GoldTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GoldTransactions.
+     */
+    distinct?: GoldTransactionScalarFieldEnum | GoldTransactionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction findMany
+   */
+  export type GoldTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which GoldTransactions to fetch.
+     */
+    where?: GoldTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GoldTransactions to fetch.
+     */
+    orderBy?: GoldTransactionOrderByWithRelationInput | GoldTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GoldTransactions.
+     */
+    cursor?: GoldTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GoldTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GoldTransactions.
+     */
+    skip?: number
+    distinct?: GoldTransactionScalarFieldEnum | GoldTransactionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction create
+   */
+  export type GoldTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GoldTransaction.
+     */
+    data: XOR<GoldTransactionCreateInput, GoldTransactionUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction createMany
+   */
+  export type GoldTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GoldTransactions.
+     */
+    data: GoldTransactionCreateManyInput | GoldTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GoldTransaction createManyAndReturn
+   */
+  export type GoldTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many GoldTransactions.
+     */
+    data: GoldTransactionCreateManyInput | GoldTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GoldTransaction update
+   */
+  export type GoldTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GoldTransaction.
+     */
+    data: XOR<GoldTransactionUpdateInput, GoldTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which GoldTransaction to update.
+     */
+    where: GoldTransactionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction updateMany
+   */
+  export type GoldTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GoldTransactions.
+     */
+    data: XOR<GoldTransactionUpdateManyMutationInput, GoldTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which GoldTransactions to update
+     */
+    where?: GoldTransactionWhereInput
+    /**
+     * Limit how many GoldTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GoldTransaction updateManyAndReturn
+   */
+  export type GoldTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update GoldTransactions.
+     */
+    data: XOR<GoldTransactionUpdateManyMutationInput, GoldTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which GoldTransactions to update
+     */
+    where?: GoldTransactionWhereInput
+    /**
+     * Limit how many GoldTransactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GoldTransaction upsert
+   */
+  export type GoldTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GoldTransaction to update in case it exists.
+     */
+    where: GoldTransactionWhereUniqueInput
+    /**
+     * In case the GoldTransaction found by the `where` argument doesn't exist, create a new GoldTransaction with this data.
+     */
+    create: XOR<GoldTransactionCreateInput, GoldTransactionUncheckedCreateInput>
+    /**
+     * In case the GoldTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GoldTransactionUpdateInput, GoldTransactionUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction delete
+   */
+  export type GoldTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    /**
+     * Filter which GoldTransaction to delete.
+     */
+    where: GoldTransactionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GoldTransaction deleteMany
+   */
+  export type GoldTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GoldTransactions to delete
+     */
+    where?: GoldTransactionWhereInput
+    /**
+     * Limit how many GoldTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GoldTransaction.brute
+   */
+  export type GoldTransaction$bruteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Brute
+     */
+    select?: BruteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Brute
+     */
+    omit?: BruteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BruteInclude<ExtArgs> | null
+    where?: BruteWhereInput
+  }
+
+  /**
+   * GoldTransaction without action
+   */
+  export type GoldTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Brute
    */
 
@@ -10109,6 +11400,7 @@ export namespace Prisma {
     event?: boolean | Brute$eventArgs<ExtArgs>
     wonEvents?: boolean | Brute$wonEventsArgs<ExtArgs>
     userlogs?: boolean | Brute$userlogsArgs<ExtArgs>
+    goldTransactions?: boolean | Brute$goldTransactionsArgs<ExtArgs>
     bruteTemporaryEffects?: boolean | Brute$bruteTemporaryEffectsArgs<ExtArgs>
     bruteTemporaryWeapons?: boolean | Brute$bruteTemporaryWeaponsArgs<ExtArgs>
     _count?: boolean | BruteCountOutputTypeDefaultArgs<ExtArgs>
@@ -10349,6 +11641,7 @@ export namespace Prisma {
     event?: boolean | Brute$eventArgs<ExtArgs>
     wonEvents?: boolean | Brute$wonEventsArgs<ExtArgs>
     userlogs?: boolean | Brute$userlogsArgs<ExtArgs>
+    goldTransactions?: boolean | Brute$goldTransactionsArgs<ExtArgs>
     bruteTemporaryEffects?: boolean | Brute$bruteTemporaryEffectsArgs<ExtArgs>
     bruteTemporaryWeapons?: boolean | Brute$bruteTemporaryWeaponsArgs<ExtArgs>
     _count?: boolean | BruteCountOutputTypeDefaultArgs<ExtArgs>
@@ -10399,6 +11692,7 @@ export namespace Prisma {
       event: Prisma.$EventPayload<ExtArgs> | null
       wonEvents: Prisma.$EventPayload<ExtArgs>[]
       userlogs: Prisma.$UserLogPayload<ExtArgs>[]
+      goldTransactions: Prisma.$GoldTransactionPayload<ExtArgs>[]
       bruteTemporaryEffects: Prisma.$BruteTemporaryEffectPayload<ExtArgs>[]
       bruteTemporaryWeapons: Prisma.$BruteTemporaryWeaponPayload<ExtArgs>[]
     }
@@ -10887,6 +12181,7 @@ export namespace Prisma {
     event<T extends Brute$eventArgs<ExtArgs> = {}>(args?: Subset<T, Brute$eventArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     wonEvents<T extends Brute$wonEventsArgs<ExtArgs> = {}>(args?: Subset<T, Brute$wonEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userlogs<T extends Brute$userlogsArgs<ExtArgs> = {}>(args?: Subset<T, Brute$userlogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    goldTransactions<T extends Brute$goldTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, Brute$goldTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GoldTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bruteTemporaryEffects<T extends Brute$bruteTemporaryEffectsArgs<ExtArgs> = {}>(args?: Subset<T, Brute$bruteTemporaryEffectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BruteTemporaryEffectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bruteTemporaryWeapons<T extends Brute$bruteTemporaryWeaponsArgs<ExtArgs> = {}>(args?: Subset<T, Brute$bruteTemporaryWeaponsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BruteTemporaryWeaponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -12019,6 +13314,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserLogScalarFieldEnum | UserLogScalarFieldEnum[]
+  }
+
+  /**
+   * Brute.goldTransactions
+   */
+  export type Brute$goldTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GoldTransaction
+     */
+    select?: GoldTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GoldTransaction
+     */
+    omit?: GoldTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GoldTransactionInclude<ExtArgs> | null
+    where?: GoldTransactionWhereInput
+    orderBy?: GoldTransactionOrderByWithRelationInput | GoldTransactionOrderByWithRelationInput[]
+    cursor?: GoldTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GoldTransactionScalarFieldEnum | GoldTransactionScalarFieldEnum[]
   }
 
   /**
@@ -20463,6 +21782,7 @@ export namespace Prisma {
     date: Date | null
     userId: string | null
     gold: number | null
+    source: string | null
   }
 
   export type TournamentGoldMaxAggregateOutputType = {
@@ -20470,6 +21790,7 @@ export namespace Prisma {
     date: Date | null
     userId: string | null
     gold: number | null
+    source: string | null
   }
 
   export type TournamentGoldCountAggregateOutputType = {
@@ -20477,6 +21798,7 @@ export namespace Prisma {
     date: number
     userId: number
     gold: number
+    source: number
     _all: number
   }
 
@@ -20494,6 +21816,7 @@ export namespace Prisma {
     date?: true
     userId?: true
     gold?: true
+    source?: true
   }
 
   export type TournamentGoldMaxAggregateInputType = {
@@ -20501,6 +21824,7 @@ export namespace Prisma {
     date?: true
     userId?: true
     gold?: true
+    source?: true
   }
 
   export type TournamentGoldCountAggregateInputType = {
@@ -20508,6 +21832,7 @@ export namespace Prisma {
     date?: true
     userId?: true
     gold?: true
+    source?: true
     _all?: true
   }
 
@@ -20602,6 +21927,7 @@ export namespace Prisma {
     date: Date
     userId: string
     gold: number
+    source: string | null
     _count: TournamentGoldCountAggregateOutputType | null
     _avg: TournamentGoldAvgAggregateOutputType | null
     _sum: TournamentGoldSumAggregateOutputType | null
@@ -20628,6 +21954,7 @@ export namespace Prisma {
     date?: boolean
     userId?: boolean
     gold?: boolean
+    source?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tournamentGold"]>
 
@@ -20636,6 +21963,7 @@ export namespace Prisma {
     date?: boolean
     userId?: boolean
     gold?: boolean
+    source?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tournamentGold"]>
 
@@ -20644,6 +21972,7 @@ export namespace Prisma {
     date?: boolean
     userId?: boolean
     gold?: boolean
+    source?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tournamentGold"]>
 
@@ -20652,9 +21981,10 @@ export namespace Prisma {
     date?: boolean
     userId?: boolean
     gold?: boolean
+    source?: boolean
   }
 
-  export type TournamentGoldOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "userId" | "gold", ExtArgs["result"]["tournamentGold"]>
+  export type TournamentGoldOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "userId" | "gold" | "source", ExtArgs["result"]["tournamentGold"]>
   export type TournamentGoldInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -20675,6 +22005,7 @@ export namespace Prisma {
       date: Date
       userId: string
       gold: number
+      source: string | null
     }, ExtArgs["result"]["tournamentGold"]>
     composites: {}
   }
@@ -21103,6 +22434,7 @@ export namespace Prisma {
     readonly date: FieldRef<"TournamentGold", 'DateTime'>
     readonly userId: FieldRef<"TournamentGold", 'String'>
     readonly gold: FieldRef<"TournamentGold", 'Int'>
+    readonly source: FieldRef<"TournamentGold", 'String'>
   }
     
 
@@ -57778,6 +59110,19 @@ export namespace Prisma {
   export type UserLogScalarFieldEnum = (typeof UserLogScalarFieldEnum)[keyof typeof UserLogScalarFieldEnum]
 
 
+  export const GoldTransactionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    amount: 'amount',
+    source: 'source',
+    sourceData: 'sourceData',
+    bruteId: 'bruteId',
+    createdAt: 'createdAt'
+  };
+
+  export type GoldTransactionScalarFieldEnum = (typeof GoldTransactionScalarFieldEnum)[keyof typeof GoldTransactionScalarFieldEnum]
+
+
   export const BruteScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -57953,7 +59298,8 @@ export namespace Prisma {
     id: 'id',
     date: 'date',
     userId: 'userId',
-    gold: 'gold'
+    gold: 'gold',
+    source: 'source'
   };
 
   export type TournamentGoldScalarFieldEnum = (typeof TournamentGoldScalarFieldEnum)[keyof typeof TournamentGoldScalarFieldEnum]
@@ -58990,6 +60336,7 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     reportsHandled?: BruteReportListRelationFilter
     logs?: UserLogListRelationFilter
+    goldTransactions?: GoldTransactionListRelationFilter
     dailyObjectives?: DailyObjectiveListRelationFilter
     weeklyObjectives?: WeeklyObjectiveListRelationFilter
     permanentAchievements?: PermanentAchievementListRelationFilter
@@ -59035,6 +60382,7 @@ export namespace Prisma {
     notifications?: NotificationOrderByRelationAggregateInput
     reportsHandled?: BruteReportOrderByRelationAggregateInput
     logs?: UserLogOrderByRelationAggregateInput
+    goldTransactions?: GoldTransactionOrderByRelationAggregateInput
     dailyObjectives?: DailyObjectiveOrderByRelationAggregateInput
     weeklyObjectives?: WeeklyObjectiveOrderByRelationAggregateInput
     permanentAchievements?: PermanentAchievementOrderByRelationAggregateInput
@@ -59083,6 +60431,7 @@ export namespace Prisma {
     notifications?: NotificationListRelationFilter
     reportsHandled?: BruteReportListRelationFilter
     logs?: UserLogListRelationFilter
+    goldTransactions?: GoldTransactionListRelationFilter
     dailyObjectives?: DailyObjectiveListRelationFilter
     weeklyObjectives?: WeeklyObjectiveListRelationFilter
     permanentAchievements?: PermanentAchievementListRelationFilter
@@ -59224,6 +60573,76 @@ export namespace Prisma {
     oldName?: StringNullableWithAggregatesFilter<"UserLog"> | string | null
   }
 
+  export type GoldTransactionWhereInput = {
+    AND?: GoldTransactionWhereInput | GoldTransactionWhereInput[]
+    OR?: GoldTransactionWhereInput[]
+    NOT?: GoldTransactionWhereInput | GoldTransactionWhereInput[]
+    id?: UuidFilter<"GoldTransaction"> | string
+    userId?: UuidFilter<"GoldTransaction"> | string
+    amount?: IntFilter<"GoldTransaction"> | number
+    source?: StringFilter<"GoldTransaction"> | string
+    sourceData?: StringNullableFilter<"GoldTransaction"> | string | null
+    bruteId?: UuidNullableFilter<"GoldTransaction"> | string | null
+    createdAt?: DateTimeFilter<"GoldTransaction"> | Date | string
+    brute?: XOR<BruteNullableScalarRelationFilter, BruteWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type GoldTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    source?: SortOrder
+    sourceData?: SortOrderInput | SortOrder
+    bruteId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    brute?: BruteOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type GoldTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GoldTransactionWhereInput | GoldTransactionWhereInput[]
+    OR?: GoldTransactionWhereInput[]
+    NOT?: GoldTransactionWhereInput | GoldTransactionWhereInput[]
+    userId?: UuidFilter<"GoldTransaction"> | string
+    amount?: IntFilter<"GoldTransaction"> | number
+    source?: StringFilter<"GoldTransaction"> | string
+    sourceData?: StringNullableFilter<"GoldTransaction"> | string | null
+    bruteId?: UuidNullableFilter<"GoldTransaction"> | string | null
+    createdAt?: DateTimeFilter<"GoldTransaction"> | Date | string
+    brute?: XOR<BruteNullableScalarRelationFilter, BruteWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "id">
+
+  export type GoldTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    source?: SortOrder
+    sourceData?: SortOrderInput | SortOrder
+    bruteId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: GoldTransactionCountOrderByAggregateInput
+    _avg?: GoldTransactionAvgOrderByAggregateInput
+    _max?: GoldTransactionMaxOrderByAggregateInput
+    _min?: GoldTransactionMinOrderByAggregateInput
+    _sum?: GoldTransactionSumOrderByAggregateInput
+  }
+
+  export type GoldTransactionScalarWhereWithAggregatesInput = {
+    AND?: GoldTransactionScalarWhereWithAggregatesInput | GoldTransactionScalarWhereWithAggregatesInput[]
+    OR?: GoldTransactionScalarWhereWithAggregatesInput[]
+    NOT?: GoldTransactionScalarWhereWithAggregatesInput | GoldTransactionScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"GoldTransaction"> | string
+    userId?: UuidWithAggregatesFilter<"GoldTransaction"> | string
+    amount?: IntWithAggregatesFilter<"GoldTransaction"> | number
+    source?: StringWithAggregatesFilter<"GoldTransaction"> | string
+    sourceData?: StringNullableWithAggregatesFilter<"GoldTransaction"> | string | null
+    bruteId?: UuidNullableWithAggregatesFilter<"GoldTransaction"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"GoldTransaction"> | Date | string
+  }
+
   export type BruteWhereInput = {
     AND?: BruteWhereInput | BruteWhereInput[]
     OR?: BruteWhereInput[]
@@ -59318,6 +60737,7 @@ export namespace Prisma {
     event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
     wonEvents?: EventListRelationFilter
     userlogs?: UserLogListRelationFilter
+    goldTransactions?: GoldTransactionListRelationFilter
     bruteTemporaryEffects?: BruteTemporaryEffectListRelationFilter
     bruteTemporaryWeapons?: BruteTemporaryWeaponListRelationFilter
   }
@@ -59413,6 +60833,7 @@ export namespace Prisma {
     event?: EventOrderByWithRelationInput
     wonEvents?: EventOrderByRelationAggregateInput
     userlogs?: UserLogOrderByRelationAggregateInput
+    goldTransactions?: GoldTransactionOrderByRelationAggregateInput
     bruteTemporaryEffects?: BruteTemporaryEffectOrderByRelationAggregateInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponOrderByRelationAggregateInput
   }
@@ -59511,6 +60932,7 @@ export namespace Prisma {
     event?: XOR<EventNullableScalarRelationFilter, EventWhereInput> | null
     wonEvents?: EventListRelationFilter
     userlogs?: UserLogListRelationFilter
+    goldTransactions?: GoldTransactionListRelationFilter
     bruteTemporaryEffects?: BruteTemporaryEffectListRelationFilter
     bruteTemporaryWeapons?: BruteTemporaryWeaponListRelationFilter
   }, "id" | "id">
@@ -60220,6 +61642,7 @@ export namespace Prisma {
     date?: DateTimeFilter<"TournamentGold"> | Date | string
     userId?: UuidFilter<"TournamentGold"> | string
     gold?: IntFilter<"TournamentGold"> | number
+    source?: StringNullableFilter<"TournamentGold"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -60228,6 +61651,7 @@ export namespace Prisma {
     date?: SortOrder
     userId?: SortOrder
     gold?: SortOrder
+    source?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -60239,6 +61663,7 @@ export namespace Prisma {
     date?: DateTimeFilter<"TournamentGold"> | Date | string
     userId?: UuidFilter<"TournamentGold"> | string
     gold?: IntFilter<"TournamentGold"> | number
+    source?: StringNullableFilter<"TournamentGold"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "id">
 
@@ -60247,6 +61672,7 @@ export namespace Prisma {
     date?: SortOrder
     userId?: SortOrder
     gold?: SortOrder
+    source?: SortOrderInput | SortOrder
     _count?: TournamentGoldCountOrderByAggregateInput
     _avg?: TournamentGoldAvgOrderByAggregateInput
     _max?: TournamentGoldMaxOrderByAggregateInput
@@ -60262,6 +61688,7 @@ export namespace Prisma {
     date?: DateTimeWithAggregatesFilter<"TournamentGold"> | Date | string
     userId?: UuidWithAggregatesFilter<"TournamentGold"> | string
     gold?: IntWithAggregatesFilter<"TournamentGold"> | number
+    source?: StringNullableWithAggregatesFilter<"TournamentGold"> | string | null
   }
 
   export type TournamentXpWhereInput = {
@@ -62469,6 +63896,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -62514,6 +63942,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -62559,6 +63988,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -62604,6 +64034,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -62761,6 +64192,74 @@ export namespace Prisma {
     oldName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type GoldTransactionCreateInput = {
+    id?: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    createdAt?: Date | string
+    brute?: BruteCreateNestedOneWithoutGoldTransactionsInput
+    user: UserCreateNestedOneWithoutGoldTransactionsInput
+  }
+
+  export type GoldTransactionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    bruteId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GoldTransactionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brute?: BruteUpdateOneWithoutGoldTransactionsNestedInput
+    user?: UserUpdateOneRequiredWithoutGoldTransactionsNestedInput
+  }
+
+  export type GoldTransactionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    bruteId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GoldTransactionCreateManyInput = {
+    id?: string
+    userId: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    bruteId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GoldTransactionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GoldTransactionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    bruteId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BruteCreateInput = {
     id?: string
     name: string
@@ -62847,6 +64346,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -62937,6 +64437,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -63027,6 +64528,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -63117,6 +64619,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -63897,6 +65400,7 @@ export namespace Prisma {
     id?: string
     date: Date | string
     gold: number
+    source?: string | null
     user: UserCreateNestedOneWithoutTournamentGoldsInput
   }
 
@@ -63905,12 +65409,14 @@ export namespace Prisma {
     date: Date | string
     userId: string
     gold: number
+    source?: string | null
   }
 
   export type TournamentGoldUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     gold?: IntFieldUpdateOperationsInput | number
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutTournamentGoldsNestedInput
   }
 
@@ -63919,6 +65425,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     gold?: IntFieldUpdateOperationsInput | number
+    source?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TournamentGoldCreateManyInput = {
@@ -63926,12 +65433,14 @@ export namespace Prisma {
     date: Date | string
     userId: string
     gold: number
+    source?: string | null
   }
 
   export type TournamentGoldUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     gold?: IntFieldUpdateOperationsInput | number
+    source?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TournamentGoldUncheckedUpdateManyInput = {
@@ -63939,6 +65448,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     gold?: IntFieldUpdateOperationsInput | number
+    source?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TournamentXpCreateInput = {
@@ -66337,6 +67847,12 @@ export namespace Prisma {
     none?: UserLogWhereInput
   }
 
+  export type GoldTransactionListRelationFilter = {
+    every?: GoldTransactionWhereInput
+    some?: GoldTransactionWhereInput
+    none?: GoldTransactionWhereInput
+  }
+
   export type DailyObjectiveListRelationFilter = {
     every?: DailyObjectiveWhereInput
     some?: DailyObjectiveWhereInput
@@ -66425,6 +67941,10 @@ export namespace Prisma {
   }
 
   export type UserLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GoldTransactionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -66777,6 +68297,44 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type GoldTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    source?: SortOrder
+    sourceData?: SortOrder
+    bruteId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GoldTransactionAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type GoldTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    source?: SortOrder
+    sourceData?: SortOrder
+    bruteId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GoldTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    source?: SortOrder
+    sourceData?: SortOrder
+    bruteId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GoldTransactionSumOrderByAggregateInput = {
+    amount?: SortOrder
   }
 
   export type EnumDestinyChoiceSideNullableListFilter<$PrismaModel = never> = {
@@ -67736,6 +69294,7 @@ export namespace Prisma {
     date?: SortOrder
     userId?: SortOrder
     gold?: SortOrder
+    source?: SortOrder
   }
 
   export type TournamentGoldAvgOrderByAggregateInput = {
@@ -67747,6 +69306,7 @@ export namespace Prisma {
     date?: SortOrder
     userId?: SortOrder
     gold?: SortOrder
+    source?: SortOrder
   }
 
   export type TournamentGoldMinOrderByAggregateInput = {
@@ -67754,6 +69314,7 @@ export namespace Prisma {
     date?: SortOrder
     userId?: SortOrder
     gold?: SortOrder
+    source?: SortOrder
   }
 
   export type TournamentGoldSumOrderByAggregateInput = {
@@ -69526,6 +71087,13 @@ export namespace Prisma {
     connect?: UserLogWhereUniqueInput | UserLogWhereUniqueInput[]
   }
 
+  export type GoldTransactionCreateNestedManyWithoutUserInput = {
+    create?: XOR<GoldTransactionCreateWithoutUserInput, GoldTransactionUncheckedCreateWithoutUserInput> | GoldTransactionCreateWithoutUserInput[] | GoldTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutUserInput | GoldTransactionCreateOrConnectWithoutUserInput[]
+    createMany?: GoldTransactionCreateManyUserInputEnvelope
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+  }
+
   export type DailyObjectiveCreateNestedManyWithoutUserInput = {
     create?: XOR<DailyObjectiveCreateWithoutUserInput, DailyObjectiveUncheckedCreateWithoutUserInput> | DailyObjectiveCreateWithoutUserInput[] | DailyObjectiveUncheckedCreateWithoutUserInput[]
     connectOrCreate?: DailyObjectiveCreateOrConnectWithoutUserInput | DailyObjectiveCreateOrConnectWithoutUserInput[]
@@ -69654,6 +71222,13 @@ export namespace Prisma {
     connectOrCreate?: UserLogCreateOrConnectWithoutUserInput | UserLogCreateOrConnectWithoutUserInput[]
     createMany?: UserLogCreateManyUserInputEnvelope
     connect?: UserLogWhereUniqueInput | UserLogWhereUniqueInput[]
+  }
+
+  export type GoldTransactionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GoldTransactionCreateWithoutUserInput, GoldTransactionUncheckedCreateWithoutUserInput> | GoldTransactionCreateWithoutUserInput[] | GoldTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutUserInput | GoldTransactionCreateOrConnectWithoutUserInput[]
+    createMany?: GoldTransactionCreateManyUserInputEnvelope
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
   }
 
   export type DailyObjectiveUncheckedCreateNestedManyWithoutUserInput = {
@@ -69904,6 +71479,20 @@ export namespace Prisma {
     update?: UserLogUpdateWithWhereUniqueWithoutUserInput | UserLogUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserLogUpdateManyWithWhereWithoutUserInput | UserLogUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserLogScalarWhereInput | UserLogScalarWhereInput[]
+  }
+
+  export type GoldTransactionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GoldTransactionCreateWithoutUserInput, GoldTransactionUncheckedCreateWithoutUserInput> | GoldTransactionCreateWithoutUserInput[] | GoldTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutUserInput | GoldTransactionCreateOrConnectWithoutUserInput[]
+    upsert?: GoldTransactionUpsertWithWhereUniqueWithoutUserInput | GoldTransactionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GoldTransactionCreateManyUserInputEnvelope
+    set?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    disconnect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    delete?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    update?: GoldTransactionUpdateWithWhereUniqueWithoutUserInput | GoldTransactionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GoldTransactionUpdateManyWithWhereWithoutUserInput | GoldTransactionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GoldTransactionScalarWhereInput | GoldTransactionScalarWhereInput[]
   }
 
   export type DailyObjectiveUpdateManyWithoutUserNestedInput = {
@@ -70169,6 +71758,20 @@ export namespace Prisma {
     deleteMany?: UserLogScalarWhereInput | UserLogScalarWhereInput[]
   }
 
+  export type GoldTransactionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GoldTransactionCreateWithoutUserInput, GoldTransactionUncheckedCreateWithoutUserInput> | GoldTransactionCreateWithoutUserInput[] | GoldTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutUserInput | GoldTransactionCreateOrConnectWithoutUserInput[]
+    upsert?: GoldTransactionUpsertWithWhereUniqueWithoutUserInput | GoldTransactionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GoldTransactionCreateManyUserInputEnvelope
+    set?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    disconnect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    delete?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    update?: GoldTransactionUpdateWithWhereUniqueWithoutUserInput | GoldTransactionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GoldTransactionUpdateManyWithWhereWithoutUserInput | GoldTransactionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GoldTransactionScalarWhereInput | GoldTransactionScalarWhereInput[]
+  }
+
   export type DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<DailyObjectiveCreateWithoutUserInput, DailyObjectiveUncheckedCreateWithoutUserInput> | DailyObjectiveCreateWithoutUserInput[] | DailyObjectiveUncheckedCreateWithoutUserInput[]
     connectOrCreate?: DailyObjectiveCreateOrConnectWithoutUserInput | DailyObjectiveCreateOrConnectWithoutUserInput[]
@@ -70327,6 +71930,36 @@ export namespace Prisma {
     delete?: BruteWhereInput | boolean
     connect?: BruteWhereUniqueInput
     update?: XOR<XOR<BruteUpdateToOneWithWhereWithoutUserlogsInput, BruteUpdateWithoutUserlogsInput>, BruteUncheckedUpdateWithoutUserlogsInput>
+  }
+
+  export type BruteCreateNestedOneWithoutGoldTransactionsInput = {
+    create?: XOR<BruteCreateWithoutGoldTransactionsInput, BruteUncheckedCreateWithoutGoldTransactionsInput>
+    connectOrCreate?: BruteCreateOrConnectWithoutGoldTransactionsInput
+    connect?: BruteWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutGoldTransactionsInput = {
+    create?: XOR<UserCreateWithoutGoldTransactionsInput, UserUncheckedCreateWithoutGoldTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGoldTransactionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BruteUpdateOneWithoutGoldTransactionsNestedInput = {
+    create?: XOR<BruteCreateWithoutGoldTransactionsInput, BruteUncheckedCreateWithoutGoldTransactionsInput>
+    connectOrCreate?: BruteCreateOrConnectWithoutGoldTransactionsInput
+    upsert?: BruteUpsertWithoutGoldTransactionsInput
+    disconnect?: BruteWhereInput | boolean
+    delete?: BruteWhereInput | boolean
+    connect?: BruteWhereUniqueInput
+    update?: XOR<XOR<BruteUpdateToOneWithWhereWithoutGoldTransactionsInput, BruteUpdateWithoutGoldTransactionsInput>, BruteUncheckedUpdateWithoutGoldTransactionsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutGoldTransactionsNestedInput = {
+    create?: XOR<UserCreateWithoutGoldTransactionsInput, UserUncheckedCreateWithoutGoldTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGoldTransactionsInput
+    upsert?: UserUpsertWithoutGoldTransactionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGoldTransactionsInput, UserUpdateWithoutGoldTransactionsInput>, UserUncheckedUpdateWithoutGoldTransactionsInput>
   }
 
   export type BruteCreatedestinyPathInput = {
@@ -70544,6 +72177,13 @@ export namespace Prisma {
     connect?: UserLogWhereUniqueInput | UserLogWhereUniqueInput[]
   }
 
+  export type GoldTransactionCreateNestedManyWithoutBruteInput = {
+    create?: XOR<GoldTransactionCreateWithoutBruteInput, GoldTransactionUncheckedCreateWithoutBruteInput> | GoldTransactionCreateWithoutBruteInput[] | GoldTransactionUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutBruteInput | GoldTransactionCreateOrConnectWithoutBruteInput[]
+    createMany?: GoldTransactionCreateManyBruteInputEnvelope
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+  }
+
   export type BruteTemporaryEffectCreateNestedManyWithoutBruteInput = {
     create?: XOR<BruteTemporaryEffectCreateWithoutBruteInput, BruteTemporaryEffectUncheckedCreateWithoutBruteInput> | BruteTemporaryEffectCreateWithoutBruteInput[] | BruteTemporaryEffectUncheckedCreateWithoutBruteInput[]
     connectOrCreate?: BruteTemporaryEffectCreateOrConnectWithoutBruteInput | BruteTemporaryEffectCreateOrConnectWithoutBruteInput[]
@@ -70709,6 +72349,13 @@ export namespace Prisma {
     connectOrCreate?: UserLogCreateOrConnectWithoutBruteInput | UserLogCreateOrConnectWithoutBruteInput[]
     createMany?: UserLogCreateManyBruteInputEnvelope
     connect?: UserLogWhereUniqueInput | UserLogWhereUniqueInput[]
+  }
+
+  export type GoldTransactionUncheckedCreateNestedManyWithoutBruteInput = {
+    create?: XOR<GoldTransactionCreateWithoutBruteInput, GoldTransactionUncheckedCreateWithoutBruteInput> | GoldTransactionCreateWithoutBruteInput[] | GoldTransactionUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutBruteInput | GoldTransactionCreateOrConnectWithoutBruteInput[]
+    createMany?: GoldTransactionCreateManyBruteInputEnvelope
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
   }
 
   export type BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput = {
@@ -71135,6 +72782,20 @@ export namespace Prisma {
     deleteMany?: UserLogScalarWhereInput | UserLogScalarWhereInput[]
   }
 
+  export type GoldTransactionUpdateManyWithoutBruteNestedInput = {
+    create?: XOR<GoldTransactionCreateWithoutBruteInput, GoldTransactionUncheckedCreateWithoutBruteInput> | GoldTransactionCreateWithoutBruteInput[] | GoldTransactionUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutBruteInput | GoldTransactionCreateOrConnectWithoutBruteInput[]
+    upsert?: GoldTransactionUpsertWithWhereUniqueWithoutBruteInput | GoldTransactionUpsertWithWhereUniqueWithoutBruteInput[]
+    createMany?: GoldTransactionCreateManyBruteInputEnvelope
+    set?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    disconnect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    delete?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    update?: GoldTransactionUpdateWithWhereUniqueWithoutBruteInput | GoldTransactionUpdateWithWhereUniqueWithoutBruteInput[]
+    updateMany?: GoldTransactionUpdateManyWithWhereWithoutBruteInput | GoldTransactionUpdateManyWithWhereWithoutBruteInput[]
+    deleteMany?: GoldTransactionScalarWhereInput | GoldTransactionScalarWhereInput[]
+  }
+
   export type BruteTemporaryEffectUpdateManyWithoutBruteNestedInput = {
     create?: XOR<BruteTemporaryEffectCreateWithoutBruteInput, BruteTemporaryEffectUncheckedCreateWithoutBruteInput> | BruteTemporaryEffectCreateWithoutBruteInput[] | BruteTemporaryEffectUncheckedCreateWithoutBruteInput[]
     connectOrCreate?: BruteTemporaryEffectCreateOrConnectWithoutBruteInput | BruteTemporaryEffectCreateOrConnectWithoutBruteInput[]
@@ -71469,6 +73130,20 @@ export namespace Prisma {
     update?: UserLogUpdateWithWhereUniqueWithoutBruteInput | UserLogUpdateWithWhereUniqueWithoutBruteInput[]
     updateMany?: UserLogUpdateManyWithWhereWithoutBruteInput | UserLogUpdateManyWithWhereWithoutBruteInput[]
     deleteMany?: UserLogScalarWhereInput | UserLogScalarWhereInput[]
+  }
+
+  export type GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput = {
+    create?: XOR<GoldTransactionCreateWithoutBruteInput, GoldTransactionUncheckedCreateWithoutBruteInput> | GoldTransactionCreateWithoutBruteInput[] | GoldTransactionUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: GoldTransactionCreateOrConnectWithoutBruteInput | GoldTransactionCreateOrConnectWithoutBruteInput[]
+    upsert?: GoldTransactionUpsertWithWhereUniqueWithoutBruteInput | GoldTransactionUpsertWithWhereUniqueWithoutBruteInput[]
+    createMany?: GoldTransactionCreateManyBruteInputEnvelope
+    set?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    disconnect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    delete?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    connect?: GoldTransactionWhereUniqueInput | GoldTransactionWhereUniqueInput[]
+    update?: GoldTransactionUpdateWithWhereUniqueWithoutBruteInput | GoldTransactionUpdateWithWhereUniqueWithoutBruteInput[]
+    updateMany?: GoldTransactionUpdateManyWithWhereWithoutBruteInput | GoldTransactionUpdateManyWithWhereWithoutBruteInput[]
+    deleteMany?: GoldTransactionScalarWhereInput | GoldTransactionScalarWhereInput[]
   }
 
   export type BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput = {
@@ -74358,6 +76033,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -74447,6 +76123,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -74518,12 +76195,14 @@ export namespace Prisma {
     id?: string
     date: Date | string
     gold: number
+    source?: string | null
   }
 
   export type TournamentGoldUncheckedCreateWithoutUserInput = {
     id?: string
     date: Date | string
     gold: number
+    source?: string | null
   }
 
   export type TournamentGoldCreateOrConnectWithoutUserInput = {
@@ -74690,6 +76369,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -74779,6 +76459,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -74875,6 +76556,34 @@ export namespace Prisma {
 
   export type UserLogCreateManyUserInputEnvelope = {
     data: UserLogCreateManyUserInput | UserLogCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GoldTransactionCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    createdAt?: Date | string
+    brute?: BruteCreateNestedOneWithoutGoldTransactionsInput
+  }
+
+  export type GoldTransactionUncheckedCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    bruteId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GoldTransactionCreateOrConnectWithoutUserInput = {
+    where: GoldTransactionWhereUniqueInput
+    create: XOR<GoldTransactionCreateWithoutUserInput, GoldTransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type GoldTransactionCreateManyUserInputEnvelope = {
+    data: GoldTransactionCreateManyUserInput | GoldTransactionCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -75340,6 +77049,7 @@ export namespace Prisma {
     date?: DateTimeFilter<"TournamentGold"> | Date | string
     userId?: UuidFilter<"TournamentGold"> | string
     gold?: IntFilter<"TournamentGold"> | number
+    source?: StringNullableFilter<"TournamentGold"> | string | null
   }
 
   export type InventoryItemUpsertWithWhereUniqueWithoutUserInput = {
@@ -75495,6 +77205,35 @@ export namespace Prisma {
     bruteId?: UuidNullableFilter<"UserLog"> | string | null
     gold?: IntNullableFilter<"UserLog"> | number | null
     oldName?: StringNullableFilter<"UserLog"> | string | null
+  }
+
+  export type GoldTransactionUpsertWithWhereUniqueWithoutUserInput = {
+    where: GoldTransactionWhereUniqueInput
+    update: XOR<GoldTransactionUpdateWithoutUserInput, GoldTransactionUncheckedUpdateWithoutUserInput>
+    create: XOR<GoldTransactionCreateWithoutUserInput, GoldTransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type GoldTransactionUpdateWithWhereUniqueWithoutUserInput = {
+    where: GoldTransactionWhereUniqueInput
+    data: XOR<GoldTransactionUpdateWithoutUserInput, GoldTransactionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GoldTransactionUpdateManyWithWhereWithoutUserInput = {
+    where: GoldTransactionScalarWhereInput
+    data: XOR<GoldTransactionUpdateManyMutationInput, GoldTransactionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type GoldTransactionScalarWhereInput = {
+    AND?: GoldTransactionScalarWhereInput | GoldTransactionScalarWhereInput[]
+    OR?: GoldTransactionScalarWhereInput[]
+    NOT?: GoldTransactionScalarWhereInput | GoldTransactionScalarWhereInput[]
+    id?: UuidFilter<"GoldTransaction"> | string
+    userId?: UuidFilter<"GoldTransaction"> | string
+    amount?: IntFilter<"GoldTransaction"> | number
+    source?: StringFilter<"GoldTransaction"> | string
+    sourceData?: StringNullableFilter<"GoldTransaction"> | string | null
+    bruteId?: UuidNullableFilter<"GoldTransaction"> | string | null
+    createdAt?: DateTimeFilter<"GoldTransaction"> | Date | string
   }
 
   export type DailyObjectiveUpsertWithWhereUniqueWithoutUserInput = {
@@ -75813,6 +77552,7 @@ export namespace Prisma {
     following?: BruteCreateNestedManyWithoutFollowersInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -75857,6 +77597,7 @@ export namespace Prisma {
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -75958,6 +77699,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -76047,6 +77789,7 @@ export namespace Prisma {
     inClanWarAttackerFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutAttackersInput
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -76100,6 +77843,7 @@ export namespace Prisma {
     following?: BruteUpdateManyWithoutFollowersNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -76144,6 +77888,7 @@ export namespace Prisma {
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -76251,6 +77996,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -76340,8 +78086,581 @@ export namespace Prisma {
     inClanWarAttackerFighters?: ClanWarFightersUncheckedUpdateManyWithoutAttackersNestedInput
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
+  }
+
+  export type BruteCreateWithoutGoldTransactionsInput = {
+    id?: string
+    name: string
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    willBeDeletedAt?: Date | string | null
+    deletionReason?: string | null
+    destinyPath?: BruteCreatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    level?: number
+    xp?: number
+    hp?: number
+    enduranceStat?: number
+    enduranceModifier?: number
+    enduranceValue?: number
+    strengthStat?: number
+    strengthModifier?: number
+    strengthValue?: number
+    agilityStat?: number
+    agilityModifier?: number
+    agilityValue?: number
+    speedStat?: number
+    speedModifier?: number
+    speedValue?: number
+    ranking?: number
+    gender: $Enums.Gender
+    body?: string
+    colors?: string
+    weapons?: BruteCreateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteCreateskillsInput | $Enums.SkillName[]
+    pets?: BruteCreatepetsInput | $Enums.PetName[]
+    ascensions?: number
+    ascendedWeapons?: BruteCreateascendedWeaponsInput | $Enums.WeaponName[]
+    ascendedSkills?: BruteCreateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteCreateascendedPetsInput | $Enums.PetName[]
+    pupilsCount?: number
+    registeredForTournament?: boolean
+    nextTournamentDate?: Date | string | null
+    currentTournamentDate?: Date | string | null
+    currentTournamentStepWatched?: number | null
+    globalTournamentWatchedDate?: Date | string | null
+    globalTournamentRoundWatched?: number | null
+    eventTournamentWatchedDate?: Date | string | null
+    eventTournamentRoundWatched?: number | null
+    lastFight?: Date | string | null
+    fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    victories?: number
+    losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
+    opponentsGeneratedAt?: Date | string | null
+    canRankUpSince?: Date | string | null
+    favorite?: boolean
+    autoFightEnabled?: boolean
+    tournamentWins?: number
+    resets?: number
+    user?: UserCreateNestedOneWithoutBrutesInput
+    master?: BruteCreateNestedOneWithoutPupilsInput
+    pupils?: BruteCreateNestedManyWithoutMasterInput
+    clan?: ClanCreateNestedOneWithoutBrutesInput
+    fights?: FightCreateNestedManyWithoutBrute1Input
+    fightsAsAdversary?: FightCreateNestedManyWithoutBrute2Input
+    logs?: LogCreateNestedManyWithoutCurrentBruteInput
+    destinyChoices?: DestinyChoiceCreateNestedManyWithoutBruteInput
+    tournaments?: TournamentCreateNestedManyWithoutParticipantsInput
+    opponents?: BruteCreateNestedManyWithoutOpponentOfInput
+    opponentOf?: BruteCreateNestedManyWithoutOpponentsInput
+    achievements?: AchievementCreateNestedManyWithoutBruteInput
+    reports?: BruteReportCreateNestedManyWithoutBruteInput
+    masterOfClan?: ClanCreateNestedOneWithoutMasterInput
+    clanPosts?: ClanPostCreateNestedManyWithoutAuthorInput
+    wantToJoinClan?: ClanCreateNestedOneWithoutJoinRequestsInput
+    threads?: ClanThreadCreateNestedManyWithoutCreatorInput
+    inventory?: InventoryItemCreateNestedManyWithoutBruteInput
+    tournamentAchievements?: TournamentAchievementCreateNestedManyWithoutBruteInput
+    tournamentXps?: TournamentXpCreateNestedManyWithoutBruteInput
+    startingStats?: BruteStartingStatsCreateNestedOneWithoutBruteInput
+    damageOnBosses?: BossDamageCreateNestedManyWithoutBruteInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
+    inClanWarAttackerFighters?: ClanWarFightersCreateNestedManyWithoutAttackersInput
+    inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
+    event?: EventCreateNestedOneWithoutBrutesInput
+    wonEvents?: EventCreateNestedManyWithoutWinnerInput
+    userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
+  }
+
+  export type BruteUncheckedCreateWithoutGoldTransactionsInput = {
+    id?: string
+    name: string
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    willBeDeletedAt?: Date | string | null
+    deletionReason?: string | null
+    destinyPath?: BruteCreatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    level?: number
+    xp?: number
+    hp?: number
+    enduranceStat?: number
+    enduranceModifier?: number
+    enduranceValue?: number
+    strengthStat?: number
+    strengthModifier?: number
+    strengthValue?: number
+    agilityStat?: number
+    agilityModifier?: number
+    agilityValue?: number
+    speedStat?: number
+    speedModifier?: number
+    speedValue?: number
+    ranking?: number
+    gender: $Enums.Gender
+    userId?: string | null
+    body?: string
+    colors?: string
+    weapons?: BruteCreateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteCreateskillsInput | $Enums.SkillName[]
+    pets?: BruteCreatepetsInput | $Enums.PetName[]
+    ascensions?: number
+    ascendedWeapons?: BruteCreateascendedWeaponsInput | $Enums.WeaponName[]
+    ascendedSkills?: BruteCreateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteCreateascendedPetsInput | $Enums.PetName[]
+    masterId?: string | null
+    pupilsCount?: number
+    clanId?: string | null
+    registeredForTournament?: boolean
+    nextTournamentDate?: Date | string | null
+    currentTournamentDate?: Date | string | null
+    currentTournamentStepWatched?: number | null
+    globalTournamentWatchedDate?: Date | string | null
+    globalTournamentRoundWatched?: number | null
+    eventTournamentWatchedDate?: Date | string | null
+    eventTournamentRoundWatched?: number | null
+    lastFight?: Date | string | null
+    fightsLeft?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    victories?: number
+    losses?: number
+    winStreakCurrent?: number
+    winStreakMax?: number
+    opponentsGeneratedAt?: Date | string | null
+    canRankUpSince?: Date | string | null
+    favorite?: boolean
+    autoFightEnabled?: boolean
+    wantToJoinClanId?: string | null
+    tournamentWins?: number
+    eventId?: string | null
+    resets?: number
+    pupils?: BruteUncheckedCreateNestedManyWithoutMasterInput
+    fights?: FightUncheckedCreateNestedManyWithoutBrute1Input
+    fightsAsAdversary?: FightUncheckedCreateNestedManyWithoutBrute2Input
+    logs?: LogUncheckedCreateNestedManyWithoutCurrentBruteInput
+    destinyChoices?: DestinyChoiceUncheckedCreateNestedManyWithoutBruteInput
+    tournaments?: TournamentUncheckedCreateNestedManyWithoutParticipantsInput
+    opponents?: BruteUncheckedCreateNestedManyWithoutOpponentOfInput
+    opponentOf?: BruteUncheckedCreateNestedManyWithoutOpponentsInput
+    achievements?: AchievementUncheckedCreateNestedManyWithoutBruteInput
+    reports?: BruteReportUncheckedCreateNestedManyWithoutBruteInput
+    masterOfClan?: ClanUncheckedCreateNestedOneWithoutMasterInput
+    clanPosts?: ClanPostUncheckedCreateNestedManyWithoutAuthorInput
+    threads?: ClanThreadUncheckedCreateNestedManyWithoutCreatorInput
+    inventory?: InventoryItemUncheckedCreateNestedManyWithoutBruteInput
+    tournamentAchievements?: TournamentAchievementUncheckedCreateNestedManyWithoutBruteInput
+    tournamentXps?: TournamentXpUncheckedCreateNestedManyWithoutBruteInput
+    startingStats?: BruteStartingStatsUncheckedCreateNestedOneWithoutBruteInput
+    damageOnBosses?: BossDamageUncheckedCreateNestedManyWithoutBruteInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    inClanWarAttackerFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutAttackersInput
+    inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
+    wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
+    userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
+  }
+
+  export type BruteCreateOrConnectWithoutGoldTransactionsInput = {
+    where: BruteWhereUniqueInput
+    create: XOR<BruteCreateWithoutGoldTransactionsInput, BruteUncheckedCreateWithoutGoldTransactionsInput>
+  }
+
+  export type UserCreateWithoutGoldTransactionsInput = {
+    id: string
+    lang?: $Enums.Lang
+    name: string
+    admin?: boolean
+    moderator?: boolean
+    connexionToken: string
+    bruteLimit?: number
+    gold?: number
+    fightSpeed?: number
+    backgroundMusic?: boolean
+    dinorpgDone?: Date | string | null
+    ips?: UserCreateipsInput | string[]
+    bannedAt?: Date | string | null
+    banReason?: string | null
+    displayVersusPage?: boolean
+    displayOpponentDetails?: boolean
+    lastSeen?: Date | string
+    lastFightDate?: Date | string | null
+    consecutiveDaysPlayed?: number
+    unlockedTitleIds?: UserCreateunlockedTitleIdsInput | number[]
+    equippedTitleId?: number | null
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    brutes?: BruteCreateNestedManyWithoutUserInput
+    achievements?: AchievementCreateNestedManyWithoutUserInput
+    reports?: BruteReportCreateNestedManyWithoutUsersInput
+    tournamentGolds?: TournamentGoldCreateNestedManyWithoutUserInput
+    inventory?: InventoryItemCreateNestedManyWithoutUserInput
+    favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
+    following?: BruteCreateNestedManyWithoutFollowersInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
+    logs?: UserLogCreateNestedManyWithoutUserInput
+    dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
+    weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
+    permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
+    missions?: MissionCreateNestedManyWithoutUserInput
+    missionAchievements?: MissionAchievementCreateNestedManyWithoutUserInput
+    userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGoldTransactionsInput = {
+    id: string
+    lang?: $Enums.Lang
+    name: string
+    admin?: boolean
+    moderator?: boolean
+    connexionToken: string
+    bruteLimit?: number
+    gold?: number
+    fightSpeed?: number
+    backgroundMusic?: boolean
+    dinorpgDone?: Date | string | null
+    ips?: UserCreateipsInput | string[]
+    bannedAt?: Date | string | null
+    banReason?: string | null
+    displayVersusPage?: boolean
+    displayOpponentDetails?: boolean
+    lastSeen?: Date | string
+    lastFightDate?: Date | string | null
+    consecutiveDaysPlayed?: number
+    unlockedTitleIds?: UserCreateunlockedTitleIdsInput | number[]
+    equippedTitleId?: number | null
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    brutes?: BruteUncheckedCreateNestedManyWithoutUserInput
+    achievements?: AchievementUncheckedCreateNestedManyWithoutUserInput
+    reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
+    tournamentGolds?: TournamentGoldUncheckedCreateNestedManyWithoutUserInput
+    inventory?: InventoryItemUncheckedCreateNestedManyWithoutUserInput
+    favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
+    following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
+    logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
+    weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
+    permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
+    missions?: MissionUncheckedCreateNestedManyWithoutUserInput
+    missionAchievements?: MissionAchievementUncheckedCreateNestedManyWithoutUserInput
+    userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGoldTransactionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGoldTransactionsInput, UserUncheckedCreateWithoutGoldTransactionsInput>
+  }
+
+  export type BruteUpsertWithoutGoldTransactionsInput = {
+    update: XOR<BruteUpdateWithoutGoldTransactionsInput, BruteUncheckedUpdateWithoutGoldTransactionsInput>
+    create: XOR<BruteCreateWithoutGoldTransactionsInput, BruteUncheckedCreateWithoutGoldTransactionsInput>
+    where?: BruteWhereInput
+  }
+
+  export type BruteUpdateToOneWithWhereWithoutGoldTransactionsInput = {
+    where?: BruteWhereInput
+    data: XOR<BruteUpdateWithoutGoldTransactionsInput, BruteUncheckedUpdateWithoutGoldTransactionsInput>
+  }
+
+  export type BruteUpdateWithoutGoldTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    willBeDeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    destinyPath?: BruteUpdatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    level?: IntFieldUpdateOperationsInput | number
+    xp?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    enduranceStat?: IntFieldUpdateOperationsInput | number
+    enduranceModifier?: FloatFieldUpdateOperationsInput | number
+    enduranceValue?: IntFieldUpdateOperationsInput | number
+    strengthStat?: IntFieldUpdateOperationsInput | number
+    strengthModifier?: FloatFieldUpdateOperationsInput | number
+    strengthValue?: IntFieldUpdateOperationsInput | number
+    agilityStat?: IntFieldUpdateOperationsInput | number
+    agilityModifier?: FloatFieldUpdateOperationsInput | number
+    agilityValue?: IntFieldUpdateOperationsInput | number
+    speedStat?: IntFieldUpdateOperationsInput | number
+    speedModifier?: FloatFieldUpdateOperationsInput | number
+    speedValue?: IntFieldUpdateOperationsInput | number
+    ranking?: IntFieldUpdateOperationsInput | number
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    body?: StringFieldUpdateOperationsInput | string
+    colors?: StringFieldUpdateOperationsInput | string
+    weapons?: BruteUpdateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteUpdateskillsInput | $Enums.SkillName[]
+    pets?: BruteUpdatepetsInput | $Enums.PetName[]
+    ascensions?: IntFieldUpdateOperationsInput | number
+    ascendedWeapons?: BruteUpdateascendedWeaponsInput | $Enums.WeaponName[]
+    ascendedSkills?: BruteUpdateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteUpdateascendedPetsInput | $Enums.PetName[]
+    pupilsCount?: IntFieldUpdateOperationsInput | number
+    registeredForTournament?: BoolFieldUpdateOperationsInput | boolean
+    nextTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentStepWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    globalTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    globalTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    eventTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    victories?: IntFieldUpdateOperationsInput | number
+    losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
+    opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    favorite?: BoolFieldUpdateOperationsInput | boolean
+    autoFightEnabled?: BoolFieldUpdateOperationsInput | boolean
+    tournamentWins?: IntFieldUpdateOperationsInput | number
+    resets?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneWithoutBrutesNestedInput
+    master?: BruteUpdateOneWithoutPupilsNestedInput
+    pupils?: BruteUpdateManyWithoutMasterNestedInput
+    clan?: ClanUpdateOneWithoutBrutesNestedInput
+    fights?: FightUpdateManyWithoutBrute1NestedInput
+    fightsAsAdversary?: FightUpdateManyWithoutBrute2NestedInput
+    logs?: LogUpdateManyWithoutCurrentBruteNestedInput
+    destinyChoices?: DestinyChoiceUpdateManyWithoutBruteNestedInput
+    tournaments?: TournamentUpdateManyWithoutParticipantsNestedInput
+    opponents?: BruteUpdateManyWithoutOpponentOfNestedInput
+    opponentOf?: BruteUpdateManyWithoutOpponentsNestedInput
+    achievements?: AchievementUpdateManyWithoutBruteNestedInput
+    reports?: BruteReportUpdateManyWithoutBruteNestedInput
+    masterOfClan?: ClanUpdateOneWithoutMasterNestedInput
+    clanPosts?: ClanPostUpdateManyWithoutAuthorNestedInput
+    wantToJoinClan?: ClanUpdateOneWithoutJoinRequestsNestedInput
+    threads?: ClanThreadUpdateManyWithoutCreatorNestedInput
+    inventory?: InventoryItemUpdateManyWithoutBruteNestedInput
+    tournamentAchievements?: TournamentAchievementUpdateManyWithoutBruteNestedInput
+    tournamentXps?: TournamentXpUpdateManyWithoutBruteNestedInput
+    startingStats?: BruteStartingStatsUpdateOneWithoutBruteNestedInput
+    damageOnBosses?: BossDamageUpdateManyWithoutBruteNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
+    inClanWarAttackerFighters?: ClanWarFightersUpdateManyWithoutAttackersNestedInput
+    inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
+    event?: EventUpdateOneWithoutBrutesNestedInput
+    wonEvents?: EventUpdateManyWithoutWinnerNestedInput
+    userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
+  }
+
+  export type BruteUncheckedUpdateWithoutGoldTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    willBeDeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    destinyPath?: BruteUpdatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    level?: IntFieldUpdateOperationsInput | number
+    xp?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    enduranceStat?: IntFieldUpdateOperationsInput | number
+    enduranceModifier?: FloatFieldUpdateOperationsInput | number
+    enduranceValue?: IntFieldUpdateOperationsInput | number
+    strengthStat?: IntFieldUpdateOperationsInput | number
+    strengthModifier?: FloatFieldUpdateOperationsInput | number
+    strengthValue?: IntFieldUpdateOperationsInput | number
+    agilityStat?: IntFieldUpdateOperationsInput | number
+    agilityModifier?: FloatFieldUpdateOperationsInput | number
+    agilityValue?: IntFieldUpdateOperationsInput | number
+    speedStat?: IntFieldUpdateOperationsInput | number
+    speedModifier?: FloatFieldUpdateOperationsInput | number
+    speedValue?: IntFieldUpdateOperationsInput | number
+    ranking?: IntFieldUpdateOperationsInput | number
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    colors?: StringFieldUpdateOperationsInput | string
+    weapons?: BruteUpdateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteUpdateskillsInput | $Enums.SkillName[]
+    pets?: BruteUpdatepetsInput | $Enums.PetName[]
+    ascensions?: IntFieldUpdateOperationsInput | number
+    ascendedWeapons?: BruteUpdateascendedWeaponsInput | $Enums.WeaponName[]
+    ascendedSkills?: BruteUpdateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteUpdateascendedPetsInput | $Enums.PetName[]
+    masterId?: NullableStringFieldUpdateOperationsInput | string | null
+    pupilsCount?: IntFieldUpdateOperationsInput | number
+    clanId?: NullableStringFieldUpdateOperationsInput | string | null
+    registeredForTournament?: BoolFieldUpdateOperationsInput | boolean
+    nextTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentStepWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    globalTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    globalTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    eventTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fightsLeft?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    victories?: IntFieldUpdateOperationsInput | number
+    losses?: IntFieldUpdateOperationsInput | number
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
+    opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    favorite?: BoolFieldUpdateOperationsInput | boolean
+    autoFightEnabled?: BoolFieldUpdateOperationsInput | boolean
+    wantToJoinClanId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentWins?: IntFieldUpdateOperationsInput | number
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    resets?: IntFieldUpdateOperationsInput | number
+    pupils?: BruteUncheckedUpdateManyWithoutMasterNestedInput
+    fights?: FightUncheckedUpdateManyWithoutBrute1NestedInput
+    fightsAsAdversary?: FightUncheckedUpdateManyWithoutBrute2NestedInput
+    logs?: LogUncheckedUpdateManyWithoutCurrentBruteNestedInput
+    destinyChoices?: DestinyChoiceUncheckedUpdateManyWithoutBruteNestedInput
+    tournaments?: TournamentUncheckedUpdateManyWithoutParticipantsNestedInput
+    opponents?: BruteUncheckedUpdateManyWithoutOpponentOfNestedInput
+    opponentOf?: BruteUncheckedUpdateManyWithoutOpponentsNestedInput
+    achievements?: AchievementUncheckedUpdateManyWithoutBruteNestedInput
+    reports?: BruteReportUncheckedUpdateManyWithoutBruteNestedInput
+    masterOfClan?: ClanUncheckedUpdateOneWithoutMasterNestedInput
+    clanPosts?: ClanPostUncheckedUpdateManyWithoutAuthorNestedInput
+    threads?: ClanThreadUncheckedUpdateManyWithoutCreatorNestedInput
+    inventory?: InventoryItemUncheckedUpdateManyWithoutBruteNestedInput
+    tournamentAchievements?: TournamentAchievementUncheckedUpdateManyWithoutBruteNestedInput
+    tournamentXps?: TournamentXpUncheckedUpdateManyWithoutBruteNestedInput
+    startingStats?: BruteStartingStatsUncheckedUpdateOneWithoutBruteNestedInput
+    damageOnBosses?: BossDamageUncheckedUpdateManyWithoutBruteNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    inClanWarAttackerFighters?: ClanWarFightersUncheckedUpdateManyWithoutAttackersNestedInput
+    inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
+    wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
+    userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
+  }
+
+  export type UserUpsertWithoutGoldTransactionsInput = {
+    update: XOR<UserUpdateWithoutGoldTransactionsInput, UserUncheckedUpdateWithoutGoldTransactionsInput>
+    create: XOR<UserCreateWithoutGoldTransactionsInput, UserUncheckedCreateWithoutGoldTransactionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGoldTransactionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGoldTransactionsInput, UserUncheckedUpdateWithoutGoldTransactionsInput>
+  }
+
+  export type UserUpdateWithoutGoldTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    name?: StringFieldUpdateOperationsInput | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
+    moderator?: BoolFieldUpdateOperationsInput | boolean
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    bruteLimit?: IntFieldUpdateOperationsInput | number
+    gold?: IntFieldUpdateOperationsInput | number
+    fightSpeed?: IntFieldUpdateOperationsInput | number
+    backgroundMusic?: BoolFieldUpdateOperationsInput | boolean
+    dinorpgDone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ips?: UserUpdateipsInput | string[]
+    bannedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    displayVersusPage?: BoolFieldUpdateOperationsInput | boolean
+    displayOpponentDetails?: BoolFieldUpdateOperationsInput | boolean
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    consecutiveDaysPlayed?: IntFieldUpdateOperationsInput | number
+    unlockedTitleIds?: UserUpdateunlockedTitleIdsInput | number[]
+    equippedTitleId?: NullableIntFieldUpdateOperationsInput | number | null
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    brutes?: BruteUpdateManyWithoutUserNestedInput
+    achievements?: AchievementUpdateManyWithoutUserNestedInput
+    reports?: BruteReportUpdateManyWithoutUsersNestedInput
+    tournamentGolds?: TournamentGoldUpdateManyWithoutUserNestedInput
+    inventory?: InventoryItemUpdateManyWithoutUserNestedInput
+    favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
+    following?: BruteUpdateManyWithoutFollowersNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
+    logs?: UserLogUpdateManyWithoutUserNestedInput
+    dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
+    weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
+    permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
+    missions?: MissionUpdateManyWithoutUserNestedInput
+    missionAchievements?: MissionAchievementUpdateManyWithoutUserNestedInput
+    userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGoldTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    name?: StringFieldUpdateOperationsInput | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
+    moderator?: BoolFieldUpdateOperationsInput | boolean
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    bruteLimit?: IntFieldUpdateOperationsInput | number
+    gold?: IntFieldUpdateOperationsInput | number
+    fightSpeed?: IntFieldUpdateOperationsInput | number
+    backgroundMusic?: BoolFieldUpdateOperationsInput | boolean
+    dinorpgDone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ips?: UserUpdateipsInput | string[]
+    bannedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    displayVersusPage?: BoolFieldUpdateOperationsInput | boolean
+    displayOpponentDetails?: BoolFieldUpdateOperationsInput | boolean
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    consecutiveDaysPlayed?: IntFieldUpdateOperationsInput | number
+    unlockedTitleIds?: UserUpdateunlockedTitleIdsInput | number[]
+    equippedTitleId?: NullableIntFieldUpdateOperationsInput | number | null
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    brutes?: BruteUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: AchievementUncheckedUpdateManyWithoutUserNestedInput
+    reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
+    tournamentGolds?: TournamentGoldUncheckedUpdateManyWithoutUserNestedInput
+    inventory?: InventoryItemUncheckedUpdateManyWithoutUserNestedInput
+    favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
+    following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
+    logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
+    weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
+    permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
+    missions?: MissionUncheckedUpdateManyWithoutUserNestedInput
+    missionAchievements?: MissionAchievementUncheckedUpdateManyWithoutUserNestedInput
+    userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBrutesInput = {
@@ -76377,6 +78696,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -76421,6 +78741,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -76522,6 +78843,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -76611,6 +78933,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -76705,6 +79028,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -76794,6 +79118,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -77139,6 +79464,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -77228,6 +79554,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -77322,6 +79649,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -77411,6 +79739,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -77768,6 +80097,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -77812,6 +80142,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -77961,6 +80292,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GoldTransactionCreateWithoutBruteInput = {
+    id?: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutGoldTransactionsInput
+  }
+
+  export type GoldTransactionUncheckedCreateWithoutBruteInput = {
+    id?: string
+    userId: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GoldTransactionCreateOrConnectWithoutBruteInput = {
+    where: GoldTransactionWhereUniqueInput
+    create: XOR<GoldTransactionCreateWithoutBruteInput, GoldTransactionUncheckedCreateWithoutBruteInput>
+  }
+
+  export type GoldTransactionCreateManyBruteInputEnvelope = {
+    data: GoldTransactionCreateManyBruteInput | GoldTransactionCreateManyBruteInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BruteTemporaryEffectCreateWithoutBruteInput = {
     id?: string
     skillName: $Enums.SkillName
@@ -78053,6 +80412,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -78097,6 +80457,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -78204,6 +80565,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -78293,6 +80655,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -79002,6 +81365,22 @@ export namespace Prisma {
     data: XOR<UserLogUpdateManyMutationInput, UserLogUncheckedUpdateManyWithoutBruteInput>
   }
 
+  export type GoldTransactionUpsertWithWhereUniqueWithoutBruteInput = {
+    where: GoldTransactionWhereUniqueInput
+    update: XOR<GoldTransactionUpdateWithoutBruteInput, GoldTransactionUncheckedUpdateWithoutBruteInput>
+    create: XOR<GoldTransactionCreateWithoutBruteInput, GoldTransactionUncheckedCreateWithoutBruteInput>
+  }
+
+  export type GoldTransactionUpdateWithWhereUniqueWithoutBruteInput = {
+    where: GoldTransactionWhereUniqueInput
+    data: XOR<GoldTransactionUpdateWithoutBruteInput, GoldTransactionUncheckedUpdateWithoutBruteInput>
+  }
+
+  export type GoldTransactionUpdateManyWithWhereWithoutBruteInput = {
+    where: GoldTransactionScalarWhereInput
+    data: XOR<GoldTransactionUpdateManyMutationInput, GoldTransactionUncheckedUpdateManyWithoutBruteInput>
+  }
+
   export type BruteTemporaryEffectUpsertWithWhereUniqueWithoutBruteInput = {
     where: BruteTemporaryEffectWhereUniqueInput
     update: XOR<BruteTemporaryEffectUpdateWithoutBruteInput, BruteTemporaryEffectUncheckedUpdateWithoutBruteInput>
@@ -79090,6 +81469,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -79134,6 +81514,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -79194,6 +81575,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -79238,6 +81620,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -79333,6 +81716,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -79422,6 +81806,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -79527,6 +81912,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -79616,6 +82002,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -79705,6 +82092,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -79794,6 +82182,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -79888,6 +82277,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -79977,6 +82367,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -80078,6 +82469,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -80122,6 +82514,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -80271,6 +82664,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -80360,6 +82754,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -80460,6 +82855,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -80549,6 +82945,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -80742,6 +83139,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -80831,6 +83229,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -81020,6 +83419,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -81109,6 +83509,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -81294,6 +83695,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -81383,6 +83785,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -81524,6 +83927,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -81613,6 +84017,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -81718,6 +84123,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -81807,6 +84213,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -82051,6 +84458,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -82140,6 +84548,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -82245,6 +84654,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -82334,6 +84744,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -82371,6 +84782,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -82415,6 +84827,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -82475,6 +84888,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -82519,6 +84933,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -82615,6 +85030,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -82704,6 +85120,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -82809,6 +85226,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -82898,6 +85316,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -82987,6 +85406,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -83076,6 +85496,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -83118,6 +85539,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -83162,6 +85584,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -83274,6 +85697,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -83363,6 +85787,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -83411,6 +85836,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -83455,6 +85881,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -83500,6 +85927,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
     missions?: MissionCreateNestedManyWithoutUserInput
@@ -83544,6 +85972,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
     missions?: MissionUncheckedCreateNestedManyWithoutUserInput
@@ -83604,6 +86033,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
     missions?: MissionUpdateManyWithoutUserNestedInput
@@ -83648,6 +86078,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
     missions?: MissionUncheckedUpdateManyWithoutUserNestedInput
@@ -83692,6 +86123,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
     missions?: MissionCreateNestedManyWithoutUserInput
@@ -83736,6 +86168,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
     missions?: MissionUncheckedCreateNestedManyWithoutUserInput
@@ -83796,6 +86229,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
     missions?: MissionUpdateManyWithoutUserNestedInput
@@ -83840,6 +86274,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
     missions?: MissionUncheckedUpdateManyWithoutUserNestedInput
@@ -83884,6 +86319,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -83928,6 +86364,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -83988,6 +86425,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -84032,6 +86470,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -84076,6 +86515,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -84120,6 +86560,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -84180,6 +86621,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -84224,6 +86666,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -84268,6 +86711,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     missions?: MissionCreateNestedManyWithoutUserInput
@@ -84312,6 +86756,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     missions?: MissionUncheckedCreateNestedManyWithoutUserInput
@@ -84372,6 +86817,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     missions?: MissionUpdateManyWithoutUserNestedInput
@@ -84416,6 +86862,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     missions?: MissionUncheckedUpdateManyWithoutUserNestedInput
@@ -84511,6 +86958,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -84600,6 +87048,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -84642,6 +87091,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -84686,6 +87136,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -84735,6 +87186,7 @@ export namespace Prisma {
     following?: BruteCreateNestedManyWithoutFollowersInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -84779,6 +87231,7 @@ export namespace Prisma {
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -84891,6 +87344,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -84980,6 +87434,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -85044,6 +87499,7 @@ export namespace Prisma {
     following?: BruteUpdateManyWithoutFollowersNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -85088,6 +87544,7 @@ export namespace Prisma {
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -85184,6 +87641,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -85273,6 +87731,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -85367,6 +87826,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -85456,6 +87916,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -85555,6 +88016,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -85644,6 +88106,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -85936,6 +88399,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -86025,6 +88489,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -86287,6 +88752,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -86376,6 +88842,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -86554,6 +89021,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -86643,6 +89111,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -86777,6 +89246,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -86866,6 +89336,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -87006,6 +89477,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -87095,6 +89567,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -87184,6 +89657,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -87273,6 +89747,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -87421,6 +89896,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -87510,6 +89986,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -88067,6 +90544,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -88156,6 +90634,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -88250,6 +90729,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -88339,6 +90819,7 @@ export namespace Prisma {
     inClanWarAttackerFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutAttackersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -88508,6 +90989,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -88597,6 +91079,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -88639,6 +91122,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -88683,6 +91167,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -88795,6 +91280,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -88884,6 +91370,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -88932,6 +91419,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -88976,6 +91464,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -89313,6 +91802,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -89357,6 +91847,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -89440,6 +91931,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -89484,6 +91976,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -89557,6 +92050,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -89601,6 +92095,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -89684,6 +92179,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -89728,6 +92224,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -89853,6 +92350,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
 
@@ -89942,6 +92440,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
 
@@ -90047,6 +92546,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
 
@@ -90136,6 +92636,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
 
@@ -90225,6 +92726,7 @@ export namespace Prisma {
     event?: EventCreateNestedOneWithoutBrutesInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
   }
 
@@ -90314,6 +92816,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
   }
 
@@ -90419,6 +92922,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
   }
 
@@ -90508,6 +93012,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
   }
 
@@ -90579,6 +93084,7 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -90623,6 +93129,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -90701,6 +93208,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -90745,6 +93253,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -90864,6 +93373,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
     wonEvents?: EventCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -90953,6 +93463,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -91075,6 +93586,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
     event?: EventCreateNestedOneWithoutBrutesInput
     userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
   }
@@ -91164,6 +93676,7 @@ export namespace Prisma {
     inClanWarAttackerFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutAttackersInput
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
   }
@@ -91314,6 +93827,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
     event?: EventUpdateOneWithoutBrutesNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -91403,6 +93917,7 @@ export namespace Prisma {
     inClanWarAttackerFighters?: ClanWarFightersUncheckedUpdateManyWithoutAttackersNestedInput
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -91440,6 +93955,7 @@ export namespace Prisma {
     following?: BruteCreateNestedManyWithoutFollowersInput
     reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
     logs?: UserLogCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
@@ -91484,6 +94000,7 @@ export namespace Prisma {
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
     reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
     logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
     dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -91544,6 +94061,7 @@ export namespace Prisma {
     following?: BruteUpdateManyWithoutFollowersNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -91588,6 +94106,7 @@ export namespace Prisma {
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -91674,6 +94193,7 @@ export namespace Prisma {
     id?: string
     date: Date | string
     gold: number
+    source?: string | null
   }
 
   export type InventoryItemCreateManyUserInput = {
@@ -91710,6 +94230,15 @@ export namespace Prisma {
     bruteId?: string | null
     gold?: number | null
     oldName?: string | null
+  }
+
+  export type GoldTransactionCreateManyUserInput = {
+    id?: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    bruteId?: string | null
+    createdAt?: Date | string
   }
 
   export type DailyObjectiveCreateManyUserInput = {
@@ -91900,6 +94429,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -91989,6 +94519,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -92118,18 +94649,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     gold?: IntFieldUpdateOperationsInput | number
+    source?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TournamentGoldUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     gold?: IntFieldUpdateOperationsInput | number
+    source?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TournamentGoldUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     gold?: IntFieldUpdateOperationsInput | number
+    source?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type InventoryItemUpdateWithoutUserInput = {
@@ -92297,6 +94831,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -92386,6 +94921,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -92542,6 +95078,33 @@ export namespace Prisma {
     bruteId?: NullableStringFieldUpdateOperationsInput | string | null
     gold?: NullableIntFieldUpdateOperationsInput | number | null
     oldName?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GoldTransactionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brute?: BruteUpdateOneWithoutGoldTransactionsNestedInput
+  }
+
+  export type GoldTransactionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    bruteId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GoldTransactionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    bruteId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DailyObjectiveUpdateWithoutUserInput = {
@@ -93064,6 +95627,15 @@ export namespace Prisma {
     oldName?: string | null
   }
 
+  export type GoldTransactionCreateManyBruteInput = {
+    id?: string
+    userId: string
+    amount: number
+    source: string
+    sourceData?: string | null
+    createdAt?: Date | string
+  }
+
   export type BruteTemporaryEffectCreateManyBruteInput = {
     id?: string
     skillName: $Enums.SkillName
@@ -93163,6 +95735,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -93252,6 +95825,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -93636,6 +96210,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -93725,6 +96300,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -93879,6 +96455,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -93968,6 +96545,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -94260,6 +96838,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -94304,6 +96883,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -94445,6 +97025,33 @@ export namespace Prisma {
     oldName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type GoldTransactionUpdateWithoutBruteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutGoldTransactionsNestedInput
+  }
+
+  export type GoldTransactionUncheckedUpdateWithoutBruteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GoldTransactionUncheckedUpdateManyWithoutBruteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    source?: StringFieldUpdateOperationsInput | string
+    sourceData?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BruteTemporaryEffectUpdateWithoutBruteInput = {
     id?: StringFieldUpdateOperationsInput | string
     skillName?: EnumSkillNameFieldUpdateOperationsInput | $Enums.SkillName
@@ -94572,6 +97179,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -94616,6 +97224,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -94808,6 +97417,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -94897,6 +97507,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -95057,6 +97668,7 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
@@ -95101,6 +97713,7 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
     logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
     dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -95410,6 +98023,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -95499,6 +98113,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -95652,6 +98267,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -95741,6 +98357,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -96213,6 +98830,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -96302,6 +98920,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -96456,6 +99075,7 @@ export namespace Prisma {
     event?: EventUpdateOneWithoutBrutesNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -96545,6 +99165,7 @@ export namespace Prisma {
     inClanWarAttackerFighters?: ClanWarFightersUncheckedUpdateManyWithoutAttackersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }
@@ -96897,6 +99518,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
   }
@@ -96986,6 +99608,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
     bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
   }

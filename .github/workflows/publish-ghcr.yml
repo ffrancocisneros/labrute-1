@@ -39,3 +39,18 @@
              tags: |
                ghcr.io/${{ github.repository_owner }}/labrute:latest
                ghcr.io/${{ github.repository_owner }}/labrute:${{ github.sha }}
+
+     # Redeploy en Railway tras publicar la imagen. Railway no detecta cambios en :latest
+     # por sí solo. Secrets requeridos: RAILWAY_TOKEN, RAILWAY_SERVICE_ID, RAILWAY_ENVIRONMENT_ID
+     railway-redeploy:
+       needs: build-and-push
+       if: always() && needs.build-and-push.result == 'success'
+       runs-on: ubuntu-latest
+       continue-on-error: true
+       steps:
+         - name: Trigger Railway redeploy
+           run: |
+             curl -sSf -X POST https://backboard.railway.com/graphql/v2 \
+               -H "Authorization: Bearer ${{ secrets.RAILWAY_TOKEN }}" \
+               -H "Content-Type: application/json" \
+               -d '{"query":"mutation { serviceInstanceRedeploy(environmentId: \"${{ secrets.RAILWAY_ENVIRONMENT_ID }}\", serviceId: \"${{ secrets.RAILWAY_SERVICE_ID }}\") }"}'

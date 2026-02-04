@@ -57,6 +57,7 @@ import { updateBruteData } from '../utils/brute/updateBruteData.js';
 import { executeAutoFights } from '../utils/brute/executeAutoFights.js';
 import { updateClanPoints } from '../utils/clan/updateClanPoints.js';
 import { createUserLog } from '../utils/createUserLog.js';
+import { createGoldTransaction } from '../utils/createGoldTransaction.js';
 import { ilike } from '../utils/ilike.js';
 import { sendError } from '../utils/sendError.js';
 import { ServerState } from '../utils/ServerState.js';
@@ -901,6 +902,14 @@ export const Brutes = {
         type: UserLogType.GOLD_WIN,
         userId: authed.id,
         gold,
+      });
+
+      createGoldTransaction(prisma, {
+        userId: authed.id,
+        amount: gold,
+        source: 'arena',
+        bruteId: brute.id,
+        sourceData: JSON.stringify({ bruteName: brute.name }),
       });
 
       // Decrease master's pupils count

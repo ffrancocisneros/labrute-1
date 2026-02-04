@@ -1,5 +1,6 @@
 import { ExpectedError, getRewardTitleName, NotFoundError } from '@labrute/core';
 import { AchievementRewardType, PrismaClient } from '@labrute/prisma';
+import { createGoldTransaction } from '../createGoldTransaction.js';
 
 /**
  * Reclama la recompensa de un logro permanente
@@ -33,6 +34,14 @@ export const claimAchievementReward = async (
       data: { gold: { increment: achievement.rewardValue } },
     });
     result.gold = achievement.rewardValue;
+
+    // Crear transacción de oro
+    createGoldTransaction(prisma, {
+      userId,
+      amount: achievement.rewardValue,
+      source: 'achievement',
+      sourceData: JSON.stringify({ achievementType: achievement.type, level: achievement.level }),
+    });
   } else if (achievement.rewardType === AchievementRewardType.TITLE) {
     const titleId = achievement.rewardValue;
     const u = await prisma.user.findUnique({

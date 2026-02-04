@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { ExpectedError, LimitError, NotFoundError } from '@labrute/core';
 import { UserLogType } from '@labrute/prisma';
 import { translate } from '../translate.js';
+import { createGoldTransaction } from '../createGoldTransaction.js';
 
 interface PurchaseItemParams {
   prisma: PrismaClient;
@@ -228,6 +229,38 @@ export const purchaseItem = async ({
         type: UserLogType.GOLD_LOSS,
         userId,
         gold: item.price,
+      },
+    });
+
+    // Crear transacción de oro con detalles del item
+    const sourceData: Record<string, unknown> = { itemName: item.name };
+    if (bruteId) {
+      // Obtener nombre del bruto
+      const bruteWithName = await tx.brute.findUnique({
+        where: { id: bruteId },
+        select: { name: true },
+      });
+      if (bruteWithName) {
+        sourceData.bruteName = bruteWithName.name;
+      }
+    }
+    if (item.type === 'TEMPORARY_SKILL' && item.valueString) {
+      sourceData.skillName = item.valueString;
+    }
+    if (item.type === 'TEMPORARY_WEAPON' && item.valueString) {
+      sourceData.weaponName = item.valueString;
+    }
+    if (item.type === 'BONUS_FIGHTS' && item.valueInt) {
+      sourceData.fightsCount = item.valueInt;
+    }
+
+    await tx.goldTransaction.create({
+      data: {
+        userId,
+        amount: -item.price, // negativo = gasto
+        source: 'shop',
+        sourceData: JSON.stringify(sourceData),
+        bruteId: bruteId || null,
       },
     });
   });

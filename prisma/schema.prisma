@@ -50,6 +50,7 @@ model User {
   notifications                 Notification[]
   reportsHandled                BruteReport[]                   @relation("BruteReportHandler")
   logs                          UserLog[]
+  goldTransactions              GoldTransaction[]
   dailyObjectives               DailyObjective[]
   weeklyObjectives              WeeklyObjective[]
   permanentAchievements         PermanentAchievement[]
@@ -90,6 +91,22 @@ model UserLog {
   oldName String?
 
   @@index([userId, date])
+  @@index([bruteId])
+}
+
+model GoldTransaction {
+  id         String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId     String   @db.Uuid
+  amount     Int // positivo = ingreso, negativo = gasto
+  source     String   @db.VarChar(50) // clave i18n: "arena", "daily_tournament", "shop", etc.
+  sourceData String?  @db.Text // JSON opcional: { bruteName, itemName, level }
+  brute      Brute?   @relation(fields: [bruteId], references: [id])
+  bruteId    String?  @db.Uuid
+  createdAt  DateTime @default(now()) @db.Timestamp()
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
   @@index([bruteId])
 }
 
@@ -315,6 +332,7 @@ model Brute {
   wonEvents                    Event[]                 @relation("EventBruteWinner")
   resets                       Int                     @default(0)
   userlogs                     UserLog[]
+  goldTransactions             GoldTransaction[]
   bruteTemporaryEffects        BruteTemporaryEffect[]
   bruteTemporaryWeapons        BruteTemporaryWeapon[]
 
@@ -528,6 +546,7 @@ model TournamentGold {
   user   User     @relation(fields: [userId], references: [id])
   userId String   @db.Uuid
   gold   Int
+  source String?  @db.VarChar(50) // "daily", "global", "copa_del_rey"
 
   @@index([userId])
 }

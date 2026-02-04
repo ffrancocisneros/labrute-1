@@ -6,6 +6,7 @@ import AchievementRankingView from './views/AchievementRankingView';
 import AchievementsView from './views/AchievementsView';
 import PermanentAchievementsView from './views/PermanentAchievementsView';
 import BattlePassView from './views/BattlePassView';
+import BalanceView from './views/BalanceView';
 import MissionsView from './views/MissionsView';
 import ShopView from './views/ShopView';
 import StatisticsView from './views/StatisticsView';
@@ -71,6 +72,7 @@ const routes: RouteObject[] = [
       { path: 'missions', element: <MissionsView /> },
       { path: 'pase', element: <BattlePassView /> },
       { path: 'shop', element: <ShopView /> },
+      { path: 'balance', element: <BalanceView /> },
       { path: 'statistics', element: <StatisticsView /> },
       { path: 'achievements', element: <PermanentAchievementsView /> },
       { path: 'unknown-brute', element: <BruteNotFoundView /> },

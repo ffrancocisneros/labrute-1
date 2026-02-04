@@ -1,5 +1,6 @@
 import { ExpectedError, getRewardTitleName, NotFoundError } from '@labrute/core';
 import { MissionRewardType, PrismaClient } from '@labrute/prisma';
+import { createGoldTransaction } from '../createGoldTransaction.js';
 
 /**
  * Reclama la recompensa de una misión completada
@@ -33,6 +34,14 @@ export const claimMissionReward = async (
       data: { gold: { increment: mission.rewardValue } },
     });
     result.gold = mission.rewardValue;
+
+    // Crear transacción de oro
+    createGoldTransaction(prisma, {
+      userId,
+      amount: mission.rewardValue,
+      source: 'mission',
+      sourceData: JSON.stringify({ missionType: mission.type, category: mission.category }),
+    });
   } else if (mission.rewardType === MissionRewardType.TITLE) {
     const titleId = mission.rewardValue;
     const u = await prisma.user.findUnique({

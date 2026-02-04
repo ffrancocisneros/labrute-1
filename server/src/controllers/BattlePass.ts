@@ -14,6 +14,7 @@ import { auth } from '../utils/auth.js';
 import { sendError } from '../utils/sendError.js';
 import { getCurrentSeason } from '../utils/battlePass/getCurrentSeason.js';
 import { LOGGER } from '../context.js';
+import { createGoldTransaction } from '../utils/createGoldTransaction.js';
 
 export interface BattlePassLevelInfo {
   level: number;
@@ -194,6 +195,12 @@ export const BattlePass = {
               await prisma.user.update({
                 where: { id: user.id },
                 data: { gold: { increment: r.valueInt } },
+              });
+              createGoldTransaction(prisma, {
+                userId: user.id,
+                amount: r.valueInt,
+                source: 'battle_pass',
+                sourceData: JSON.stringify({ level, seasonId: season.id }),
               });
             }
             break;

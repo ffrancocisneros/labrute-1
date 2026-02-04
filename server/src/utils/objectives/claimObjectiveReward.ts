@@ -1,5 +1,6 @@
 import { ObjectiveRewardType, PrismaClient } from '@labrute/prisma';
 import { ExpectedError } from '@labrute/core';
+import { createGoldTransaction } from '../createGoldTransaction.js';
 
 /**
  * Reclama la recompensa de un objetivo diario completado
@@ -38,6 +39,14 @@ export const claimDailyObjectiveReward = async (
       },
     });
     result.gold = objective.rewardValue;
+
+    // Crear transacción de oro
+    createGoldTransaction(prisma, {
+      userId,
+      amount: objective.rewardValue,
+      source: 'daily_objective',
+      sourceData: JSON.stringify({ objectiveType: objective.type }),
+    });
   } else if (objective.rewardType === ObjectiveRewardType.TITLE) {
     // TODO: Implementar sistema de títulos exclusivos
     // Por ahora, solo retornamos el ID del título
@@ -93,6 +102,14 @@ export const claimWeeklyObjectiveReward = async (
       },
     });
     result.gold = objective.rewardValue;
+
+    // Crear transacción de oro
+    createGoldTransaction(prisma, {
+      userId,
+      amount: objective.rewardValue,
+      source: 'weekly_objective',
+      sourceData: JSON.stringify({ objectiveType: objective.type }),
+    });
   } else if (objective.rewardType === ObjectiveRewardType.TITLE) {
     // TODO: Implementar sistema de títulos exclusivos
     result.title = `title_${objective.rewardValue}`;

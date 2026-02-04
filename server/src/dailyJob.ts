@@ -439,6 +439,7 @@ const handleDailyTournaments = async (
           userId: winnerBrute.userId,
           date: today.toDate(),
           gold: DailyTournamentGoldReward,
+          source: 'daily',
         },
         select: { id: true },
       });
@@ -722,6 +723,7 @@ const handleGlobalTournament = async (
       userId: winnerUser.id,
       date: today.toDate(),
       gold: GlobalTournamentGoldReward,
+      source: 'global',
     },
     select: { id: true },
   });
@@ -875,6 +877,7 @@ const handleCopaDelRey = async (
           userId: winnerBrute.userId,
           date: today.toDate(),
           gold: CopaDelReyGoldReward,
+          source: 'copa_del_rey',
         },
         select: { id: true },
       });
@@ -942,6 +945,7 @@ const handleCopaDelRey = async (
         userId: winnerBrute.userId,
         date: today.toDate(),
         gold: CopaDelReyGoldReward,
+        source: 'copa_del_rey',
       },
       select: { id: true },
     });
@@ -1323,6 +1327,23 @@ const handleTournamentEarnings = async (prisma: PrismaClient) => {
       FROM "TournamentGold"
       WHERE date < ${today}
       GROUP BY "userId");
+    `,
+    // Create GoldTransaction records for each TournamentGold before deleting
+    prisma.$executeRaw`
+      INSERT INTO "GoldTransaction" ("id", "userId", "amount", "source", "createdAt")
+      SELECT 
+        uuid_generate_v4(),
+        "userId",
+        gold,
+        CASE 
+          WHEN source = 'daily' THEN 'daily_tournament'
+          WHEN source = 'global' THEN 'global_tournament'
+          WHEN source = 'copa_del_rey' THEN 'copa_del_rey'
+          ELSE 'tournament'
+        END,
+        CURRENT_TIMESTAMP
+      FROM "TournamentGold"
+      WHERE date < ${today};
     `,
     // Delete tournament gold
     prisma.$executeRaw`
