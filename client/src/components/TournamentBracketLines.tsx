@@ -20,9 +20,9 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
 }) => {
   const theme = useTheme();
   const lineColor = theme.palette.mode === 'dark'
-    ? theme.palette.border.shadow || 'rgba(255, 255, 255, 0.3)'
-    : 'rgba(0, 0, 0, 0.4)';
-  const strokeWidth = 2;
+    ? 'rgba(255, 255, 255, 0.6)'
+    : 'rgba(80, 60, 40, 0.85)';
+  const strokeWidth = 4;
 
   if (lines.length === 0 || containerWidth === 0 || containerHeight === 0) {
     return null;
@@ -59,8 +59,8 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
               fill="none"
               stroke={lineColor}
               strokeWidth={strokeWidth}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              strokeLinecap="square"
+              strokeLinejoin="miter"
             />
           );
         }
@@ -75,7 +75,7 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
             y2={line.to.y}
             stroke={lineColor}
             strokeWidth={strokeWidth}
-            strokeLinecap="round"
+            strokeLinecap="square"
           />
         );
       })}

@@ -238,42 +238,42 @@ const TournamentView = () => {
         const fromRect2 = fromEl2.getBoundingClientRect();
         const toRect = toEl.getBoundingClientRect();
 
-        // Calculate positions relative to container
-        const from1 = {
-          x: fromRect1.left + fromRect1.width / 2 - containerRect.left,
-          y: fromRect1.top + fromRect1.height / 2 - containerRect.top,
-        };
-        const from2 = {
-          x: fromRect2.left + fromRect2.width / 2 - containerRect.left,
-          y: fromRect2.top + fromRect2.height / 2 - containerRect.top,
-        };
-        const to = {
-          x: toRect.left + toRect.width / 2 - containerRect.left,
-          y: toRect.top + toRect.height / 2 - containerRect.top,
+        const rel = (rect: DOMRect, edge: 'left' | 'right', vPos: 'top' | 'center' | 'bottom') => {
+          const x = edge === 'left' ? rect.left - containerRect.left : rect.right - containerRect.left;
+          const y = vPos === 'top'
+            ? rect.top - containerRect.top
+            : vPos === 'bottom'
+              ? rect.bottom - containerRect.top
+              : rect.top + rect.height / 2 - containerRect.top;
+          return { x, y };
         };
 
-        // Calculate intermediate point (midpoint between the two source fights)
+        // Connect from EDGE of boxes (like real bracket keys), not center
+        // Left side: lines extend from RIGHT edge toward center
+        // Right side: lines extend from LEFT edge toward center
+        const isLeftSide = fromRound < 6;
+
+        const from1 = rel(fromRect1, isLeftSide ? 'right' : 'left', 'center');
+        const from2 = rel(fromRect2, isLeftSide ? 'right' : 'left', 'center');
+        const to = rel(toRect, isLeftSide ? 'left' : 'right', 'center');
+
+        // Meeting point: vertical bar of the "]" or "[" bracket shape
         const intermediateY = (from1.y + from2.y) / 2;
-        const intermediateX = fromRound < 6
-          ? (from1.x + from2.x) / 2 + (to.x - (from1.x + from2.x) / 2) * 0.5
-          : (from1.x + from2.x) / 2 - ((from1.x + from2.x) / 2 - to.x) * 0.5;
+        const intermediateX = isLeftSide
+          ? Math.min(from1.x, from2.x) + (to.x - Math.min(from1.x, from2.x)) * 0.4
+          : Math.max(from1.x, from2.x) - (Math.max(from1.x, from2.x) - to.x) * 0.4;
 
-        // Add bracket lines: from each source fight to intermediate, then to destination
-        // Line from first source to intermediate
-        lines.push({
-          from: from1,
-          to: { x: intermediateX, y: intermediateY },
-        });
-        // Line from second source to intermediate
-        lines.push({
-          from: from2,
-          to: { x: intermediateX, y: intermediateY },
-        });
-        // Line from intermediate to destination (with intermediate point for bracket shape)
+        // Bracket key shape: horizontal from each box -> vertical bar -> L to next round
+        const barTop = { x: intermediateX, y: from1.y };
+        const barBottom = { x: intermediateX, y: from2.y };
+        lines.push({ from: from1, to: barTop });
+        lines.push({ from: barTop, to: barBottom });
+        lines.push({ from: barBottom, to: from2 });
+        // L-shape: vertical bar center -> horizontal -> vertical to next box
         lines.push({
           from: { x: intermediateX, y: intermediateY },
           to,
-          intermediate: { x: intermediateX, y: intermediateY },
+          intermediate: { x: to.x, y: intermediateY },
         });
       });
     });
