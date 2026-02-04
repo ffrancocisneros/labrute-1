@@ -1,11 +1,10 @@
 import { GoldTransactionsListResponse } from '@labrute/core';
 import { AccountBalance, Add, Remove } from '@mui/icons-material';
-import { Box, Chip, Paper, Stack, Tab, Tabs } from '@mui/material';
+import { Box, Paper, Stack, Tab, Tabs } from '@mui/material';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import FantasyButton from '../components/FantasyButton';
-import Link from '../components/Link';
 import Loader from '../components/Loader';
 import Page from '../components/Page';
 import Text from '../components/Text';
@@ -46,9 +45,9 @@ const BalanceView = () => {
     loadTransactions();
   }, [loadTransactions]);
 
-  const filteredTransactions = transactions.filter((t) => {
-    if (filter === 'income') return t.amount > 0;
-    if (filter === 'expense') return t.amount < 0;
+  const filteredTransactions = transactions.filter((tx) => {
+    if (filter === 'income') return tx.amount > 0;
+    if (filter === 'expense') return tx.amount < 0;
     return true;
   });
 
