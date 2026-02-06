@@ -1,6 +1,6 @@
 import { BATTLE_PASS_XP, getRewardTitleName } from '@labrute/core';
-import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, LinearProgress, MenuItem, Paper, Select, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import { ArrowBack, ArrowForward, CheckCircle, Lock, ExpandMore } from '@mui/icons-material';
+import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, LinearProgress, MenuItem, Paper, Select, Tooltip, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { ArrowBack, ArrowForward, CheckCircle, HelpOutline, Lock, ExpandMore } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -207,9 +207,14 @@ const BattlePassView = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {/* Season Info */}
           <Paper sx={{ p: 2, bgcolor: 'background.paperDark' }}>
-            <Typography variant="h5" gutterBottom>
-              {data.season.name}
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Typography variant="h5" gutterBottom sx={{ mb: 0 }}>
+                {data.season.name}
+              </Typography>
+              <Tooltip title={t('battlePass.tooltip')}>
+                <HelpOutline sx={{ fontSize: 20, color: 'text.secondary', cursor: 'help' }} />
+              </Tooltip>
+            </Box>
             <Typography color="text.secondary" variant="body2" gutterBottom>
               {(() => {
                 const endDate = dayjs(data.season.endDate);

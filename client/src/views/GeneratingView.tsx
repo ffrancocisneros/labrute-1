@@ -11,7 +11,7 @@ const GeneratingView = () => {
   const { palette: { mode } } = useTheme();
 
   // Get server state
-  const { data: serverState, reload } = useStateAsync(null, Server.isReady, undefined);
+  const { data: serverState, reload } = useStateAsync(null, Server.isReady);
 
   // Check server state every minute
   useEffect(() => {

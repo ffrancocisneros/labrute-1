@@ -38,6 +38,10 @@ export const executeAutoFights = async (
   prisma: PrismaClient,
   bruteId: string,
 ): Promise<AutoFightResult> => {
+  // Métricas de performance
+  const startTime = Date.now();
+  const fightTimings: number[] = [];
+
   // Obtener el bruto completo con todos los campos necesarios
   let brute = await prisma.brute.findFirst({
     where: {
@@ -146,7 +150,7 @@ export const executeAutoFights = async (
     await prisma.brute.update({
       where: { id: brute.id },
       data: {
-        opponents: {
+        Brute_Opponents_B: {
           set: opponents.map((o) => ({ id: o.id })),
         },
         opponentsGeneratedAt: new Date(),
@@ -220,7 +224,7 @@ export const executeAutoFights = async (
       await prisma.brute.update({
         where: { id: brute.id },
         data: {
-          opponents: {
+          Brute_Opponents_B: {
             set: newOpponents.map((o) => ({ id: o.id })),
           },
           opponentsGeneratedAt: new Date(),
@@ -240,6 +244,9 @@ export const executeAutoFights = async (
     }
 
     try {
+      // Métricas: inicio de pelea individual
+      const fightStartTime = Date.now();
+
       // Usar el bruto del estado del loop (inicial o actualizado en iteración anterior). Evita 1 query por pelea (ver ANALISIS_LENTITUD_PELEAS_AUTOMATICAS.md).
       if (!brute) {
         break;
@@ -443,6 +450,10 @@ export const executeAutoFights = async (
 
       fightsCompleted++;
 
+      // Métricas: fin de pelea individual
+      const fightDuration = Date.now() - fightStartTime;
+      fightTimings.push(fightDuration);
+
       // Actualizar referencia del brute para siguiente iteración (incluir valores actualizados)
       brute = {
         ...updatedBruteAfterFight,
@@ -461,7 +472,7 @@ export const executeAutoFights = async (
           await prisma.brute.update({
             where: { id: updatedBruteAfterFight.id },
             data: {
-              opponents: {
+              Brute_Opponents_B: {
                 set: opponents.map((o) => ({ id: o.id })),
               },
               opponentsGeneratedAt: new Date(),
@@ -537,6 +548,19 @@ export const executeAutoFights = async (
   const totalFinalFights = finalFightsLeft + finalBonusFights;
   
   const finalCanLevelUp = canLevelUp(finalCalculatedBrute);
+
+  // Métricas: calcular estadísticas finales
+  const totalDuration = Date.now() - startTime;
+  const avgFightTime = fightTimings.length > 0
+    ? Math.round(fightTimings.reduce((a, b) => a + b, 0) / fightTimings.length)
+    : 0;
+  const minFightTime = fightTimings.length > 0 ? Math.min(...fightTimings) : 0;
+  const maxFightTime = fightTimings.length > 0 ? Math.max(...fightTimings) : 0;
+
+  // Log de métricas de performance
+  if (fightsCompleted > 0) {
+    LOGGER.log(`AutoFights performance [${brute.name}]: ${fightsCompleted} peleas en ${totalDuration}ms (promedio: ${avgFightTime}ms/pelea, min: ${minFightTime}ms, max: ${maxFightTime}ms)`);
+  }
 
   // Devolver solo peleas DIARIAS: la columna fightsLeft en DB es solo diarias.
   // El controlador escribe result.fightsLeft en la DB; si devolvemos total (diarias+bonus)

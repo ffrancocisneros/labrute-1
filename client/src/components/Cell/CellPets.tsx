@@ -22,9 +22,11 @@ const CellPets = ({
   const [hoveredPetTier, setHoveredPetTier] = useState<number>();
 
   const getFilter = (pet: PetName) => {
-    if (brute?.ascendedPets.includes(pet)
+    if ((brute?.ascendedPets ?? []).includes(pet)
       || selectedPet === pet
-      || (hoverSelectAscend && hoveredPet === pet)) return `drop-shadow(0 0 0.5rem ${PerkColor.Ascended})`;
+      || (hoverSelectAscend && hoveredPet === pet)) {
+      return `drop-shadow(0 0 0.5rem ${PerkColor.Ascended})`;
+    }
     return 'none';
   };
 

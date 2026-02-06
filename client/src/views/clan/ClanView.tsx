@@ -1,6 +1,6 @@
 import { BruteRanking, BrutesGetClanIdAsMasterResponse, CalculatedBrute, ClanGetResponse, bosses, getCalculatedBrute, getFightsLeft, getTotalFightsLeft } from '@labrute/core';
 import { BossName, ClanWarStatus, ClanWarType } from '@labrute/prisma';
-import { HighlightOff, History, PlayCircleOutline, Policy } from '@mui/icons-material';
+import { HelpOutline, HighlightOff, History, PlayCircleOutline, Policy } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Checkbox, FormControlLabel, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -430,13 +430,16 @@ const ClanView = () => {
   return clan && (
     <Page title={`${t('clan')} ${clan.name}`} headerUrl={`/${bruteName || ''}/cell`}>
       <Paper sx={{ mx: 4 }}>
-        <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
+        <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2, display: 'inline-flex', alignItems: 'center' }}>
           {warEnabled && (
             <Tooltip title={t('clanWarsEnabled')}>
               <Box component="img" src="/images/clan/war.webp" sx={{ width: 20, mr: 1 }} />
             </Tooltip>
           )}
           {t('clan')} {clan.name}
+          <Tooltip title={t('clan.tooltip')}>
+            <HelpOutline sx={{ fontSize: 20, color: 'text.secondary', cursor: 'help', ml: 1 }} />
+          </Tooltip>
           {user?.admin && (
             <Tooltip title={t('adminPanel')}>
               <IconButton

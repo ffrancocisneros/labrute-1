@@ -1,8 +1,10 @@
 import {
+  bosses,
   BruteDeletionReason,
   ClanWarMaxParticipants,
   ClanWarPointReward,
   CopaDelReyGoldReward,
+  CopaDelReyXpReward,
   DailyModifierCountOdds,
   DailyModifierOdds,
   DailyModifierSpawnChance,
@@ -12,6 +14,7 @@ import {
   Fighter,
   getCalculatedBrute,
   getNewElo,
+  getSpecialRuleForDate,
   getWinsNeededToRankUp,
   GlobalTournamentGoldReward,
   GlobalTournamentXpReward,
@@ -22,6 +25,9 @@ import {
   Modifiers,
   randomBetween,
   refreshChaosSeeds,
+  SpecialTournamentGoldReward,
+  SpecialTournamentRule,
+  SpecialTournamentXpReward,
   weightedRandom,
 } from '@labrute/core';
 import {
@@ -881,7 +887,7 @@ const handleCopaDelRey = async (
         },
         select: { id: true },
       });
-      gains[dailyChampionId] = [0, CopaDelReyGoldReward];
+      gains[dailyChampionId] = [CopaDelReyXpReward, CopaDelReyGoldReward];
     }
     LOGGER.log('Copa del Rey: same brute won daily and global, reward granted');
     return gains;
@@ -949,7 +955,7 @@ const handleCopaDelRey = async (
       },
       select: { id: true },
     });
-    gains[winnerId] = [0, CopaDelReyGoldReward];
+    gains[winnerId] = [CopaDelReyXpReward, CopaDelReyGoldReward];
   }
 
   LOGGER.log('Copa del Rey created');
@@ -1157,6 +1163,291 @@ const handleUnlimitedGlobalTournament = async (
   await ServerState.setGlobalTournamentValid(prisma, true);
 
   LOGGER.log('Unlimited global tournament created');
+};
+
+/**
+ * Determina qué regla especial está activa hoy.
+ * Usa getSpecialRuleForDate de core para consistencia con el endpoint getActiveSpecialRule.
+ */
+const getSpecialRuleForToday = (): SpecialTournamentRule =>
+  getSpecialRuleForDate(dayjs.utc());
+
+const handleSpecialTournament = async (
+  prisma: PrismaClient,
+  modifiers: Modifiers,
+): Promise<Record<string, [number, number]>> => {
+  const gains: Record<string, [number, number]> = {};
+  const today = dayjs.utc().startOf('day');
+  const tomorrow = dayjs.utc(today).add(1, 'day');
+
+  // Verificar si ya se generó el torneo especial de hoy
+  const existingSpecial = await prisma.tournament.findFirst({
+    where: {
+      type: TournamentType.SPECIAL,
+      date: {
+        gte: today.toDate(),
+        lt: tomorrow.toDate(),
+      },
+    },
+  });
+
+  if (existingSpecial) {
+    return gains;
+  }
+
+  // Determinar regla especial del día
+  const specialRule = getSpecialRuleForToday();
+
+  // Obtener todos los brutos activos (sin filtro de registro, todos entran automáticamente)
+  const eligibleBrutes = await prisma.brute.findMany({
+    where: {
+      deletedAt: null,
+      eventId: null,
+      user: {
+        isNot: null,
+      },
+    },
+    select: {
+      id: true,
+      level: true,
+      ranking: true,
+      name: true,
+    },
+  });
+
+  // Necesitamos al menos 2 brutos para crear un torneo
+  if (eligibleBrutes.length < 2) {
+    LOGGER.log(`Not enough brutes for special tournament (${specialRule}): ${eligibleBrutes.length}`);
+    return gains;
+  }
+
+  // Shuffle brutes
+  const shuffledBrutes = shuffle(eligibleBrutes);
+
+  // Crear grupos de 64 brutes (igual que torneos diarios)
+  const tournamentsToCreate = Math.ceil(shuffledBrutes.length / 64);
+  const tournaments: (typeof eligibleBrutes)[] = Array(tournamentsToCreate)
+    .fill([])
+    .map((_, index) => shuffledBrutes.slice(index * 64, index * 64 + 64));
+
+  // Ordenar brutes por ranking y nivel (igual que torneos diarios)
+  const sortedTournaments = tournaments.map((tournament) => {
+    const firstHalf: typeof eligibleBrutes = [];
+    const secondHalf: typeof eligibleBrutes = [];
+    const sortedTournament = tournament.sort((a, b) => {
+      if (a.ranking === b.ranking) {
+        return b.level - a.level;
+      }
+      return a.ranking - b.ranking;
+    });
+
+    // Alternate between first and second half
+    for (const brute of sortedTournament) {
+      if (firstHalf.length === secondHalf.length) {
+        firstHalf.push(brute);
+      } else {
+        secondHalf.push(brute);
+      }
+    }
+
+    return [...shuffle(firstHalf), ...shuffle(secondHalf)];
+  });
+
+  // Crear torneos especiales
+  for (const brutes of sortedTournaments) {
+    // Crear torneo especial
+    const tournament = await prisma.tournament.create({
+      data: {
+        date: today.toDate(),
+        type: TournamentType.SPECIAL,
+        specialRule,
+        participants: {
+          connect: brutes.map((brute) => ({ id: brute.id })),
+        },
+        rounds: 6,
+      },
+      select: { id: true, date: true },
+    });
+
+    // Crear tournament steps (igual que torneos diarios)
+    let step = 1;
+    let roundBrutes = [...brutes];
+    let winners: typeof eligibleBrutes = [];
+    let lastFight: Prisma.FightCreateInput | null = null;
+
+    while (roundBrutes.length > 1) {
+      for (let i = 0; i < roundBrutes.length - 1; i += 2) {
+        const roundBrute1 = roundBrutes[i];
+        const roundBrute2 = roundBrutes[i + 1];
+
+        if (!roundBrute1 || !roundBrute2) {
+          throw new Error(`Brute not found: ${roundBrute1?.id || roundBrute2?.id}`);
+        }
+
+        const brute1 = await prisma.brute.findUnique({
+          where: { id: roundBrute1.id },
+        });
+        const brute2 = await prisma.brute.findUnique({
+          where: { id: roundBrute2.id },
+        });
+
+        if (!brute1 || !brute2) {
+          throw new Error(`Brute not found: ${brute1?.id || brute2?.id}`);
+        }
+
+        if (brute1.id === brute2.id) {
+          throw new Error('Attempting to fight a brute against itself');
+        }
+
+        // Generate fight (retry if failed)
+        let generatedFight: Prisma.FightCreateInput | null = null;
+        let retries = 0;
+
+        while (!generatedFight) {
+          if (retries > 10) {
+            throw new Error('Too many retries');
+          }
+
+          try {
+            const newGeneratedFight = await generateFight({
+              prisma,
+              team1: { brutes: [getCalculatedBrute(brute1, modifiers)] },
+              team2: { brutes: [getCalculatedBrute(brute2, modifiers)] },
+              modifiers,
+              backups: false,
+              achievements: true,
+              tournament: roundBrutes.length === 2 ? 'finals' : 'fight',
+              specialRule,
+            });
+            generatedFight = newGeneratedFight.data;
+          } catch (error: unknown) {
+            if (!(error instanceof Error)) {
+              throw error;
+            }
+            LOGGER.log(`Error while generating a special tournament fight between ${brute1.name} and ${brute2.name}, retrying...`);
+            DISCORD().sendError(error);
+          }
+
+          retries++;
+        }
+
+        lastFight = generatedFight;
+
+        // Create fight
+        await prisma.fight.create({
+          data: {
+            ...lastFight,
+            tournamentStep: step,
+            tournament: { connect: { id: tournament.id } },
+          },
+          select: { id: true },
+        });
+
+        // Actualizar objetivos de participación en torneos especiales (ambos brutos)
+        if (brute1.userId || brute2.userId) {
+          const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('./utils/objectives/updateObjectiveProgress.js');
+          const { ObjectiveType } = await import('@labrute/prisma');
+          if (brute1.userId) {
+            await updateDailyObjectiveProgress(prisma, brute1.userId, ObjectiveType.COMPLETE_SPECIAL_FIGHTS, 1);
+            await updateWeeklyObjectiveProgress(prisma, brute1.userId, ObjectiveType.COMPLETE_SPECIAL_FIGHTS, 1);
+          }
+          if (brute2.userId) {
+            await updateDailyObjectiveProgress(prisma, brute2.userId, ObjectiveType.COMPLETE_SPECIAL_FIGHTS, 1);
+            await updateWeeklyObjectiveProgress(prisma, brute2.userId, ObjectiveType.COMPLETE_SPECIAL_FIGHTS, 1);
+          }
+        }
+
+        // Get fight winner
+        const winner = isWinner(roundBrute1, lastFight) ? roundBrute1 : roundBrute2;
+        const winnerId = winner.id;
+
+        // Add winner to next round
+        winners.push(winner);
+
+        // Store XP for winner
+        const winnerGains = gains[winnerId];
+        if (!winnerGains) {
+          gains[winnerId] = [SpecialTournamentXpReward, 0];
+        } else {
+          winnerGains[0] += SpecialTournamentXpReward;
+        }
+
+        step++;
+      }
+
+      // Continue with winners
+      roundBrutes = [...winners];
+      winners = [];
+    }
+
+    if (!lastFight) {
+      throw new Error('No last fight');
+    }
+
+    // Get last fight winner
+    const winner = roundBrutes[0];
+    if (!winner) {
+      throw new Error('No winner');
+    }
+
+    const loser = (JSON.parse(lastFight.fighters) as Fighter[])
+      .find((fighter) => !fighter.master && fighter.id !== winner.id);
+    if (!loser) {
+      throw new Error('No loser');
+    }
+
+    const winnerBrute = await prisma.brute.findUnique({
+      where: { id: winner.id },
+      select: {
+        id: true,
+        userId: true,
+      },
+    });
+
+    if (!winnerBrute) {
+      throw new Error(`Winner brute not found: ${winner.id}`);
+    }
+
+    // Only for real brutes
+    if (winnerBrute.userId) {
+      const goldReward = SpecialTournamentGoldReward[specialRule];
+
+      // Actualizar objetivos de ganar torneo especial
+      const { updateDailyObjectiveProgress, updateWeeklyObjectiveProgress } = await import('./utils/objectives/updateObjectiveProgress.js');
+      const { ObjectiveType } = await import('@labrute/prisma');
+      await updateDailyObjectiveProgress(prisma, winnerBrute.userId, ObjectiveType.WIN_SPECIAL_TOURNAMENT, 1);
+      await updateWeeklyObjectiveProgress(prisma, winnerBrute.userId, ObjectiveType.WIN_SPECIAL_TOURNAMENT, 1);
+
+      // Add gold to winner user
+      await prisma.tournamentGold.create({
+        data: {
+          userId: winnerBrute.userId,
+          date: today.toDate(),
+          gold: goldReward,
+          source: 'special_tournament',
+        },
+        select: { id: true },
+      });
+
+      // Store gains
+      const winnerGains = gains[winnerBrute.id];
+      if (!winnerGains) {
+        gains[winnerBrute.id] = [0, goldReward];
+      } else {
+        winnerGains[1] += goldReward;
+      }
+    }
+
+    // After tournament completes, clear references and trigger GC
+    lastFight = null;
+    winners = [];
+    roundBrutes = [];
+    triggerGC();
+  }
+
+  LOGGER.log(`${tournamentsToCreate} special tournaments created (rule: ${specialRule})`);
+
+  return gains;
 };
 
 const storeGains = async (
@@ -1696,6 +1987,79 @@ const cleanup = async (prisma: PrismaClient) => {
   }
 };
 
+// Handle boss rotation (weekly)
+const handleBossRotation = async (prisma: PrismaClient) => {
+  const today = dayjs.utc().startOf('day');
+
+  // Get all active clans
+  const clans = await prisma.clan.findMany({
+    where: {
+      deletedAt: null,
+    },
+    select: {
+      id: true,
+      boss: true,
+      bossRotationDate: true,
+    },
+  });
+
+  let rotated = 0;
+
+  for (const clan of clans) {
+    let shouldRotate = false;
+
+    // If bossRotationDate is null, set it to today (first time)
+    if (!clan.bossRotationDate) {
+      await prisma.clan.update({
+        where: { id: clan.id },
+        data: {
+          bossRotationDate: today.toDate(),
+        },
+      });
+      continue;
+    }
+
+    // Check if 7 days have passed since last rotation
+    const daysSinceRotation = today.diff(dayjs.utc(clan.bossRotationDate), 'day');
+    if (daysSinceRotation >= 7) {
+      shouldRotate = true;
+    }
+
+    if (shouldRotate) {
+      // Get all bosses
+      const allBosses = bosses.map((b) => b.name);
+      
+      // Find current boss index
+      const currentIndex = allBosses.indexOf(clan.boss);
+      
+      // Rotate to next boss (cycle back to first if at end)
+      const nextIndex = (currentIndex + 1) % allBosses.length;
+      const nextBoss = allBosses[nextIndex];
+
+      // Update clan: new boss, reset damage, update rotation date
+      await prisma.clan.update({
+        where: { id: clan.id },
+        data: {
+          boss: nextBoss,
+          damageOnBoss: 0,
+          bossRotationDate: today.toDate(),
+        },
+      });
+
+      // Clear boss damages for this clan
+      await prisma.bossDamage.deleteMany({
+        where: { clanId: clan.id },
+      });
+
+      rotated++;
+    }
+  }
+
+  if (rotated > 0) {
+    LOGGER.log(`Rotated boss for ${rotated} clans`);
+  }
+};
+
 const handleClanWars = async (
   prisma: PrismaClient,
   modifiers: Modifiers,
@@ -1821,7 +2185,13 @@ const handleClanWars = async (
         not: new Date(),
       },
     },
-    include: {
+    select: {
+      id: true,
+      attackerId: true,
+      defenderId: true,
+      attackerWins: true,
+      defenderWins: true,
+      duration: true,
       fights: {
         select: { id: true, date: true },
       },
@@ -1834,8 +2204,9 @@ const handleClanWars = async (
   let processed = 0;
 
   for (const clanWar of clanWars) {
-    // TODO: get day from wins, not fights
-    const day = clanWar.fights.length + 1;
+    // Calcular el día basándose en las victorias acumuladas, no en el número de peleas
+    // Esto asegura que el día refleje correctamente el progreso de la guerra
+    const day = clanWar.attackerWins + clanWar.defenderWins + 1;
 
     // Check if a fight was already generated for the day
     if (clanWar.fights.some((fight) => dayjs.utc(fight.date).isSame(today))) {
@@ -2497,6 +2868,10 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
     await handleReleases(prisma);
     logMemory('After releases');
 
+    // Rotate clan bosses (weekly)
+    await handleBossRotation(prisma);
+    logMemory('After boss rotation');
+
     // Asegurar próxima temporada de pase de batalla (si la actual termina en ≤1 día)
     const { ensureNextBattlePassSeason, updateCurrentSeasonRewards } = await import('./utils/battlePass/ensureNextSeason.js');
     await ensureNextBattlePassSeason(prisma).catch((err: Error) => {
@@ -2562,9 +2937,23 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
       logMemory('After unlimited global tournament');
       triggerGC();
 
-      // Store gains (merge daily, global, and Copa del Rey)
+      // Handle special tournament
+      const specialGains = await handleSpecialTournament(prisma, modifiers);
+      logMemory('After special tournament');
+      triggerGC();
+
+      // Store gains (merge daily, global, Copa del Rey, and special tournament)
       const mergedGlobalGains = { ...globalGains };
       for (const [bruteId, [xp, gold]] of Object.entries(copaGains)) {
+        const existing = mergedGlobalGains[bruteId];
+        if (!existing) {
+          mergedGlobalGains[bruteId] = [xp, gold];
+        } else {
+          mergedGlobalGains[bruteId] = [existing[0] + xp, existing[1] + gold];
+        }
+      }
+      // Merge special tournament gains
+      for (const [bruteId, [xp, gold]] of Object.entries(specialGains)) {
         const existing = mergedGlobalGains[bruteId];
         if (!existing) {
           mergedGlobalGains[bruteId] = [xp, gold];

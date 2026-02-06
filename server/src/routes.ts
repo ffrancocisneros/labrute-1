@@ -133,6 +133,8 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
   app.put('/api/tournament/:name/set-daily-watched', Tournaments.setDailyWatched(prisma));
   app.get('/api/tournament/global/:name/:date', Tournaments.getGlobal(prisma));
   app.get('/api/tournament/copa-del-rey/:date', Tournaments.getCopaDelRey(prisma));
+  app.get('/api/tournament/active-special-rule', Tournaments.getActiveSpecialRule());
+  app.get('/api/tournament/special/:name/:date', Tournaments.getSpecial(prisma));
   app.get('/api/tournament/:name/:date', Tournaments.getDaily(prisma));
   app.delete('/api/tournament/daily', Tournaments.deleteDaily(prisma));
   app.delete('/api/tournament/global', Tournaments.deleteGlobal(prisma));

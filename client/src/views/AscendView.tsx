@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Grid, Paper, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CellPets from '../components/Cell/CellPets';
@@ -12,6 +12,7 @@ import { useBrute } from '../hooks/useBrute';
 import BruteLevelAndXP from '../components/Brute/BruteLevelAndXP';
 import BruteBodyAndStats from '../components/Brute/BruteBodyAndStats';
 import FantasyButton from '../components/FantasyButton';
+import { HelpOutline } from '@mui/icons-material';
 import { PetName, SkillName, WeaponName } from '@labrute/prisma';
 import { useConfirm } from '../hooks/useConfirm';
 import { useAlert } from '../hooks/useAlert';
@@ -55,7 +56,7 @@ const AscendView = () => {
   }, [brute, navigate]);
 
   const onWeaponClick = (weapon: WeaponName) => {
-    if (brute?.ascendedWeapons.includes(weapon)) {
+    if (brute?.ascendedWeapons?.includes(weapon)) {
       return;
     }
     setSelectedPerk(weapon);
@@ -63,7 +64,7 @@ const AscendView = () => {
   };
 
   const onSkillClick = (skill: SkillName) => {
-    if (brute?.ascendedSkills.includes(skill)) {
+    if (brute?.ascendedSkills?.includes(skill)) {
       return;
     }
     setSelectedPerk(skill);
@@ -73,14 +74,14 @@ const AscendView = () => {
   const getNextAvailableDogAscendLevel = () => {
     if (!brute) return -1;
 
-    if (brute.ascendedPets.includes('dog3')) {
+    if (brute.ascendedPets?.includes('dog3')) {
       return -1; // Already ascended all dog levels
     }
 
     let maxAscendedDogLevel = 0;
-    if (brute.ascendedPets.includes('dog2')) {
+    if (brute.ascendedPets?.includes('dog2')) {
       maxAscendedDogLevel = 2;
-    } else if (brute.ascendedPets.includes('dog1')) {
+    } else if (brute.ascendedPets?.includes('dog1')) {
       maxAscendedDogLevel = 1;
     }
     let maxOwnedDogLevel = 0;
@@ -98,7 +99,7 @@ const AscendView = () => {
     return -1;
   };
 
-  const onPetClick = (pet: PetName) => {
+    const onPetClick = (pet: PetName) => {
     if (pet === 'dog1' || pet === 'dog2' || pet === 'dog3') {
       const nextAvailableDogAscendLevel = getNextAvailableDogAscendLevel();
       if (nextAvailableDogAscendLevel === -1) {
@@ -112,8 +113,8 @@ const AscendView = () => {
       } else if (nextAvailableDogAscendLevel === 3) {
         setSelectedPerk('dog3');
       }
-    } else {
-      if (brute?.ascendedPets.includes(pet)) {
+      } else {
+        if (brute?.ascendedPets?.includes(pet)) {
         return;
       }
       setSelectedPerk(pet);
@@ -187,6 +188,9 @@ const AscendView = () => {
       }}
       >
         <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>{t('ascension')}</Text>
+        <Tooltip title={t('ascension.tooltip')}>
+          <HelpOutline sx={{ fontSize: 20, color: 'text.secondary', cursor: 'help', mr: 1 }} />
+        </Tooltip>
         <Text bold color="secondary">{t('youAreAboutToAscend')}</Text>
       </Paper>
       <Paper sx={{ bgcolor: 'background.paperLight', mt: -2 }}>

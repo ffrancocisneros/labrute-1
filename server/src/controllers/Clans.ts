@@ -87,6 +87,7 @@ export const Clans = {
         limit: clan.limit,
         points: clan.points,
         boss: clan.boss,
+        bossRotationDate: (clan as { bossRotationDate?: Date | null }).bossRotationDate ?? null,
         participateInClanWar: clan.participateInClanWar,
         damageOnBoss: clan.damageOnBoss,
         masterId: clan.masterId,
@@ -933,7 +934,22 @@ export const Clans = {
 
       const clan = await prisma.clan.findFirst({
         where: { id, deletedAt: null },
-        select: { masterId: true },
+        select: {
+          masterId: true,
+          boss: true,
+          damageOnBoss: true,
+          brutes: {
+            select: {
+              id: true,
+              name: true,
+              user: {
+                select: {
+                  lastSeen: true,
+                },
+              },
+            },
+          },
+        },
       });
 
       if (!clan) {
@@ -964,9 +980,26 @@ export const Clans = {
         orderBy: [{ pinned: 'desc' }, { updatedAt: 'desc' }],
       });
 
+      // Get recent members (last 24 hours)
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      const recentMembers = clan.brutes.filter((brute) => {
+        if (!brute.user?.lastSeen) return false;
+        return new Date(brute.user.lastSeen) > twentyFourHoursAgo;
+      });
+
+      // Get boss progress
+      const boss = bosses.find((b) => b.name === clan.boss);
+      const bossProgress = boss ? {
+        boss: clan.boss,
+        damageOnBoss: clan.damageOnBoss,
+        bossMaxHp: boss.hp * boss.count,
+      } : null;
+
       res.status(200).send({
         masterId: clan.masterId,
         threads,
+        recentMembers,
+        bossProgress,
       });
     } catch (error) {
       sendError(res, error);

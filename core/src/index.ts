@@ -3,6 +3,7 @@ export * from './constants';
 export * from './Elo';
 export * from './knownIssues';
 export * from './releases';
+export * from './specialTournament';
 export * from './Titles';
 export * from './rewardTitles';
 export * from './types';

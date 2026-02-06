@@ -672,7 +672,7 @@ export const Brutes = {
           id: updatedBrute.id,
         },
         data: {
-          opponents: {
+          Brute_Opponents_B: {
             set: opponents.map((o) => ({
               id: o.id,
             })),
@@ -783,7 +783,7 @@ export const Brutes = {
           name: true,
           level: true,
           opponentsGeneratedAt: true,
-          opponents: {
+          Brute_Opponents_B: {
             select: {
               id: true,
               name: true,
@@ -820,7 +820,7 @@ export const Brutes = {
       }
 
       // Handle deleted opponents
-      let opponents = brute.opponents.filter((o) => o.deletedAt === null);
+      let opponents = brute.Brute_Opponents_B.filter((o: { deletedAt: Date | null }) => o.deletedAt === null);
 
       // If never generated today or not enough opponents, reset opponents
       if (!brute.opponentsGeneratedAt || dayjs.utc(brute.opponentsGeneratedAt).isBefore(dayjs.utc().startOf('day')) || opponents.length < ARENA_OPPONENTS_COUNT) {
@@ -833,7 +833,7 @@ export const Brutes = {
             id: brute.id,
           },
           data: {
-            opponents: {
+            Brute_Opponents_B: {
               set: opponents.map((o) => ({
                 id: o.id,
               })),
@@ -2200,7 +2200,7 @@ export const Brutes = {
         const fullBrute = await prisma.brute.findFirst({
           where: { id: brute.id },
           include: {
-            opponents: {
+            Brute_Opponents_B: {
               select: { name: true },
             },
           },
@@ -2350,6 +2350,7 @@ export const Brutes = {
         },
         select: {
           loser: true,
+          loserId: true,
           tournamentStep: true,
         },
       });
@@ -2362,7 +2363,7 @@ export const Brutes = {
       let roundWatched = fight.tournamentStep + 1;
 
       // Skip to last round if brute lost
-      if (fight.loser === brute.name) {
+      if (fight.loserId === brute.id || (fight.loserId === null && fight.loser === brute.name)) {
         roundWatched = 999;
       }
 

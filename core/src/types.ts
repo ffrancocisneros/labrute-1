@@ -1,4 +1,4 @@
-import { Achievement, AchievementName, BossDamage, Brute, BruteReport, BruteReportReason, BruteReportStatus, Clan, ClanPost, ClanThread, ClanWar, ClanWarFighters, Config, DestinyChoice, DestinyChoiceSide, Event, Fight, FightModifier, Gender, InventoryItem, Log, Notification, PetName, Prisma, SkillName, Tournament, User, UserLog, WeaponName } from '@labrute/prisma';
+import { Achievement, AchievementName, BossDamage, BossName, Brute, BruteReport, BruteReportReason, BruteReportStatus, Clan, ClanPost, ClanThread, ClanWar, ClanWarFighters, Config, DestinyChoice, DestinyChoiceSide, Event, Fight, FightModifier, Gender, InventoryItem, Log, Notification, PetName, Prisma, SkillName, Tournament, User, UserLog, WeaponName } from '@labrute/prisma';
 import { SkillId } from './brute/skills';
 import { WeaponAnimation, WeaponId } from './brute/weapons';
 import { BruteRanking } from './constants';
@@ -567,6 +567,14 @@ export type TournamentsGetDailyResponse = Tournament & {
     brute2: Brute | null,
   })[]
 };
+export type TournamentsGetSpecialResponse = TournamentsGetDailyResponse;
+export type TournamentsGetActiveSpecialRuleResponse = {
+  rule: string,
+  nameKey: string,
+  descKey: string,
+  emoji: string,
+  nextChangeAt: string, // ISO string
+};
 export type TournamentsGetCopaDelReyResponse = {
   semifinal: (Tournament & {
     fights: (Pick<Fight, 'id' | 'winner' | 'loser' | 'winnerId' | 'loserId' | 'tournamentStep' | 'fighters'> & {
@@ -685,6 +693,14 @@ export type ClanGetThreadsResponse = {
       author: Pick<Brute, 'id' | 'name'> | null,
     })[];
   })[],
+  recentMembers: (Pick<Brute, 'id' | 'name'> & {
+    user: Pick<User, 'lastSeen'> | null,
+  })[],
+  bossProgress: {
+    boss: BossName,
+    damageOnBoss: number,
+    bossMaxHp: number,
+  } | null,
 };
 export type ClanGetThreadResponse = ClanThread & {
   posts: (ClanPost & {

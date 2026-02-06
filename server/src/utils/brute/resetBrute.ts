@@ -277,7 +277,7 @@ export const resetBrute = async ({
       id: updatedBrute.id,
     },
     data: {
-      opponents: {
+      Brute_Opponents_B: {
         set: opponents.map((o) => ({
           id: o.id,
         })),
@@ -291,7 +291,7 @@ export const resetBrute = async ({
   // Get brutes that have this brute as opponent
   const opponentOf = await prisma.brute.findMany({
     where: {
-      opponents: {
+      Brute_Opponents_B: {
         some: {
           id: updatedBrute.id,
         },
@@ -301,7 +301,7 @@ export const resetBrute = async ({
       id: true,
       name: true,
       level: true,
-      opponents: {
+      Brute_Opponents_B: {
         select: {
           id: true,
           name: true,
@@ -317,7 +317,7 @@ export const resetBrute = async ({
       name: {
         notIn: [
           currentBrute.name,
-          ...currentBrute.opponents.map((o) => o.name),
+          ...currentBrute.Brute_Opponents_B.map((o: { name: string }) => o.name),
         ],
       },
       level: currentBrute.level,
@@ -357,10 +357,10 @@ export const resetBrute = async ({
       await prisma.brute.update({
         where: { id: currentBrute.id },
         data: {
-          opponents: {
+          Brute_Opponents_B: {
             set: [
-              ...currentBrute.opponents
-                .filter((o) => o.id !== brute?.id)
+              ...currentBrute.Brute_Opponents_B
+                .filter((o: { id: string }) => o.id !== brute?.id)
                 .map((o) => ({ id: o.id })),
               { id: newOpponentId },
             ],
@@ -373,9 +373,9 @@ export const resetBrute = async ({
       await prisma.brute.update({
         where: { id: currentBrute.id },
         data: {
-          opponents: {
-            set: currentBrute.opponents
-              .filter((o) => o.id !== brute?.id)
+          Brute_Opponents_B: {
+            set: currentBrute.Brute_Opponents_B
+              .filter((o: { id: string }) => o.id !== brute?.id)
               .map((o) => ({ id: o.id })),
           },
         },

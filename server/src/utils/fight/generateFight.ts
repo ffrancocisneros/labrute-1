@@ -9,12 +9,15 @@ import {
   FightStep,
   Fighter, ForbiddenError, Modifiers, Skill, SkillByName,
   SkillId,
+  SpecialTournamentRule,
   StepType, Tiered, Weapon, WeaponByName,
   bossBackground, bosses,
   fightBackgrounds,
   getCalculatedBrute,
   randomItem,
+  randomBetween,
   tournamentBackground,
+  weapons,
   weightedRandom,
 } from '@labrute/core';
 import {
@@ -164,6 +167,7 @@ type GenerateFightParams = {
   tournament?: 'fight' | 'finals';
   clanId?: string;
   clanWar?: boolean;
+  specialRule?: string;
 };
 
 export const generateFight = async ({
@@ -176,6 +180,7 @@ export const generateFight = async ({
   tournament,
   clanId,
   clanWar,
+  specialRule,
 }: GenerateFightParams): Promise<GenerateFightResult> => {
   if (team1.brutes?.some((brute) => team2.brutes?.some((b) => b.id === brute.id))) {
     throw new ForbiddenError('Attempted to created a fight between the same brutes');
@@ -256,12 +261,101 @@ export const generateFight = async ({
     });
   }
 
+  // Aplicar reglas especiales de torneo
+  let processedTeam1Brutes = team1.brutes ?? [];
+  let processedTeam2Brutes = team2.brutes ?? [];
+  let processedTeam1Backups = team1Backups;
+  let processedTeam2Backups = team2Backups;
+
+  const allWeaponNames = Object.keys(weapons) as WeaponName[];
+
+  const filterWeaponsByType = (
+    brute: CalculatedBrute,
+    type: 'fast' | 'heavy' | 'thrown',
+  ): CalculatedBrute => {
+    const filteredBrute = { ...brute };
+    const filteredWeapons: Partial<Record<WeaponName, number>> = {};
+
+    for (const [weaponName, tier] of Object.entries(brute.weapons)) {
+      const weapon = weapons[weaponName as WeaponName];
+      if (weapon && weapon.types.includes(type)) {
+        filteredWeapons[weaponName as WeaponName] = tier as number;
+      }
+    }
+
+    // Si no tiene armas del tipo requerido, pelea sin armas (a puños)
+    filteredBrute.weapons = filteredWeapons;
+    return filteredBrute;
+  };
+
+  const applySpecialRule = (brute: CalculatedBrute): CalculatedBrute => {
+    let result = { ...brute };
+
+    switch (specialRule) {
+      case SpecialTournamentRule.LIGHT_WEAPONS_ONLY:
+        return filterWeaponsByType(brute, 'fast');
+      case SpecialTournamentRule.HEAVY_WEAPONS_ONLY:
+        return filterWeaponsByType(brute, 'heavy');
+      case SpecialTournamentRule.THROWN_WEAPONS_ONLY:
+        return filterWeaponsByType(brute, 'thrown');
+      case SpecialTournamentRule.DOUBLE_STRENGTH:
+        result = { ...result, strengthValue: brute.strengthValue * 2 };
+        break;
+      case SpecialTournamentRule.DOUBLE_HP:
+        result = { ...result, hp: brute.hp * 2 };
+        break;
+      case SpecialTournamentRule.RANDOM_STATS: {
+        result = {
+          ...result,
+          strengthValue: randomBetween(10, 80),
+          agilityValue: randomBetween(10, 80),
+          speedValue: randomBetween(10, 80),
+          hp: randomBetween(80, 250),
+        };
+        break;
+      }
+      case SpecialTournamentRule.RANDOM_WEAPONS: {
+        const randomWeapons: Partial<Record<WeaponName, number>> = {};
+        const shuffled = [...allWeaponNames].sort(() => Math.random() - 0.5);
+        const count = randomBetween(3, 6);
+        for (let i = 0; i < Math.min(count, shuffled.length); i++) {
+          const w = shuffled[i];
+          if (w) randomWeapons[w] = randomBetween(1, 3);
+        }
+        if (Object.keys(randomWeapons).length === 0) {
+          randomWeapons[WeaponName.knife] = 1;
+        }
+        result = { ...result, weapons: randomWeapons };
+        break;
+      }
+      case SpecialTournamentRule.NO_WEAPONS_NO_PETS:
+        result = { ...result, weapons: {}, pets: {} };
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  };
+
+  if (specialRule) {
+    processedTeam1Brutes = processedTeam1Brutes.map(applySpecialRule);
+    processedTeam2Brutes = processedTeam2Brutes.map(applySpecialRule);
+    processedTeam1Backups = processedTeam1Backups.map(applySpecialRule);
+    processedTeam2Backups = processedTeam2Backups.map(applySpecialRule);
+  }
+
+  // Determinar si debe ser clanFight (sin mascotas) para NO_PETS o NO_WEAPONS_NO_PETS
+  const noPetsFight = clanWar
+    || specialRule === SpecialTournamentRule.NO_PETS
+    || specialRule === SpecialTournamentRule.NO_WEAPONS_NO_PETS;
+
   // Global fight data
   const fightDataFighters = getFighters({
-    team1: { brutes: team1.brutes ?? [], backups: team1Backups, bosses: team1.bosses ?? [] },
-    team2: { brutes: team2.brutes ?? [], backups: team2Backups, bosses: team2.bosses ?? [] },
+    team1: { brutes: processedTeam1Brutes, backups: processedTeam1Backups, bosses: team1.bosses ?? [] },
+    team2: { brutes: processedTeam2Brutes, backups: processedTeam2Backups, bosses: team2.bosses ?? [] },
     modifiers,
-    clanFight: clanWar,
+    clanFight: noPetsFight,
   });
 
   const fightData: DetailedFight = {

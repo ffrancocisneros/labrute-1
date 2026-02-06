@@ -1,7 +1,7 @@
 import { TournamentType } from '@labrute/prisma';
 import { Box, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, useMediaQuery, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import FantasyButton from '../components/FantasyButton';
@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import Page from '../components/Page';
 import Text from '../components/Text';
 import useStateAsync from '../hooks/useStateAsync';
+import { ActiveSpecialRule } from '../types/tournament';
 import Server from '../utils/Server';
 
 const TournamentHistoryView = () => {
@@ -21,6 +22,17 @@ const TournamentHistoryView = () => {
   const { data: tournaments } = useStateAsync(null, Server.Tournament.getHistory, bruteName || '');
   const todayStr = dayjs.utc().format('YYYY-MM-DD');
   const { data: copaDelRey } = useStateAsync(null, Server.Tournament.getCopaDelRey, todayStr);
+  const fetchActiveSpecialRule = useCallback(
+    async (): Promise<ActiveSpecialRule | null> => (
+      Server.Tournament.getActiveSpecialRule() as Promise<ActiveSpecialRule | null>
+    ),
+    [],
+  );
+  const activeSpecialRuleResult = useStateAsync<ActiveSpecialRule | null>(
+    null,
+    fetchActiveSpecialRule,
+  );
+  const activeSpecialRule: ActiveSpecialRule | null = activeSpecialRuleResult.data;
 
   const hasCopaSemifinal = !!copaDelRey?.semifinal;
   const hasCopaFinal = !!copaDelRey?.final;
@@ -53,6 +65,19 @@ const TournamentHistoryView = () => {
               </Link>
             )}
           </Box>
+        </Paper>
+      )}
+      {activeSpecialRule && (
+        <Paper sx={{ mx: 4, mt: 2, p: 2, bgcolor: 'background.paperAccent' }}>
+          <Text bold sx={{ mb: 1 }}>
+            {activeSpecialRule.emoji} {t(activeSpecialRule.nameKey)} - {dayjs.utc().format('DD/MM/YYYY')}
+          </Text>
+          <Text sx={{ mb: 1 }}>{t(activeSpecialRule.descKey)}</Text>
+          <Link to={`/${bruteName || ''}/tournament/special/${todayStr}`}>
+            <FantasyButton color="secondary">
+              {t('specialTournament.viewBracket')}
+            </FantasyButton>
+          </Link>
         </Paper>
       )}
       <Paper sx={{ bgcolor: 'background.paperLight', mt: -2 }}>
@@ -103,14 +128,16 @@ const TournamentHistoryView = () => {
                         {tournamentDate.format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell align="right">
-                        <Link to={`/${bruteName || ''}/tournament/${tournament.type === TournamentType.GLOBAL ? 'global/' : ''}${dayjs.utc(tournament.date).format('YYYY-MM-DD')}`}>
+                        <Link to={`/${bruteName || ''}/tournament/${tournament.type === TournamentType.GLOBAL || tournament.type === TournamentType.UNLIMITED_GLOBAL ? 'global/' : tournament.type === TournamentType.SPECIAL ? 'special/' : ''}${dayjs.utc(tournament.date).format('YYYY-MM-DD')}`}>
                           <Text bold>
                             {tournament.type === TournamentType.DAILY
                               ? t('dailyTournament')
                               : (tournament.type === TournamentType.GLOBAL
                                 || tournament.type === TournamentType.UNLIMITED_GLOBAL)
                                 ? t('globalTournament')
-                                : tournament.type}
+                                : tournament.type === TournamentType.SPECIAL
+                                  ? t('specialTournament')
+                                  : tournament.type}
                           </Text>
                         </Link>
                       </TableCell>

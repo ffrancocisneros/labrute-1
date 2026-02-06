@@ -16,8 +16,10 @@ const DAILY_OBJECTIVE_CONFIGS: ObjectiveConfig[] = [
   { type: ObjectiveType.WIN_FIGHTS, target: 5, rewardType: ObjectiveRewardType.GOLD, rewardValue: 10 },
   { type: ObjectiveType.WIN_FIGHTS, target: 10, rewardType: ObjectiveRewardType.GOLD, rewardValue: 25 },
   { type: ObjectiveType.COMPLETE_FIGHTS, target: 12, rewardType: ObjectiveRewardType.GOLD, rewardValue: 15 },
+  { type: ObjectiveType.COMPLETE_SPECIAL_FIGHTS, target: 3, rewardType: ObjectiveRewardType.GOLD, rewardValue: 30 },
   { type: ObjectiveType.LEVEL_UP, target: 1, rewardType: ObjectiveRewardType.GOLD, rewardValue: 20 },
   { type: ObjectiveType.WIN_TOURNAMENT, target: 1, rewardType: ObjectiveRewardType.GOLD, rewardValue: 50 },
+  { type: ObjectiveType.WIN_SPECIAL_TOURNAMENT, target: 1, rewardType: ObjectiveRewardType.GOLD, rewardValue: 75 },
 ];
 
 // Configuraciones de objetivos semanales (más generales)
@@ -25,8 +27,10 @@ const WEEKLY_OBJECTIVE_CONFIGS: ObjectiveConfig[] = [
   { type: ObjectiveType.WIN_FIGHTS, target: 50, rewardType: ObjectiveRewardType.GOLD, rewardValue: 100 },
   { type: ObjectiveType.WIN_FIGHTS, target: 100, rewardType: ObjectiveRewardType.GOLD, rewardValue: 250 },
   { type: ObjectiveType.COMPLETE_FIGHTS, target: 150, rewardType: ObjectiveRewardType.GOLD, rewardValue: 150 },
+  { type: ObjectiveType.COMPLETE_SPECIAL_FIGHTS, target: 9, rewardType: ObjectiveRewardType.GOLD, rewardValue: 100 },
   { type: ObjectiveType.LEVEL_UP, target: 3, rewardType: ObjectiveRewardType.GOLD, rewardValue: 75 },
   { type: ObjectiveType.WIN_TOURNAMENT, target: 3, rewardType: ObjectiveRewardType.GOLD, rewardValue: 200 },
+  { type: ObjectiveType.WIN_SPECIAL_TOURNAMENT, target: 5, rewardType: ObjectiveRewardType.GOLD, rewardValue: 300 },
   { type: ObjectiveType.GAIN_XP, target: 1000, rewardType: ObjectiveRewardType.GOLD, rewardValue: 125 },
 ];
 

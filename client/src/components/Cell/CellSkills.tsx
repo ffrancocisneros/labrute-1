@@ -30,9 +30,11 @@ const CellSkills = ({
 
   const getFilter = (skill: SkillName) => {
     if (randomSkill === skill) return `drop-shadow(0 0 0.5rem ${PerkColor.Random})`;
-    if (brute?.ascendedSkills.includes(skill)
+    if ((brute?.ascendedSkills ?? []).includes(skill)
       || selectedSkill === skill
-      || (hoverSelectAscend && hoveredSkill === skill && brute?.skills[skill])) return `drop-shadow(0 0 0.5rem ${PerkColor.Ascended})`;
+      || (hoverSelectAscend && hoveredSkill === skill && brute?.skills[skill])) {
+      return `drop-shadow(0 0 0.5rem ${PerkColor.Ascended})`;
+    }
     return 'none';
   };
 

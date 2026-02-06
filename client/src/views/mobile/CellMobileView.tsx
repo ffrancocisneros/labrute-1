@@ -7,6 +7,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import CellClan from '../../components/Cell/CellClan';
 import CellGlobalTournament from '../../components/Cell/CellGlobalTournament';
 import CellLog from '../../components/Cell/CellLog';
+import CellSpecialTournament from '../../components/Cell/CellSpecialTournament';
 import CellMain from '../../components/Cell/CellMain';
 import CellPets from '../../components/Cell/CellPets';
 import CellSkills from '../../components/Cell/CellSkills';
@@ -163,6 +164,10 @@ const CellMobileView = ({
           />
         </Grid>
         <Grid item xs={12} sm={6} sx={{ textAlign: 'center' }} order={isXs ? 6 : 0}>
+          {/* SPECIAL TOURNAMENT */}
+          <CellSpecialTournament />
+        </Grid>
+        <Grid item xs={12} sm={6} sx={{ textAlign: 'center' }} order={isXs ? 7 : 0}>
           {/* GLOBAL TOURNAMENT */}
           <CellGlobalTournament />
         </Grid>

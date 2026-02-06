@@ -48,8 +48,10 @@ const ObjectivesViewComponent = () => {
     const names: Record<string, string> = {
       WIN_FIGHTS: 'Ganar peleas',
       WIN_TOURNAMENT: 'Ganar torneo',
+      WIN_SPECIAL_TOURNAMENT: 'Ganar torneo especial',
       LEVEL_UP: 'Subir de nivel',
       COMPLETE_FIGHTS: 'Completar peleas',
+      COMPLETE_SPECIAL_FIGHTS: 'Participar en peleas de torneos especiales',
       USE_SKILLS: 'Usar habilidades',
       GAIN_XP: 'Ganar XP',
       REACH_LEVEL: 'Llegar al nivel',

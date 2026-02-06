@@ -1,10 +1,14 @@
 import { Box, Grid, IconButton, Paper, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import Link from '../../components/Link';
 import Page from '../../components/Page';
 import StyledButton from '../../components/StyledButton';
 import StyledInput from '../../components/StyledInput';
 import Text from '../../components/Text';
+import { LoggedInUser } from '../../hooks/useAuth';
+import { ActiveSpecialRule } from '../../types/tournament';
 import { AdResult } from '../../utils/ads';
 import { LockOpen, Lock } from '@mui/icons-material';
 
@@ -18,7 +22,9 @@ export interface HomeMobileViewProps {
   createBrute: () => void;
   character: React.JSX.Element;
   fixBruteAppearance: boolean;
-  setFixBruteAppearance: React.Dispatch<React.SetStateAction<boolean>>
+  setFixBruteAppearance: React.Dispatch<React.SetStateAction<boolean>>;
+  activeSpecialRule?: ActiveSpecialRule | null;
+  user?: LoggedInUser | null;
 }
 
 const HomeMobileView = ({
@@ -31,7 +37,9 @@ const HomeMobileView = ({
   createBrute,
   character,
   fixBruteAppearance,
-  setFixBruteAppearance
+  setFixBruteAppearance,
+  activeSpecialRule,
+  user,
 }: HomeMobileViewProps) => {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -59,6 +67,28 @@ const HomeMobileView = ({
 
   return (
     <Page title={t('MyBrute')} description={t('home.desc')}>
+      {activeSpecialRule && user?.brutes?.length && (
+        <Box
+          component={Link}
+          to={`/${user.brutes[0]?.name || ''}/tournament/special/${dayjs.utc().format('YYYY-MM-DD')}`}
+          sx={{
+            display: 'block',
+            mb: 2,
+            p: 1.5,
+            bgcolor: 'background.paperAccent',
+            borderRadius: 1,
+            textAlign: 'center',
+            textDecoration: 'none',
+            color: 'inherit',
+            '&:hover': { bgcolor: 'action.hover' },
+          }}
+        >
+          <Text bold>
+            {activeSpecialRule.emoji} {t('specialTournament')}: {t(activeSpecialRule.nameKey)}
+          </Text>
+          <Text variant="body2">{t(activeSpecialRule.descKey)}</Text>
+        </Box>
+      )}
       <Grid container spacing={1}>
         {/* FIRST TEXT */}
         <Grid item xs={12} sm={6}>

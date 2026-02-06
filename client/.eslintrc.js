@@ -45,7 +45,7 @@ module.exports = {
     '@typescript-eslint/semi': ['error'],
     'linebreak-style': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'import/extensions': [
       'error',
       {

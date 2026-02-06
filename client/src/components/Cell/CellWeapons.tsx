@@ -77,9 +77,11 @@ const CellWeapons = (
 
   const getFilter = (weapon: WeaponName) => {
     if (randomWeapon === weapon) return `drop-shadow(0 0 0.5rem ${PerkColor.Random})`;
-    if (brute?.ascendedWeapons.includes(weapon)
+    if ((brute?.ascendedWeapons ?? []).includes(weapon)
       || selectedWeapon === weapon
-      || (hoverSelectAscend && hoveredWeapon === weapon && brute?.weapons[weapon])) return `drop-shadow(0 0 0.5rem ${PerkColor.Ascended})`;
+      || (hoverSelectAscend && hoveredWeapon === weapon && brute?.weapons[weapon])) {
+      return `drop-shadow(0 0 0.5rem ${PerkColor.Ascended})`;
+    }
     return 'none';
   };
 

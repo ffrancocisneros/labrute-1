@@ -121,20 +121,20 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 });
 
 exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  lang: 'lang',
-  name: 'name',
   admin: 'admin',
-  moderator: 'moderator',
-  connexionToken: 'connexionToken',
+  lang: 'lang',
   bruteLimit: 'bruteLimit',
-  gold: 'gold',
-  fightSpeed: 'fightSpeed',
+  name: 'name',
+  id: 'id',
+  connexionToken: 'connexionToken',
   backgroundMusic: 'backgroundMusic',
+  fightSpeed: 'fightSpeed',
+  gold: 'gold',
+  moderator: 'moderator',
   dinorpgDone: 'dinorpgDone',
-  ips: 'ips',
-  bannedAt: 'bannedAt',
   banReason: 'banReason',
+  bannedAt: 'bannedAt',
+  ips: 'ips',
   displayVersusPage: 'displayVersusPage',
   displayOpponentDetails: 'displayOpponentDetails',
   lastSeen: 'lastSeen',
@@ -172,68 +172,68 @@ exports.Prisma.GoldTransactionScalarFieldEnum = {
 };
 
 exports.Prisma.BruteScalarFieldEnum = {
-  id: 'id',
   name: 'name',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  willBeDeletedAt: 'willBeDeletedAt',
-  deletionReason: 'deletionReason',
-  destinyPath: 'destinyPath',
-  previousDestinyPath: 'previousDestinyPath',
   level: 'level',
   xp: 'xp',
   hp: 'hp',
-  enduranceStat: 'enduranceStat',
-  enduranceModifier: 'enduranceModifier',
-  enduranceValue: 'enduranceValue',
-  strengthStat: 'strengthStat',
-  strengthModifier: 'strengthModifier',
-  strengthValue: 'strengthValue',
-  agilityStat: 'agilityStat',
-  agilityModifier: 'agilityModifier',
-  agilityValue: 'agilityValue',
-  speedStat: 'speedStat',
-  speedModifier: 'speedModifier',
-  speedValue: 'speedValue',
   ranking: 'ranking',
   gender: 'gender',
   userId: 'userId',
-  body: 'body',
-  colors: 'colors',
+  pupilsCount: 'pupilsCount',
+  lastFight: 'lastFight',
+  fightsLeft: 'fightsLeft',
   weapons: 'weapons',
   skills: 'skills',
+  agilityModifier: 'agilityModifier',
+  agilityStat: 'agilityStat',
+  agilityValue: 'agilityValue',
+  enduranceModifier: 'enduranceModifier',
+  enduranceStat: 'enduranceStat',
+  enduranceValue: 'enduranceValue',
+  speedModifier: 'speedModifier',
+  speedStat: 'speedStat',
+  speedValue: 'speedValue',
+  strengthModifier: 'strengthModifier',
+  strengthStat: 'strengthStat',
+  strengthValue: 'strengthValue',
   pets: 'pets',
-  ascensions: 'ascensions',
-  ascendedWeapons: 'ascendedWeapons',
-  ascendedSkills: 'ascendedSkills',
-  ascendedPets: 'ascendedPets',
-  masterId: 'masterId',
-  pupilsCount: 'pupilsCount',
-  clanId: 'clanId',
+  victories: 'victories',
+  destinyPath: 'destinyPath',
+  createdAt: 'createdAt',
+  deletedAt: 'deletedAt',
   registeredForTournament: 'registeredForTournament',
   nextTournamentDate: 'nextTournamentDate',
   currentTournamentDate: 'currentTournamentDate',
   currentTournamentStepWatched: 'currentTournamentStepWatched',
-  globalTournamentWatchedDate: 'globalTournamentWatchedDate',
-  globalTournamentRoundWatched: 'globalTournamentRoundWatched',
-  eventTournamentWatchedDate: 'eventTournamentWatchedDate',
-  eventTournamentRoundWatched: 'eventTournamentRoundWatched',
-  lastFight: 'lastFight',
-  fightsLeft: 'fightsLeft',
-  bonusFightsCount: 'bonusFightsCount',
-  bonusFightsDate: 'bonusFightsDate',
-  victories: 'victories',
-  losses: 'losses',
-  winStreakCurrent: 'winStreakCurrent',
-  winStreakMax: 'winStreakMax',
   opponentsGeneratedAt: 'opponentsGeneratedAt',
   canRankUpSince: 'canRankUpSince',
   favorite: 'favorite',
-  autoFightEnabled: 'autoFightEnabled',
-  wantToJoinClanId: 'wantToJoinClanId',
+  previousDestinyPath: 'previousDestinyPath',
+  body: 'body',
+  colors: 'colors',
   tournamentWins: 'tournamentWins',
+  globalTournamentRoundWatched: 'globalTournamentRoundWatched',
+  globalTournamentWatchedDate: 'globalTournamentWatchedDate',
+  deletionReason: 'deletionReason',
+  willBeDeletedAt: 'willBeDeletedAt',
+  id: 'id',
+  masterId: 'masterId',
+  clanId: 'clanId',
+  wantToJoinClanId: 'wantToJoinClanId',
   eventId: 'eventId',
-  resets: 'resets'
+  resets: 'resets',
+  ascendedSkills: 'ascendedSkills',
+  ascendedPets: 'ascendedPets',
+  ascendedWeapons: 'ascendedWeapons',
+  ascensions: 'ascensions',
+  eventTournamentRoundWatched: 'eventTournamentRoundWatched',
+  eventTournamentWatchedDate: 'eventTournamentWatchedDate',
+  losses: 'losses',
+  autoFightEnabled: 'autoFightEnabled',
+  winStreakCurrent: 'winStreakCurrent',
+  winStreakMax: 'winStreakMax',
+  bonusFightsCount: 'bonusFightsCount',
+  bonusFightsDate: 'bonusFightsDate'
 };
 
 exports.Prisma.UserUsedSkillScalarFieldEnum = {
@@ -244,101 +244,102 @@ exports.Prisma.UserUsedSkillScalarFieldEnum = {
 };
 
 exports.Prisma.BruteStartingStatsScalarFieldEnum = {
-  id: 'id',
   endurance: 'endurance',
   strength: 'strength',
   agility: 'agility',
   speed: 'speed',
-  bruteId: 'bruteId'
+  bruteId: 'bruteId',
+  id: 'id'
 };
 
 exports.Prisma.FightScalarFieldEnum = {
-  id: 'id',
   date: 'date',
-  brute1Id: 'brute1Id',
-  brute2Id: 'brute2Id',
-  winnerId: 'winnerId',
-  loserId: 'loserId',
-  winner: 'winner',
   loser: 'loser',
+  winner: 'winner',
   steps: 'steps',
   fighters: 'fighters',
-  tournamentId: 'tournamentId',
   tournamentStep: 'tournamentStep',
   modifiers: 'modifiers',
   background: 'background',
+  id: 'id',
+  brute1Id: 'brute1Id',
+  brute2Id: 'brute2Id',
+  tournamentId: 'tournamentId',
   clanWarId: 'clanWarId',
-  favoriteCount: 'favoriteCount'
+  favoriteCount: 'favoriteCount',
+  loserId: 'loserId',
+  winnerId: 'winnerId'
 };
 
 exports.Prisma.LogScalarFieldEnum = {
-  id: 'id',
   date: 'date',
-  currentBruteId: 'currentBruteId',
   type: 'type',
   level: 'level',
-  brute: 'brute',
-  fightId: 'fightId',
   xp: 'xp',
+  brute: 'brute',
   gold: 'gold',
+  id: 'id',
+  currentBruteId: 'currentBruteId',
+  fightId: 'fightId',
   template: 'template',
   destinyChoiceId: 'destinyChoiceId'
 };
 
 exports.Prisma.DestinyChoiceScalarFieldEnum = {
-  id: 'id',
-  bruteId: 'bruteId',
   path: 'path',
   type: 'type',
   skill: 'skill',
   weapon: 'weapon',
   pet: 'pet',
-  originalSkill: 'originalSkill',
-  originalWeapon: 'originalWeapon',
-  originalPet: 'originalPet',
   stat1: 'stat1',
   stat1Value: 'stat1Value',
   stat2: 'stat2',
-  stat2Value: 'stat2Value'
+  stat2Value: 'stat2Value',
+  id: 'id',
+  bruteId: 'bruteId',
+  originalPet: 'originalPet',
+  originalSkill: 'originalSkill',
+  originalWeapon: 'originalWeapon'
 };
 
 exports.Prisma.TournamentScalarFieldEnum = {
-  id: 'id',
   date: 'date',
   type: 'type',
   rounds: 'rounds',
+  specialRule: 'specialRule',
+  id: 'id',
   eventId: 'eventId'
 };
 
 exports.Prisma.TournamentAchievementScalarFieldEnum = {
-  id: 'id',
-  bruteId: 'bruteId',
   date: 'date',
   achievement: 'achievement',
-  achievementCount: 'achievementCount'
+  achievementCount: 'achievementCount',
+  id: 'id',
+  bruteId: 'bruteId'
 };
 
 exports.Prisma.TournamentGoldScalarFieldEnum = {
-  id: 'id',
   date: 'date',
   userId: 'userId',
   gold: 'gold',
+  id: 'id',
   source: 'source'
 };
 
 exports.Prisma.TournamentXpScalarFieldEnum = {
-  id: 'id',
   date: 'date',
-  bruteId: 'bruteId',
-  xp: 'xp'
+  xp: 'xp',
+  id: 'id',
+  bruteId: 'bruteId'
 };
 
 exports.Prisma.AchievementScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
   count: 'count',
-  bruteId: 'bruteId',
-  userId: 'userId'
+  userId: 'userId',
+  name: 'name',
+  id: 'id',
+  bruteId: 'bruteId'
 };
 
 exports.Prisma.DailyObjectiveScalarFieldEnum = {
@@ -349,12 +350,12 @@ exports.Prisma.DailyObjectiveScalarFieldEnum = {
   progress: 'progress',
   completed: 'completed',
   completedAt: 'completedAt',
-  claimed: 'claimed',
-  claimedAt: 'claimedAt',
   rewardType: 'rewardType',
   rewardValue: 'rewardValue',
   date: 'date',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  claimed: 'claimed',
+  claimedAt: 'claimedAt'
 };
 
 exports.Prisma.WeeklyObjectiveScalarFieldEnum = {
@@ -365,12 +366,12 @@ exports.Prisma.WeeklyObjectiveScalarFieldEnum = {
   progress: 'progress',
   completed: 'completed',
   completedAt: 'completedAt',
-  claimed: 'claimed',
-  claimedAt: 'claimedAt',
   rewardType: 'rewardType',
   rewardValue: 'rewardValue',
   weekStart: 'weekStart',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  claimed: 'claimed',
+  claimedAt: 'claimedAt'
 };
 
 exports.Prisma.MissionScalarFieldEnum = {
@@ -427,28 +428,28 @@ exports.Prisma.PermanentAchievementScalarFieldEnum = {
 };
 
 exports.Prisma.BruteReportScalarFieldEnum = {
-  id: 'id',
-  bruteId: 'bruteId',
-  bruteName: 'bruteName',
-  reason: 'reason',
-  count: 'count',
   date: 'date',
   status: 'status',
+  count: 'count',
+  reason: 'reason',
+  id: 'id',
+  bruteId: 'bruteId',
   handlerId: 'handlerId',
-  handledAt: 'handledAt'
+  handledAt: 'handledAt',
+  bruteName: 'bruteName'
 };
 
 exports.Prisma.ServerStateScalarFieldEnum = {
-  id: 'id',
   globalTournamentValid: 'globalTournamentValid',
   activeModifiers: 'activeModifiers',
   modifiersEndAt: 'modifiersEndAt',
+  id: 'id',
   nextModifiers: 'nextModifiers'
 };
 
 exports.Prisma.BannedWordScalarFieldEnum = {
-  id: 'id',
-  word: 'word'
+  word: 'word',
+  id: 'id'
 };
 
 exports.Prisma.BannedIpScalarFieldEnum = {
@@ -456,58 +457,59 @@ exports.Prisma.BannedIpScalarFieldEnum = {
 };
 
 exports.Prisma.ClanScalarFieldEnum = {
-  id: 'id',
   name: 'name',
-  deletedAt: 'deletedAt',
   limit: 'limit',
   points: 'points',
-  elo: 'elo',
   boss: 'boss',
   damageOnBoss: 'damageOnBoss',
+  bossRotationDate: 'bossRotationDate',
+  id: 'id',
   masterId: 'masterId',
-  participateInClanWar: 'participateInClanWar'
+  elo: 'elo',
+  participateInClanWar: 'participateInClanWar',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.ClanThreadScalarFieldEnum = {
-  id: 'id',
-  clanId: 'clanId',
-  creatorId: 'creatorId',
   title: 'title',
   locked: 'locked',
-  pinned: 'pinned',
   postCount: 'postCount',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  pinned: 'pinned',
+  id: 'id',
+  clanId: 'clanId',
+  creatorId: 'creatorId'
 };
 
 exports.Prisma.ClanPostScalarFieldEnum = {
+  date: 'date',
+  message: 'message',
   id: 'id',
   threadId: 'threadId',
-  authorId: 'authorId',
-  date: 'date',
-  message: 'message'
+  authorId: 'authorId'
 };
 
 exports.Prisma.BossDamageScalarFieldEnum = {
-  id: 'id',
-  bruteId: 'bruteId',
+  damage: 'damage',
   clanId: 'clanId',
-  damage: 'damage'
+  bruteId: 'bruteId',
+  id: 'id'
 };
 
 exports.Prisma.ClanWarScalarFieldEnum = {
   id: 'id',
   duration: 'duration',
-  type: 'type',
   date: 'date',
   status: 'status',
   attackerId: 'attackerId',
-  attackerEloChange: 'attackerEloChange',
-  attackerWins: 'attackerWins',
   defenderId: 'defenderId',
+  winnerId: 'winnerId',
+  type: 'type',
+  attackerEloChange: 'attackerEloChange',
   defenderEloChange: 'defenderEloChange',
-  defenderWins: 'defenderWins',
-  winnerId: 'winnerId'
+  attackerWins: 'attackerWins',
+  defenderWins: 'defenderWins'
 };
 
 exports.Prisma.ClanWarFightersScalarFieldEnum = {
@@ -517,9 +519,9 @@ exports.Prisma.ClanWarFightersScalarFieldEnum = {
 };
 
 exports.Prisma.InventoryItemScalarFieldEnum = {
-  id: 'id',
   type: 'type',
   count: 'count',
+  id: 'id',
   bruteId: 'bruteId',
   userId: 'userId'
 };
@@ -568,16 +570,16 @@ exports.Prisma.BruteTemporaryEffectScalarFieldEnum = {
   id: 'id',
   bruteId: 'bruteId',
   skillName: 'skillName',
-  createdAt: 'createdAt',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.BruteTemporaryWeaponScalarFieldEnum = {
   id: 'id',
   bruteId: 'bruteId',
   weaponName: 'weaponName',
-  createdAt: 'createdAt',
-  expiresAt: 'expiresAt'
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CosmeticPresetScalarFieldEnum = {
@@ -615,11 +617,11 @@ exports.Prisma.EventScalarFieldEnum = {
   id: 'id',
   date: 'date',
   type: 'type',
-  maxLevel: 'maxLevel',
-  maxRound: 'maxRound',
-  status: 'status',
   winnerId: 'winnerId',
+  status: 'status',
+  maxLevel: 'maxLevel',
   finishedAt: 'finishedAt',
+  maxRound: 'maxRound',
   sortedBrutes: 'sortedBrutes'
 };
 
@@ -627,10 +629,10 @@ exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   message: 'message',
-  severity: 'severity',
-  link: 'link',
   read: 'read',
-  date: 'date'
+  date: 'date',
+  link: 'link',
+  severity: 'severity'
 };
 
 exports.Prisma.ConfigScalarFieldEnum = {
@@ -666,21 +668,16 @@ exports.UserLogType = exports.$Enums.UserLogType = {
   CONNECT: 'CONNECT',
   DISCONNECT: 'DISCONNECT',
   GOLD_WIN: 'GOLD_WIN',
-  GOLD_LOSS: 'GOLD_LOSS',
   CREATE_BRUTE: 'CREATE_BRUTE',
   RENAME_BRUTE: 'RENAME_BRUTE',
   SACRIFICE_BRUTE: 'SACRIFICE_BRUTE',
-  BANNED: 'BANNED'
+  BANNED: 'BANNED',
+  GOLD_LOSS: 'GOLD_LOSS'
 };
 
 exports.Gender = exports.$Enums.Gender = {
   male: 'male',
   female: 'female'
-};
-
-exports.DestinyChoiceSide = exports.$Enums.DestinyChoiceSide = {
-  LEFT: 'LEFT',
-  RIGHT: 'RIGHT'
 };
 
 exports.WeaponName = exports.$Enums.WeaponName = {
@@ -773,6 +770,11 @@ exports.PetName = exports.$Enums.PetName = {
   bear: 'bear'
 };
 
+exports.DestinyChoiceSide = exports.$Enums.DestinyChoiceSide = {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT'
+};
+
 exports.FightModifier = exports.$Enums.FightModifier = {
   noThrows: 'noThrows',
   focusOpponent: 'focusOpponent',
@@ -799,11 +801,11 @@ exports.LogType = exports.$Enums.LogType = {
   childup: 'childup',
   up: 'up',
   lvl: 'lvl',
-  ascend: 'ascend',
   tournament: 'tournament',
   tournamentXp: 'tournamentXp',
-  bossFight: 'bossFight',
-  bossDefeat: 'bossDefeat'
+  bossDefeat: 'bossDefeat',
+  ascend: 'ascend',
+  bossFight: 'bossFight'
 };
 
 exports.DestinyChoiceType = exports.$Enums.DestinyChoiceType = {
@@ -823,9 +825,10 @@ exports.BruteStat = exports.$Enums.BruteStat = {
 exports.TournamentType = exports.$Enums.TournamentType = {
   DAILY: 'DAILY',
   GLOBAL: 'GLOBAL',
-  UNLIMITED_GLOBAL: 'UNLIMITED_GLOBAL',
   CUSTOM: 'CUSTOM',
+  SPECIAL: 'SPECIAL',
   BATTLE_ROYALE: 'BATTLE_ROYALE',
+  UNLIMITED_GLOBAL: 'UNLIMITED_GLOBAL',
   COPA_DEL_REY_SEMIFINAL: 'COPA_DEL_REY_SEMIFINAL',
   COPA_DEL_REY: 'COPA_DEL_REY'
 };
@@ -943,17 +946,19 @@ exports.AchievementName = exports.$Enums.AchievementName = {
   rankUp2: 'rankUp2',
   rankUp1: 'rankUp1',
   rankUp0: 'rankUp0',
-  ascend: 'ascend',
   sacrifice: 'sacrifice',
   beta: 'beta',
-  bug: 'bug'
+  bug: 'bug',
+  ascend: 'ascend'
 };
 
 exports.ObjectiveType = exports.$Enums.ObjectiveType = {
   WIN_FIGHTS: 'WIN_FIGHTS',
   WIN_TOURNAMENT: 'WIN_TOURNAMENT',
+  WIN_SPECIAL_TOURNAMENT: 'WIN_SPECIAL_TOURNAMENT',
   LEVEL_UP: 'LEVEL_UP',
   COMPLETE_FIGHTS: 'COMPLETE_FIGHTS',
+  COMPLETE_SPECIAL_FIGHTS: 'COMPLETE_SPECIAL_FIGHTS',
   USE_SKILLS: 'USE_SKILLS',
   GAIN_XP: 'GAIN_XP',
   REACH_LEVEL: 'REACH_LEVEL',
@@ -1051,14 +1056,14 @@ exports.AchievementRewardType = exports.$Enums.AchievementRewardType = {
   COSMETIC: 'COSMETIC'
 };
 
-exports.BruteReportReason = exports.$Enums.BruteReportReason = {
-  name: 'name'
-};
-
 exports.BruteReportStatus = exports.$Enums.BruteReportStatus = {
   pending: 'pending',
   accepted: 'accepted',
   rejected: 'rejected'
+};
+
+exports.BruteReportReason = exports.$Enums.BruteReportReason = {
+  name: 'name'
 };
 
 exports.BossName = exports.$Enums.BossName = {
@@ -1067,16 +1072,16 @@ exports.BossName = exports.$Enums.BossName = {
   Cerberus: 'Cerberus'
 };
 
-exports.ClanWarType = exports.$Enums.ClanWarType = {
-  friendly: 'friendly',
-  official: 'official'
-};
-
 exports.ClanWarStatus = exports.$Enums.ClanWarStatus = {
   pending: 'pending',
   ongoing: 'ongoing',
   waitingForRewards: 'waitingForRewards',
   finished: 'finished'
+};
+
+exports.ClanWarType = exports.$Enums.ClanWarType = {
+  friendly: 'friendly',
+  official: 'official'
 };
 
 exports.InventoryItemType = exports.$Enums.InventoryItemType = {
@@ -1122,9 +1127,9 @@ exports.EventType = exports.$Enums.EventType = {
 };
 
 exports.EventStatus = exports.$Enums.EventStatus = {
-  starting: 'starting',
   ongoing: 'ongoing',
-  finished: 'finished'
+  finished: 'finished',
+  starting: 'starting'
 };
 
 exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {

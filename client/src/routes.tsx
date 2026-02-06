@@ -100,6 +100,7 @@ const routes: RouteObject[] = [
           { path: 'fight/:fightId', element: <FightView /> },
           { path: 'tournament/global/:date', element: <GlobalTournamentView /> },
           { path: 'tournament/copa-del-rey/:type/:date', element: <CopaDelReyView /> },
+          { path: 'tournament/special/:date', element: <TournamentView type="special" /> },
           { path: 'tournament/:date', element: <TournamentView /> },
           { path: 'ranking', element: <RankingView /> },
           { path: 'ranking/:rank', element: <RankingView /> },

@@ -144,6 +144,34 @@ export const DailyTournamentXpReward = 1;
 export const GlobalTournamentGoldReward = 150;
 export const GlobalTournamentXpReward = 1;
 export const CopaDelReyGoldReward = 500;
+export const CopaDelReyXpReward = 10;
+
+// Torneos especiales
+export enum SpecialTournamentRule {
+  NO_PETS = 'NO_PETS',
+  LIGHT_WEAPONS_ONLY = 'LIGHT_WEAPONS_ONLY',
+  HEAVY_WEAPONS_ONLY = 'HEAVY_WEAPONS_ONLY',
+  THROWN_WEAPONS_ONLY = 'THROWN_WEAPONS_ONLY',
+  DOUBLE_STRENGTH = 'DOUBLE_STRENGTH',
+  DOUBLE_HP = 'DOUBLE_HP',
+  RANDOM_STATS = 'RANDOM_STATS',
+  RANDOM_WEAPONS = 'RANDOM_WEAPONS',
+  NO_WEAPONS_NO_PETS = 'NO_WEAPONS_NO_PETS',
+}
+
+export const SpecialTournamentGoldReward: Record<SpecialTournamentRule, number> = {
+  [SpecialTournamentRule.NO_PETS]: 120,
+  [SpecialTournamentRule.LIGHT_WEAPONS_ONLY]: 130,
+  [SpecialTournamentRule.HEAVY_WEAPONS_ONLY]: 130,
+  [SpecialTournamentRule.THROWN_WEAPONS_ONLY]: 130,
+  [SpecialTournamentRule.DOUBLE_STRENGTH]: 130,
+  [SpecialTournamentRule.DOUBLE_HP]: 130,
+  [SpecialTournamentRule.RANDOM_STATS]: 140,
+  [SpecialTournamentRule.RANDOM_WEAPONS]: 140,
+  [SpecialTournamentRule.NO_WEAPONS_NO_PETS]: 150,
+};
+
+export const SpecialTournamentXpReward = 1; // Igual que torneo diario
 
 export const DEFAULT_LANGUAGE = Lang.es;
 

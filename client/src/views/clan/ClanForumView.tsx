@@ -1,7 +1,7 @@
-import { ClanGetThreadsResponse } from '@labrute/core';
-import { Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from '@mui/material';
+import { bosses } from '@labrute/core';
+import { Box, LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from '@mui/material';
 import dayjs from 'dayjs';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import Link from '../../components/Link';
@@ -11,19 +11,60 @@ import { useAlert } from '../../hooks/useAlert';
 import Server from '../../utils/Server';
 import catchError from '../../utils/catchError';
 
+/** Forum data with typed indicators to avoid @labrute/core type resolution issues */
+interface ForumData {
+  masterId: string | null;
+  threads: Array<{
+    id: string;
+    title: string;
+    pinned: boolean;
+    locked: boolean;
+    postCount: number;
+    updatedAt: string;
+    creator: { id: string; name: string } | null;
+    posts: Array<{ date: string; author: { id: string; name: string } | null }>;
+  }>;
+  recentMembers: Array<{
+    id: string;
+    name: string;
+    user: { lastSeen: string | Date } | null;
+  }>;
+  bossProgress: {
+    boss: string;
+    damageOnBoss: number;
+    bossMaxHp: number;
+  } | null;
+}
+
 const ClanForumView = () => {
   const { t } = useTranslation();
   const { bruteName, id } = useParams();
   const Alert = useAlert();
 
-  const [data, setData] = useState<ClanGetThreadsResponse | null>(null);
+  const [data, setData] = useState<ForumData | null>(null);
 
   // Fetch data
   useEffect(() => {
     if (!bruteName || !id) return;
 
-    Server.Clan.getThreads({ brute: bruteName, id }).then(setData).catch(catchError(Alert));
+    Server.Clan.getThreads({ brute: bruteName, id })
+      .then((res) => setData(res as unknown as ForumData))
+      .catch(catchError(Alert));
   }, [Alert, bruteName, id]);
+
+  // Get boss info
+  const bossInfo = useMemo(() => {
+    if (!data?.bossProgress) return null;
+    const { boss } = data.bossProgress;
+    return bosses.find((b) => b.name === boss);
+  }, [data]);
+
+  // Calculate boss progress percentage
+  const bossProgressPercent = useMemo(() => {
+    if (!data?.bossProgress) return 0;
+    const { damageOnBoss, bossMaxHp } = data.bossProgress;
+    return Math.min(100, (damageOnBoss / bossMaxHp) * 100);
+  }, [data]);
 
   return (
     <Page title={t('forum')} headerUrl={`/${bruteName || ''}/cell`}>
@@ -51,6 +92,81 @@ const ClanForumView = () => {
               <Link to={`/${bruteName}/clan/${id}/post/0`}>
                 <Text bold smallCaps>{t('startThread')}</Text>
               </Link>
+            </Box>
+            {/* INDICATORS */}
+            <Box sx={{ mt: 2, mb: 2 }}>
+              {/* Recent Members */}
+              {data.recentMembers.length > 0 && (
+                <Paper sx={{ p: 1.5, mb: 2, bgcolor: 'background.paperDark' }}>
+                  <Text bold smallCaps sx={{ mb: 1 }}>
+                    {t('recentMembers')} ({data.recentMembers.length})
+                  </Text>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {data.recentMembers.map((member) => {
+                      const lastSeen = member.user?.lastSeen;
+                      const lastSeenText = lastSeen
+                        ? dayjs.utc(lastSeen).fromNow()
+                        : '';
+                      return (
+                        <Tooltip
+                          key={member.id}
+                          title={lastSeenText}
+                        >
+                          <Box
+                            component="span"
+                            sx={{
+                              px: 1,
+                              py: 0.5,
+                              bgcolor: 'success.dark',
+                              borderRadius: 1,
+                              fontSize: '0.875rem',
+                            }}
+                          >
+                            {member.name}
+                          </Box>
+                        </Tooltip>
+                      );
+                    })}
+                  </Box>
+                </Paper>
+              )}
+              {/* Boss Progress */}
+              {data.bossProgress && bossInfo && (
+                <Paper sx={{ p: 1.5, bgcolor: 'background.paperDark' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      mb: 1,
+                    }}
+                  >
+                    <Text bold smallCaps>
+                      {t('bossProgress')}: {data.bossProgress.boss}
+                    </Text>
+                    <Text variant="body2" color="text.secondary">
+                      {data.bossProgress.damageOnBoss.toLocaleString()}
+                      {' / '}
+                      {data.bossProgress.bossMaxHp.toLocaleString()} HP
+                    </Text>
+                  </Box>
+                  <LinearProgress
+                    variant="determinate"
+                    value={bossProgressPercent}
+                    sx={{
+                      height: 20,
+                      borderRadius: 1,
+                      bgcolor: 'background.default',
+                      '& .MuiLinearProgress-bar': {
+                        bgcolor: bossProgressPercent >= 100 ? 'success.main' : 'warning.main',
+                      },
+                    }}
+                  />
+                  <Text variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+                    {bossProgressPercent.toFixed(1)}% {t('complete')}
+                  </Text>
+                </Paper>
+              )}
             </Box>
             {/* THREADS */}
             <Table sx={{

@@ -2,7 +2,7 @@ import { PrismaClient } from '@labrute/prisma';
 import type { Request, Response } from 'express';
 import { auth } from '../utils/auth.js';
 import { sendError } from '../utils/sendError.js';
-import { getCalculatedBrute, ExpectedError, NotFoundError } from '@labrute/core';
+import { getCalculatedBrute, ExpectedError, NotFoundError, isWinner } from '@labrute/core';
 import { ServerState } from '../utils/ServerState.js';
 
 export interface BruteStatistics {
@@ -159,7 +159,7 @@ export const Statistics = {
 
         // Calcular racha de victorias
         for (const fight of fights) {
-          const won = fight.winner === brute.name;
+          const won = isWinner(brute, fight);
           if (won) {
             victories++;
             currentStreak++;
@@ -571,7 +571,7 @@ export const Statistics = {
         let maxDamage = 0;
 
         for (const fight of fights) {
-          const won = fight.winner === brute.name;
+          const won = isWinner(brute, fight);
           if (won) {
             victories++;
             currentStreak++;

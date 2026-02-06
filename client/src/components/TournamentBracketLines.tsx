@@ -19,10 +19,11 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
   containerHeight,
 }) => {
   const theme = useTheme();
+  // Líneas gruesas y oscuras, estilo llaves de torneo
   const lineColor = theme.palette.mode === 'dark'
-    ? 'rgba(255, 255, 255, 0.6)'
-    : 'rgba(80, 60, 40, 0.85)';
-  const strokeWidth = 4;
+    ? '#e0e0e0'
+    : '#2c1810';
+  const strokeWidth = 10;
 
   if (lines.length === 0 || containerWidth === 0 || containerHeight === 0) {
     return null;
@@ -46,29 +47,27 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
       {/* eslint-disable react/no-array-index-key -- lines array is stable, index is appropriate */}
       {lines.map((line, index) => {
         if (line.intermediate) {
-          // Draw bracket shape: vertical from source, horizontal connection, vertical to destination
+          // Forma de llave: vertical -> horizontal -> vertical
           const path = `M ${line.from.x} ${line.from.y}
                        L ${line.from.x} ${line.intermediate.y}
                        L ${line.to.x} ${line.intermediate.y}
                        L ${line.to.x} ${line.to.y}`;
-          // eslint-disable-next-line react/no-array-index-key
           return (
             <path
-              key={index}
+              key={`path-${index}`}
               d={path}
               fill="none"
               stroke={lineColor}
               strokeWidth={strokeWidth}
               strokeLinecap="square"
               strokeLinejoin="miter"
+              vectorEffect="non-scaling-stroke"
             />
           );
         }
-        // Simple straight line
-        // eslint-disable-next-line react/no-array-index-key
         return (
           <line
-            key={index}
+            key={`line-${index}`}
             x1={line.from.x}
             y1={line.from.y}
             x2={line.to.x}
@@ -76,10 +75,10 @@ const TournamentBracketLines: React.FC<TournamentBracketLinesProps> = ({
             stroke={lineColor}
             strokeWidth={strokeWidth}
             strokeLinecap="square"
+            vectorEffect="non-scaling-stroke"
           />
         );
       })}
-      {/* eslint-enable react/no-array-index-key */}
     </Box>
   );
 };

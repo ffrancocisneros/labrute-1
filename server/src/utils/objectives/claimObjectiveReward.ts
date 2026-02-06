@@ -1,5 +1,5 @@
 import { ObjectiveRewardType, PrismaClient } from '@labrute/prisma';
-import { ExpectedError } from '@labrute/core';
+import { ExpectedError, getRewardTitleName } from '@labrute/core';
 import { createGoldTransaction } from '../createGoldTransaction.js';
 
 /**
@@ -48,9 +48,20 @@ export const claimDailyObjectiveReward = async (
       sourceData: JSON.stringify({ objectiveType: objective.type }),
     });
   } else if (objective.rewardType === ObjectiveRewardType.TITLE) {
-    // TODO: Implementar sistema de títulos exclusivos
-    // Por ahora, solo retornamos el ID del título
-    result.title = `title_${objective.rewardValue}`;
+    // Desbloquear título exclusivo
+    const titleId = objective.rewardValue;
+    const u = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { unlockedTitleIds: true },
+    });
+    const ids = u?.unlockedTitleIds ?? [];
+    if (!ids.includes(titleId)) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { unlockedTitleIds: [...ids, titleId] },
+      });
+    }
+    result.title = getRewardTitleName(titleId) ?? `Título ${titleId}`;
   }
 
   // Marcar como reclamado
@@ -111,8 +122,20 @@ export const claimWeeklyObjectiveReward = async (
       sourceData: JSON.stringify({ objectiveType: objective.type }),
     });
   } else if (objective.rewardType === ObjectiveRewardType.TITLE) {
-    // TODO: Implementar sistema de títulos exclusivos
-    result.title = `title_${objective.rewardValue}`;
+    // Desbloquear título exclusivo
+    const titleId = objective.rewardValue;
+    const u = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { unlockedTitleIds: true },
+    });
+    const ids = u?.unlockedTitleIds ?? [];
+    if (!ids.includes(titleId)) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { unlockedTitleIds: [...ids, titleId] },
+      });
+    }
+    result.title = getRewardTitleName(titleId) ?? `Título ${titleId}`;
   }
 
   // Marcar como reclamado

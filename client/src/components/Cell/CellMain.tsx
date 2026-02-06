@@ -18,7 +18,9 @@ import FantasyButton from '../FantasyButton';
 import Link from '../Link';
 import StyledButton from '../StyledButton';
 import Text from '../Text';
+import CellDailyProgress from './CellDailyProgress';
 import CellGlobalTournament from './CellGlobalTournament';
+import CellSpecialTournament from './CellSpecialTournament';
 import CellTournament from './CellTournament';
 
 export interface CellMainProps extends BoxProps {
@@ -164,6 +166,9 @@ const CellMain = ({
         )}
       </Box>
       <BruteBodyAndStats brute={brute} sx={{ mb: 1 }} />
+
+      {/* DAILY PROGRESS */}
+      <CellDailyProgress />
 
       {/* REGISTER ALL BRUTES BUTTON */}
       {owner && hasUnregisteredBrutes && (
@@ -354,6 +359,10 @@ const CellMain = ({
         <CellTournament
           language={language}
         />
+      )}
+      {/* SPECIAL TOURNAMENT */}
+      {!smallScreen && !brute.eventId && (
+        <CellSpecialTournament />
       )}
       {/* GLOBAL TOURNAMENT */}
       {!smallScreen && !brute.eventId && (

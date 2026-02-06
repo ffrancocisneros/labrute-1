@@ -1,9 +1,11 @@
 import {
   ExpectedError, ForbiddenError, GLOBAL_TOURNAMENT_START_HOUR,
   NotFoundError,
-  TournamentHistoryResponse, TournamentsGetCopaDelReyResponse, TournamentsGetDailyResponse, TournamentsGetGlobalResponse,
+  SPECIAL_RULE_META,
+  TournamentHistoryResponse, TournamentsGetActiveSpecialRuleResponse, TournamentsGetCopaDelReyResponse, TournamentsGetDailyResponse, TournamentsGetGlobalResponse, TournamentsGetSpecialResponse,
   TournamentsUpdateStepWatchedResponse,
   TournementsUpdateGlobalRoundWatchedResponse,
+  getSpecialRuleForDate,
 } from '@labrute/core';
 import {
   PrismaClient,
@@ -123,6 +125,72 @@ export const Tournaments = {
       res.send({
         semifinal: semifinal ?? null,
         final: final ?? null,
+      });
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
+  getSpecial: (prisma: PrismaClient) => async (
+    req: Request,
+    res: Response<TournamentsGetSpecialResponse>,
+  ) => {
+    try {
+      if (!req.params.name || !req.params.date || !dayjs.utc(req.params.date, 'YYYY-MM-DD').isValid()) {
+        throw new ExpectedError(translate('invalidParameters'));
+      }
+
+      const tournament = await prisma.tournament.findFirst({
+        where: {
+          date: { equals: dayjs.utc(req.params.date, 'YYYY-MM-DD').toDate() },
+          type: TournamentType.SPECIAL,
+          participants: {
+            some: {
+              name: ilike(req.params.name),
+            },
+          },
+        },
+        include: {
+          fights: {
+            select: {
+              id: true,
+              brute1: true,
+              brute2: true,
+              winner: true,
+              winnerId: true,
+              loser: true,
+              loserId: true,
+              tournamentStep: true,
+              fighters: true,
+            },
+          },
+        },
+      });
+
+      if (!tournament) {
+        throw new NotFoundError('Tournament not found');
+      }
+
+      res.send(tournament);
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
+  getActiveSpecialRule: () => async (
+    req: Request,
+    res: Response<TournamentsGetActiveSpecialRuleResponse>,
+  ) => {
+    try {
+      const today = dayjs.utc().startOf('day');
+      const tomorrow = today.add(1, 'day');
+      const rule = getSpecialRuleForDate(today);
+      const meta = SPECIAL_RULE_META[rule];
+
+      res.send({
+        rule,
+        nameKey: meta.nameKey,
+        descKey: meta.descKey,
+        emoji: meta.emoji,
+        nextChangeAt: tomorrow.toISOString(),
       });
     } catch (error) {
       sendError(res, error);
@@ -666,8 +734,7 @@ export const Tournaments = {
             { brute1Id: brute.id },
             { brute2Id: brute.id },
           ],
-          // TODO: Replace by winnerId on release
-          winner: brute.name,
+          winnerId: brute.id,
         },
         select: {
           tournamentId: true,
@@ -751,6 +818,7 @@ export const Tournaments = {
         },
         select: {
           loser: true,
+          loserId: true,
           tournamentStep: true,
         },
       });
@@ -763,7 +831,7 @@ export const Tournaments = {
       let roundWatched = fight.tournamentStep;
 
       // Skip to last round if brute lost
-      if (fight.loser === brute.name) {
+      if (fight.loserId === brute.id || (fight.loserId === null && fight.loser === brute.name)) {
         roundWatched = 999;
       }
 

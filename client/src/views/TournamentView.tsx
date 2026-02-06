@@ -44,7 +44,11 @@ const fighterToBrute = (fighter: Fighter) => ({
   colors: fighter.colors || '0'.repeat(32),
 });
 
-const TournamentView = () => {
+interface TournamentViewProps {
+  type?: 'daily' | 'special';
+}
+
+const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
   const { t } = useTranslation();
   const { bruteName, date } = useParams();
   const { user, authing } = useAuth();
@@ -53,8 +57,15 @@ const TournamentView = () => {
   const { brute, updateBrute } = useBrute();
   const { palette: { mode } } = useTheme();
 
-  const tournamentProps = useMemo(() => ({ name: bruteName || '', date: date || '' }), [bruteName, date]);
-  const { data: tournament } = useStateAsync(null, Server.Tournament.getDaily, tournamentProps);
+  const tournamentProps = useMemo(
+    () => ({ name: bruteName || '', date: date || '' }),
+    [bruteName, date],
+  );
+  const fetchFn = type === 'special' ? Server.Tournament.getSpecial : Server.Tournament.getDaily;
+  const { data: tournament } = useStateAsync<
+    TournamentsGetDailyResponse | null,
+    { name: string; date: string }
+  >(null, fetchFn, tournamentProps);
 
   const stepWatched = useMemo(() => {
     if (!tournament?.date) return 0;
@@ -335,13 +346,15 @@ const TournamentView = () => {
           textAlign: 'center',
         }}
         >
-          <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>{t('tournamentOf')} {dayjs.utc(tournament.date).format('DD MMMM YYYY')}</Text>
+          <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
+            {type === 'special' ? t('specialTournament') : t('tournamentOf')} {dayjs.utc(tournament.date).format('DD MMMM YYYY')}
+          </Text>
         </Paper>
         <Paper
           ref={containerRef}
           sx={{ position: 'relative', bgcolor: 'background.paperLight', mt: -2 }}
         >
-          {ownsBrute && stepWatched < 6 && (
+          {type === 'daily' && ownsBrute && stepWatched < 6 && (
             <FantasyButton onClick={setWatched} color="success">
               {t('setAsWatched')}
             </FantasyButton>

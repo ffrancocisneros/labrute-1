@@ -95,7 +95,7 @@ export const Fights = {
           userId: user.id,
         },
         include: {
-          opponents: {
+          Brute_Opponents_B: {
             select: { name: true },
           },
         },
@@ -129,7 +129,7 @@ export const Fights = {
       await enrichCalculatedBruteWithTemporary(prisma, brute2);
 
       // Check if this is an arena fight
-      const arenaFight = brute1.opponents.some((opponent) => opponent.name === brute2.name);
+      const arenaFight = brute1.Brute_Opponents_B.some((opponent: { name: string }) => opponent.name === brute2.name);
 
       const brute1FightsLeft = getFightsLeft(brute1, modifiers);
       const availableFights = brute1FightsLeft + bonusCount;
@@ -388,7 +388,7 @@ export const Fights = {
       });
 
       // Update brute opponents if the opponent was in the arena
-      if (brute1.opponents.some((o) => o.name === brute2.name)) {
+      if (brute1.Brute_Opponents_B.some((o: { name: string }) => o.name === brute2.name)) {
         // Get new opponents
         const newOpponents = await getOpponents(prisma, brute1);
 
@@ -398,7 +398,7 @@ export const Fights = {
             id: brute1.id,
           },
           data: {
-            opponents: {
+            Brute_Opponents_B: {
               set: newOpponents.map((o) => ({
                 id: o.id,
               })),

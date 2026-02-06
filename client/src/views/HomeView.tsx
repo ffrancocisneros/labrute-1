@@ -3,9 +3,11 @@ import { Gender } from '@labrute/prisma';
 import { Lock, LockOpen } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import BoxBg from '../components/BoxBg';
+import Link from '../components/Link';
 import BruteRender from '../components/Brute/Body/BruteRender';
 import EmptyBrute from '../components/Brute/Body/EmptyBrute';
 import FantasyButton from '../components/FantasyButton';
@@ -14,6 +16,7 @@ import StyledButton from '../components/StyledButton';
 import StyledInput from '../components/StyledInput';
 import Text from '../components/Text';
 import { useAlert } from '../hooks/useAlert';
+import useStateAsync from '../hooks/useStateAsync';
 import { LoggedInUser, useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../hooks/useLanguage';
 import { getRandomAd } from '../utils/ads';
@@ -22,6 +25,7 @@ import { setCookie } from '../utils/cookies';
 import Fetch from '../utils/Fetch';
 import Server from '../utils/Server';
 import { applyTemporaryEffects } from '../utils/applyTemporaryEffects';
+import { ActiveSpecialRule } from '../types/tournament';
 import HomeMobileView from './mobile/HomeMobileView';
 
 /**
@@ -122,6 +126,17 @@ const HomeView = () => {
   const rightAd = useMemo(() => getRandomAd(language, leftAd.name), [language, leftAd.name]);
 
   const [name, setName] = useState('');
+  const fetchActiveSpecialRule = useCallback(
+    async (): Promise<ActiveSpecialRule | null> => (
+      Server.Tournament.getActiveSpecialRule() as Promise<ActiveSpecialRule | null>
+    ),
+    [],
+  );
+  const activeSpecialRuleResult = useStateAsync<ActiveSpecialRule | null>(
+    null,
+    fetchActiveSpecialRule,
+  );
+  const activeSpecialRule: ActiveSpecialRule | null = activeSpecialRuleResult.data;
 
   /* CHARACTER CREATOR */
   const [creationStarted, setCreationStarted] = useState(false);
@@ -278,6 +293,8 @@ const HomeView = () => {
         character={character}
         fixBruteAppearance={fixBruteAppearance}
         setFixBruteAppearance={setFixBruteAppearance}
+        activeSpecialRule={activeSpecialRule}
+        user={user}
       />
     )
     : (
@@ -285,6 +302,28 @@ const HomeView = () => {
         title={t('MyBrute')}
         description={t('home.desc')}
       >
+        {activeSpecialRule && user?.brutes?.length && (
+          <Box
+            component={Link}
+            to={`/${user.brutes[0]?.name || ''}/tournament/special/${dayjs.utc().format('YYYY-MM-DD')}`}
+            sx={{
+              display: 'block',
+              mb: 2,
+              p: 1.5,
+              bgcolor: 'background.paperAccent',
+              borderRadius: 1,
+              textAlign: 'center',
+              textDecoration: 'none',
+              color: 'inherit',
+              '&:hover': { bgcolor: 'action.hover' },
+            }}
+          >
+            <Text bold>
+              {activeSpecialRule.emoji} {t('specialTournament')}: {t(activeSpecialRule.nameKey)}
+            </Text>
+            <Text variant="body2">{t(activeSpecialRule.descKey)}</Text>
+          </Box>
+        )}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
           {/* CHARACTER CREATION */}
           <BoxBg
