@@ -69,11 +69,13 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
 
   const stepWatched = useMemo(() => {
     if (!tournament?.date) return 0;
+    // Special tournaments always show all rounds
+    if (type === 'special') return 6;
     if (!brute?.currentTournamentDate) return 0;
     if (!dayjs.utc(tournament.date).isSame(dayjs.utc(), 'day')) return 6;
 
     return brute?.currentTournamentStepWatched || 0;
-  }, [brute, tournament]);
+  }, [brute, tournament, type]);
 
   const ownsBrute = useMemo(() => (authing
     || !!(brute && user && brute.userId === user.id)), [authing, brute, user]);

@@ -53,6 +53,9 @@ export const Tournaments = {
               tournamentStep: true,
               fighters: true,
             },
+            orderBy: {
+              tournamentStep: 'asc',
+            },
           },
         },
       });
@@ -161,6 +164,9 @@ export const Tournaments = {
               loserId: true,
               tournamentStep: true,
               fighters: true,
+            },
+            orderBy: {
+              tournamentStep: 'asc',
             },
           },
         },
