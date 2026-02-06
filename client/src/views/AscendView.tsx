@@ -99,7 +99,7 @@ const AscendView = () => {
     return -1;
   };
 
-    const onPetClick = (pet: PetName) => {
+  const onPetClick = (pet: PetName) => {
     if (pet === 'dog1' || pet === 'dog2' || pet === 'dog3') {
       const nextAvailableDogAscendLevel = getNextAvailableDogAscendLevel();
       if (nextAvailableDogAscendLevel === -1) {
@@ -113,10 +113,9 @@ const AscendView = () => {
       } else if (nextAvailableDogAscendLevel === 3) {
         setSelectedPerk('dog3');
       }
-      } else {
-        if (brute?.ascendedPets?.includes(pet)) {
-        return;
-      }
+    } else if (brute?.ascendedPets?.includes(pet)) {
+      return;
+    } else {
       setSelectedPerk(pet);
     }
     setSelectedPerkType('pet');

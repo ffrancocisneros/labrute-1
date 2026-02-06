@@ -286,6 +286,74 @@ El workflow está diseñado para que el job `railway-redeploy` falle silenciosam
 
 ---
 
+## ❌ Error de build Docker - ESLint en AscendView
+
+### Síntoma
+
+Al correr el workflow `publish-ghcr.yml`, el paso `yarn build:client` falló con:
+
+```text
+[eslint]
+src/views/AscendView.tsx
+  Line 102:1:  Expected indentation of 2 spaces but found 4  indent
+  Line 116:1:  Expected indentation of 4 spaces but found 6  indent
+  Line 117:1:  Expected indentation of 6 spaces but found 8  indent
+```
+
+### Causa
+
+- Se modificó `AscendView.tsx` para hacer más segura la lógica de ascensión de mascotas (`ascendedPets?.includes(pet)`), pero se dejó un bloque con **indentación incorrecta**:
+  - La declaración de `const onPetClick = (pet: PetName) => { ... }` quedó desfasada hacia la derecha.
+  - El `if/else` interno tenía niveles de indentación inconsistentes.
+- El linter de `react-scripts` se ejecuta en el **build de producción** (`yarn build`), y cualquier warning de esta regla se trata como error, rompiendo el build de Docker.
+
+### Solución aplicada
+
+- Reescribir el bloque de `onPetClick` con indentación correcta y lógica más clara:
+
+```ts
+const onPetClick = (pet: PetName) => {
+  if (pet === 'dog1' || pet === 'dog2' || pet === 'dog3') {
+    const nextAvailableDogAscendLevel = getNextAvailableDogAscendLevel();
+    if (nextAvailableDogAscendLevel === -1) {
+      return;
+    }
+
+    if (nextAvailableDogAscendLevel === 1) {
+      setSelectedPerk('dog1');
+    } else if (nextAvailableDogAscendLevel === 2) {
+      setSelectedPerk('dog2');
+    } else if (nextAvailableDogAscendLevel === 3) {
+      setSelectedPerk('dog3');
+    }
+  } else if (brute?.ascendedPets?.includes(pet)) {
+    return;
+  } else {
+    setSelectedPerk(pet);
+  }
+  setSelectedPerkType('pet');
+};
+```
+
+### Lección / Checklist para futuros cambios
+
+Antes de hacer **push a `main`** y disparar el build Docker:
+
+1. Ejecutar localmente (al menos una vez por rama grande):
+   ```bash
+   cd client
+   yarn build
+   ```
+   Esto corre el mismo ESLint que el build de Docker.
+
+2. Si se toca cualquier vista React (`client/src/views/**`), en especial componentes complejos como `AscendView`, verificar que:
+   - No haya warnings de ESLint (indentación, variables sin usar, etc.).
+   - El build de producción se complete correctamente.
+
+Con esto se evitan fallos de CI por detalles de formato que solo aparecen en `yarn build:client` dentro del contenedor Docker.
+
+---
+
 ## 🚨 Error de Migración en Producción - Bonus Fights
 
 ### Problema Reportado
