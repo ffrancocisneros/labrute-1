@@ -273,6 +273,39 @@ const Server = {
     accept: (brute: string, clan: string, war: string) => Fetch<never>('/api/clan/war/accept', { brute, clan, war }, 'PATCH'),
     getFight: (warId: string, fightId: string) => Fetch<FightGetResponse>(`/api/clan/war/${warId}/fight/${fightId}`),
   },
+  ClanTournament: {
+    register: (bruteId: string, clanId: string) => Fetch<{ success: boolean }>(
+      '/api/clan/tournament/register',
+      { brute: bruteId, clanId },
+      'POST',
+    ),
+    getToday: (clanId: string) => Fetch<{
+      tournament: {
+        id: string;
+        date: string;
+        format: 'ELIMINATION' | 'LEAGUE';
+        status: 'PENDING' | 'ONGOING' | 'FINISHED';
+        rounds: number;
+        participants: Array<{
+          id: string;
+          seed: number;
+          points: number;
+          finalPosition: number | null;
+          clan: { id: string; name: string };
+        }>;
+        wars: Array<{
+          id: string;
+          round: number;
+          attackerWins: number;
+          defenderWins: number;
+          fightIds: string[];
+          attackerClan: { id: string; name: string };
+          defenderClan: { id: string; name: string };
+          winnerClan: { id: string; name: string } | null;
+        }>;
+      } | null;
+    }>(`/api/clan/${clanId}/tournament/today`),
+  },
   Event: {
     list: (page: number) => Fetch<EventListResponse>('/api/event/list', { page }),
     get: (bruteId: string, id: string) => Fetch<EventGetResponse>(`/api/event/${id}/brute/${bruteId}`),
@@ -305,6 +338,8 @@ const Server = {
         progress: number;
         completed: boolean;
         completedAt?: string | null;
+        claimed: boolean;
+        claimedAt?: string | null;
         rewardType: string;
         rewardValue: number;
       }>;
@@ -315,6 +350,8 @@ const Server = {
         progress: number;
         completed: boolean;
         completedAt?: string | null;
+        claimed: boolean;
+        claimedAt?: string | null;
         rewardType: string;
         rewardValue: number;
       }>;
@@ -332,6 +369,28 @@ const Server = {
         rewardType: string;
         rewardValue: number;
         order: number;
+      }>;
+      clanDaily: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        rewardGold: number;
+        rewardXp: number;
+        startDate: string;
+        endDate: string;
+      }>;
+      clanWeekly: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        rewardGold: number;
+        rewardXp: number;
+        startDate: string;
+        endDate: string;
       }>;
     }>('/api/missions'),
     claim: (id: string) => Fetch<{

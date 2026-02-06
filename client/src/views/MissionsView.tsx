@@ -66,6 +66,24 @@ const MissionsView = () => {
   const [completedExpandedDaily, setCompletedExpandedDaily] = useState(false);
   const [completedExpandedWeekly, setCompletedExpandedWeekly] = useState(false);
   const [completedExpandedGeneral, setCompletedExpandedGeneral] = useState(false);
+  const [clanDailyMissions, setClanDailyMissions] = useState<Array<{
+    id: string;
+    type: string;
+    target: number;
+    progress: number;
+    completed: boolean;
+    rewardGold: number;
+    rewardXp: number;
+  }>>([]);
+  const [clanWeeklyMissions, setClanWeeklyMissions] = useState<Array<{
+    id: string;
+    type: string;
+    target: number;
+    progress: number;
+    completed: boolean;
+    rewardGold: number;
+    rewardXp: number;
+  }>>([]);
 
   const loadMissions = useCallback(async () => {
     try {
@@ -74,15 +92,53 @@ const MissionsView = () => {
         daily: DailyMission[];
         weekly: WeeklyMission[];
         general: GeneralMission[];
+        clanDaily: Array<{
+          id: string;
+          type: string;
+          target: number;
+          progress: number;
+          completed: boolean;
+          rewardGold: number;
+          rewardXp: number;
+        }>;
+        clanWeekly: Array<{
+          id: string;
+          type: string;
+          target: number;
+          progress: number;
+          completed: boolean;
+          rewardGold: number;
+          rewardXp: number;
+        }>;
       };
       setDailyMissions(response.daily || []);
       setWeeklyMissions(response.weekly || []);
       setGeneralMissions(response.general || []);
+      setClanDailyMissions((response.clanDaily || []).map((m) => ({
+        id: m.id,
+        type: m.type,
+        target: m.target,
+        progress: m.progress,
+        completed: m.completed,
+        rewardGold: m.rewardGold,
+        rewardXp: m.rewardXp,
+      })));
+      setClanWeeklyMissions((response.clanWeekly || []).map((m) => ({
+        id: m.id,
+        type: m.type,
+        target: m.target,
+        progress: m.progress,
+        completed: m.completed,
+        rewardGold: m.rewardGold,
+        rewardXp: m.rewardXp,
+      })));
     } catch (error) {
       catchError(Alert)(error as ErrorType | string);
       setDailyMissions([]);
       setWeeklyMissions([]);
       setGeneralMissions([]);
+      setClanDailyMissions([]);
+      setClanWeeklyMissions([]);
     } finally {
       setLoading(false);
     }
@@ -161,6 +217,18 @@ const MissionsView = () => {
       GAIN_XP: 'Ganar XP',
       REACH_LEVEL: 'Llegar al nivel',
       COMPLETE_ACHIEVEMENTS: 'Completar logros',
+    };
+    return names[type] || type;
+  };
+
+  const getClanMissionName = (type: string): string => {
+    const names: Record<string, string> = {
+      DAILY_BOSS_FIGHTS: 'Peleas contra el jefe de clan',
+      DAILY_CLAN_WAR_WIN: 'Victoria de guerra de clan en torneo',
+      DAILY_BOSS_DAMAGE: 'Daño total al jefe de clan',
+      WEEKLY_BOSS_KILL: 'Derrotar al jefe de clan',
+      WEEKLY_TOURNAMENTS_PLAYED: 'Torneos de clan jugados',
+      WEEKLY_DUELS_WON: 'Duelos ganados en torneos de clan',
     };
     return names[type] || type;
   };
@@ -271,6 +339,65 @@ const MissionsView = () => {
     );
   };
 
+  const renderClanMission = (
+    mission: {
+      id: string;
+      type: string;
+      target: number;
+      progress: number;
+      completed: boolean;
+      rewardGold: number;
+      rewardXp: number;
+    },
+  ) => {
+    const progress = Math.min((mission.progress / mission.target) * 100, 100);
+
+    return (
+      <Paper
+        key={mission.id}
+        sx={{
+          p: 2,
+          mb: 2,
+          bgcolor: 'background.paperLight',
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 1 }}>
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h6">
+              {getClanMissionName(mission.type)}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Objetivo de clan: {mission.target}
+            </Typography>
+          </Box>
+          {mission.completed && (
+            <Chip
+              label="Completada"
+              color="success"
+              size="small"
+              icon={<CheckCircle />}
+            />
+          )}
+        </Box>
+        <Box sx={{ mb: 1 }}>
+          <LinearProgress
+            variant="determinate"
+            value={progress}
+            sx={{ height: 8, borderRadius: 1 }}
+          />
+          <Typography variant="caption" sx={{ mt: 0.5, display: 'block' }}>
+            {mission.progress} / {mission.target}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Text bold color="secondary">
+            Recompensa por bruto del clan: {mission.rewardGold} oro, {mission.rewardXp} XP
+          </Text>
+        </Box>
+      </Paper>
+    );
+  };
+
   return (
     <Page title="Misiones">
       <Box sx={{ width: '100%' }}>
@@ -354,6 +481,15 @@ const MissionsView = () => {
                 )}
               </>
             )}
+            {/* Misiones de clan diarias */}
+            {clanDailyMissions.length > 0 && (
+              <Box sx={{ mt: 3 }}>
+                <Typography variant="h6" sx={{ mb: 1 }}>
+                  Misiones de clan (diarias)
+                </Typography>
+                {clanDailyMissions.map((mission) => renderClanMission(mission))}
+              </Box>
+            )}
           </Box>
         )}
 
@@ -392,6 +528,15 @@ const MissionsView = () => {
                   </Box>
                 )}
               </>
+            )}
+            {/* Misiones de clan semanales */}
+            {clanWeeklyMissions.length > 0 && (
+              <Box sx={{ mt: 3 }}>
+                <Typography variant="h6" sx={{ mb: 1 }}>
+                  Misiones de clan (semanales)
+                </Typography>
+                {clanWeeklyMissions.map((mission) => renderClanMission(mission))}
+              </Box>
             )}
           </Box>
         )}

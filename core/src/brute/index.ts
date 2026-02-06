@@ -8,6 +8,7 @@ export * from './colors';
 export * from './createRandomBruteStats';
 export * from './getBruteGoldValue';
 export * from './getFightsLeft';
+export * from './getBossFightsLeft';
 export * from './getGoldNeededForNewBrute';
 export * from './getHP';
 export * from './getLevelUpChoices';

@@ -12,6 +12,7 @@ import { BruteReports } from './controllers/BruteReports.js';
 import { Brutes } from './controllers/Brutes.js';
 import { Clans } from './controllers/Clans.js';
 import { ClanWars } from './controllers/ClanWars.js';
+import { ClanTournaments } from './controllers/ClanTournaments.js';
 import { Events } from './controllers/Events.js';
 import { Fights } from './controllers/Fights.js';
 import { Logs } from './controllers/Logs.js';
@@ -212,6 +213,10 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
   app.delete('/api/clan/war', ClanWars.cancel(prisma));
   app.patch('/api/clan/war/accept', ClanWars.accept(prisma));
   app.get('/api/clan/war/:warId/fight/:fightId', ClanWars.getFight(prisma));
+
+  // Clan tournament
+  app.post('/api/clan/tournament/register', ClanTournaments.register(prisma));
+  app.get('/api/clan/:id/tournament/today', ClanTournaments.getTodayForClan(prisma));
 
   // Event
   app.get('/api/event/list', Events.list(prisma));

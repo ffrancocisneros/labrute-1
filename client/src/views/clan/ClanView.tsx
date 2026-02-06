@@ -1,6 +1,6 @@
-import { BruteRanking, BrutesGetClanIdAsMasterResponse, CalculatedBrute, ClanGetResponse, bosses, getCalculatedBrute, getFightsLeft, getTotalFightsLeft } from '@labrute/core';
+import { BruteRanking, BrutesGetClanIdAsMasterResponse, CalculatedBrute, ClanGetResponse, bosses, getBossFightsLeft, getCalculatedBrute } from '@labrute/core';
 import { BossName, ClanWarStatus, ClanWarType } from '@labrute/prisma';
-import { HelpOutline, HighlightOff, History, PlayCircleOutline, Policy } from '@mui/icons-material';
+import { EmojiEvents, HelpOutline, HighlightOff, History, PlayCircleOutline, Policy } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Checkbox, FormControlLabel, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -43,6 +43,9 @@ const ClanView = () => {
   const [sort, setSort] = useState<SortOption>(SortOption.Default);
   const [warEnabled, setWarEnabled] = useState(false);
   const [masterOfClan, setMasterOfClan] = useState<BrutesGetClanIdAsMasterResponse['id']>(null);
+  const [tournamentSummary, setTournamentSummary] = useState<{
+    hasToday: boolean;
+  } | null>(null);
 
   const boss = useMemo(() => clan && bosses.find((b) => b.name === clan.boss), [clan]);
   const displayedBossName = useMemo(() => {
@@ -72,6 +75,19 @@ const ClanView = () => {
       setWarEnabled(data.participateInClanWar);
     }).catch(catchError(Alert));
   }, [id, Alert, modifiers]);
+
+  // Fetch today's clan tournament summary (very lightweight)
+  useEffect(() => {
+    if (!id) return;
+
+    Server.ClanTournament.getToday(id).then((data) => {
+      setTournamentSummary({
+        hasToday: !!data.tournament,
+      });
+    }).catch(() => {
+      setTournamentSummary(null);
+    });
+  }, [id]);
 
   // Fetch brute master of clan id
   useEffect(() => {
@@ -305,20 +321,31 @@ const ClanView = () => {
 
     if (!clan || !brute) return;
 
-    // Check if brute still has fights left
-    if (getTotalFightsLeft(brute) <= 0) {
-      Alert.open('error', t('noFightsLeft'));
+    // Check if brute still has boss fights left (separate counter)
+    const bossFightsLeft = getBossFightsLeft({
+      lastBossFightDate: brute.lastBossFightDate,
+      bossFightsToday: brute.bossFightsToday,
+    });
+
+    if (bossFightsLeft <= 0) {
+      Alert.open('error', t('noBossFightsLeft'));
       return;
     }
 
     Server.Clan.challengeBoss(brute.name, clan.id).then((fight) => {
-      // Update fights left
+      const today = new Date();
+      const { lastBossFightDate } = brute;
+      const isSameDay = lastBossFightDate
+        && new Date(lastBossFightDate).toDateString() === today.toDateString();
+      const newBossFightsToday = isSameDay ? (brute.bossFightsToday ?? 2) - 1 : 1;
+
+      // Update boss fights counter (not regular fights)
       updateData((data) => (data ? ({
         ...data,
         brutes: data.brutes.map((b) => (b.name === brute.name ? {
           ...b,
-          fightsLeft: getFightsLeft(b) - 1,
-          lastFight: new Date(),
+          lastBossFightDate: today,
+          bossFightsToday: newBossFightsToday,
         } : b)),
       }) : null));
 
@@ -327,8 +354,8 @@ const ClanView = () => {
 
         return {
           ...b,
-          fightsLeft: getFightsLeft(b) - 1,
-          lastFight: new Date(),
+          lastBossFightDate: today,
+          bossFightsToday: newBossFightsToday,
         };
       });
 
@@ -427,6 +454,24 @@ const ClanView = () => {
     }).catch(catchError(Alert));
   };
 
+  const goToClanTournament = () => {
+    if (!brute || !clan) return;
+    navigate(`/${brute.name}/clan/${clan.id}/tournament`);
+  };
+
+  const registerClanTournament = () => {
+    if (!brute || !clan) return;
+    // Only master can register (same rule as backend)
+    if (clan.masterId !== brute.id) {
+      Alert.open('error', t('unauthorized'));
+      return;
+    }
+    Server.ClanTournament.register(brute.id, clan.id).then(() => {
+      Alert.open('success', t('clanTournamentRegistered'));
+      setTournamentSummary((prev) => (prev ? { ...prev, hasToday: true } : { hasToday: true }));
+    }).catch(catchError(Alert));
+  };
+
   return clan && (
     <Page title={`${t('clan')} ${clan.name}`} headerUrl={`/${bruteName || ''}/cell`}>
       <Paper sx={{ mx: 4 }}>
@@ -475,6 +520,12 @@ const ClanView = () => {
               <Text bold smallCaps>{t('forum')}</Text>
             </Link>
           )}
+          {/* CLAN TOURNAMENT */}
+          {user && brute?.clanId === clan.id && (
+            <Link href="#" onClick={goToClanTournament}>
+              <Text bold smallCaps>{t('clanTournament')}</Text>
+            </Link>
+          )}
           {/* DECLARE FRIENDLY WAR */}
           {user && masterOfClan && masterOfClan !== clan.id && !clanWar && (
             <Link href="#" onClick={declareFriendlyWar}>
@@ -511,6 +562,41 @@ const ClanView = () => {
             )}
             label={t('toggleWar')}
           />
+        )}
+        {/* CLAN TOURNAMENT SUMMARY */}
+        {clan && (
+          <Box sx={{
+            mt: 1,
+            px: 2,
+            py: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 1,
+          }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <EmojiEvents color="warning" sx={{ fontSize: 22 }} />
+              <Text bold smallCaps>
+                {t('clanTournament')}
+              </Text>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+              <Text smallCaps>
+                {tournamentSummary?.hasToday ? t('clanTournamentTodayRegistered') : t('clanTournamentNext')}
+              </Text>
+              {owner && clan.masterId === brute?.id && (
+                <FantasyButton
+                  color="success"
+                  onClick={registerClanTournament}
+                  sx={{ ml: 1 }}
+                >
+                  {t('registerForNextClanTournament')}
+                </FantasyButton>
+              )}
+            </Box>
+          </Box>
         )}
         {/* ONGOING CLAN WAR */}
         {clanWar && (
@@ -776,11 +862,35 @@ const ClanView = () => {
             </Box>
           </Box>
         )}
-        {user && owner && brute?.clanId === clan.id && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-            <FantasyButton color="warning" onClick={challengeBoss}>{t('challengeBoss')}</FantasyButton>
-          </Box>
-        )}
+        {user && owner && brute?.clanId === clan.id && (() => {
+          const bossFightsLeft = brute ? getBossFightsLeft({
+            lastBossFightDate: brute.lastBossFightDate,
+            bossFightsToday: brute.bossFightsToday,
+          }) : 0;
+          const canChallengeBoss = bossFightsLeft > 0;
+
+          return (
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 1, gap: 1 }}>
+              <Text smallCaps sx={{ fontSize: '0.875rem' }}>
+                {t('bossFightsLeft', { current: bossFightsLeft, max: 2 })}
+              </Text>
+              <Tooltip
+                title={!canChallengeBoss ? t('noBossFightsLeft') : t('bossFightsDoNotConsumeDailyFights')}
+                arrow
+              >
+                <span>
+                  <FantasyButton
+                    color="warning"
+                    onClick={challengeBoss}
+                    disabled={!canChallengeBoss}
+                  >
+                    {t('challengeBoss')}
+                  </FantasyButton>
+                </span>
+              </Tooltip>
+            </Box>
+          );
+        })()}
         {/* MEMBERS */}
         <Text bold h4 sx={{ my: 1 }}>{clan.brutes.length}/{clan.limit} {t('brutes')}</Text>
         <Box sx={{

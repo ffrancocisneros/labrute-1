@@ -182,6 +182,8 @@ exports.Prisma.BruteScalarFieldEnum = {
   pupilsCount: 'pupilsCount',
   lastFight: 'lastFight',
   fightsLeft: 'fightsLeft',
+  lastBossFightDate: 'lastBossFightDate',
+  bossFightsToday: 'bossFightsToday',
   weapons: 'weapons',
   skills: 'skills',
   agilityModifier: 'agilityModifier',
@@ -516,6 +518,54 @@ exports.Prisma.ClanWarFightersScalarFieldEnum = {
   id: 'id',
   clanWarId: 'clanWarId',
   day: 'day'
+};
+
+exports.Prisma.ClanTournamentScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  format: 'format',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  rounds: 'rounds'
+};
+
+exports.Prisma.ClanTournamentClanScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  tournamentId: 'tournamentId',
+  seed: 'seed',
+  points: 'points',
+  finalPosition: 'finalPosition'
+};
+
+exports.Prisma.ClanTournamentWarScalarFieldEnum = {
+  id: 'id',
+  tournamentId: 'tournamentId',
+  round: 'round',
+  attackerClanId: 'attackerClanId',
+  defenderClanId: 'defenderClanId',
+  winnerClanId: 'winnerClanId',
+  attackerWins: 'attackerWins',
+  defenderWins: 'defenderWins',
+  fightIds: 'fightIds'
+};
+
+exports.Prisma.ClanMissionScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  type: 'type',
+  cadence: 'cadence',
+  target: 'target',
+  progress: 'progress',
+  completed: 'completed',
+  completedAt: 'completedAt',
+  rewardGold: 'rewardGold',
+  rewardXp: 'rewardXp',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.InventoryItemScalarFieldEnum = {
@@ -1084,6 +1134,31 @@ exports.ClanWarType = exports.$Enums.ClanWarType = {
   official: 'official'
 };
 
+exports.ClanTournamentFormat = exports.$Enums.ClanTournamentFormat = {
+  ELIMINATION: 'ELIMINATION',
+  LEAGUE: 'LEAGUE'
+};
+
+exports.ClanTournamentStatus = exports.$Enums.ClanTournamentStatus = {
+  PENDING: 'PENDING',
+  ONGOING: 'ONGOING',
+  FINISHED: 'FINISHED'
+};
+
+exports.ClanMissionType = exports.$Enums.ClanMissionType = {
+  DAILY_BOSS_FIGHTS: 'DAILY_BOSS_FIGHTS',
+  DAILY_CLAN_WAR_WIN: 'DAILY_CLAN_WAR_WIN',
+  DAILY_BOSS_DAMAGE: 'DAILY_BOSS_DAMAGE',
+  WEEKLY_BOSS_KILL: 'WEEKLY_BOSS_KILL',
+  WEEKLY_TOURNAMENTS_PLAYED: 'WEEKLY_TOURNAMENTS_PLAYED',
+  WEEKLY_DUELS_WON: 'WEEKLY_DUELS_WON'
+};
+
+exports.ClanMissionCadence = exports.$Enums.ClanMissionCadence = {
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY'
+};
+
 exports.InventoryItemType = exports.$Enums.InventoryItemType = {
   visualReset: 'visualReset',
   bossTicket: 'bossTicket',
@@ -1169,6 +1244,10 @@ exports.Prisma.ModelName = {
   BossDamage: 'BossDamage',
   ClanWar: 'ClanWar',
   ClanWarFighters: 'ClanWarFighters',
+  ClanTournament: 'ClanTournament',
+  ClanTournamentClan: 'ClanTournamentClan',
+  ClanTournamentWar: 'ClanTournamentWar',
+  ClanMission: 'ClanMission',
   InventoryItem: 'InventoryItem',
   BattlePassSeason: 'BattlePassSeason',
   BattlePassReward: 'BattlePassReward',

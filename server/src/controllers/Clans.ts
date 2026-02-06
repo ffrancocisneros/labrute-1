@@ -7,6 +7,7 @@ import {
   ClanGetThreadsResponse, ClanListResponse, ClanSort, ExpectedError,
   FightLogTemplateCount,
   ForbiddenError,
+  getBossFightsLeft,
   getCalculatedBrute, getFightsLeft,
   isUuid,
   LimitError, MissingElementError, NotFoundError,
@@ -14,7 +15,7 @@ import {
 } from '@labrute/core';
 import {
   BossName,
-  Clan, ClanWarStatus, LogType, Prisma, PrismaClient,
+  Clan, ClanMissionType, ClanWarStatus, LogType, Prisma, PrismaClient,
 } from '@labrute/prisma';
 import type { Request, Response } from 'express';
 import { DISCORD, LOGGER } from '../context.js';
@@ -24,6 +25,7 @@ import { generateFight, GenerateFightResult } from '../utils/fight/generateFight
 import { ilike } from '../utils/ilike.js';
 import { sendError } from '../utils/sendError.js';
 import { ServerState } from '../utils/ServerState.js';
+import { incrementClanMission } from '../utils/missions/clanMissions.js';
 import { translate } from '../utils/translate.js';
 
 export const Clans = {
@@ -1383,11 +1385,6 @@ export const Clans = {
 
       const brute = getCalculatedBrute(baseBrute, modifiers);
 
-      // Check if the brute has fights left
-      if (getFightsLeft(brute, modifiers) <= 0) {
-        throw new LimitError(translate('noFightsLeft', user));
-      }
-
       const { id } = req.params;
 
       // Check if the brute is in the clan
@@ -1412,12 +1409,26 @@ export const Clans = {
         throw new NotFoundError('Boss not found');
       }
 
-      // Update brute last fight and fights left
+      // Check if the brute has boss fights left (separate counter)
+      const bossFightsLeft = getBossFightsLeft({
+        lastBossFightDate: baseBrute.lastBossFightDate,
+        bossFightsToday: baseBrute.bossFightsToday,
+      });
+
+      if (bossFightsLeft <= 0) {
+        throw new LimitError(translate('noBossFightsLeft', user));
+      }
+
+      // Update brute last boss fight date and boss fights today
+      const today = new Date();
+      const lastBossFightDate = baseBrute.lastBossFightDate;
+      const isSameDay = lastBossFightDate && new Date(lastBossFightDate).toDateString() === today.toDateString();
+      
       await prisma.brute.update({
         where: { id: brute.id },
         data: {
-          lastFight: new Date(),
-          fightsLeft: getFightsLeft(brute, modifiers) - 1,
+          lastBossFightDate: today,
+          bossFightsToday: isSameDay ? (baseBrute.bossFightsToday ?? 2) - 1 : 1,
         },
         select: { id: true },
       });
@@ -1485,6 +1496,14 @@ export const Clans = {
             fightId,
           },
         });
+      }
+
+      // Misiones de clan: pelea al jefe (diaria)
+      await incrementClanMission(prisma, clan.id, ClanMissionType.DAILY_BOSS_FIGHTS, 1);
+
+      // Misiones de clan: jefe derrotado (semanal)
+      if (generatedFight.boss?.defeated) {
+        await incrementClanMission(prisma, clan.id, ClanMissionType.WEEKLY_BOSS_KILL, 1);
       }
 
       // Send fight id to client

@@ -22,6 +22,7 @@ import ClanPostView from './views/clan/ClanPostView';
 import ClanRankingView from './views/clan/ClanRankingView';
 import ClanThreadView from './views/clan/ClanThreadView';
 import ClanView from './views/clan/ClanView';
+import ClanTournamentView from './views/clan/ClanTournamentView';
 import ClanWarFightView from './views/clan/ClanWarFightView';
 import { ClanWarHistoryView } from './views/clan/ClanWarHistoryView';
 import { ClanWarView } from './views/clan/ClanWarView';
@@ -119,6 +120,7 @@ const routes: RouteObject[] = [
                 path: ':id',
                 children: [
                   { path: '', element: <ClanView /> },
+                  { path: 'tournament', element: <ClanTournamentView /> },
                   { path: 'forum', element: <ClanForumView /> },
                   { path: 'thread/:tid', element: <ClanThreadView /> },
                   { path: 'post/:tid', element: <ClanPostView /> },

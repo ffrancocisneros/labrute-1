@@ -97,6 +97,8 @@ model Brute {
   pupilsCount                  Int                     @default(0)
   lastFight                    DateTime?               @db.Date
   fightsLeft                   Int                     @default(12)
+  lastBossFightDate            DateTime?               @db.Date
+  bossFightsToday              Int                     @default(2)
   weapons                      WeaponName[]            @default([])
   skills                       SkillName[]             @default([])
   agilityModifier              Float                   @default(1)
@@ -500,25 +502,30 @@ model BannedIp {
 }
 
 model Clan {
-  name                 String       @db.VarChar(255)
-  limit                Int          @default(10)
-  points               Int          @default(0)
-  boss                 BossName     @default(GoldClaw)
-  damageOnBoss         Int          @default(0)
-  bossRotationDate     DateTime?    @db.Date
-  id                   String       @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  masterId             String?      @unique @db.Uuid
-  elo                  Int          @default(1000)
-  participateInClanWar Boolean      @default(false)
-  deletedAt            DateTime?    @db.Timestamptz(6)
-  bossDamages          BossDamage[]
-  brutes               Brute[]
-  joinRequests         Brute[]      @relation("JoinRequests")
-  master               Brute?       @relation("MasterOfClan", fields: [masterId], references: [id])
-  threads              ClanThread[]
-  attacks              ClanWar[]    @relation("ClanWarAttacker")
-  defenses             ClanWar[]    @relation("ClanWarDefender")
-  wins                 ClanWar[]    @relation("ClanWarWinner")
+  name                   String               @db.VarChar(255)
+  limit                  Int                  @default(10)
+  points                 Int                  @default(0)
+  boss                   BossName             @default(GoldClaw)
+  damageOnBoss           Int                  @default(0)
+  bossRotationDate       DateTime?            @db.Date
+  id                     String               @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  masterId               String?              @unique @db.Uuid
+  elo                    Int                  @default(1000)
+  participateInClanWar   Boolean              @default(false)
+  deletedAt              DateTime?            @db.Timestamptz(6)
+  bossDamages            BossDamage[]
+  brutes                 Brute[]
+  joinRequests           Brute[]              @relation("JoinRequests")
+  master                 Brute?               @relation("MasterOfClan", fields: [masterId], references: [id])
+  threads                ClanThread[]
+  attacks                ClanWar[]            @relation("ClanWarAttacker")
+  defenses               ClanWar[]            @relation("ClanWarDefender")
+  wins                   ClanWar[]            @relation("ClanWarWinner")
+  tournamentAttacks      ClanTournamentWar[]  @relation("ClanTournamentAttackerClan")
+  tournamentDefenses     ClanTournamentWar[]  @relation("ClanTournamentDefenderClan")
+  tournamentWins         ClanTournamentWar[]  @relation("ClanTournamentWinnerClan")
+  tournamentParticipants ClanTournamentClan[]
+  missions               ClanMission[]
 
   @@unique([name, deletedAt])
   @@index([deletedAt, name, points])
@@ -605,6 +612,76 @@ model ClanWarFighters {
 
   @@unique([clanWarId, day])
   @@index([clanWarId])
+}
+
+model ClanTournament {
+  id           String               @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  date         DateTime             @db.Date
+  format       ClanTournamentFormat
+  status       ClanTournamentStatus @default(PENDING)
+  createdAt    DateTime             @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime             @default(now()) @db.Timestamp(6)
+  rounds       Int                  @default(0)
+  participants ClanTournamentClan[]
+  wars         ClanTournamentWar[]
+
+  @@index([date, format])
+}
+
+model ClanTournamentClan {
+  id            String         @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  clanId        String         @db.Uuid
+  tournamentId  String         @db.Uuid
+  seed          Int
+  points        Int            @default(0) // usado en formato liga
+  finalPosition Int? // posición final (1 = campeón)
+  clan          Clan           @relation(fields: [clanId], references: [id])
+  tournament    ClanTournament @relation(fields: [tournamentId], references: [id])
+
+  @@unique([tournamentId, clanId])
+  @@index([clanId])
+  @@index([tournamentId])
+}
+
+model ClanTournamentWar {
+  id             String         @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tournamentId   String         @db.Uuid
+  round          Int            @default(1) // 1 = primera ronda / primera jornada
+  attackerClanId String         @db.Uuid
+  defenderClanId String         @db.Uuid
+  winnerClanId   String?        @db.Uuid
+  attackerWins   Int            @default(0) // duelos ganados por atacante
+  defenderWins   Int            @default(0) // duelos ganados por defensor
+  fightIds       String[]       @default([]) // IDs de Fight para replays
+  tournament     ClanTournament @relation(fields: [tournamentId], references: [id])
+  attackerClan   Clan           @relation("ClanTournamentAttackerClan", fields: [attackerClanId], references: [id])
+  defenderClan   Clan           @relation("ClanTournamentDefenderClan", fields: [defenderClanId], references: [id])
+  winnerClan     Clan?          @relation("ClanTournamentWinnerClan", fields: [winnerClanId], references: [id])
+
+  @@index([tournamentId, round])
+  @@index([attackerClanId])
+  @@index([defenderClanId])
+  @@index([winnerClanId])
+}
+
+model ClanMission {
+  id          String             @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  clanId      String             @db.Uuid
+  type        ClanMissionType
+  cadence     ClanMissionCadence
+  target      Int
+  progress    Int                @default(0)
+  completed   Boolean            @default(false)
+  completedAt DateTime?          @db.Timestamp(6)
+  rewardGold  Int                @default(0) // por bruto del clan
+  rewardXp    Int                @default(0) // por bruto del clan
+  startDate   DateTime           @db.Date
+  endDate     DateTime           @db.Date
+  createdAt   DateTime           @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime           @default(now()) @db.Timestamp(6)
+  clan        Clan               @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  @@index([clanId, cadence, startDate, endDate])
 }
 
 model InventoryItem {
@@ -1281,4 +1358,29 @@ enum NotificationSeverity {
   success
   warning
   error
+}
+
+enum ClanTournamentFormat {
+  ELIMINATION // Eliminación directa
+  LEAGUE // Liga todos contra todos
+}
+
+enum ClanTournamentStatus {
+  PENDING
+  ONGOING
+  FINISHED
+}
+
+enum ClanMissionType {
+  DAILY_BOSS_FIGHTS /// X peleas contra el jefe hoy
+  DAILY_CLAN_WAR_WIN /// 1 guerra de clan ganada en día de torneo
+  DAILY_BOSS_DAMAGE /// Y daño total al jefe hoy
+  WEEKLY_BOSS_KILL /// Derrotar al jefe 1 vez en la semana
+  WEEKLY_TOURNAMENTS_PLAYED /// Participar en M torneos de clan en la semana
+  WEEKLY_DUELS_WON /// Ganar K duelos en torneos de clan en la semana
+}
+
+enum ClanMissionCadence {
+  DAILY
+  WEEKLY
 }

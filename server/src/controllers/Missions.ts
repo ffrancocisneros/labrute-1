@@ -1,4 +1,4 @@
-import { PrismaClient } from '@labrute/prisma';
+import { ClanMissionCadence, PrismaClient } from '@labrute/prisma';
 import type { Request, Response } from 'express';
 import { auth } from '../utils/auth.js';
 import { sendError } from '../utils/sendError.js';
@@ -53,12 +53,34 @@ export const Missions = {
         rewardValue: number;
         order: number;
       }>;
+      clanDaily: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        rewardGold: number;
+        rewardXp: number;
+        startDate: string;
+        endDate: string;
+      }>;
+      clanWeekly: Array<{
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        rewardGold: number;
+        rewardXp: number;
+        startDate: string;
+        endDate: string;
+      }>;
     }>,
   ) => {
     try {
       const authed = await auth(prisma, req);
 
-      const today = dayjs().startOf('day').toDate();
+      const today = dayjs.utc().startOf('day').toDate();
       const weekStart = getWeekStart();
 
       // Generar misiones generales si no existen
@@ -97,6 +119,93 @@ export const Missions = {
           { order: 'asc' },
         ],
       });
+
+      // Misiones de clan (para el primer clan en el que tenga un bruto)
+      let clanDaily: {
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        rewardGold: number;
+        rewardXp: number;
+        startDate: string;
+        endDate: string;
+      }[] = [];
+
+      let clanWeekly: {
+        id: string;
+        type: string;
+        target: number;
+        progress: number;
+        completed: boolean;
+        rewardGold: number;
+        rewardXp: number;
+        startDate: string;
+        endDate: string;
+      }[] = [];
+
+      const userBruteWithClan = await prisma.brute.findFirst({
+        where: {
+          userId: authed.id,
+          deletedAt: null,
+          clanId: { not: null },
+        },
+        select: {
+          clanId: true,
+        },
+      });
+
+      if (userBruteWithClan?.clanId) {
+        const clanId = userBruteWithClan.clanId;
+
+        const dailyClanMissions = await prisma.clanMission.findMany({
+          where: {
+            clanId,
+            cadence: ClanMissionCadence.DAILY,
+            startDate: today,
+            endDate: today,
+          },
+          orderBy: { createdAt: 'asc' },
+        });
+
+        const weekStart = getWeekStart();
+        const weekEnd = dayjs.utc(weekStart).add(6, 'day').startOf('day').toDate();
+
+        const weeklyClanMissions = await prisma.clanMission.findMany({
+          where: {
+            clanId,
+            cadence: ClanMissionCadence.WEEKLY,
+            startDate: weekStart,
+            endDate: weekEnd,
+          },
+          orderBy: { createdAt: 'asc' },
+        });
+
+        clanDaily = dailyClanMissions.map((m) => ({
+          id: m.id,
+          type: m.type,
+          target: m.target,
+          progress: m.progress,
+          completed: m.completed,
+          rewardGold: m.rewardGold,
+          rewardXp: m.rewardXp,
+          startDate: m.startDate.toISOString(),
+          endDate: m.endDate.toISOString(),
+        }));
+
+        clanWeekly = weeklyClanMissions.map((m) => ({
+          id: m.id,
+          type: m.type,
+          target: m.target,
+          progress: m.progress,
+          completed: m.completed,
+          rewardGold: m.rewardGold,
+          rewardXp: m.rewardXp,
+          startDate: m.startDate.toISOString(),
+          endDate: m.endDate.toISOString(),
+        }));
+      }
 
       res.send({
         daily: dailyMissions.map((m) => ({
@@ -138,6 +247,8 @@ export const Missions = {
           rewardValue: m.rewardValue,
           order: m.order,
         })),
+        clanDaily,
+        clanWeekly,
       });
     } catch (error) {
       sendError(res, error);

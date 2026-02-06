@@ -33,6 +33,10 @@ import {
 import {
   AchievementName,
   Brute,
+  ClanMissionType,
+  ClanMissionCadence,
+  ClanTournamentFormat,
+  ClanTournamentStatus,
   ClanWarStatus,
   ClanWarType,
   EventStatus,
@@ -47,6 +51,7 @@ import { ServerState } from './utils/ServerState.js';
 import { resetBrute } from './utils/brute/resetBrute.js';
 import { updateClanPoints } from './utils/clan/updateClanPoints.js';
 import { generateFight } from './utils/fight/generateFight.js';
+import { ensureDailyClanMissions, ensureWeeklyClanMissions, incrementClanMission } from './utils/missions/clanMissions.js';
 import { logMemory } from './utils/memory.js';
 import { shuffle } from './utils/shuffle.js';
 
@@ -2484,6 +2489,483 @@ const handleClanWars = async (
   }
 };
 
+const handleClanTournaments = async (
+  prisma: PrismaClient,
+  modifiers: Modifiers,
+) => {
+  const today = dayjs.utc().startOf('day').toDate();
+
+  // XP y oro se acumulan y se guardan via TournamentXp / TournamentGold
+  const xpByBrute: Record<string, number> = {};
+  const goldByUser: Record<string, number> = {};
+
+  // Obtener torneos de clan del día que aún no fueron procesados
+  const tournaments = await prisma.clanTournament.findMany({
+    where: {
+      date: today,
+      status: ClanTournamentStatus.PENDING,
+    },
+    include: {
+      participants: {
+        include: {
+          clan: {
+            select: { id: true, name: true },
+          },
+        },
+      },
+      wars: true,
+    },
+  });
+
+  if (!tournaments.length) {
+    return;
+  }
+
+  const simulateWar = async (
+    clanAId: string,
+    clanBId: string,
+  ) => {
+    // Obtener brutos activos de cada clan
+    const [brutesA, brutesB] = await Promise.all([
+      prisma.brute.findMany({
+        where: {
+          clanId: clanAId,
+          deletedAt: null,
+        },
+      }),
+      prisma.brute.findMany({
+        where: {
+          clanId: clanBId,
+          deletedAt: null,
+        },
+      }),
+    ]);
+
+    const maxPerClan = 10;
+    const N = Math.min(
+      maxPerClan,
+      brutesA.length,
+      brutesB.length,
+    );
+
+    if (!N) {
+      // Si algún clan no tiene brutos, no hay duelos; empate sin ganador
+      return {
+        attackerWins: 0,
+        defenderWins: 0,
+        fightIds: [] as string[],
+        winnerClanId: null as string | null,
+      };
+    }
+
+    const attackers = shuffle(brutesA).slice(0, N);
+    const defenders = shuffle(brutesB).slice(0, N);
+
+    let attackerWins = 0;
+    let defenderWins = 0;
+    const fightIds: string[] = [];
+
+    const duelsToPlay = N;
+
+    const playDuel = async (attacker: Brute, defender: Brute) => {
+      // Generate fight (retry if failed)
+      let generatedFight: Prisma.FightCreateInput | null = null;
+      let retries = 0;
+
+      while (!generatedFight) {
+        if (retries > 10) {
+          throw new Error('Too many retries in clan tournament duel');
+        }
+
+        try {
+          const result = await generateFight({
+            prisma,
+            team1: { brutes: [getCalculatedBrute(attacker, modifiers)] },
+            team2: { brutes: [getCalculatedBrute(defender, modifiers)] },
+            modifiers,
+            backups: false,
+            achievements: true,
+          });
+          generatedFight = result.data;
+        } catch (error: unknown) {
+          if (!(error instanceof Error)) {
+            throw error;
+          }
+          LOGGER.log(`Error while generating a clan tournament duel between ${attacker.name} and ${defender.name}, retrying...`);
+          DISCORD().sendError(error);
+        }
+
+        retries += 1;
+      }
+
+      const created = await prisma.fight.create({
+        data: generatedFight,
+        select: { id: true, winner: true },
+      });
+
+      fightIds.push(created.id);
+
+      // Asignar victoria
+      const winnerIsAttacker = isWinner(attacker, generatedFight);
+      if (winnerIsAttacker) {
+        attackerWins += 1;
+        xpByBrute[attacker.id] = (xpByBrute[attacker.id] ?? 0) + 1;
+      } else {
+        defenderWins += 1;
+        xpByBrute[defender.id] = (xpByBrute[defender.id] ?? 0) + 1;
+      }
+    };
+
+    for (let i = 0; i < duelsToPlay; i += 1) {
+      const attacker = attackers[i];
+      const defender = defenders[i];
+      if (!attacker || !defender) {
+        // Algún clan se quedó corto (debería estar cubierto por N, pero por seguridad)
+        // Contamos esto como victoria para el que sí tiene bruto
+        if (attacker && !defender) {
+          attackerWins += 1;
+        } else if (!attacker && defender) {
+          defenderWins += 1;
+        }
+        // Sin pelea generada
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      // eslint-disable-next-line no-await-in-loop
+      await playDuel(attacker, defender);
+    }
+
+    // Desempate simple si hace falta: duelo extra aleatorio hasta que alguien gane
+    let safety = 0;
+    while (attackerWins === defenderWins && safety < 5) {
+      const attacker = attackers[Math.floor(Math.random() * attackers.length)];
+      const defender = defenders[Math.floor(Math.random() * defenders.length)];
+      if (!attacker || !defender) break;
+      // eslint-disable-next-line no-await-in-loop
+      await playDuel(attacker, defender);
+      safety += 1;
+    }
+
+    let winnerClanId: string | null = null;
+    if (attackerWins > defenderWins) {
+      winnerClanId = clanAId;
+    } else if (defenderWins > attackerWins) {
+      winnerClanId = clanBId;
+    }
+
+    return {
+      attackerWins,
+      defenderWins,
+      fightIds,
+      winnerClanId,
+    };
+  };
+
+  for (const tournament of tournaments) {
+    if (tournament.participants.length < 2) {
+      // Nada que hacer, marcar como terminado sin ganador
+      await prisma.clanTournament.update({
+        where: { id: tournament.id },
+        data: {
+          status: ClanTournamentStatus.FINISHED,
+          rounds: 0,
+        },
+      });
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    await prisma.clanTournament.update({
+      where: { id: tournament.id },
+      data: {
+        status: ClanTournamentStatus.ONGOING,
+      },
+    });
+
+    if (tournament.format === ClanTournamentFormat.ELIMINATION) {
+      // Torneo de eliminación directa (bracket)
+      let currentClans = shuffle(tournament.participants);
+      const totalParticipants = currentClans.length;
+      let round = 1;
+
+      while (currentClans.length > 1) {
+        const nextRoundClans: typeof currentClans = [];
+
+        for (let i = 0; i < currentClans.length; i += 2) {
+          const clanA = currentClans[i];
+          const clanB = currentClans[i + 1];
+
+          if (clanA && !clanB) {
+            // Bye, clanA avanza solo
+            nextRoundClans.push(clanA);
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          if (!clanA || !clanB) {
+            // Inconsistencia rara, saltar
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          // Crear guerra vacía
+          const war = await prisma.clanTournamentWar.create({
+            data: {
+              tournamentId: tournament.id,
+              round,
+              attackerClanId: clanA.clanId,
+              defenderClanId: clanB.clanId,
+            },
+            select: { id: true },
+          });
+
+          const {
+            attackerWins,
+            defenderWins,
+            fightIds,
+            winnerClanId,
+          } = await simulateWar(clanA.clanId, clanB.clanId);
+
+          await prisma.clanTournamentWar.update({
+            where: { id: war.id },
+            data: {
+              attackerWins,
+              defenderWins,
+              fightIds,
+              winnerClanId,
+            },
+          });
+
+          // Progreso de misiones de clan: duelos ganados y victoria de guerra diaria
+          await incrementClanMission(prisma, clanA.clanId, ClanMissionType.WEEKLY_DUELS_WON, attackerWins);
+          await incrementClanMission(prisma, clanB.clanId, ClanMissionType.WEEKLY_DUELS_WON, defenderWins);
+          if (winnerClanId) {
+            await incrementClanMission(prisma, winnerClanId, ClanMissionType.DAILY_CLAN_WAR_WIN, 1);
+          }
+
+          const winnerParticipant = winnerClanId === clanA.clanId ? clanA : clanB;
+          if (winnerParticipant) {
+            nextRoundClans.push(winnerParticipant);
+          }
+        }
+
+        currentClans = nextRoundClans;
+        round += 1;
+      }
+
+      const champion = currentClans[0];
+
+      await prisma.clanTournament.update({
+        where: { id: tournament.id },
+        data: {
+          status: ClanTournamentStatus.FINISHED,
+          rounds: Math.ceil(Math.log2(totalParticipants)),
+        },
+      });
+
+      if (champion) {
+        // Recompensa final torneo eliminación
+        const championBrutes = await prisma.brute.findMany({
+          where: {
+            clanId: champion.clanId,
+            deletedAt: null,
+          },
+          select: {
+            id: true,
+            userId: true,
+          },
+        });
+
+        for (const brute of championBrutes) {
+          xpByBrute[brute.id] = (xpByBrute[brute.id] ?? 0) + 3;
+          if (brute.userId) {
+            goldByUser[brute.userId] = (goldByUser[brute.userId] ?? 0) + 150;
+          }
+        }
+
+        // Guardar posición final
+        await prisma.clanTournamentClan.updateMany({
+          where: {
+            tournamentId: tournament.id,
+            clanId: champion.clanId,
+          },
+          data: {
+            finalPosition: 1,
+          },
+        });
+
+        // Misión semanal: torneo jugado esta semana
+        await incrementClanMission(prisma, champion.clanId, ClanMissionType.WEEKLY_TOURNAMENTS_PLAYED, 1);
+      }
+
+      // Todos los participantes cuentan como haber jugado este torneo
+      for (const participant of tournament.participants) {
+        await incrementClanMission(prisma, participant.clanId, ClanMissionType.WEEKLY_TOURNAMENTS_PLAYED, 1);
+      }
+    } else {
+      // Liga todos contra todos
+      const participants = tournament.participants;
+      const duelWinsByClan: Record<string, number> = {};
+
+      // Generar todas las guerras (round robin)
+      let round = 1;
+      for (let i = 0; i < participants.length; i += 1) {
+        for (let j = i + 1; j < participants.length; j += 1) {
+          const clanA = participants[i];
+          const clanB = participants[j];
+          if (!clanA || !clanB) {
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+
+          const war = await prisma.clanTournamentWar.create({
+            data: {
+              tournamentId: tournament.id,
+              round,
+              attackerClanId: clanA.clanId,
+              defenderClanId: clanB.clanId,
+            },
+            select: { id: true },
+          });
+
+          const {
+            attackerWins,
+            defenderWins,
+            fightIds,
+            winnerClanId,
+          } = await simulateWar(clanA.clanId, clanB.clanId);
+
+          await prisma.clanTournamentWar.update({
+            where: { id: war.id },
+            data: {
+              attackerWins,
+              defenderWins,
+              fightIds,
+              winnerClanId,
+            },
+          });
+
+          // Sumar puntos de liga
+          if (winnerClanId) {
+            await prisma.clanTournamentClan.updateMany({
+              where: {
+                tournamentId: tournament.id,
+                clanId: winnerClanId,
+              },
+              data: {
+                points: { increment: 1 },
+              },
+            });
+
+            // Victoria diaria de guerra en día de torneo
+            await incrementClanMission(prisma, winnerClanId, ClanMissionType.DAILY_CLAN_WAR_WIN, 1);
+          }
+
+          // Sumar duelos ganados para desempate
+          duelWinsByClan[clanA.clanId] = (duelWinsByClan[clanA.clanId] ?? 0) + attackerWins;
+          duelWinsByClan[clanB.clanId] = (duelWinsByClan[clanB.clanId] ?? 0) + defenderWins;
+
+          // Misiones: duelos ganados en la semana
+          await incrementClanMission(prisma, clanA.clanId, ClanMissionType.WEEKLY_DUELS_WON, attackerWins);
+          await incrementClanMission(prisma, clanB.clanId, ClanMissionType.WEEKLY_DUELS_WON, defenderWins);
+
+          round += 1;
+        }
+      }
+
+      // Calcular posiciones finales
+      const updatedParticipants = await prisma.clanTournamentClan.findMany({
+        where: { tournamentId: tournament.id },
+        include: {
+          clan: {
+            select: { id: true, name: true },
+          },
+        },
+      });
+
+      const sorted = updatedParticipants.slice().sort((a, b) => {
+        if (a.points !== b.points) {
+          return b.points - a.points;
+        }
+        const aWins = duelWinsByClan[a.clanId] ?? 0;
+        const bWins = duelWinsByClan[b.clanId] ?? 0;
+        if (aWins !== bWins) {
+          return bWins - aWins;
+        }
+        // Desempate final por seed (más bajo primero)
+        return a.seed - b.seed;
+      });
+
+      for (let index = 0; index < sorted.length; index += 1) {
+        const participant = sorted[index];
+        if (!participant) continue;
+        // eslint-disable-next-line no-await-in-loop
+        await prisma.clanTournamentClan.update({
+          where: { id: participant.id },
+          data: { finalPosition: index + 1 },
+        });
+      }
+
+      await prisma.clanTournament.update({
+        where: { id: tournament.id },
+        data: {
+          status: ClanTournamentStatus.FINISHED,
+          rounds: sorted.length > 1 ? sorted.length - 1 : 1,
+        },
+      });
+
+      const champion = sorted[0];
+      if (champion) {
+        const championBrutes = await prisma.brute.findMany({
+          where: {
+            clanId: champion.clanId,
+            deletedAt: null,
+          },
+          select: {
+            id: true,
+            userId: true,
+          },
+        });
+
+        for (const brute of championBrutes) {
+          xpByBrute[brute.id] = (xpByBrute[brute.id] ?? 0) + 4;
+          if (brute.userId) {
+            goldByUser[brute.userId] = (goldByUser[brute.userId] ?? 0) + 200;
+          }
+        }
+
+        // Misión semanal: torneo jugado esta semana (liga)
+        await incrementClanMission(prisma, champion.clanId, ClanMissionType.WEEKLY_TOURNAMENTS_PLAYED, 1);
+      }
+    }
+  }
+
+  // Persistir XP de brutos del torneo de clan
+  if (Object.keys(xpByBrute).length) {
+    await prisma.tournamentXp.createMany({
+      data: Object.entries(xpByBrute).map(([bruteId, xp]) => ({
+        bruteId,
+        date: today,
+        xp,
+      })),
+    });
+  }
+
+  // Persistir oro para usuarios
+  if (Object.keys(goldByUser).length) {
+    await prisma.tournamentGold.createMany({
+      data: Object.entries(goldByUser).map(([userId, gold]) => ({
+        userId,
+        date: today,
+        gold,
+        source: 'clan_tournament',
+      })),
+    });
+  }
+
+  LOGGER.log(`${tournaments.length} clan tournaments handled`);
+};
+
 const handleEventFinish = async (prisma: PrismaClient) => {
   // Get last event
   const lastEvent = await prisma.event.findFirst({
@@ -2892,6 +3374,11 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
     // Refresh chaos seeds
     refreshChaosSeeds(modifiers);
 
+    // Clan missions (daily + weekly)
+    await ensureDailyClanMissions(prisma);
+    await ensureWeeklyClanMissions(prisma);
+    logMemory('After clan missions generation');
+
     if (process.env.NODE_ENV === 'production' || GENERATE_TOURNAMENTS_IN_DEV) {
       // Update server state to hold traffic
       ServerState.setReady(false);
@@ -2940,6 +3427,11 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
       // Handle special tournament
       const specialGains = await handleSpecialTournament(prisma, modifiers);
       logMemory('After special tournament');
+      triggerGC();
+
+      // Handle clan tournaments (clan vs clan)
+      await handleClanTournaments(prisma, modifiers);
+      logMemory('After clan tournaments');
       triggerGC();
 
       // Store gains (merge daily, global, Copa del Rey, and special tournament)
