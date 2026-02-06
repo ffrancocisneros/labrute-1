@@ -356,6 +356,11 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
           <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
             {type === 'special' ? t('specialTournament') : t('tournamentOf')} {dayjs.utc(tournament.date).format('DD MMMM YYYY')}
           </Text>
+          {type === 'special' && tournament.fights.length < 63 && (
+            <Text variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              {t('specialTournament.incomplete', { count: tournament.fights.length, expected: 63 })}
+            </Text>
+          )}
         </Paper>
         <Paper
           ref={containerRef}

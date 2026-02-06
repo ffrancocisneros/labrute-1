@@ -548,6 +548,7 @@
   "specialTournament.randomWeapons.desc": "Cada bruto recibe armas aleatorias.",
   "specialTournament.noWeaponsNoPets": "Sin Armas ni Mascotas",
   "specialTournament.noWeaponsNoPets.desc": "Pelea a puños, sin armas ni mascotas.",
+  "specialTournament.incomplete": "Torneo incompleto: {{count}} de {{expected}} peleas generadas. El próximo torneo especial debería estar completo.",
   "backToTournaments": "Volver a torneos",
   "invalidParameters": "Parámetros inválidos",
   "unlimited": "Ilimitado",

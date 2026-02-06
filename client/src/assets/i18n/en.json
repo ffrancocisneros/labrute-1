@@ -548,6 +548,7 @@
   "specialTournament.randomWeapons.desc": "Each brute gets random weapons.",
   "specialTournament.noWeaponsNoPets": "No Weapons or Pets",
   "specialTournament.noWeaponsNoPets.desc": "Bare-handed fight, no weapons or pets.",
+  "specialTournament.incomplete": "Incomplete tournament: {{count}} of {{expected}} fights generated. The next special tournament should be complete.",
   "backToTournaments": "Back to tournaments",
   "invalidParameters": "Invalid parameters",
   "unlimited": "Unlimited",
