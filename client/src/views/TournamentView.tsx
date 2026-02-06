@@ -105,45 +105,50 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
     if (!tournament) return [];
     const result: typeof tournament.fights[] = [];
 
-    // First round
+    // First round - left side (steps 1-16)
     result[0] = tournament.fights.filter((fight) => fight.tournamentStep <= 16);
+    // First round - right side (steps 17-32)
     result[10] = tournament.fights.filter(
-      (fight) => fight.tournamentStep > 16 && fight.tournamentStep <= 32
+      (fight) => fight.tournamentStep > 16 && fight.tournamentStep <= 32,
     );
 
-    // Second round
+    // Second round - left side (steps 33-40)
     result[1] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 32 && fight.tournamentStep <= 40
     );
+    // Second round - right side (steps 41-48)
     result[9] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 40 && fight.tournamentStep <= 48
     );
 
-    // Third round
+    // Third round - left side (steps 49-52)
     result[2] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 48 && fight.tournamentStep <= 52
     );
+    // Third round - right side (steps 53-56)
     result[8] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 52 && fight.tournamentStep <= 56
     );
 
-    // Fourth round
+    // Fourth round - left side (steps 57-58)
     result[3] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 56 && fight.tournamentStep <= 58
     );
+    // Fourth round - right side (steps 59-60)
     result[7] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 58 && fight.tournamentStep <= 60
     );
 
-    // Fifth round
+    // Fifth round - left side (step 61)
     result[4] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 60 && fight.tournamentStep <= 61
     );
+    // Fifth round - right side (step 62)
     result[6] = tournament.fights.filter(
       (fight) => fight.tournamentStep > 61 && fight.tournamentStep <= 62
     );
 
-    // Sixth round
+    // Sixth round - final (step 63)
     result[5] = tournament.fights.filter((fight) => fight.tournamentStep === 63);
 
     // Order every round by step low to high
