@@ -98,6 +98,12 @@ const CellMain = ({
     }).catch(catchError(Alert));
   }, [Alert, navigate]);
 
+  // Hide button after registering all — avoids reappearing until next user fetch
+  const [justRegisteredAll, setJustRegisteredAll] = React.useState(false);
+  React.useEffect(() => {
+    setJustRegisteredAll(false);
+  }, [user?.id]);
+
   // Register all brutes for tournament
   const registerAllBrutes = useCallback(() => {
     Server.Tournament.registerAllDaily().then((response) => {
@@ -128,12 +134,6 @@ const CellMain = ({
     if (!owner || !user) return false;
     return user.brutes.some((b) => !b.registeredForTournament && !b.canRankUpSince);
   }, [owner, user]);
-
-  // Hide button after registering all — avoids reappearing until next user fetch
-  const [justRegisteredAll, setJustRegisteredAll] = React.useState(false);
-  React.useEffect(() => {
-    setJustRegisteredAll(false);
-  }, [user?.id]);
 
   return brute && (
     <Box {...rest}>
