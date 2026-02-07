@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import BoxBg from '../components/BoxBg';
 import CellClan from '../components/Cell/CellClan';
+import CellDailyProgress from '../components/Cell/CellDailyProgress';
 import CellLog from '../components/Cell/CellLog';
 import CellMain from '../components/Cell/CellMain';
 import CellPets from '../components/Cell/CellPets';
@@ -368,6 +369,8 @@ const CellView = () => {
                 <CellSkills />
                 {/* PETS */}
                 <CellPets sx={{ mt: 2 }} />
+                {/* DAILY PROGRESS */}
+                <CellDailyProgress sx={{ mt: 2 }} />
               </Box>
               {/* MAIN */}
               <CellMain

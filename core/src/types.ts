@@ -567,7 +567,9 @@ export type TournamentsGetDailyResponse = Tournament & {
     brute2: Brute | null,
   })[]
 };
-export type TournamentsGetSpecialResponse = TournamentsGetDailyResponse;
+export type TournamentsGetSpecialResponse = TournamentsGetDailyResponse & {
+  participantsCount?: number,
+};
 export type TournamentsGetActiveSpecialRuleResponse = {
   rule: string,
   nameKey: string,

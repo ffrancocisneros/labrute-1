@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import { Navigate, RouteObject } from 'react-router';
 import ProvideBrute from './components/Brute/ProvideBrute';
@@ -48,6 +49,7 @@ import ResetVisualsView from './views/ResetVisualsView';
 import CopaDelReyView from './views/CopaDelReyView';
 import TournamentHistoryView from './views/TournamentHistoryView';
 import TournamentView from './views/TournamentView';
+import UnifiedTournamentView from './views/UnifiedTournamentView';
 import UserAdminView from './views/admin/UserAdminView';
 import UserView from './views/UserView';
 import VersusView from './views/VersusView';
@@ -99,10 +101,18 @@ const routes: RouteObject[] = [
           { path: 'inventory', element: <InventoryView /> },
           { path: 'versus/:opponentName', element: <VersusView /> },
           { path: 'fight/:fightId', element: <FightView /> },
-          { path: 'tournament/global/:date', element: <GlobalTournamentView /> },
-          { path: 'tournament/copa-del-rey/:type/:date', element: <CopaDelReyView /> },
-          { path: 'tournament/special/:date', element: <TournamentView type="special" /> },
-          { path: 'tournament/:date', element: <TournamentView /> },
+          {
+            path: 'tournament',
+            element: <UnifiedTournamentView />,
+            children: [
+              { path: '', element: <Navigate to={`${dayjs.utc().format('YYYY-MM-DD')}`} replace /> },
+              { path: 'global/:date', element: <GlobalTournamentView /> },
+              { path: 'copa-del-rey/:type/:date', element: <CopaDelReyView /> },
+              { path: 'special/:date', element: <TournamentView type="special" /> },
+              { path: 'clan/:id', element: <ClanTournamentView /> },
+              { path: ':date', element: <TournamentView /> },
+            ],
+          },
           { path: 'ranking', element: <RankingView /> },
           { path: 'ranking/:rank', element: <RankingView /> },
           { path: 'destiny', element: <DestinyView /> },

@@ -153,6 +153,9 @@ export const Tournaments = {
           },
         },
         include: {
+          _count: {
+            select: { participants: true },
+          },
           fights: {
             select: {
               id: true,
@@ -176,7 +179,8 @@ export const Tournaments = {
         throw new NotFoundError('Tournament not found');
       }
 
-      res.send(tournament);
+      const { _count, ...rest } = tournament;
+      res.send({ ...rest, participantsCount: _count.participants });
     } catch (error) {
       sendError(res, error);
     }

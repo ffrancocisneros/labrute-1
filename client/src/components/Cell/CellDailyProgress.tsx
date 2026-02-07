@@ -1,11 +1,12 @@
 import { BATTLE_PASS_LEVELS, BATTLE_PASS_XP_PER_LEVEL, getMaxFightsPerDay, getTotalFightsLeft } from '@labrute/core';
 import { SportsKabaddi, Assignment, CardGiftcard } from '@mui/icons-material';
-import { Box, LinearProgress, Paper, Tooltip } from '@mui/material';
+import { Box, LinearProgress, Paper, PaperProps, Tooltip } from '@mui/material';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import Link from '../Link';
 import Text from '../Text';
+import { useAuth } from '../../hooks/useAuth';
 import { useBrute } from '../../hooks/useBrute';
 import useStateAsync from '../../hooks/useStateAsync';
 import Server from '../../utils/Server';
@@ -21,10 +22,11 @@ interface BattlePassData {
   xpForNextLevel: number;
 }
 
-const CellDailyProgress = () => {
+const CellDailyProgress = ({ sx, ...rest }: PaperProps) => {
   const { t } = useTranslation();
   const { bruteName } = useParams();
   const { brute, owner } = useBrute();
+  const { modifiers } = useAuth();
 
   const fetchObjectives = useCallback(
     async (ownerParam?: boolean): Promise<ObjectivesData | null> => {
@@ -76,8 +78,8 @@ const CellDailyProgress = () => {
   if (!owner || !brute || !bruteName) return null;
   if (brute.eventId) return null;
 
-  const fightsLeft = getTotalFightsLeft(brute);
-  const maxFights = getMaxFightsPerDay(brute);
+  const fightsLeft = getTotalFightsLeft(brute, modifiers);
+  const maxFights = getMaxFightsPerDay(brute, modifiers);
   const fightsUsed = Math.max(0, maxFights - fightsLeft);
 
   const dailyCompleted = objectives?.daily.filter((o) => o.completed).length ?? 0;
@@ -91,12 +93,14 @@ const CellDailyProgress = () => {
 
   return (
     <Paper
+      {...rest}
       sx={{
         p: 1.5,
         mb: 1.5,
         bgcolor: 'background.paperDark',
         border: '1px solid',
         borderColor: 'divider',
+        ...sx,
       }}
     >
       <Text bold variant="body2" sx={{ mb: 1 }}>

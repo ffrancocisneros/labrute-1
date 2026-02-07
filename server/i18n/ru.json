@@ -55,6 +55,7 @@
   "tournamentNotFound": "Турнир не найден",
   "userNotFound": "Пользователь не найден",
   "invalidParameters": "Неверные параметры",
+  "clanTournamentAlreadyRegistered": "Ваш клан уже зарегистрирован на следующий турнир.",
   "nameContainsBannedWord": "Это имя содержит недопустимое слово",
   "favoriteLimitReached": "Вы достигли максимальное количество избранных",
   "notEnoughGold": "Недостаточно золота",

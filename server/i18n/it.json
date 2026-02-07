@@ -55,6 +55,7 @@
   "tournamentNotFound": "Torneo non trovato",
   "userNotFound": "Utente non trovato",
   "invalidParameters": "Parametri non validi",
+  "clanTournamentAlreadyRegistered": "Il tuo clan è già iscritto al prossimo torneo.",
   "nameContainsBannedWord": "Questo nome contiene una parola proibita",
   "favoriteLimitReached": "Hai raggiunto il limite dei tuoi bruti preferiti",
   "notEnoughGold": "Oro insufficiente",

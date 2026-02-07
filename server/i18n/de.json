@@ -55,6 +55,7 @@
   "tournamentNotFound": "Wettkampf nicht gefunden",
   "userNotFound": "Nutzer nicht gefunden",
   "invalidParameters": "Ungültige Parameter",
+  "clanTournamentAlreadyRegistered": "Dein Klan ist bereits für das nächste Turnier angemeldet.",
   "nameContainsBannedWord": "Dieser Name enthält ein verbotenes Wort",
   "favoriteLimitReached": "Du hast das Maximum an Favoriten erreicht",
   "notEnoughGold": "Nicht genügend Gold",

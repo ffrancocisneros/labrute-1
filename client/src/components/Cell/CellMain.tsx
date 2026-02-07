@@ -18,10 +18,6 @@ import FantasyButton from '../FantasyButton';
 import Link from '../Link';
 import StyledButton from '../StyledButton';
 import Text from '../Text';
-import CellDailyProgress from './CellDailyProgress';
-import CellGlobalTournament from './CellGlobalTournament';
-import CellSpecialTournament from './CellSpecialTournament';
-import CellTournament from './CellTournament';
 
 export interface CellMainProps extends BoxProps {
   language: Lang;
@@ -46,7 +42,7 @@ const CellMain = ({
   const Alert = useAlert();
   const navigate = useNavigate();
   const { brute, owner, updateBrute } = useBrute();
-  const { user, authing, currentEvent, updateData } = useAuth();
+  const { user, authing, currentEvent, updateData, modifiers } = useAuth();
 
   const xpNeededForNextLevel = useMemo(
     () => (brute ? getXPNeeded(brute.level + 1) : 0),
@@ -54,8 +50,8 @@ const CellMain = ({
   );
 
   const fightsLeft = useMemo(
-    () => (brute ? getTotalFightsLeft(brute) : 0),
-    [brute],
+    () => (brute ? getTotalFightsLeft(brute, modifiers) : 0),
+    [brute, modifiers],
   );
 
   // Temporales activos (arma/habilidad) - vienen del payload /api/user/authenticate
@@ -106,6 +102,7 @@ const CellMain = ({
   const registerAllBrutes = useCallback(() => {
     Server.Tournament.registerAllDaily().then((response) => {
       Alert.open('success', t('brutesRegistered', { count: response.registered }));
+      setJustRegisteredAll(true);
       // Update all brutes in the user data
       updateData((data) => (data ? {
         ...data,
@@ -131,6 +128,12 @@ const CellMain = ({
     if (!owner || !user) return false;
     return user.brutes.some((b) => !b.registeredForTournament && !b.canRankUpSince);
   }, [owner, user]);
+
+  // Hide button after registering all — avoids reappearing until next user fetch
+  const [justRegisteredAll, setJustRegisteredAll] = React.useState(false);
+  React.useEffect(() => {
+    setJustRegisteredAll(false);
+  }, [user?.id]);
 
   return brute && (
     <Box {...rest}>
@@ -167,11 +170,8 @@ const CellMain = ({
       </Box>
       <BruteBodyAndStats brute={brute} sx={{ mb: 1 }} />
 
-      {/* DAILY PROGRESS */}
-      <CellDailyProgress />
-
       {/* REGISTER ALL BRUTES BUTTON */}
-      {owner && hasUnregisteredBrutes && (
+      {owner && hasUnregisteredBrutes && !justRegisteredAll && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
           <FantasyButton
             color="primary"
@@ -345,7 +345,7 @@ const CellMain = ({
           : (
             <Box sx={{ textAlign: 'center' }}>
               <Text bold color="error">{t('bruteIsResting', { brute: brute.name })}</Text>
-              <Text color="error">{t('newFightsTomorrow', { amount: getMaxFightsPerDay(brute) })}</Text>
+              <Text color="error">{t('newFightsTomorrow', { amount: getMaxFightsPerDay(brute, modifiers) })}</Text>
             </Box>
           )
         : (!brute.eventId || brute.level < (currentEvent?.maxLevel ?? 999)) ? (
@@ -354,19 +354,17 @@ const CellMain = ({
           </FantasyButton>
         )
           : null)}
-      {/* TOURNAMENT */}
+      {/* TOURNAMENT - Single button to unified tournament view */}
       {!smallScreen && !brute.eventId && (
-        <CellTournament
-          language={language}
-        />
-      )}
-      {/* SPECIAL TOURNAMENT */}
-      {!smallScreen && !brute.eventId && (
-        <CellSpecialTournament />
-      )}
-      {/* GLOBAL TOURNAMENT */}
-      {!smallScreen && !brute.eventId && (
-        <CellGlobalTournament sx={{ mt: 3 }} />
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+          <FantasyButton
+            color="secondary"
+            to={`/${brute.name}/tournament`}
+            sx={{ my: 1 }}
+          >
+            {t('tournament')}
+          </FantasyButton>
+        </Box>
       )}
       {/* BRUTE SACRIFICE */}
       {owner

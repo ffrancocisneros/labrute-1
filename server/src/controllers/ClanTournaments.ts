@@ -133,7 +133,7 @@ export const ClanTournaments = {
       });
 
       if (alreadyRegistered) {
-        throw new ExpectedError(translate('invalidParameters', user));
+        throw new ExpectedError(translate('clanTournamentAlreadyRegistered', user));
       }
 
       // Count current participants to assign a simple seed
