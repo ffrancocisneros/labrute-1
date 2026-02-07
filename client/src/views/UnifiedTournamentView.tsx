@@ -68,7 +68,7 @@ const UnifiedTournamentView = () => {
         />
         <Tab
           component={Link}
-          to={`/${bruteName}/tournament/copa-del-rey/semifinal/${currentDate}`}
+          to={`/${bruteName}/tournament/copa-del-rey/final/${currentDate}`}
           value="copa"
           label={t('tournament.copaDelRey')}
         />
