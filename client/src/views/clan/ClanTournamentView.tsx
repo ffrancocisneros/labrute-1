@@ -169,12 +169,13 @@ const ClanTournamentView = () => {
                           sx={{
                             my: 0.5,
                             px: 1.5,
-                            py: 1,
+                            py: 0.75,
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            alignItems: 'stretch',
                             minWidth: 220,
+                            minHeight: 90,
                           }}
                         >
                           <Box
@@ -184,6 +185,7 @@ const ClanTournamentView = () => {
                               justifyContent: 'center',
                               gap: 1,
                               width: 1,
+                              flexGrow: 1,
                             }}
                           >
                             <Text
