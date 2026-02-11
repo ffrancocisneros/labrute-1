@@ -67,6 +67,23 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
     { name: string; date: string }
   >(null, fetchFn, tournamentProps);
 
+  // Regla legible del torneo especial (mapear enums técnicos a claves de i18n)
+  const specialRuleKey = useMemo(() => {
+    if (!tournament?.specialRule) return null;
+    const map: Record<string, string> = {
+      NO_PETS: 'noPets',
+      LIGHT_WEAPONS: 'lightWeapons',
+      HEAVY_WEAPONS: 'heavyWeapons',
+      THROWN_WEAPONS: 'thrownWeapons',
+      DOUBLE_STRENGTH: 'doubleStrength',
+      DOUBLE_HP: 'doubleHp',
+      RANDOM_STATS: 'randomStats',
+      RANDOM_WEAPONS: 'randomWeapons',
+      NO_WEAPONS_NO_PETS: 'noWeaponsNoPets',
+    };
+    return map[tournament.specialRule] ?? null;
+  }, [tournament?.specialRule]);
+
   const stepWatched = useMemo(() => {
     if (!tournament?.date) return 0;
     // Special tournaments always show all rounds
@@ -356,9 +373,9 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
           <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
             {type === 'special' ? t('specialTournament') : t('tournamentOf')} {dayjs.utc(tournament.date).format('DD MMMM YYYY')}
           </Text>
-          {type === 'special' && tournament.specialRule && (
+          {type === 'special' && specialRuleKey && (
             <Text smallCaps color="text.secondary" sx={{ mt: 0.5 }}>
-              {t(`specialTournament.${tournament.specialRule}`, tournament)}
+              {t(`specialTournament.${specialRuleKey}`)}
             </Text>
           )}
           {type === 'special' && tournament.fights.length < 63 && (
