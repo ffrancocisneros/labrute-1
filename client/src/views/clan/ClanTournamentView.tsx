@@ -172,43 +172,39 @@ const ClanTournamentView = () => {
                             py: 0.75,
                             display: 'flex',
                             flexDirection: 'column',
-                            minWidth: 200,
+                            minWidth: 220,
                           }}
                         >
-                          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-                            <Text bold color={attackerIsWinner ? 'success.main' : 'text.primary'}>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              gap: 1,
+                            }}
+                          >
+                            <Text
+                              bold
+                              color={attackerIsWinner ? 'success.main' : 'text.primary'}
+                              sx={{ flex: 1, textAlign: 'left' }}
+                            >
                               {war.attackerClan.name}
                             </Text>
-                            <Text smallCaps color={attackerIsWinner ? 'success.main' : 'text.secondary'}>
-                              {t('duelsWon', { count: war.attackerWins })}
-                            </Text>
-                          </Box>
-                          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 0.5 }}>
                             <Box
                               component="img"
                               src={`/images${mode === 'dark' ? '/dark' : ''}/versus/vs.webp`}
-                              sx={{ width: 48 }}
+                              sx={{ width: 40 }}
                             />
-                          </Box>
-                          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Text bold color={defenderIsWinner ? 'success.main' : 'text.primary'}>
+                            <Text
+                              bold
+                              color={defenderIsWinner ? 'success.main' : 'text.primary'}
+                              sx={{ flex: 1, textAlign: 'right' }}
+                            >
                               {war.defenderClan.name}
                             </Text>
-                            <Text smallCaps color={defenderIsWinner ? 'success.main' : 'text.secondary'}>
-                              {t('duelsWon', { count: war.defenderWins })}
-                            </Text>
                           </Box>
-                          {war.round === tournament.rounds && war.winnerClan && (
-                            <Text
-                              smallCaps
-                              color="success.main"
-                              sx={{ mt: 0.5 }}
-                            >
-                              {t('clanTournamentChampion', { clan: war.winnerClan.name })}
-                            </Text>
-                          )}
                           {war.fightIds.length > 0 && bruteName && (
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 0.5 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 0.75 }}>
                               <FantasyButton
                                 color="primary"
                                 onClick={() => navigate(`/${bruteName}/tournament/clan/${id}/war/${war.id}`)}
