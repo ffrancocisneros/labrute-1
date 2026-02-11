@@ -168,25 +168,37 @@ const ClanTournamentView = () => {
                           shadow={false}
                           sx={{
                             my: 0.5,
-                            px: 1,
-                            py: 0.75,
+                            px: 1.5,
+                            py: 1,
                             display: 'flex',
                             flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
                             minWidth: 220,
+                            height: 80,
+                            overflow: 'hidden',
                           }}
                         >
                           <Box
                             sx={{
                               display: 'flex',
                               alignItems: 'center',
-                              justifyContent: 'space-between',
+                              justifyContent: 'center',
                               gap: 1,
+                              width: 1,
                             }}
                           >
                             <Text
                               bold
                               color={attackerIsWinner ? 'success.main' : 'text.primary'}
-                              sx={{ flex: 1, textAlign: 'left' }}
+                              sx={{
+                                flex: 1,
+                                textAlign: 'right',
+                                px: 0.5,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
                             >
                               {war.attackerClan.name}
                             </Text>
@@ -198,7 +210,14 @@ const ClanTournamentView = () => {
                             <Text
                               bold
                               color={defenderIsWinner ? 'success.main' : 'text.primary'}
-                              sx={{ flex: 1, textAlign: 'right' }}
+                              sx={{
+                                flex: 1,
+                                textAlign: 'left',
+                                px: 0.5,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
                             >
                               {war.defenderClan.name}
                             </Text>
