@@ -266,6 +266,8 @@
   "noClanWarsYet": "Todavía no hay guerras registradas.",
   "watchDuels": "Ver duelos",
   "duelsWon": "Duelos ganados: {{count}}",
+  "clanTournamentWarLeft": "Nombre de clan 1",
+  "clanTournamentWarRight": "Nombre de clan 2",
   "herculeanStrength": "Fuerza de Hércules",
   "herculeanStrength.desc": "¡Eres capaz de desplazar montañas con tu fuerza! Pero de momento nada de eso... ¡tienes un adversario que destrozar!",
   "herculeanStrength.effect": "",

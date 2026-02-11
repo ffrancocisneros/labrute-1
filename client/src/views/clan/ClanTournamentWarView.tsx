@@ -1,4 +1,5 @@
 import { Box, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Fighter } from '@labrute/core';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -48,6 +49,12 @@ const ClanTournamentWarView = () => {
   );
 
   const [warIndexTitle, setWarIndexTitle] = useState<string>('');
+  const [fightsDetails, setFightsDetails] = useState<Record<string, {
+    leftName: string;
+    rightName: string;
+    winner: string;
+    loser: string;
+  }>>({});
 
   const tournament = data?.tournament ?? null;
   const war = tournament?.wars.find((w) => w.id === warId) ?? null;
@@ -59,6 +66,41 @@ const ClanTournamentWarView = () => {
     const date = dayjs.utc(tournament.date).format('DD/MM/YYYY');
     setWarIndexTitle(`${t('clanTournament')} - ${date}`);
   }, [t, tournament, war]);
+
+  // Cargar detalles de cada pelea (nombres de brutos y ganador/perdedor)
+  useEffect(() => {
+    if (!war) {
+      setFightsDetails({});
+      return undefined;
+    }
+
+    let cancelled = false;
+
+    (async () => {
+      const entries = await Promise.all(war.fightIds.map(async (fightId) => {
+        const fight = await Server.Fight.get(fightId);
+        const fighters = JSON.parse(fight.fighters) as Fighter[];
+
+        const leftBrute = fighters.find((f) => f.team === 'L' && f.type === 'brute');
+        const rightBrute = fighters.find((f) => f.team === 'R' && f.type === 'brute');
+
+        return [fightId, {
+          leftName: leftBrute?.name || '',
+          rightName: rightBrute?.name || '',
+          winner: fight.winner,
+          loser: fight.loser,
+        }] as const;
+      }));
+
+      if (!cancelled) {
+        setFightsDetails(Object.fromEntries(entries));
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [war]);
 
   const title = warIndexTitle || t('clanTournament');
 
@@ -124,28 +166,56 @@ const ClanTournamentWarView = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>#</TableCell>
-                  <TableCell>{t('fight')}</TableCell>
-                  <TableCell align="right">{t('action')}</TableCell>
+                  <TableCell>{t('clanTournamentWarLeft')}</TableCell>
+                  <TableCell align="center">{t('fight')}</TableCell>
+                  <TableCell align="right">{t('clanTournamentWarRight')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {war.fightIds.map((fightId, index) => (
-                  <TableRow key={fightId}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      {t('day', { day: index + 1 })}
-                    </TableCell>
-                    <TableCell align="right">
-                      <FantasyButton
-                        color="primary"
-                        onClick={() => navigate(`/${bruteName || ''}/fight/${fightId}`)}
-                      >
-                        {t('seeFight')}
-                      </FantasyButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {war.fightIds.map((fightId) => {
+                  const details = fightsDetails[fightId];
+                  const leftName = details?.leftName || '';
+                  const rightName = details?.rightName || '';
+
+                  const leftColor = details
+                    ? details.winner === leftName
+                      ? 'success.main'
+                      : details.loser === leftName
+                        ? 'error.main'
+                        : 'text.primary'
+                    : 'text.primary';
+
+                  const rightColor = details
+                    ? details.winner === rightName
+                      ? 'success.main'
+                      : details.loser === rightName
+                        ? 'error.main'
+                        : 'text.primary'
+                    : 'text.primary';
+
+                  return (
+                    <TableRow key={fightId}>
+                      <TableCell>
+                        <Text bold color={leftColor}>
+                          {leftName || '...'}
+                        </Text>
+                      </TableCell>
+                      <TableCell align="center">
+                        <FantasyButton
+                          color="primary"
+                          onClick={() => navigate(`/${bruteName || ''}/fight/${fightId}`)}
+                        >
+                          {t('seeFight')}
+                        </FantasyButton>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Text bold color={rightColor}>
+                          {rightName || '...'}
+                        </Text>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </>
