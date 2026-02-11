@@ -253,6 +253,7 @@
   "clanTournamentTodayRegistered": "Registered for today's tournament",
   "registerForNextClanTournament": "Register for next clan tournament",
   "clanTournamentAlreadyRegistered": "Your clan is already registered for the next tournament.",
+  "clanTournamentChampion": "Champion: {{clan}}",
   "clanTournamentFormatElimination": "Format: Elimination",
   "clanTournamentFormatLeague": "Format: League (round-robin)",
   "clanTournamentStatus.PENDING": "Pending",

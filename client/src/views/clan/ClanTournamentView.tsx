@@ -71,6 +71,12 @@ const ClanTournamentView = () => {
     return byRound;
   }, [tournament]);
 
+  const champion = useMemo(() => {
+    if (!tournament) return null;
+    const best = tournament.participants.find((p) => p.finalPosition === 1);
+    return best?.clan.name ?? null;
+  }, [tournament]);
+
   const title = useMemo(() => {
     if (!tournament) return t('clanTournament');
     const date = dayjs.utc(tournament.date).format('DD/MM/YYYY');
@@ -98,22 +104,29 @@ const ClanTournamentView = () => {
         )}
         {tournament && (
           <>
-            <Box sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              mb: 2,
-            }}
-            >
-              <Text bold smallCaps>
-                {tournament.format === 'ELIMINATION'
-                  ? t('clanTournamentFormatElimination')
-                  : t('clanTournamentFormatLeague')}
-              </Text>
-              <Text smallCaps>
-                {t('status')}: {t(`clanTournamentStatus.${tournament.status}`)}
-              </Text>
+            <Box sx={{ mb: 2 }}>
+              <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                mb: champion ? 1 : 0,
+              }}
+              >
+                <Text bold smallCaps>
+                  {tournament.format === 'ELIMINATION'
+                    ? t('clanTournamentFormatElimination')
+                    : t('clanTournamentFormatLeague')}
+                </Text>
+                <Text smallCaps>
+                  {t('status')}: {t(`clanTournamentStatus.${tournament.status}`)}
+                </Text>
+              </Box>
+              {champion && (
+                <Text smallCaps bold color="success.main">
+                  {t('clanTournamentChampion', { clan: champion })}
+                </Text>
+              )}
             </Box>
             {tournament.format === 'ELIMINATION' && (
               <Box sx={{
@@ -142,74 +155,76 @@ const ClanTournamentView = () => {
                     >
                       {t('roundX', { round })}
                     </Text>
-                    {wars.map((war) => (
-                      <StyledButton
-                        key={war.id}
-                        image="/images/arena/brute-bg.webp"
-                        imageHover="/images/arena/brute-bg-hover.webp"
-                        contrast={false}
-                        shadow={false}
-                        sx={{
-                          my: 0.5,
-                          px: 1,
-                          py: 0.5,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          minWidth: 200,
-                          position: 'relative',
-                          overflow: 'hidden',
-                        }}
-                      >
-                        <Box sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'flex-start',
-                          flex: 1,
-                          mr: 1,
-                        }}
+                    {wars.map((war) => {
+                      const attackerIsWinner = war.winnerClan?.id === war.attackerClan.id;
+                      const defenderIsWinner = war.winnerClan?.id === war.defenderClan.id;
+
+                      return (
+                        <StyledButton
+                          key={war.id}
+                          image="/images/arena/brute-bg.webp"
+                          imageHover="/images/arena/brute-bg-hover.webp"
+                          contrast={false}
+                          shadow={false}
+                          sx={{
+                            my: 0.5,
+                            px: 1,
+                            py: 0.75,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            minWidth: 200,
+                          }}
                         >
-                          <Text bold>{war.attackerClan.name}</Text>
-                          <Text smallCaps color="text.secondary">
-                            {t('duelsWon', { count: war.attackerWins })}
-                          </Text>
-                        </Box>
-                        <Box
-                          component="img"
-                          src={`/images${mode === 'dark' ? '/dark' : ''}/versus/vs.webp`}
-                          sx={{ width: 60, mx: 1 }}
-                        />
-                        <Box sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'flex-end',
-                          flex: 1,
-                          ml: 1,
-                        }}
-                        >
-                          <Text bold>{war.defenderClan.name}</Text>
-                          <Text smallCaps color="text.secondary">
-                            {t('duelsWon', { count: war.defenderWins })}
-                          </Text>
-                        </Box>
-                        {war.fightIds.length > 0 && bruteName && (
-                          <FantasyButton
-                            color="primary"
-                            onClick={() => navigate(`/${bruteName}/tournament/clan/${id}/war/${war.id}`)}
-                            sx={{
-                              position: 'absolute',
-                              bottom: 4,
-                              right: 4,
-                              px: 1,
-                              py: 0,
-                              fontSize: 10,
-                            }}
-                          >
-                            {t('watchDuels')}
-                          </FantasyButton>
-                        )}
-                      </StyledButton>
-                    ))}
+                          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                            <Text bold color={attackerIsWinner ? 'success.main' : 'text.primary'}>
+                              {war.attackerClan.name}
+                            </Text>
+                            <Text smallCaps color={attackerIsWinner ? 'success.main' : 'text.secondary'}>
+                              {t('duelsWon', { count: war.attackerWins })}
+                            </Text>
+                          </Box>
+                          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 0.5 }}>
+                            <Box
+                              component="img"
+                              src={`/images${mode === 'dark' ? '/dark' : ''}/versus/vs.webp`}
+                              sx={{ width: 48 }}
+                            />
+                          </Box>
+                          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Text bold color={defenderIsWinner ? 'success.main' : 'text.primary'}>
+                              {war.defenderClan.name}
+                            </Text>
+                            <Text smallCaps color={defenderIsWinner ? 'success.main' : 'text.secondary'}>
+                              {t('duelsWon', { count: war.defenderWins })}
+                            </Text>
+                          </Box>
+                          {war.round === tournament.rounds && war.winnerClan && (
+                            <Text
+                              smallCaps
+                              color="success.main"
+                              sx={{ mt: 0.5 }}
+                            >
+                              {t('clanTournamentChampion', { clan: war.winnerClan.name })}
+                            </Text>
+                          )}
+                          {war.fightIds.length > 0 && bruteName && (
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 0.5 }}>
+                              <FantasyButton
+                                color="primary"
+                                onClick={() => navigate(`/${bruteName}/tournament/clan/${id}/war/${war.id}`)}
+                                sx={{
+                                  px: 1,
+                                  py: 0,
+                                  fontSize: 10,
+                                }}
+                              >
+                                {t('watchDuels')}
+                              </FantasyButton>
+                            </Box>
+                          )}
+                        </StyledButton>
+                      );
+                    })}
                   </Box>
                 ))}
               </Box>

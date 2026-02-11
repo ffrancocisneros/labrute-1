@@ -253,6 +253,7 @@
   "clanTournamentTodayRegistered": "Inscrito al torneo de hoy",
   "registerForNextClanTournament": "Inscribir para el próximo torneo de clan",
   "clanTournamentAlreadyRegistered": "Tu clan ya está inscrito en el próximo torneo.",
+  "clanTournamentChampion": "Campeón: {{clan}}",
   "clanTournamentFormatElimination": "Formato: Eliminación directa",
   "clanTournamentFormatLeague": "Formato: Liga (todos contra todos)",
   "clanTournamentStatus.PENDING": "Pendiente",
