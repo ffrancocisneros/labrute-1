@@ -175,8 +175,6 @@ const ClanTournamentView = () => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             minWidth: 220,
-                            height: 80,
-                            overflow: 'hidden',
                           }}
                         >
                           <Box
