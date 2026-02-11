@@ -356,6 +356,11 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
           <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
             {type === 'special' ? t('specialTournament') : t('tournamentOf')} {dayjs.utc(tournament.date).format('DD MMMM YYYY')}
           </Text>
+          {type === 'special' && tournament.specialRule && (
+            <Text smallCaps color="text.secondary" sx={{ mt: 0.5 }}>
+              {t(`specialTournament.${tournament.specialRule}`, tournament)}
+            </Text>
+          )}
           {type === 'special' && tournament.fights.length < 63 && (
             <Text variant="body2" color="text.secondary" sx={{ mt: 1 }}>
               {t('specialTournament.incomplete', { count: tournament.fights.length, expected: 63 })}

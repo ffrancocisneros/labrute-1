@@ -575,6 +575,7 @@
   "specialTournament.noWeaponsNoPets.desc": "Bare-handed fight, no weapons or pets.",
   "specialTournament.incomplete": "Incomplete tournament: {{count}} of {{expected}} fights generated. The next special tournament should be complete.",
   "backToTournaments": "Back to tournaments",
+  "backToClan": "Back",
   "invalidParameters": "Invalid parameters",
   "unlimited": "Unlimited",
   "globalTournament.desc": "View {{brute}}'s participation in the global tournament of {{date}}.",

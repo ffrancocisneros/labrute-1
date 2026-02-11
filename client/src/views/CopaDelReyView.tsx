@@ -119,11 +119,19 @@ const CopaDelReyView = () => {
                           width: StyledButtonWidth,
                           height: StyledButtonHeight,
                           m: 0.5,
+                          overflow: 'hidden',
+                          backgroundSize: 'contain',
+                          position: 'relative',
                         }}
                       >
                         <BruteTooltip fighter={brute1}>
                           <Box sx={{ position: 'relative', height: 1, width: 50, mr: 1 }}>
-                            {brute1 && <BruteRender brute={fighterToBrute(brute1)} />}
+                            {brute1 && (
+                              <BruteRender
+                                brute={fighterToBrute(brute1)}
+                                sx={{ position: 'absolute', bottom: -8, left: -8 }}
+                              />
+                            )}
                             {brute2 && isWinner(brute2, fight) && (
                               <Close color="error" sx={{ position: 'absolute', top: 5, left: 0, width: 1, height: 1, zIndex: 3 }} />
                             )}
@@ -137,7 +145,11 @@ const CopaDelReyView = () => {
                         {brute2 && (
                           <BruteTooltip fighter={brute2}>
                             <Box sx={{ position: 'relative', height: 1, width: 50, ml: 1 }}>
-                              <BruteRender brute={fighterToBrute(brute2)} looking="left" />
+                              <BruteRender
+                                brute={fighterToBrute(brute2)}
+                                looking="left"
+                                sx={{ position: 'absolute', bottom: -8, right: -8 }}
+                              />
                               {brute1 && isWinner(brute1, fight) && (
                                 <Close color="error" sx={{ position: 'absolute', top: 5, left: 0, width: 1, height: 1 }} />
                               )}

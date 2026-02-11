@@ -166,9 +166,9 @@ const ClanTournamentWarView = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell>{t('clanTournamentWarLeft')}</TableCell>
+                  <TableCell>{war.attackerClan.name}</TableCell>
                   <TableCell align="center">{t('fight')}</TableCell>
-                  <TableCell align="right">{t('clanTournamentWarRight')}</TableCell>
+                  <TableCell align="right">{war.defenderClan.name}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
