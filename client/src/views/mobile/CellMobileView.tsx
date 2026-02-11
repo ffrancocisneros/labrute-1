@@ -5,14 +5,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import CellClan from '../../components/Cell/CellClan';
-import CellGlobalTournament from '../../components/Cell/CellGlobalTournament';
 import CellLog from '../../components/Cell/CellLog';
-import CellSpecialTournament from '../../components/Cell/CellSpecialTournament';
 import CellMain from '../../components/Cell/CellMain';
 import CellPets from '../../components/Cell/CellPets';
 import CellSkills from '../../components/Cell/CellSkills';
 import CellSocials from '../../components/Cell/CellSocials';
-import CellTournament from '../../components/Cell/CellTournament';
+// Nota: los componentes de torneos específicos (CellTournament, CellSpecialTournament,
+// CellGlobalTournament) ya no se usan en mobile, reemplazados por un solo botón
+// que lleva a la vista unificada de torneos.
 import CellWeapons from '../../components/Cell/CellWeapons';
 import FantasyButton from '../../components/FantasyButton';
 import Link from '../../components/Link';
@@ -158,18 +158,14 @@ const CellMobileView = ({
           )}
         </Grid>
         <Grid item xs={12} sm={6} sx={{ textAlign: 'center' }} order={isXs ? 5 : 0}>
-          {/* TOURNAMENT */}
-          <CellTournament
-            language={language}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} sx={{ textAlign: 'center' }} order={isXs ? 6 : 0}>
-          {/* SPECIAL TOURNAMENT */}
-          <CellSpecialTournament />
-        </Grid>
-        <Grid item xs={12} sm={6} sx={{ textAlign: 'center' }} order={isXs ? 7 : 0}>
-          {/* GLOBAL TOURNAMENT */}
-          <CellGlobalTournament />
+          {/* TOURNAMENT - botón único a vista unificada */}
+          <FantasyButton
+            color="secondary"
+            to={`/${brute.name}/tournament`}
+            sx={{ my: 1 }}
+          >
+            {t('tournament')}
+          </FantasyButton>
         </Grid>
       </Grid>
       {/* LOGS */}

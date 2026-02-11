@@ -73,7 +73,9 @@ const ClanTournamentView = () => {
 
   const title = useMemo(() => {
     if (!tournament) return t('clanTournament');
-    return `${t('clanTournamentOf')} ${dayjs.utc(tournament.date).format('DD/MM/YYYY')}`;
+    const date = dayjs.utc(tournament.date).format('DD/MM/YYYY');
+    // Mostrar un título claro y amigable: "Torneo de Clanes - FECHA"
+    return `${t('clanTournament')} - ${date}`;
   }, [t, tournament]);
 
   return (
@@ -193,7 +195,7 @@ const ClanTournamentView = () => {
                         {war.fightIds.length > 0 && bruteName && (
                           <FantasyButton
                             color="primary"
-                            onClick={() => navigate(`/${bruteName}/fight/${war.fightIds[0]}`)}
+                            onClick={() => navigate(`/${bruteName}/tournament/clan/${id}/war/${war.id}`)}
                             sx={{
                               position: 'absolute',
                               bottom: 4,
@@ -290,7 +292,7 @@ const ClanTournamentView = () => {
                           {war.fightIds.length > 0 && bruteName && (
                             <FantasyButton
                               color="primary"
-                              onClick={() => navigate(`/${bruteName}/fight/${war.fightIds[0]}`)}
+                              onClick={() => navigate(`/${bruteName}/tournament/clan/${id}/war/${war.id}`)}
                               sx={{ ml: 1 }}
                             >
                               {t('watchDuels')}

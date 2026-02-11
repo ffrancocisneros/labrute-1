@@ -1,5 +1,4 @@
 import { Box, Grid, IconButton, Paper, Tooltip, useMediaQuery, useTheme } from '@mui/material';
-import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Link from '../../components/Link';
@@ -70,7 +69,7 @@ const HomeMobileView = ({
       {activeSpecialRule && user?.brutes?.length && (
         <Box
           component={Link}
-          to={`/${user.brutes[0]?.name || ''}/tournament/special/${dayjs.utc().format('YYYY-MM-DD')}`}
+          to={`/${user.brutes[0]?.name || ''}/tournament`}
           sx={{
             display: 'block',
             mb: 2,
@@ -84,9 +83,11 @@ const HomeMobileView = ({
           }}
         >
           <Text bold>
-            {activeSpecialRule.emoji} {t('specialTournament')}: {t(activeSpecialRule.nameKey)}
+            {activeSpecialRule.emoji} {t('tournament')}: {t(activeSpecialRule.nameKey)}
           </Text>
-          <Text variant="body2">{t(activeSpecialRule.descKey)}</Text>
+          <Text variant="body2">
+            {t('specialTournament')}: {t(activeSpecialRule.descKey)}
+          </Text>
         </Box>
       )}
       <Grid container spacing={1}>

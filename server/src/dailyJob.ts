@@ -1635,6 +1635,8 @@ const handleTournamentEarnings = async (prisma: PrismaClient) => {
           WHEN source = 'daily' THEN 'daily_tournament'
           WHEN source = 'global' THEN 'global_tournament'
           WHEN source = 'copa_del_rey' THEN 'copa_del_rey'
+          WHEN source = 'special_tournament' THEN 'special_tournament'
+          WHEN source = 'clan_tournament' THEN 'clan_tournament'
           ELSE 'tournament'
         END,
         CURRENT_TIMESTAMP

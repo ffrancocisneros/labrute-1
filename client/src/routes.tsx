@@ -24,6 +24,7 @@ import ClanRankingView from './views/clan/ClanRankingView';
 import ClanThreadView from './views/clan/ClanThreadView';
 import ClanView from './views/clan/ClanView';
 import ClanTournamentView from './views/clan/ClanTournamentView';
+import ClanTournamentWarView from './views/clan/ClanTournamentWarView';
 import ClanWarFightView from './views/clan/ClanWarFightView';
 import { ClanWarHistoryView } from './views/clan/ClanWarHistoryView';
 import { ClanWarView } from './views/clan/ClanWarView';
@@ -110,6 +111,7 @@ const routes: RouteObject[] = [
               { path: 'copa-del-rey/:type/:date', element: <CopaDelReyView /> },
               { path: 'special/:date', element: <TournamentView type="special" /> },
               { path: 'clan/:id', element: <ClanTournamentView /> },
+              { path: 'clan/:id/war/:warId', element: <ClanTournamentWarView /> },
               { path: ':date', element: <TournamentView /> },
             ],
           },
