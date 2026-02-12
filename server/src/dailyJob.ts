@@ -115,7 +115,9 @@ const deleteMisformattedTournaments = async (prisma: PrismaClient) => {
   // Check tournaments already created today
   const tournamentsAlreadyCreated = await prisma.tournament.findMany({
     where: {
-      type: TournamentType.DAILY,
+      type: {
+        in: [TournamentType.DAILY, TournamentType.SPECIAL],
+      },
       date: {
         gte: today.toDate(),
         lt: tomorrow.toDate(),
@@ -1220,6 +1222,8 @@ const handleSpecialTournament = async (
     },
   });
 
+  LOGGER.log(`[special-tournament] Regla ${specialRule} con ${eligibleBrutes.length} brutos elegibles`);
+
   // Necesitamos al menos 2 brutos para crear un torneo
   if (eligibleBrutes.length < 2) {
     LOGGER.log(`Not enough brutes for special tournament (${specialRule}): ${eligibleBrutes.length}`);
@@ -1229,11 +1233,57 @@ const handleSpecialTournament = async (
   // Shuffle brutes
   const shuffledBrutes = shuffle(eligibleBrutes);
 
-  // Crear grupos de 64 brutes (igual que torneos diarios)
+  // Crear grupos de hasta 64 brutos
   const tournamentsToCreate = Math.ceil(shuffledBrutes.length / 64);
   const tournaments: (typeof eligibleBrutes)[] = Array(tournamentsToCreate)
     .fill([])
     .map((_, index) => shuffledBrutes.slice(index * 64, index * 64 + 64));
+
+  // Rellenar el último grupo con brutos generados (bots) para llegar a 64,
+  // igual que en los torneos diarios, pero sin tocar flags de registro.
+  if (tournaments.length && tournaments[tournaments.length - 1]?.length) {
+    const lastTournament = tournaments[tournaments.length - 1];
+
+    if (!lastTournament) {
+      throw new Error('No last special tournament group');
+    }
+
+    const highestLevelBrute = lastTournament
+      .slice() // no mutar el array original durante el sort
+      .sort((a, b) => a.level - b.level)[lastTournament.length - 1]?.level;
+
+    if (typeof highestLevelBrute === 'number') {
+      // Obtener brutos generados (userId null) de nivel similar
+      let generatedBrutes = await prisma.brute.findMany({
+        where: {
+          deletedAt: null,
+          user: null,
+          level: {
+            lte: highestLevelBrute,
+          },
+        },
+        select: {
+          id: true,
+          level: true,
+          ranking: true,
+          name: true,
+        },
+      });
+
+      // Barajar bots disponibles
+      generatedBrutes = shuffle(generatedBrutes);
+
+      if (lastTournament.length < 64 && generatedBrutes.length) {
+        lastTournament.push(...generatedBrutes.slice(0, 64 - lastTournament.length));
+      }
+
+      // Si aun así no llegamos a 64, descartamos este grupo para evitar brackets raros
+      if (lastTournament.length !== 64) {
+        LOGGER.log(`[special-tournament] Grupo incompleto descartado: ${lastTournament.length} participantes (regla ${specialRule})`);
+        tournaments.pop();
+      }
+    }
+  }
 
   // Ordenar brutes por ranking y nivel (igual que torneos diarios)
   const sortedTournaments = tournaments.map((tournament) => {
@@ -1257,6 +1307,8 @@ const handleSpecialTournament = async (
 
     return [...shuffle(firstHalf), ...shuffle(secondHalf)];
   });
+
+  let createdSpecialCount = 0;
 
   // Crear torneos especiales
   for (const brutes of sortedTournaments) {
@@ -1443,6 +1495,10 @@ const handleSpecialTournament = async (
       }
     }
 
+    const fightsCount = step - 1;
+    LOGGER.log(`[special-tournament] Torneo ${tournament.id} creado con ${brutes.length} participantes y ${fightsCount} peleas (regla ${specialRule})`);
+    createdSpecialCount += 1;
+
     // After tournament completes, clear references and trigger GC
     lastFight = null;
     winners = [];
@@ -1450,7 +1506,7 @@ const handleSpecialTournament = async (
     triggerGC();
   }
 
-  LOGGER.log(`${tournamentsToCreate} special tournaments created (rule: ${specialRule})`);
+  LOGGER.log(`${createdSpecialCount} special tournaments created (rule: ${specialRule})`);
 
   return gains;
 };
