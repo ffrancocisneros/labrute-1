@@ -18,6 +18,7 @@ import { useBrute } from '../hooks/useBrute';
 import useStateAsync from '../hooks/useStateAsync';
 import Server from '../utils/Server';
 import TournamentMobileView from './mobile/TournamentMobileView';
+import { getSpecialTournamentRuleKey } from '../utils/specialTournamentLabel';
 
 const scale = (base: number, round: number) => ((round === 0 || round === 10)
   ? base * 0.5
@@ -68,21 +69,10 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
   >(null, fetchFn, tournamentProps);
 
   // Regla legible del torneo especial (mapear enums técnicos a claves de i18n)
-  const specialRuleKey = useMemo(() => {
-    if (!tournament?.specialRule) return null;
-    const map: Record<string, string> = {
-      NO_PETS: 'noPets',
-      LIGHT_WEAPONS: 'lightWeapons',
-      HEAVY_WEAPONS: 'heavyWeapons',
-      THROWN_WEAPONS: 'thrownWeapons',
-      DOUBLE_STRENGTH: 'doubleStrength',
-      DOUBLE_HP: 'doubleHp',
-      RANDOM_STATS: 'randomStats',
-      RANDOM_WEAPONS: 'randomWeapons',
-      NO_WEAPONS_NO_PETS: 'noWeaponsNoPets',
-    };
-    return map[tournament.specialRule] ?? null;
-  }, [tournament?.specialRule]);
+  const specialRuleKey = useMemo(
+    () => getSpecialTournamentRuleKey(tournament?.specialRule ?? null),
+    [tournament?.specialRule],
+  );
 
   const stepWatched = useMemo(() => {
     if (!tournament?.date) return 0;
@@ -355,6 +345,7 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
         display={display}
         goToFight={goToFight}
         setWatched={setWatched}
+        specialRuleKey={type === 'special' ? specialRuleKey : null}
       />
     ) : (
       <Page

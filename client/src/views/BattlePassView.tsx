@@ -46,7 +46,8 @@ const getRewardIcon = (r: RewardRow): RewardIcon => {
   }
 };
 
-const hasTempSkillOrWeapon = (rewards: Array<{ type: string }>): boolean => rewards.some((r) => r.type === 'TEMPORARY_SKILL' || r.type === 'TEMPORARY_WEAPON');
+const needsBruteSelection = (rewards: Array<{ type: string }>): boolean => rewards
+  .some((r) => r.type === 'TEMPORARY_SKILL' || r.type === 'TEMPORARY_WEAPON' || r.type === 'BONUS_FIGHTS');
 
 const missionTypeName: Record<string, string> = {
   WIN_FIGHTS: 'Ganar peleas',
@@ -123,7 +124,7 @@ const BattlePassView = () => {
   }, [Alert, load]);
 
   const onClaim = useCallback((level: number, rewards: Array<{ type: string }>) => {
-    if (hasTempSkillOrWeapon(rewards)) {
+    if (needsBruteSelection(rewards)) {
       setClaimLevel(level);
       setClaimBruteOpen(true);
     } else {
@@ -694,12 +695,29 @@ const BattlePassView = () => {
         </Box>
       )}
 
-      {/* Dialog for temporary skill/weapon selection */}
+      {/* Dialog for rewards that need brute selection (skills, weapons, bonus fights) */}
       <Dialog open={claimBruteOpen} onClose={() => { setClaimBruteOpen(false); setClaimLevel(null); setBruteId(''); }}>
         <DialogTitle>
-          {claimLevel && data?.levels.find((l) => l.level === claimLevel)?.rewards.some((r) => r.type === 'TEMPORARY_WEAPON')
-            ? 'Elegir bruto para el arma 24h'
-            : 'Elegir bruto para la habilidad 24h'}
+          {(() => {
+            const levelData = claimLevel
+              ? data?.levels.find((l) => l.level === claimLevel)
+              : null;
+            const rewards = levelData?.rewards ?? [];
+            const hasBonusFights = rewards.some((r) => r.type === 'BONUS_FIGHTS');
+            const hasTempWeapon = rewards.some((r) => r.type === 'TEMPORARY_WEAPON');
+            const hasTempSkill = rewards.some((r) => r.type === 'TEMPORARY_SKILL');
+
+            if (hasBonusFights && !hasTempWeapon && !hasTempSkill) {
+              return 'Elegir bruto para las peleas extra';
+            }
+            if (hasTempWeapon && !hasTempSkill && !hasBonusFights) {
+              return 'Elegir bruto para el arma 24h';
+            }
+            if (hasTempSkill && !hasTempWeapon && !hasBonusFights) {
+              return 'Elegir bruto para la habilidad 24h';
+            }
+            return 'Elegir bruto para la recompensa';
+          })()}
         </DialogTitle>
         <DialogContent>
           <FormControl fullWidth sx={{ mt: 1 }}>

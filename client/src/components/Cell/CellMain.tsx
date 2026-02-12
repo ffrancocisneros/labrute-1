@@ -132,7 +132,7 @@ const CellMain = ({
   // Backend will filter out invalid brutes (canRankUpSince, deletedAt, eventId)
   const hasUnregisteredBrutes = useMemo(() => {
     if (!owner || !user) return false;
-    return user.brutes.some((b) => !b.registeredForTournament && !b.canRankUpSince);
+    return user.brutes.some((b) => !b.registeredForTournament && !b.canRankUpSince && !b.eventId);
   }, [owner, user]);
 
   return brute && (

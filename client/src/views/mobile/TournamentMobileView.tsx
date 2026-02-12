@@ -46,6 +46,7 @@ interface Props {
   display: boolean,
   goToFight: (fight: TournamentsGetDailyResponse['fights'][number], newStep: number) => () => void,
   setWatched: () => void,
+  specialRuleKey?: string | null,
 }
 
 const TournamentMobileView = ({
@@ -59,6 +60,7 @@ const TournamentMobileView = ({
   display,
   goToFight,
   setWatched,
+  specialRuleKey,
 }: Props) => {
   const { t } = useTranslation();
   const { authing } = useAuth();
@@ -66,12 +68,24 @@ const TournamentMobileView = ({
 
   return tournament && (
     <Page title={`${t('tournament')} ${t('MyBrute')}`} headerUrl={`/${bruteName || ''}/cell`}>
-      <Paper sx={{
-        mx: 4,
-        textAlign: 'center',
-      }}
+      <Paper
+        sx={{
+          mx: 4,
+          textAlign: 'center',
+        }}
       >
-        <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>{t('tournamentOf')} {dayjs.utc(tournament.date).format('DD MMMM YYYY')}</Text>
+        <Text h3 bold upperCase typo="handwritten" sx={{ mr: 2 }}>
+          {tournament.type === 'SPECIAL'
+            ? t('specialTournament')
+            : t('tournamentOf')}
+          {' '}
+          {dayjs.utc(tournament.date).format('DD MMMM YYYY')}
+        </Text>
+        {tournament.type === 'SPECIAL' && specialRuleKey && (
+          <Text smallCaps color="text.secondary" sx={{ mt: 0.5 }}>
+            {t(`specialTournament.${specialRuleKey}`)}
+          </Text>
+        )}
       </Paper>
       <Paper sx={{ bgcolor: 'background.paperLight', mt: -2, }}>
         {ownsBrute && stepWatched < 6 && (

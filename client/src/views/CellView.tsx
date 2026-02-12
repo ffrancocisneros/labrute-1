@@ -132,15 +132,10 @@ const CellView = () => {
           if (stopped && canLevelUp) {
             Alert.open('warning', t('autoFightStoppedLevelUp', { fights: fightsCompleted }));
           } else if (stopped && reason === 'noFightsLeft') {
-            Alert.open('success', t('autoFightCompleted', { fights: fightsCompleted }));
+            Alert.open('info', t('autoFightNoFightsLeft'));
           } else {
             Alert.open('success', t('autoFightCompleted', { fights: fightsCompleted }));
           }
-
-          // Recargar la página después de completar peleas
-          setTimeout(() => {
-            window.location.reload();
-          }, 1500);
         }
 
         // Actualizar el bruto con los nuevos datos

@@ -168,22 +168,28 @@ export const BattlePass = {
       if (progress.totalXp < xpRequired) {
         throw new LimitError('Aún no has alcanzado este nivel');
       }
-      if (progress.claimedLevels.includes(level)) {
+      const claimedLevels = progress.claimedLevels ?? [];
+      if (claimedLevels.includes(level)) {
         throw new ExpectedError('Ya reclamaste esta recompensa');
       }
 
       const rewards = (season.rewards as BattlePassReward[]).filter((r) => r.level === level);
       const tempSkillRewards = rewards.filter((r) => r.rewardType === 'TEMPORARY_SKILL');
       const tempWeaponRewards = rewards.filter((r) => r.rewardType === 'TEMPORARY_WEAPON');
+      const bonusFightRewards = rewards.filter((r) => r.rewardType === 'BONUS_FIGHTS');
 
-      if ((tempSkillRewards.length > 0 || tempWeaponRewards.length > 0) && !bruteId) {
-        throw new ExpectedError('Debes elegir un bruto para la habilidad o arma temporal');
+      if ((tempSkillRewards.length > 0 || tempWeaponRewards.length > 0 || bonusFightRewards.length > 0) && !bruteId) {
+        throw new ExpectedError('Debes elegir un bruto para esta recompensa');
       }
+
+      let targetBruteId: string | null = null;
       if (bruteId) {
         const brute = await prisma.brute.findFirst({
           where: { id: bruteId, userId: user.id, deletedAt: null },
+          select: { id: true },
         });
         if (!brute) throw new NotFoundError('Bruto no encontrado');
+        targetBruteId = brute.id;
       }
 
       const today = dayjs.utc().startOf('day').toDate();
@@ -232,14 +238,20 @@ export const BattlePass = {
             break;
           case 'BONUS_FIGHTS':
             if (r.valueInt != null && r.valueInt > 0) {
-              const u = await prisma.user.findUnique({
-                where: { id: user.id },
+              if (!targetBruteId) {
+                throw new ExpectedError('Debes elegir un bruto para las peleas extra');
+              }
+
+              const brute = await prisma.brute.findUnique({
+                where: { id: targetBruteId },
                 select: { bonusFightsCount: true, bonusFightsDate: true },
               });
-              const isToday = u?.bonusFightsDate
-                && dayjs.utc(u.bonusFightsDate).isSame(dayjs.utc(), 'day');
-              await prisma.user.update({
-                where: { id: user.id },
+
+              const isToday = brute?.bonusFightsDate
+                && dayjs.utc(brute.bonusFightsDate).isSame(dayjs.utc(), 'day');
+
+              await prisma.brute.update({
+                where: { id: targetBruteId },
                 data: isToday
                   ? { bonusFightsCount: { increment: r.valueInt } }
                   : { bonusFightsCount: r.valueInt, bonusFightsDate: today },
@@ -247,11 +259,11 @@ export const BattlePass = {
             }
             break;
           case 'TEMPORARY_SKILL':
-            if (r.valueString && bruteId) {
+            if (r.valueString && targetBruteId) {
               const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
               await prisma.bruteTemporaryEffect.create({
                 data: {
-                  bruteId,
+                  bruteId: targetBruteId,
                   skillName: r.valueString as SkillName,
                   expiresAt,
                 },
@@ -259,11 +271,11 @@ export const BattlePass = {
             }
             break;
           case 'TEMPORARY_WEAPON':
-            if (r.valueString && bruteId) {
+            if (r.valueString && targetBruteId) {
               const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
               await prisma.bruteTemporaryWeapon.create({
                 data: {
-                  bruteId,
+                  bruteId: targetBruteId,
                   weaponName: r.valueString as WeaponName,
                   expiresAt,
                 },
