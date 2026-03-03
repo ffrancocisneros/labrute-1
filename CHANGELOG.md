@@ -2,6 +2,95 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.84.0](https://github.com/ffrancocisneros/labrute-1/compare/labrute-v2.83.18...labrute-v2.84.0) (2026-03-03)
+
+
+### Features
+
+* add Copa del Rey tournament (daily champion vs global champion) ([27eda23](https://github.com/ffrancocisneros/labrute-1/commit/27eda233fc3a5b80065227e95619b099e3976be5))
+* add crazyDay modifier (x10 fights, x10 XP) ([7c33f48](https://github.com/ffrancocisneros/labrute-1/commit/7c33f48b201d6956c92198c2de3f18b3383e79ea))
+* agregar botÃ³n para inscribir todos los brutos al torneo diario ([61924f4](https://github.com/ffrancocisneros/labrute-1/commit/61924f44b783b441139e1dfc2a8ecba8eaa90495))
+* Agregar lÃ­neas de conexiÃ³n visual al torneo ([31c83ca](https://github.com/ffrancocisneros/labrute-1/commit/31c83caadbb51e12a4a51463c4a22895159d37c2))
+* Agregar mensaje informativo para torneos especiales incompletos ([42b4150](https://github.com/ffrancocisneros/labrute-1/commit/42b4150249f555bd7c4b62642b5a919d9c9b070f))
+* Agregar migraciÃ³n para campos de jefe y modelos de clan ([262d27f](https://github.com/ffrancocisneros/labrute-1/commit/262d27f8136971ae7e93e68d01b5d411b612a82f))
+* auto reload tras pelea automÃ¡tica y cambio horario daily job ([b4002a5](https://github.com/ffrancocisneros/labrute-1/commit/b4002a53acad9b997be085c88af8e22fd055172b))
+* idioma espaÃ±ol por defecto + frases personalizadas ([8869fae](https://github.com/ffrancocisneros/labrute-1/commit/8869fae2cc4902a2fe5f2057a6abd43d1c4d5271))
+* Implementar historial de balance de oro ([fcc177a](https://github.com/ffrancocisneros/labrute-1/commit/fcc177a17377b345a476ad37a1f2615d681f838d))
+* Implementar peleas diarias contra jefe de clan con contador separado ([20fbe49](https://github.com/ffrancocisneros/labrute-1/commit/20fbe490f7948c85cd036c4e47a7506d65adb5fa))
+* increase daily fights to 12 and brute slots to 10 ([594368d](https://github.com/ffrancocisneros/labrute-1/commit/594368d952c50d6c1ee0a3469735c70ec7007d25))
+* mejoras UI torneo especial, copa del rey y tabla de duelos ([953228a](https://github.com/ffrancocisneros/labrute-1/commit/953228a58896bdd0fc914a366d8e5e55bb2f2565))
+* mejoras UX celda, tÃ­tulos y auto-fight ([8da75c1](https://github.com/ffrancocisneros/labrute-1/commit/8da75c1e2d11dc48a83f8d30bb161a4be09cedcf))
+* mostrar temporales de tienda en celda ([0a60bb3](https://github.com/ffrancocisneros/labrute-1/commit/0a60bb34b7ab0389ab09a2f29e66d261e3c40cc8))
+* Mover peleas bonus de User a Brute y requerir selecciÃ³n de bruto ([47f0a9d](https://github.com/ffrancocisneros/labrute-1/commit/47f0a9de14564a4ad089b41cb18b5213e63be3c7))
+* quitar restricciÃ³n de 24h para sacrificar brutos ([b834c88](https://github.com/ffrancocisneros/labrute-1/commit/b834c88bb04ad68b26197adfeb857ceb546d19aa))
+* tabla de duelos por guerra de clan ([e7ff930](https://github.com/ffrancocisneros/labrute-1/commit/e7ff9303965669abfcb7bf6e61397542cf1e80d5))
+* temporales en celda y tier-up diario ([5296789](https://github.com/ffrancocisneros/labrute-1/commit/529678957d6bdccb6f587d58d7e47df5663f56e9))
+
+
+### Bug Fixes
+
+* add eslint-disable for react/no-array-index-key, fix max-len ([ea7a507](https://github.com/ffrancocisneros/labrute-1/commit/ea7a5070ab106380376990f78e042b524c6a1f84))
+* Agregar migraciÃ³n para campos faltantes specialRule y bossRotationDate ([59b36af](https://github.com/ffrancocisneros/labrute-1/commit/59b36afa61963ae260da4505c68324467ac3d7e9))
+* aplicar modificadores de skills temporales ([d24cfad](https://github.com/ffrancocisneros/labrute-1/commit/d24cfad9ad94e22b61073ec569f835ef64837433))
+* aplicar temporales a stats en celda ([1c7c551](https://github.com/ffrancocisneros/labrute-1/commit/1c7c55105dec9229bae2d00cc34330c990165d19))
+* auto fights, torneos especiales y pase de batalla ([13604b7](https://github.com/ffrancocisneros/labrute-1/commit/13604b71c9a91a8d4b9e86615978155a0b91aadd))
+* **auto-fight:** considerar peleas bonus al validar si hay peleas disponibles ([e7831b9](https://github.com/ffrancocisneros/labrute-1/commit/e7831b99cb6da4897a659848404fa2f5c90e0e25))
+* **auto-fight:** devolver solo peleas diarias en result.fightsLeft ([0a38ce6](https://github.com/ffrancocisneros/labrute-1/commit/0a38ce6bf237fecc46e3f8249393be63d8020f31))
+* centrar texto y mostrar borde completo en cards de guerras ([47237d2](https://github.com/ffrancocisneros/labrute-1/commit/47237d2f4fc0372cc7dbfa3a5d57e0ad674a0e0d))
+* **core:** hacer getCalculatedBrute defensivo ante weapons/skills/pets no iterables ([4d205c3](https://github.com/ffrancocisneros/labrute-1/commit/4d205c34f1a43b0cf7f22707cfd11e589816af7f))
+* Corregir error de tipos TypeScript en Fights.ts ([c93ba82](https://github.com/ffrancocisneros/labrute-1/commit/c93ba826475d33447a8e4f12d0fa0c847c26ac47))
+* corregir errores de ESLint en CellSkills.tsx ([3c7128c](https://github.com/ffrancocisneros/labrute-1/commit/3c7128c5f2c1543312c220f6d4f060aeac3b9bdd))
+* corregir errores de ESLint en temporales de tienda ([7b6d81b](https://github.com/ffrancocisneros/labrute-1/commit/7b6d81b86d51551d8c0b649236b00f155ba4b8f4))
+* Corregir errores ESLint en BalanceView (imports no usados, variable shadowing) ([c80240a](https://github.com/ffrancocisneros/labrute-1/commit/c80240ab7702b0ed264c0b312bb56040a7bf33cc))
+* Corregir errores ESLint para build Docker ([e74f749](https://github.com/ffrancocisneros/labrute-1/commit/e74f749dc10ecfafe9182f256d012c2dc46e502b))
+* corregir ESLint en ProvideBrute y applyTemporaryEffects ([bec5816](https://github.com/ffrancocisneros/labrute-1/commit/bec58164c17323d2c617ea653f92dfd4fa5f1649))
+* dividir lÃ­neas largas en ShopView para ESLint ([6b9cdad](https://github.com/ffrancocisneros/labrute-1/commit/6b9cdad5e68f2ace059a2939f552a85cdb2366f8))
+* eliminar casts innecesarios en applyTemporaryEffects ([7101d61](https://github.com/ffrancocisneros/labrute-1/commit/7101d611d09794b90b65d8c6fbc1324b2bfa77dd))
+* eliminar imports no usados en ProvideBrute ([84b7446](https://github.com/ffrancocisneros/labrute-1/commit/84b7446d83ae983ec686dec0c840d674c133bbda))
+* eliminar type assertions innecesarias en ProvideBrute ([b9a5c83](https://github.com/ffrancocisneros/labrute-1/commit/b9a5c837a998b5a9d4dfd68d67b45db910a899c5))
+* ESLint AscendView y doc de build Docker ([d4961a7](https://github.com/ffrancocisneros/labrute-1/commit/d4961a728b9cdde222728abea282d109a76c60b2))
+* Event brutes no longer count towards normal brute limit ([0000338](https://github.com/ffrancocisneros/labrute-1/commit/00003382a1225e8643d88c1110b62de047c047e2))
+* implementar soluciones del plan (i18n, torneos unificados, progreso diario, etc) ([7345f81](https://github.com/ffrancocisneros/labrute-1/commit/7345f816d8899f761664db7de44381d5ef8e5fc9))
+* importar tipos TemporarySkillEffect/WeaponEffect y hacer cast ([dc853ea](https://github.com/ffrancocisneros/labrute-1/commit/dc853ea4a05d9a5f3b0498b99da40a0e30a3a1c5))
+* Inicializar todos los rounds en torneos especiales ([0dcb551](https://github.com/ffrancocisneros/labrute-1/commit/0dcb551ee5d8f75e8ccb02cade71319d343caddf))
+* limpiar ESLint en HomeView y ShopView para build Docker ([259617f](https://github.com/ffrancocisneros/labrute-1/commit/259617fcd1a43e66cbd7cf52cfa38200bdeb5269))
+* limpiar tipos y max-len en useAuth ([b54c36a](https://github.com/ffrancocisneros/labrute-1/commit/b54c36ac769bf7fed1b98f2fe417aa967bc847a0))
+* mark failed shop migration as applied instead of rolled back ([6dc298f](https://github.com/ffrancocisneros/labrute-1/commit/6dc298f5614b97f568c28728242a518f51f1cc0b))
+* mejorar lÃ­neas del bracket - forma de llaves, mÃ¡s grosor y visibilidad ([cf56b11](https://github.com/ffrancocisneros/labrute-1/commit/cf56b11db1bf96a649b91a92d469d1f128c901b5))
+* Mejorar UI de BalanceView - filtros, layout en una lÃ­nea, borde verde, icono de oro ([6fd78a6](https://github.com/ffrancocisneros/labrute-1/commit/6fd78a64a43fbccbdb99809e937f9b54e99203d3))
+* mostrar borde inferior en cards de guerras ([998a964](https://github.com/ffrancocisneros/labrute-1/commit/998a96459a1b27b5c571ad735f1b58c299c34e2e))
+* mostrar botÃ³n de sacrificar sin restricciÃ³n de 24h ([14bf800](https://github.com/ffrancocisneros/labrute-1/commit/14bf800ac67a886b75d4ec1d99e77c6c7f345179))
+* mostrar regla de torneo especial traducida ([cc7f578](https://github.com/ffrancocisneros/labrute-1/commit/cc7f578863c51089b41be7d9d018c5419e0c96d0))
+* mostrar temporales en celda ([1599ef2](https://github.com/ffrancocisneros/labrute-1/commit/1599ef2a7086e61b7fd84726e21ab3fb2733dff2))
+* Mostrar todos los rounds en torneos especiales y ordenar peleas por tournamentStep ([0eff2c1](https://github.com/ffrancocisneros/labrute-1/commit/0eff2c12c32a924229e0d08fa9f6515b40d0ae1a))
+* mover justRegisteredAll antes de registerAllBrutes (no-use-before-define) ([f3ab562](https://github.com/ffrancocisneros/labrute-1/commit/f3ab562cc116477a5649b297ba23ba3be1e2616a))
+* pagar recompensas de misiones al reclamar ([4f8f9eb](https://github.com/ffrancocisneros/labrute-1/commit/4f8f9eb089d8bf3f1b742eedc87f161d083b28d0))
+* pestaÃ±a Copa del Rey enlaza a final en lugar de semifinal ([7d82e71](https://github.com/ffrancocisneros/labrute-1/commit/7d82e71042515a6ddae4ce033b005d1ed5775562))
+* recover from failed shop migration on Railway ([dfd6ed1](https://github.com/ffrancocisneros/labrute-1/commit/dfd6ed14fb55d3a47e1aa60c5c0b312242fe7591))
+* Remove postinstall script temporarily during Docker build ([482344c](https://github.com/ffrancocisneros/labrute-1/commit/482344c60a6e0967c808a939bfc3866c1f43cb52))
+* remover import de dayjs no usado ([e52d436](https://github.com/ffrancocisneros/labrute-1/commit/e52d436d1c9571b37f99863c72b18b7b152c1108))
+* resaltar y mostrar temporales en skills ([342c657](https://github.com/ffrancocisneros/labrute-1/commit/342c657495077ae0df400fd9593c4e114dcc66fe))
+* Resolver migraciÃ³n fallida de bonus fights en producciÃ³n ([e43b989](https://github.com/ffrancocisneros/labrute-1/commit/e43b989ae44a3f2215fdc37fa50a47f265342e5b))
+* Restore @labrute/prisma package name ([35d1dbe](https://github.com/ffrancocisneros/labrute-1/commit/35d1dbe37b1ecba19ee50b59dfca41ada8ee2a06))
+* separar getCalculatedBrute de merge de temporales para tipos ([b94d015](https://github.com/ffrancocisneros/labrute-1/commit/b94d015c988d57b7aab704e8d7d2982fa16c17fd))
+* **server:** corregir errores TypeScript en build Docker - peleas automÃ¡ticas ([0c93074](https://github.com/ffrancocisneros/labrute-1/commit/0c9307438c520b6f4e0e7cb720f4aea186985f60))
+* **shop:** mostrar y permitir usar peleas bonus compradas en tienda ([00ee9fa](https://github.com/ffrancocisneros/labrute-1/commit/00ee9fa893bf85b5113f27ff3a48ee64aee653b7))
+* simplificar condiciÃ³n y mover botÃ³n registrar todos a posiciÃ³n mÃ¡s visible ([58ed238](https://github.com/ffrancocisneros/labrute-1/commit/58ed2386ede3c2b4b98be29b16aad75aedd0ce0f))
+* Skip postinstall script in CI/Docker build environments ([04d3d90](https://github.com/ffrancocisneros/labrute-1/commit/04d3d9039fa150ab8742af35a1bbbf464efab48e))
+* tipos explÃ­citos en ShopView para pasar ESLint ([5d45e61](https://github.com/ffrancocisneros/labrute-1/commit/5d45e611e033f9ea2e60039f87b1b62d2ff080f1))
+* torneos especiales completos ([f77e057](https://github.com/ffrancocisneros/labrute-1/commit/f77e05735618da28307451e46d9639948b8df9a7))
+* usar destructuring y eliminar imports no usados ([2a936d1](https://github.com/ffrancocisneros/labrute-1/commit/2a936d1b386308cdc2f7821b7a8b90825f76d784))
+* usar objeto skills/weapons en lugar de array en ShopView ([431c48b](https://github.com/ffrancocisneros/labrute-1/commit/431c48b7e5b10487e3c36fa65e21710be8c0a3d1))
+* usar TemporarySkillEffect/WeaponEffect en lugar de tipos locales con string ([1f22b61](https://github.com/ffrancocisneros/labrute-1/commit/1f22b610414b924d28cf8052eb03c373f89e9d07))
+* use tournamentStep as key instead of array index (react/no-array-index-key) ([a705437](https://github.com/ffrancocisneros/labrute-1/commit/a7054375575321054dd13f987019dbb2bc1d0094))
+
+
+### Performance Improvements
+
+* **auto-fight:** reducir tiempo de peleas automaticas (ANALISIS_LENTITUD_PELEAS_AUTOMATICAS) ([eea5d13](https://github.com/ffrancocisneros/labrute-1/commit/eea5d13974e26377a6edb016c913bd96543ace48))
+* desacoplar misiones/logros en background ([8b8fee3](https://github.com/ffrancocisneros/labrute-1/commit/8b8fee33650e8a7f1002d2eb4e4c30f33fac9a77))
+* reducir latencia al iniciar combates ([b68cf8a](https://github.com/ffrancocisneros/labrute-1/commit/b68cf8a9b3c1e3a55c2fc321ec36302be6e810a4))
+
 ## [2.83.18](https://github.com/Zenoo/labrute/compare/labrute-v2.83.17...labrute-v2.83.18) (2025-12-02)
 
 
