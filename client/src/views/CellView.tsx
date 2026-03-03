@@ -151,6 +151,12 @@ const CellView = () => {
           autoFightEnabled: false,
         } : null));
       }
+
+      if (response.success) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
     }).catch(catchError(Alert)).finally(() => {
       setIsAutoFighting(false);
     });
