@@ -82,4 +82,3 @@ const SurvivalView = () => {
 };
 
 export default SurvivalView;
-
