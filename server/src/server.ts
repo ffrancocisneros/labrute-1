@@ -109,8 +109,15 @@ export function main(cx: ServerContext) {
     });
 
     // Initialize daily scheduler
-    // Ejecutar dailyJob todos los días a las 22:00 UTC (19:00 en Argentina, asumiendo UTC-3)
-    schedule.scheduleJob('0 22 * * *', dailyJob(cx.prisma));
+    // Ejecutar dailyJob todos los días a las 19:00 hora de Argentina (America/Argentina/Buenos_Aires),
+    // independientemente de la zona horaria del servidor.
+    schedule.scheduleJob(
+      {
+        rule: '0 19 * * *',
+        tz: 'America/Argentina/Buenos_Aires',
+      },
+      dailyJob(cx.prisma),
+    );
   });
 
   initRoutes(app, cx.config, cx.prisma);
