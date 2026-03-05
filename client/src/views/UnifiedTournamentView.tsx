@@ -7,7 +7,7 @@ import { Navigate, Outlet, useLocation, useParams } from 'react-router';
 import Link from '../components/Link';
 import { useBrute } from '../hooks/useBrute';
 
-type TabValue = 'daily' | 'global' | 'special' | 'copa' | 'clan';
+type TabValue = 'daily' | 'global' | 'special' | 'copa' | 'clan' | 'survival';
 
 const UnifiedTournamentView = () => {
   const { t } = useTranslation();
@@ -30,6 +30,7 @@ const UnifiedTournamentView = () => {
     if (path.includes('/tournament/special/')) return 'special';
     if (path.includes('/tournament/copa-del-rey/')) return 'copa';
     if (path.includes('/tournament/clan/')) return 'clan';
+    if (path.includes('/tournament/survival')) return 'survival';
     return 'daily';
   };
 
@@ -65,6 +66,12 @@ const UnifiedTournamentView = () => {
           to={`/${bruteName}/tournament/special/${currentDate}`}
           value="special"
           label={t('tournament.special')}
+        />
+        <Tab
+          component={Link}
+          to={`/${bruteName}/tournament/survival`}
+          value="survival"
+          label={t('tournament.survival')}
         />
         <Tab
           component={Link}

@@ -254,6 +254,101 @@ export const Tournaments = {
       sendError(res, error);
     }
   },
+  registerSurvival: (prisma: PrismaClient) => async (
+    req: Request,
+    res: Response<{ success: boolean }>,
+  ) => {
+    try {
+      const user = await auth(prisma, req);
+
+      if (!req.params.name) {
+        throw new Error(translate('missingParameters', user));
+      }
+
+      const today = dayjs.utc().startOf('day');
+      const dayOfWeek = today.day(); // 0 = domingo, 4 = jueves
+
+      // Solo permitir inscripción el jueves (día anterior al torneo Survival)
+      if (dayOfWeek !== 4) {
+        throw new ExpectedError(translate('invalidParameters'));
+      }
+
+      // Obtener brute del usuario
+      const brute = await prisma.brute.findFirst({
+        where: {
+          name: ilike(req.params.name),
+          deletedAt: null,
+          eventId: null,
+          userId: user.id,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!brute) {
+        throw new NotFoundError(translate('bruteNotFound', user));
+      }
+
+      // Próximo viernes (mismo week, día 5)
+      const eventDate = today.day() <= 5
+        ? today.day(5)
+        : today.add(1, 'week').day(5);
+
+      await prisma.survivalRegistration.upsert({
+        where: {
+          userId_eventDate: {
+            userId: user.id,
+            eventDate: eventDate.toDate(),
+          },
+        },
+        create: {
+          userId: user.id,
+          bruteId: brute.id,
+          eventDate: eventDate.toDate(),
+        },
+        update: {
+          bruteId: brute.id,
+        },
+        select: { id: true },
+      });
+
+      res.send({ success: true });
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
+  getSurvivalSelection: (prisma: PrismaClient) => async (
+    req: Request,
+    res: Response<{ bruteName: string | null }>,
+  ) => {
+    try {
+      const user = await auth(prisma, req);
+
+      const today = dayjs.utc().startOf('day');
+      const eventDate = today.day() <= 5
+        ? today.day(5)
+        : today.add(1, 'week').day(5);
+
+      const registration = await prisma.survivalRegistration.findUnique({
+        where: {
+          userId_eventDate: {
+            userId: user.id,
+            eventDate: eventDate.toDate(),
+          },
+        },
+        select: {
+          brute: {
+            select: { name: true },
+          },
+        },
+      });
+
+      res.send({ bruteName: registration?.brute.name ?? null });
+    } catch (error) {
+      sendError(res, error);
+    }
+  },
   registerAllDaily: (prisma: PrismaClient) => async (req: Request, res: Response<{ success: boolean; registered: number }>) => {
     try {
       const user = await auth(prisma, req);

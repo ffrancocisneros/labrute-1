@@ -1511,6 +1511,180 @@ const handleSpecialTournament = async (
   return gains;
 };
 
+const handleSurvivalTournament = async (
+  prisma: PrismaClient,
+  modifiers: Modifiers,
+) => {
+  const today = dayjs.utc().startOf('day');
+
+  // Solo ejecutar los viernes
+  if (today.day() !== 5) {
+    return;
+  }
+
+  const eventDate = today.toDate();
+
+  // Obtener inscripciones explícitas
+  const registrations = await prisma.survivalRegistration.findMany({
+    where: {
+      eventDate,
+    },
+    select: {
+      userId: true,
+      bruteId: true,
+    },
+  });
+
+  const explicitByUser = new Map<string, string>();
+  registrations.forEach((r) => {
+    explicitByUser.set(r.userId, r.bruteId);
+  });
+
+  // Obtener todos los brutos elegibles (uno por usuario, máximo nivel por defecto)
+  const brutesByUser = await prisma.brute.findMany({
+    where: {
+      deletedAt: null,
+      eventId: null,
+      userId: {
+        not: null,
+      },
+    },
+    select: {
+      id: true,
+      userId: true,
+      level: true,
+      ranking: true,
+    },
+  });
+
+  const participantsIds: string[] = [];
+  const bestBruteByUser = new Map<string, { id: string; level: number; ranking: number }>();
+
+  for (const brute of brutesByUser) {
+    if (!brute.userId) continue;
+    const current = bestBruteByUser.get(brute.userId);
+    if (!current || brute.level > current.level || (brute.level === current.level && brute.ranking < current.ranking)) {
+      bestBruteByUser.set(brute.userId, {
+        id: brute.id,
+        level: brute.level,
+        ranking: brute.ranking,
+      });
+    }
+  }
+
+  for (const [userId, best] of bestBruteByUser.entries()) {
+    const explicit = explicitByUser.get(userId);
+    participantsIds.push(explicit ?? best.id);
+  }
+
+  // Necesitamos al menos 2 participantes reales
+  if (participantsIds.length < 2) {
+    return;
+  }
+
+  // Cargar brutos completos para el torneo Survival
+  let roundBrutes = await prisma.brute.findMany({
+    where: {
+      id: { in: participantsIds },
+    },
+  });
+
+  roundBrutes = shuffle(roundBrutes);
+
+  // Torneo por rondas con byes para completar potencia de 2
+  while (roundBrutes.length > 1) {
+    const bracketSize = 2 ** Math.ceil(Math.log2(roundBrutes.length));
+    const byesCount = bracketSize - roundBrutes.length;
+    const byes = byesCount > 0 ? roundBrutes.splice(roundBrutes.length - byesCount, byesCount) : [];
+
+    const nextRound: typeof roundBrutes = [...byes];
+
+    for (let i = 0; i < roundBrutes.length - 1; i += 2) {
+      const brute1 = roundBrutes[i];
+      const brute2 = roundBrutes[i + 1];
+
+      if (!brute1 || !brute2) {
+        continue;
+      }
+
+      // Generar pelea sin guardarla en DB, sólo para decidir ganador
+      let generatedFight: Prisma.FightCreateInput | null = null;
+      let retries = 0;
+
+      while (!generatedFight) {
+        if (retries > 10) {
+          throw new Error('Too many retries in Survival tournament');
+        }
+
+        try {
+          const fight = await generateFight({
+            prisma,
+            team1: { brutes: [getCalculatedBrute(brute1, modifiers)] },
+            team2: { brutes: [getCalculatedBrute(brute2, modifiers)] },
+            modifiers,
+            backups: false,
+            achievements: false,
+            tournament: 'fight',
+          });
+          generatedFight = fight.data;
+        } catch (error: unknown) {
+          if (!(error instanceof Error)) {
+            throw error;
+          }
+          LOGGER.log(`Error while generating a Survival fight between ${brute1.name} and ${brute2.name}, retrying...`);
+          DISCORD().sendError(error);
+        }
+
+        retries++;
+      }
+
+      // Elegir ganador por nombre
+      const winner = brute1.name === generatedFight.winner ? brute1 : brute2;
+      nextRound.push(winner);
+    }
+
+    roundBrutes = nextRound;
+  }
+
+  const champion = roundBrutes[0];
+
+  if (!champion) {
+    return;
+  }
+
+  // Marcar para eliminación todos los participantes excepto el campeón
+  await prisma.brute.updateMany({
+    where: {
+      id: {
+        in: participantsIds.filter((id) => id !== champion.id),
+      },
+    },
+    data: {
+      willBeDeletedAt: dayjs.utc().add(1, 'day').toDate(),
+      deletionReason: BruteDeletionReason.EVENT_LOSS,
+    },
+  });
+
+  // Ascender y reiniciar al campeón a nivel 1
+  const fullChampion = await prisma.brute.findUnique({
+    where: { id: champion.id },
+    include: {
+      user: true,
+    },
+  });
+
+  if (fullChampion && fullChampion.user) {
+    await resetBrute({
+      prisma,
+      user: fullChampion.user,
+      brute: fullChampion,
+      free: true,
+      rankUp: true,
+      ascended: undefined,
+    });
+  }
+}
+
 const storeGains = async (
   prisma: PrismaClient,
   dailyGains: Record<string, [number, number]>,
@@ -3485,6 +3659,11 @@ export const dailyJob = (prisma: PrismaClient) => async () => {
       // Handle special tournament
       const specialGains = await handleSpecialTournament(prisma, modifiers);
       logMemory('After special tournament');
+      triggerGC();
+
+      // Handle Survival weekly tournament (viernes)
+      await handleSurvivalTournament(prisma, modifiers);
+      logMemory('After Survival tournament');
       triggerGC();
 
       // Handle clan tournaments (clan vs clan)

@@ -63,6 +63,7 @@ import { ClanAdminView } from './views/admin/ClanAdminView';
 import { CurrentEventsView } from './views/event/CurrentEventsView';
 import { EventRoundView } from './views/event/EventRoundView';
 import { UserLogView } from './views/admin/UserLogView';
+import SurvivalView from './views/SurvivalView';
 
 const routes: RouteObject[] = [
   {
@@ -110,6 +111,7 @@ const routes: RouteObject[] = [
               { path: 'global/:date', element: <GlobalTournamentView /> },
               { path: 'copa-del-rey/:type/:date', element: <CopaDelReyView /> },
               { path: 'special/:date', element: <TournamentView type="special" /> },
+              { path: 'survival', element: <SurvivalView /> },
               { path: 'clan/:id', element: <ClanTournamentView /> },
               { path: 'clan/:id/war/:warId', element: <ClanTournamentWarView /> },
               { path: ':date', element: <TournamentView /> },
