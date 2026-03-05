@@ -1,7 +1,7 @@
 on:
-  push:
-    branches:
-      - main
+  # Deshabilitado para ejecuciones automáticas porque está fallando con error HTML de GitHub.
+  # Se puede volver a activar y depurar más adelante.
+  workflow_dispatch:
 
 permissions:
   contents: write
