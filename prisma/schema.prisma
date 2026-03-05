@@ -54,6 +54,7 @@ model User {
   reports                       BruteReport[]                   @relation("BruteReportToUser")
   favoriteFights                Fight[]                         @relation("FavoriteFights")
   following                     Brute[]                         @relation("Followers")
+  survivalRegistrations         SurvivalRegistration[]
 }
 
 model UserLog {
@@ -182,6 +183,7 @@ model Brute {
   followers                    User[]                  @relation("Followers")
   Brute_Opponents_A            Brute[]                 @relation("Opponents")
   Brute_Opponents_B            Brute[]                 @relation("Opponents")
+  survivalRegistrations        SurvivalRegistration[]
 
   @@index([deletedAt, eventId, ranking])
   @@index([ascensions, level, xp])
@@ -336,6 +338,20 @@ model TournamentXp {
   bruteId String   @db.Uuid
   brute   Brute    @relation(fields: [bruteId], references: [id], onDelete: Cascade)
 
+  @@index([bruteId])
+}
+
+model SurvivalRegistration {
+  id        String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  userId    String   @db.Uuid
+  bruteId   String   @db.Uuid
+  eventDate DateTime @db.Date
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  brute     Brute    @relation(fields: [bruteId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventDate])
+  @@index([eventDate])
   @@index([bruteId])
 }
 

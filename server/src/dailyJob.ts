@@ -1536,7 +1536,7 @@ const handleSurvivalTournament = async (
   });
 
   const explicitByUser = new Map<string, string>();
-  registrations.forEach((r) => {
+  registrations.forEach((r: { userId: string; bruteId: string }) => {
     explicitByUser.set(r.userId, r.bruteId);
   });
 

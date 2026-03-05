@@ -336,6 +336,14 @@ exports.Prisma.TournamentXpScalarFieldEnum = {
   bruteId: 'bruteId'
 };
 
+exports.Prisma.SurvivalRegistrationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  bruteId: 'bruteId',
+  eventDate: 'eventDate',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.AchievementScalarFieldEnum = {
   count: 'count',
   userId: 'userId',
@@ -1228,6 +1236,7 @@ exports.Prisma.ModelName = {
   TournamentAchievement: 'TournamentAchievement',
   TournamentGold: 'TournamentGold',
   TournamentXp: 'TournamentXp',
+  SurvivalRegistration: 'SurvivalRegistration',
   Achievement: 'Achievement',
   DailyObjective: 'DailyObjective',
   WeeklyObjective: 'WeeklyObjective',

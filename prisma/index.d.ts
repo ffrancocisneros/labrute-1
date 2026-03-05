@@ -79,6 +79,11 @@ export type TournamentGold = $Result.DefaultSelection<Prisma.$TournamentGoldPayl
  */
 export type TournamentXp = $Result.DefaultSelection<Prisma.$TournamentXpPayload>
 /**
+ * Model SurvivalRegistration
+ * 
+ */
+export type SurvivalRegistration = $Result.DefaultSelection<Prisma.$SurvivalRegistrationPayload>
+/**
  * Model Achievement
  * 
  */
@@ -1302,6 +1307,16 @@ export class PrismaClient<
   get tournamentXp(): Prisma.TournamentXpDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.survivalRegistration`: Exposes CRUD operations for the **SurvivalRegistration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SurvivalRegistrations
+    * const survivalRegistrations = await prisma.survivalRegistration.findMany()
+    * ```
+    */
+  get survivalRegistration(): Prisma.SurvivalRegistrationDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.achievement`: Exposes CRUD operations for the **Achievement** model.
     * Example usage:
     * ```ts
@@ -2103,6 +2118,7 @@ export namespace Prisma {
     TournamentAchievement: 'TournamentAchievement',
     TournamentGold: 'TournamentGold',
     TournamentXp: 'TournamentXp',
+    SurvivalRegistration: 'SurvivalRegistration',
     Achievement: 'Achievement',
     DailyObjective: 'DailyObjective',
     WeeklyObjective: 'WeeklyObjective',
@@ -2156,7 +2172,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userLog" | "goldTransaction" | "brute" | "userUsedSkill" | "bruteStartingStats" | "fight" | "log" | "destinyChoice" | "tournament" | "tournamentAchievement" | "tournamentGold" | "tournamentXp" | "achievement" | "dailyObjective" | "weeklyObjective" | "mission" | "missionAchievement" | "permanentAchievement" | "bruteReport" | "serverState" | "bannedWord" | "bannedIp" | "clan" | "clanThread" | "clanPost" | "bossDamage" | "clanWar" | "clanWarFighters" | "clanTournament" | "clanTournamentClan" | "clanTournamentWar" | "clanMission" | "inventoryItem" | "battlePassSeason" | "battlePassReward" | "battlePassMission" | "userBattlePassProgress" | "userBattlePassMissionProgress" | "bruteTemporaryEffect" | "bruteTemporaryWeapon" | "cosmeticPreset" | "userUnlockedCosmetic" | "shopItem" | "release" | "event" | "notification" | "config"
+      modelProps: "user" | "userLog" | "goldTransaction" | "brute" | "userUsedSkill" | "bruteStartingStats" | "fight" | "log" | "destinyChoice" | "tournament" | "tournamentAchievement" | "tournamentGold" | "tournamentXp" | "survivalRegistration" | "achievement" | "dailyObjective" | "weeklyObjective" | "mission" | "missionAchievement" | "permanentAchievement" | "bruteReport" | "serverState" | "bannedWord" | "bannedIp" | "clan" | "clanThread" | "clanPost" | "bossDamage" | "clanWar" | "clanWarFighters" | "clanTournament" | "clanTournamentClan" | "clanTournamentWar" | "clanMission" | "inventoryItem" | "battlePassSeason" | "battlePassReward" | "battlePassMission" | "userBattlePassProgress" | "userBattlePassMissionProgress" | "bruteTemporaryEffect" | "bruteTemporaryWeapon" | "cosmeticPreset" | "userUnlockedCosmetic" | "shopItem" | "release" | "event" | "notification" | "config"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3119,6 +3135,80 @@ export namespace Prisma {
           count: {
             args: Prisma.TournamentXpCountArgs<ExtArgs>
             result: $Utils.Optional<TournamentXpCountAggregateOutputType> | number
+          }
+        }
+      }
+      SurvivalRegistration: {
+        payload: Prisma.$SurvivalRegistrationPayload<ExtArgs>
+        fields: Prisma.SurvivalRegistrationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SurvivalRegistrationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SurvivalRegistrationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>
+          }
+          findFirst: {
+            args: Prisma.SurvivalRegistrationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SurvivalRegistrationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>
+          }
+          findMany: {
+            args: Prisma.SurvivalRegistrationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>[]
+          }
+          create: {
+            args: Prisma.SurvivalRegistrationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>
+          }
+          createMany: {
+            args: Prisma.SurvivalRegistrationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SurvivalRegistrationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>[]
+          }
+          delete: {
+            args: Prisma.SurvivalRegistrationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>
+          }
+          update: {
+            args: Prisma.SurvivalRegistrationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>
+          }
+          deleteMany: {
+            args: Prisma.SurvivalRegistrationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SurvivalRegistrationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SurvivalRegistrationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>[]
+          }
+          upsert: {
+            args: Prisma.SurvivalRegistrationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SurvivalRegistrationPayload>
+          }
+          aggregate: {
+            args: Prisma.SurvivalRegistrationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSurvivalRegistration>
+          }
+          groupBy: {
+            args: Prisma.SurvivalRegistrationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SurvivalRegistrationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SurvivalRegistrationCountArgs<ExtArgs>
+            result: $Utils.Optional<SurvivalRegistrationCountAggregateOutputType> | number
           }
         }
       }
@@ -5821,6 +5911,7 @@ export namespace Prisma {
     tournamentAchievement?: TournamentAchievementOmit
     tournamentGold?: TournamentGoldOmit
     tournamentXp?: TournamentXpOmit
+    survivalRegistration?: SurvivalRegistrationOmit
     achievement?: AchievementOmit
     dailyObjective?: DailyObjectiveOmit
     weeklyObjective?: WeeklyObjectiveOmit
@@ -5956,6 +6047,7 @@ export namespace Prisma {
     reports: number
     favoriteFights: number
     following: number
+    survivalRegistrations: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5979,6 +6071,7 @@ export namespace Prisma {
     reports?: boolean | UserCountOutputTypeCountReportsArgs
     favoriteFights?: boolean | UserCountOutputTypeCountFavoriteFightsArgs
     following?: boolean | UserCountOutputTypeCountFollowingArgs
+    survivalRegistrations?: boolean | UserCountOutputTypeCountSurvivalRegistrationsArgs
   }
 
   // Custom InputTypes
@@ -6132,6 +6225,13 @@ export namespace Prisma {
     where?: BruteWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSurvivalRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SurvivalRegistrationWhereInput
+  }
+
 
   /**
    * Count Type BruteCountOutputType
@@ -6162,6 +6262,7 @@ export namespace Prisma {
     followers: number
     Brute_Opponents_A: number
     Brute_Opponents_B: number
+    survivalRegistrations: number
   }
 
   export type BruteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6189,6 +6290,7 @@ export namespace Prisma {
     followers?: boolean | BruteCountOutputTypeCountFollowersArgs
     Brute_Opponents_A?: boolean | BruteCountOutputTypeCountBrute_Opponents_AArgs
     Brute_Opponents_B?: boolean | BruteCountOutputTypeCountBrute_Opponents_BArgs
+    survivalRegistrations?: boolean | BruteCountOutputTypeCountSurvivalRegistrationsArgs
   }
 
   // Custom InputTypes
@@ -6368,6 +6470,13 @@ export namespace Prisma {
    */
   export type BruteCountOutputTypeCountBrute_Opponents_BArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BruteWhereInput
+  }
+
+  /**
+   * BruteCountOutputType without action
+   */
+  export type BruteCountOutputTypeCountSurvivalRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SurvivalRegistrationWhereInput
   }
 
 
@@ -7318,6 +7427,7 @@ export namespace Prisma {
     reports?: boolean | User$reportsArgs<ExtArgs>
     favoriteFights?: boolean | User$favoriteFightsArgs<ExtArgs>
     following?: boolean | User$followingArgs<ExtArgs>
+    survivalRegistrations?: boolean | User$survivalRegistrationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -7421,6 +7531,7 @@ export namespace Prisma {
     reports?: boolean | User$reportsArgs<ExtArgs>
     favoriteFights?: boolean | User$favoriteFightsArgs<ExtArgs>
     following?: boolean | User$followingArgs<ExtArgs>
+    survivalRegistrations?: boolean | User$survivalRegistrationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7449,6 +7560,7 @@ export namespace Prisma {
       reports: Prisma.$BruteReportPayload<ExtArgs>[]
       favoriteFights: Prisma.$FightPayload<ExtArgs>[]
       following: Prisma.$BrutePayload<ExtArgs>[]
+      survivalRegistrations: Prisma.$SurvivalRegistrationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       admin: boolean
@@ -7888,6 +8000,7 @@ export namespace Prisma {
     reports<T extends User$reportsArgs<ExtArgs> = {}>(args?: Subset<T, User$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BruteReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     favoriteFights<T extends User$favoriteFightsArgs<ExtArgs> = {}>(args?: Subset<T, User$favoriteFightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     following<T extends User$followingArgs<ExtArgs> = {}>(args?: Subset<T, User$followingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    survivalRegistrations<T extends User$survivalRegistrationsArgs<ExtArgs> = {}>(args?: Subset<T, User$survivalRegistrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8814,6 +8927,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BruteScalarFieldEnum | BruteScalarFieldEnum[]
+  }
+
+  /**
+   * User.survivalRegistrations
+   */
+  export type User$survivalRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    where?: SurvivalRegistrationWhereInput
+    orderBy?: SurvivalRegistrationOrderByWithRelationInput | SurvivalRegistrationOrderByWithRelationInput[]
+    cursor?: SurvivalRegistrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SurvivalRegistrationScalarFieldEnum | SurvivalRegistrationScalarFieldEnum[]
   }
 
   /**
@@ -11928,6 +12065,7 @@ export namespace Prisma {
     followers?: boolean | Brute$followersArgs<ExtArgs>
     Brute_Opponents_A?: boolean | Brute$Brute_Opponents_AArgs<ExtArgs>
     Brute_Opponents_B?: boolean | Brute$Brute_Opponents_BArgs<ExtArgs>
+    survivalRegistrations?: boolean | Brute$survivalRegistrationsArgs<ExtArgs>
     _count?: boolean | BruteCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["brute"]>
 
@@ -12175,6 +12313,7 @@ export namespace Prisma {
     followers?: boolean | Brute$followersArgs<ExtArgs>
     Brute_Opponents_A?: boolean | Brute$Brute_Opponents_AArgs<ExtArgs>
     Brute_Opponents_B?: boolean | Brute$Brute_Opponents_BArgs<ExtArgs>
+    survivalRegistrations?: boolean | Brute$survivalRegistrationsArgs<ExtArgs>
     _count?: boolean | BruteCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BruteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12226,6 +12365,7 @@ export namespace Prisma {
       followers: Prisma.$UserPayload<ExtArgs>[]
       Brute_Opponents_A: Prisma.$BrutePayload<ExtArgs>[]
       Brute_Opponents_B: Prisma.$BrutePayload<ExtArgs>[]
+      survivalRegistrations: Prisma.$SurvivalRegistrationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       name: string
@@ -12717,6 +12857,7 @@ export namespace Prisma {
     followers<T extends Brute$followersArgs<ExtArgs> = {}>(args?: Subset<T, Brute$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Brute_Opponents_A<T extends Brute$Brute_Opponents_AArgs<ExtArgs> = {}>(args?: Subset<T, Brute$Brute_Opponents_AArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Brute_Opponents_B<T extends Brute$Brute_Opponents_BArgs<ExtArgs> = {}>(args?: Subset<T, Brute$Brute_Opponents_BArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BrutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    survivalRegistrations<T extends Brute$survivalRegistrationsArgs<ExtArgs> = {}>(args?: Subset<T, Brute$survivalRegistrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13921,6 +14062,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: BruteScalarFieldEnum | BruteScalarFieldEnum[]
+  }
+
+  /**
+   * Brute.survivalRegistrations
+   */
+  export type Brute$survivalRegistrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    where?: SurvivalRegistrationWhereInput
+    orderBy?: SurvivalRegistrationOrderByWithRelationInput | SurvivalRegistrationOrderByWithRelationInput[]
+    cursor?: SurvivalRegistrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SurvivalRegistrationScalarFieldEnum | SurvivalRegistrationScalarFieldEnum[]
   }
 
   /**
@@ -24491,6 +24656,1081 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TournamentXpInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SurvivalRegistration
+   */
+
+  export type AggregateSurvivalRegistration = {
+    _count: SurvivalRegistrationCountAggregateOutputType | null
+    _min: SurvivalRegistrationMinAggregateOutputType | null
+    _max: SurvivalRegistrationMaxAggregateOutputType | null
+  }
+
+  export type SurvivalRegistrationMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    bruteId: string | null
+    eventDate: Date | null
+    createdAt: Date | null
+  }
+
+  export type SurvivalRegistrationMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    bruteId: string | null
+    eventDate: Date | null
+    createdAt: Date | null
+  }
+
+  export type SurvivalRegistrationCountAggregateOutputType = {
+    id: number
+    userId: number
+    bruteId: number
+    eventDate: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SurvivalRegistrationMinAggregateInputType = {
+    id?: true
+    userId?: true
+    bruteId?: true
+    eventDate?: true
+    createdAt?: true
+  }
+
+  export type SurvivalRegistrationMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    bruteId?: true
+    eventDate?: true
+    createdAt?: true
+  }
+
+  export type SurvivalRegistrationCountAggregateInputType = {
+    id?: true
+    userId?: true
+    bruteId?: true
+    eventDate?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SurvivalRegistrationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SurvivalRegistration to aggregate.
+     */
+    where?: SurvivalRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SurvivalRegistrations to fetch.
+     */
+    orderBy?: SurvivalRegistrationOrderByWithRelationInput | SurvivalRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SurvivalRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SurvivalRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SurvivalRegistrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SurvivalRegistrations
+    **/
+    _count?: true | SurvivalRegistrationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SurvivalRegistrationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SurvivalRegistrationMaxAggregateInputType
+  }
+
+  export type GetSurvivalRegistrationAggregateType<T extends SurvivalRegistrationAggregateArgs> = {
+        [P in keyof T & keyof AggregateSurvivalRegistration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSurvivalRegistration[P]>
+      : GetScalarType<T[P], AggregateSurvivalRegistration[P]>
+  }
+
+
+
+
+  export type SurvivalRegistrationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SurvivalRegistrationWhereInput
+    orderBy?: SurvivalRegistrationOrderByWithAggregationInput | SurvivalRegistrationOrderByWithAggregationInput[]
+    by: SurvivalRegistrationScalarFieldEnum[] | SurvivalRegistrationScalarFieldEnum
+    having?: SurvivalRegistrationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SurvivalRegistrationCountAggregateInputType | true
+    _min?: SurvivalRegistrationMinAggregateInputType
+    _max?: SurvivalRegistrationMaxAggregateInputType
+  }
+
+  export type SurvivalRegistrationGroupByOutputType = {
+    id: string
+    userId: string
+    bruteId: string
+    eventDate: Date
+    createdAt: Date
+    _count: SurvivalRegistrationCountAggregateOutputType | null
+    _min: SurvivalRegistrationMinAggregateOutputType | null
+    _max: SurvivalRegistrationMaxAggregateOutputType | null
+  }
+
+  type GetSurvivalRegistrationGroupByPayload<T extends SurvivalRegistrationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SurvivalRegistrationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SurvivalRegistrationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SurvivalRegistrationGroupByOutputType[P]>
+            : GetScalarType<T[P], SurvivalRegistrationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SurvivalRegistrationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    bruteId?: boolean
+    eventDate?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    brute?: boolean | BruteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["survivalRegistration"]>
+
+  export type SurvivalRegistrationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    bruteId?: boolean
+    eventDate?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    brute?: boolean | BruteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["survivalRegistration"]>
+
+  export type SurvivalRegistrationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    bruteId?: boolean
+    eventDate?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    brute?: boolean | BruteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["survivalRegistration"]>
+
+  export type SurvivalRegistrationSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    bruteId?: boolean
+    eventDate?: boolean
+    createdAt?: boolean
+  }
+
+  export type SurvivalRegistrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bruteId" | "eventDate" | "createdAt", ExtArgs["result"]["survivalRegistration"]>
+  export type SurvivalRegistrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    brute?: boolean | BruteDefaultArgs<ExtArgs>
+  }
+  export type SurvivalRegistrationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    brute?: boolean | BruteDefaultArgs<ExtArgs>
+  }
+  export type SurvivalRegistrationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    brute?: boolean | BruteDefaultArgs<ExtArgs>
+  }
+
+  export type $SurvivalRegistrationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SurvivalRegistration"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      brute: Prisma.$BrutePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      bruteId: string
+      eventDate: Date
+      createdAt: Date
+    }, ExtArgs["result"]["survivalRegistration"]>
+    composites: {}
+  }
+
+  type SurvivalRegistrationGetPayload<S extends boolean | null | undefined | SurvivalRegistrationDefaultArgs> = $Result.GetResult<Prisma.$SurvivalRegistrationPayload, S>
+
+  type SurvivalRegistrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SurvivalRegistrationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: SurvivalRegistrationCountAggregateInputType | true
+    }
+
+  export interface SurvivalRegistrationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SurvivalRegistration'], meta: { name: 'SurvivalRegistration' } }
+    /**
+     * Find zero or one SurvivalRegistration that matches the filter.
+     * @param {SurvivalRegistrationFindUniqueArgs} args - Arguments to find a SurvivalRegistration
+     * @example
+     * // Get one SurvivalRegistration
+     * const survivalRegistration = await prisma.survivalRegistration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SurvivalRegistrationFindUniqueArgs>(args: SelectSubset<T, SurvivalRegistrationFindUniqueArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SurvivalRegistration that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SurvivalRegistrationFindUniqueOrThrowArgs} args - Arguments to find a SurvivalRegistration
+     * @example
+     * // Get one SurvivalRegistration
+     * const survivalRegistration = await prisma.survivalRegistration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SurvivalRegistrationFindUniqueOrThrowArgs>(args: SelectSubset<T, SurvivalRegistrationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SurvivalRegistration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SurvivalRegistrationFindFirstArgs} args - Arguments to find a SurvivalRegistration
+     * @example
+     * // Get one SurvivalRegistration
+     * const survivalRegistration = await prisma.survivalRegistration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SurvivalRegistrationFindFirstArgs>(args?: SelectSubset<T, SurvivalRegistrationFindFirstArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SurvivalRegistration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SurvivalRegistrationFindFirstOrThrowArgs} args - Arguments to find a SurvivalRegistration
+     * @example
+     * // Get one SurvivalRegistration
+     * const survivalRegistration = await prisma.survivalRegistration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SurvivalRegistrationFindFirstOrThrowArgs>(args?: SelectSubset<T, SurvivalRegistrationFindFirstOrThrowArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SurvivalRegistrations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SurvivalRegistrationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SurvivalRegistrations
+     * const survivalRegistrations = await prisma.survivalRegistration.findMany()
+     * 
+     * // Get first 10 SurvivalRegistrations
+     * const survivalRegistrations = await prisma.survivalRegistration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const survivalRegistrationWithIdOnly = await prisma.survivalRegistration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SurvivalRegistrationFindManyArgs>(args?: SelectSubset<T, SurvivalRegistrationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SurvivalRegistration.
+     * @param {SurvivalRegistrationCreateArgs} args - Arguments to create a SurvivalRegistration.
+     * @example
+     * // Create one SurvivalRegistration
+     * const SurvivalRegistration = await prisma.survivalRegistration.create({
+     *   data: {
+     *     // ... data to create a SurvivalRegistration
+     *   }
+     * })
+     * 
+     */
+    create<T extends SurvivalRegistrationCreateArgs>(args: SelectSubset<T, SurvivalRegistrationCreateArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SurvivalRegistrations.
+     * @param {SurvivalRegistrationCreateManyArgs} args - Arguments to create many SurvivalRegistrations.
+     * @example
+     * // Create many SurvivalRegistrations
+     * const survivalRegistration = await prisma.survivalRegistration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SurvivalRegistrationCreateManyArgs>(args?: SelectSubset<T, SurvivalRegistrationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SurvivalRegistrations and returns the data saved in the database.
+     * @param {SurvivalRegistrationCreateManyAndReturnArgs} args - Arguments to create many SurvivalRegistrations.
+     * @example
+     * // Create many SurvivalRegistrations
+     * const survivalRegistration = await prisma.survivalRegistration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SurvivalRegistrations and only return the `id`
+     * const survivalRegistrationWithIdOnly = await prisma.survivalRegistration.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SurvivalRegistrationCreateManyAndReturnArgs>(args?: SelectSubset<T, SurvivalRegistrationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SurvivalRegistration.
+     * @param {SurvivalRegistrationDeleteArgs} args - Arguments to delete one SurvivalRegistration.
+     * @example
+     * // Delete one SurvivalRegistration
+     * const SurvivalRegistration = await prisma.survivalRegistration.delete({
+     *   where: {
+     *     // ... filter to delete one SurvivalRegistration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SurvivalRegistrationDeleteArgs>(args: SelectSubset<T, SurvivalRegistrationDeleteArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SurvivalRegistration.
+     * @param {SurvivalRegistrationUpdateArgs} args - Arguments to update one SurvivalRegistration.
+     * @example
+     * // Update one SurvivalRegistration
+     * const survivalRegistration = await prisma.survivalRegistration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SurvivalRegistrationUpdateArgs>(args: SelectSubset<T, SurvivalRegistrationUpdateArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SurvivalRegistrations.
+     * @param {SurvivalRegistrationDeleteManyArgs} args - Arguments to filter SurvivalRegistrations to delete.
+     * @example
+     * // Delete a few SurvivalRegistrations
+     * const { count } = await prisma.survivalRegistration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SurvivalRegistrationDeleteManyArgs>(args?: SelectSubset<T, SurvivalRegistrationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SurvivalRegistrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SurvivalRegistrationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SurvivalRegistrations
+     * const survivalRegistration = await prisma.survivalRegistration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SurvivalRegistrationUpdateManyArgs>(args: SelectSubset<T, SurvivalRegistrationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SurvivalRegistrations and returns the data updated in the database.
+     * @param {SurvivalRegistrationUpdateManyAndReturnArgs} args - Arguments to update many SurvivalRegistrations.
+     * @example
+     * // Update many SurvivalRegistrations
+     * const survivalRegistration = await prisma.survivalRegistration.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SurvivalRegistrations and only return the `id`
+     * const survivalRegistrationWithIdOnly = await prisma.survivalRegistration.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SurvivalRegistrationUpdateManyAndReturnArgs>(args: SelectSubset<T, SurvivalRegistrationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SurvivalRegistration.
+     * @param {SurvivalRegistrationUpsertArgs} args - Arguments to update or create a SurvivalRegistration.
+     * @example
+     * // Update or create a SurvivalRegistration
+     * const survivalRegistration = await prisma.survivalRegistration.upsert({
+     *   create: {
+     *     // ... data to create a SurvivalRegistration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SurvivalRegistration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SurvivalRegistrationUpsertArgs>(args: SelectSubset<T, SurvivalRegistrationUpsertArgs<ExtArgs>>): Prisma__SurvivalRegistrationClient<$Result.GetResult<Prisma.$SurvivalRegistrationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SurvivalRegistrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SurvivalRegistrationCountArgs} args - Arguments to filter SurvivalRegistrations to count.
+     * @example
+     * // Count the number of SurvivalRegistrations
+     * const count = await prisma.survivalRegistration.count({
+     *   where: {
+     *     // ... the filter for the SurvivalRegistrations we want to count
+     *   }
+     * })
+    **/
+    count<T extends SurvivalRegistrationCountArgs>(
+      args?: Subset<T, SurvivalRegistrationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SurvivalRegistrationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SurvivalRegistration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SurvivalRegistrationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SurvivalRegistrationAggregateArgs>(args: Subset<T, SurvivalRegistrationAggregateArgs>): Prisma.PrismaPromise<GetSurvivalRegistrationAggregateType<T>>
+
+    /**
+     * Group by SurvivalRegistration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SurvivalRegistrationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SurvivalRegistrationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SurvivalRegistrationGroupByArgs['orderBy'] }
+        : { orderBy?: SurvivalRegistrationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SurvivalRegistrationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSurvivalRegistrationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SurvivalRegistration model
+   */
+  readonly fields: SurvivalRegistrationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SurvivalRegistration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SurvivalRegistrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    brute<T extends BruteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BruteDefaultArgs<ExtArgs>>): Prisma__BruteClient<$Result.GetResult<Prisma.$BrutePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SurvivalRegistration model
+   */
+  interface SurvivalRegistrationFieldRefs {
+    readonly id: FieldRef<"SurvivalRegistration", 'String'>
+    readonly userId: FieldRef<"SurvivalRegistration", 'String'>
+    readonly bruteId: FieldRef<"SurvivalRegistration", 'String'>
+    readonly eventDate: FieldRef<"SurvivalRegistration", 'DateTime'>
+    readonly createdAt: FieldRef<"SurvivalRegistration", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SurvivalRegistration findUnique
+   */
+  export type SurvivalRegistrationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which SurvivalRegistration to fetch.
+     */
+    where: SurvivalRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration findUniqueOrThrow
+   */
+  export type SurvivalRegistrationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which SurvivalRegistration to fetch.
+     */
+    where: SurvivalRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration findFirst
+   */
+  export type SurvivalRegistrationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which SurvivalRegistration to fetch.
+     */
+    where?: SurvivalRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SurvivalRegistrations to fetch.
+     */
+    orderBy?: SurvivalRegistrationOrderByWithRelationInput | SurvivalRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SurvivalRegistrations.
+     */
+    cursor?: SurvivalRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SurvivalRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SurvivalRegistrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SurvivalRegistrations.
+     */
+    distinct?: SurvivalRegistrationScalarFieldEnum | SurvivalRegistrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration findFirstOrThrow
+   */
+  export type SurvivalRegistrationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which SurvivalRegistration to fetch.
+     */
+    where?: SurvivalRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SurvivalRegistrations to fetch.
+     */
+    orderBy?: SurvivalRegistrationOrderByWithRelationInput | SurvivalRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SurvivalRegistrations.
+     */
+    cursor?: SurvivalRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SurvivalRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SurvivalRegistrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SurvivalRegistrations.
+     */
+    distinct?: SurvivalRegistrationScalarFieldEnum | SurvivalRegistrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration findMany
+   */
+  export type SurvivalRegistrationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter, which SurvivalRegistrations to fetch.
+     */
+    where?: SurvivalRegistrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SurvivalRegistrations to fetch.
+     */
+    orderBy?: SurvivalRegistrationOrderByWithRelationInput | SurvivalRegistrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SurvivalRegistrations.
+     */
+    cursor?: SurvivalRegistrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SurvivalRegistrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SurvivalRegistrations.
+     */
+    skip?: number
+    distinct?: SurvivalRegistrationScalarFieldEnum | SurvivalRegistrationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration create
+   */
+  export type SurvivalRegistrationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SurvivalRegistration.
+     */
+    data: XOR<SurvivalRegistrationCreateInput, SurvivalRegistrationUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration createMany
+   */
+  export type SurvivalRegistrationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SurvivalRegistrations.
+     */
+    data: SurvivalRegistrationCreateManyInput | SurvivalRegistrationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SurvivalRegistration createManyAndReturn
+   */
+  export type SurvivalRegistrationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * The data used to create many SurvivalRegistrations.
+     */
+    data: SurvivalRegistrationCreateManyInput | SurvivalRegistrationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SurvivalRegistration update
+   */
+  export type SurvivalRegistrationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SurvivalRegistration.
+     */
+    data: XOR<SurvivalRegistrationUpdateInput, SurvivalRegistrationUncheckedUpdateInput>
+    /**
+     * Choose, which SurvivalRegistration to update.
+     */
+    where: SurvivalRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration updateMany
+   */
+  export type SurvivalRegistrationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SurvivalRegistrations.
+     */
+    data: XOR<SurvivalRegistrationUpdateManyMutationInput, SurvivalRegistrationUncheckedUpdateManyInput>
+    /**
+     * Filter which SurvivalRegistrations to update
+     */
+    where?: SurvivalRegistrationWhereInput
+    /**
+     * Limit how many SurvivalRegistrations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SurvivalRegistration updateManyAndReturn
+   */
+  export type SurvivalRegistrationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * The data used to update SurvivalRegistrations.
+     */
+    data: XOR<SurvivalRegistrationUpdateManyMutationInput, SurvivalRegistrationUncheckedUpdateManyInput>
+    /**
+     * Filter which SurvivalRegistrations to update
+     */
+    where?: SurvivalRegistrationWhereInput
+    /**
+     * Limit how many SurvivalRegistrations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SurvivalRegistration upsert
+   */
+  export type SurvivalRegistrationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SurvivalRegistration to update in case it exists.
+     */
+    where: SurvivalRegistrationWhereUniqueInput
+    /**
+     * In case the SurvivalRegistration found by the `where` argument doesn't exist, create a new SurvivalRegistration with this data.
+     */
+    create: XOR<SurvivalRegistrationCreateInput, SurvivalRegistrationUncheckedCreateInput>
+    /**
+     * In case the SurvivalRegistration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SurvivalRegistrationUpdateInput, SurvivalRegistrationUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration delete
+   */
+  export type SurvivalRegistrationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
+    /**
+     * Filter which SurvivalRegistration to delete.
+     */
+    where: SurvivalRegistrationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SurvivalRegistration deleteMany
+   */
+  export type SurvivalRegistrationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SurvivalRegistrations to delete
+     */
+    where?: SurvivalRegistrationWhereInput
+    /**
+     * Limit how many SurvivalRegistrations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SurvivalRegistration without action
+   */
+  export type SurvivalRegistrationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SurvivalRegistration
+     */
+    select?: SurvivalRegistrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SurvivalRegistration
+     */
+    omit?: SurvivalRegistrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SurvivalRegistrationInclude<ExtArgs> | null
   }
 
 
@@ -64746,6 +65986,17 @@ export namespace Prisma {
   export type TournamentXpScalarFieldEnum = (typeof TournamentXpScalarFieldEnum)[keyof typeof TournamentXpScalarFieldEnum]
 
 
+  export const SurvivalRegistrationScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    bruteId: 'bruteId',
+    eventDate: 'eventDate',
+    createdAt: 'createdAt'
+  };
+
+  export type SurvivalRegistrationScalarFieldEnum = (typeof SurvivalRegistrationScalarFieldEnum)[keyof typeof SurvivalRegistrationScalarFieldEnum]
+
+
   export const AchievementScalarFieldEnum: {
     count: 'count',
     userId: 'userId',
@@ -65894,6 +67145,7 @@ export namespace Prisma {
     reports?: BruteReportListRelationFilter
     favoriteFights?: FightListRelationFilter
     following?: BruteListRelationFilter
+    survivalRegistrations?: SurvivalRegistrationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -65940,6 +67192,7 @@ export namespace Prisma {
     reports?: BruteReportOrderByRelationAggregateInput
     favoriteFights?: FightOrderByRelationAggregateInput
     following?: BruteOrderByRelationAggregateInput
+    survivalRegistrations?: SurvivalRegistrationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -65989,6 +67242,7 @@ export namespace Prisma {
     reports?: BruteReportListRelationFilter
     favoriteFights?: FightListRelationFilter
     following?: BruteListRelationFilter
+    survivalRegistrations?: SurvivalRegistrationListRelationFilter
   }, "id" | "id">
 
   export type UserOrderByWithAggregationInput = {
@@ -66290,6 +67544,7 @@ export namespace Prisma {
     followers?: UserListRelationFilter
     Brute_Opponents_A?: BruteListRelationFilter
     Brute_Opponents_B?: BruteListRelationFilter
+    survivalRegistrations?: SurvivalRegistrationListRelationFilter
   }
 
   export type BruteOrderByWithRelationInput = {
@@ -66388,6 +67643,7 @@ export namespace Prisma {
     followers?: UserOrderByRelationAggregateInput
     Brute_Opponents_A?: BruteOrderByRelationAggregateInput
     Brute_Opponents_B?: BruteOrderByRelationAggregateInput
+    survivalRegistrations?: SurvivalRegistrationOrderByRelationAggregateInput
   }
 
   export type BruteWhereUniqueInput = Prisma.AtLeast<{
@@ -66489,6 +67745,7 @@ export namespace Prisma {
     followers?: UserListRelationFilter
     Brute_Opponents_A?: BruteListRelationFilter
     Brute_Opponents_B?: BruteListRelationFilter
+    survivalRegistrations?: SurvivalRegistrationListRelationFilter
   }, "id" | "id">
 
   export type BruteOrderByWithAggregationInput = {
@@ -67304,6 +68561,65 @@ export namespace Prisma {
     xp?: IntWithAggregatesFilter<"TournamentXp"> | number
     id?: UuidWithAggregatesFilter<"TournamentXp"> | string
     bruteId?: UuidWithAggregatesFilter<"TournamentXp"> | string
+  }
+
+  export type SurvivalRegistrationWhereInput = {
+    AND?: SurvivalRegistrationWhereInput | SurvivalRegistrationWhereInput[]
+    OR?: SurvivalRegistrationWhereInput[]
+    NOT?: SurvivalRegistrationWhereInput | SurvivalRegistrationWhereInput[]
+    id?: UuidFilter<"SurvivalRegistration"> | string
+    userId?: UuidFilter<"SurvivalRegistration"> | string
+    bruteId?: UuidFilter<"SurvivalRegistration"> | string
+    eventDate?: DateTimeFilter<"SurvivalRegistration"> | Date | string
+    createdAt?: DateTimeFilter<"SurvivalRegistration"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    brute?: XOR<BruteScalarRelationFilter, BruteWhereInput>
+  }
+
+  export type SurvivalRegistrationOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    bruteId?: SortOrder
+    eventDate?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    brute?: BruteOrderByWithRelationInput
+  }
+
+  export type SurvivalRegistrationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_eventDate?: SurvivalRegistrationUserIdEventDateCompoundUniqueInput
+    AND?: SurvivalRegistrationWhereInput | SurvivalRegistrationWhereInput[]
+    OR?: SurvivalRegistrationWhereInput[]
+    NOT?: SurvivalRegistrationWhereInput | SurvivalRegistrationWhereInput[]
+    userId?: UuidFilter<"SurvivalRegistration"> | string
+    bruteId?: UuidFilter<"SurvivalRegistration"> | string
+    eventDate?: DateTimeFilter<"SurvivalRegistration"> | Date | string
+    createdAt?: DateTimeFilter<"SurvivalRegistration"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    brute?: XOR<BruteScalarRelationFilter, BruteWhereInput>
+  }, "id" | "id" | "userId_eventDate">
+
+  export type SurvivalRegistrationOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    bruteId?: SortOrder
+    eventDate?: SortOrder
+    createdAt?: SortOrder
+    _count?: SurvivalRegistrationCountOrderByAggregateInput
+    _max?: SurvivalRegistrationMaxOrderByAggregateInput
+    _min?: SurvivalRegistrationMinOrderByAggregateInput
+  }
+
+  export type SurvivalRegistrationScalarWhereWithAggregatesInput = {
+    AND?: SurvivalRegistrationScalarWhereWithAggregatesInput | SurvivalRegistrationScalarWhereWithAggregatesInput[]
+    OR?: SurvivalRegistrationScalarWhereWithAggregatesInput[]
+    NOT?: SurvivalRegistrationScalarWhereWithAggregatesInput | SurvivalRegistrationScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"SurvivalRegistration"> | string
+    userId?: UuidWithAggregatesFilter<"SurvivalRegistration"> | string
+    bruteId?: UuidWithAggregatesFilter<"SurvivalRegistration"> | string
+    eventDate?: DateTimeWithAggregatesFilter<"SurvivalRegistration"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"SurvivalRegistration"> | Date | string
   }
 
   export type AchievementWhereInput = {
@@ -69813,6 +71129,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -69859,6 +71176,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -69905,6 +71223,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -69951,6 +71270,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -70258,6 +71578,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateInput = {
@@ -70351,6 +71672,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUpdateInput = {
@@ -70444,6 +71766,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateInput = {
@@ -70537,6 +71860,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteCreateManyInput = {
@@ -71425,6 +72749,60 @@ export namespace Prisma {
     xp?: IntFieldUpdateOperationsInput | number
     id?: StringFieldUpdateOperationsInput | string
     bruteId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SurvivalRegistrationCreateInput = {
+    id?: string
+    eventDate: Date | string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutSurvivalRegistrationsInput
+    brute: BruteCreateNestedOneWithoutSurvivalRegistrationsInput
+  }
+
+  export type SurvivalRegistrationUncheckedCreateInput = {
+    id?: string
+    userId: string
+    bruteId: string
+    eventDate: Date | string
+    createdAt?: Date | string
+  }
+
+  export type SurvivalRegistrationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSurvivalRegistrationsNestedInput
+    brute?: BruteUpdateOneRequiredWithoutSurvivalRegistrationsNestedInput
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    bruteId?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SurvivalRegistrationCreateManyInput = {
+    id?: string
+    userId: string
+    bruteId: string
+    eventDate: Date | string
+    createdAt?: Date | string
+  }
+
+  export type SurvivalRegistrationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    bruteId?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AchievementCreateInput = {
@@ -74199,6 +75577,12 @@ export namespace Prisma {
     none?: FightWhereInput
   }
 
+  export type SurvivalRegistrationListRelationFilter = {
+    every?: SurvivalRegistrationWhereInput
+    some?: SurvivalRegistrationWhereInput
+    none?: SurvivalRegistrationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -74273,6 +75657,10 @@ export namespace Prisma {
   }
 
   export type FightOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SurvivalRegistrationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -75651,6 +77039,35 @@ export namespace Prisma {
 
   export type TournamentXpSumOrderByAggregateInput = {
     xp?: SortOrder
+  }
+
+  export type SurvivalRegistrationUserIdEventDateCompoundUniqueInput = {
+    userId: string
+    eventDate: Date | string
+  }
+
+  export type SurvivalRegistrationCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    bruteId?: SortOrder
+    eventDate?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SurvivalRegistrationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    bruteId?: SortOrder
+    eventDate?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SurvivalRegistrationMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    bruteId?: SortOrder
+    eventDate?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AchievementNameBruteIdCompoundUniqueInput = {
@@ -77759,6 +79176,13 @@ export namespace Prisma {
     connect?: BruteWhereUniqueInput | BruteWhereUniqueInput[]
   }
 
+  export type SurvivalRegistrationCreateNestedManyWithoutUserInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutUserInput, SurvivalRegistrationUncheckedCreateWithoutUserInput> | SurvivalRegistrationCreateWithoutUserInput[] | SurvivalRegistrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutUserInput | SurvivalRegistrationCreateOrConnectWithoutUserInput[]
+    createMany?: SurvivalRegistrationCreateManyUserInputEnvelope
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+  }
+
   export type AchievementUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AchievementCreateWithoutUserInput, AchievementUncheckedCreateWithoutUserInput> | AchievementCreateWithoutUserInput[] | AchievementUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AchievementCreateOrConnectWithoutUserInput | AchievementCreateOrConnectWithoutUserInput[]
@@ -77894,6 +79318,13 @@ export namespace Prisma {
     create?: XOR<BruteCreateWithoutFollowersInput, BruteUncheckedCreateWithoutFollowersInput> | BruteCreateWithoutFollowersInput[] | BruteUncheckedCreateWithoutFollowersInput[]
     connectOrCreate?: BruteCreateOrConnectWithoutFollowersInput | BruteCreateOrConnectWithoutFollowersInput[]
     connect?: BruteWhereUniqueInput | BruteWhereUniqueInput[]
+  }
+
+  export type SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutUserInput, SurvivalRegistrationUncheckedCreateWithoutUserInput> | SurvivalRegistrationCreateWithoutUserInput[] | SurvivalRegistrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutUserInput | SurvivalRegistrationCreateOrConnectWithoutUserInput[]
+    createMany?: SurvivalRegistrationCreateManyUserInputEnvelope
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -78223,6 +79654,20 @@ export namespace Prisma {
     deleteMany?: BruteScalarWhereInput | BruteScalarWhereInput[]
   }
 
+  export type SurvivalRegistrationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutUserInput, SurvivalRegistrationUncheckedCreateWithoutUserInput> | SurvivalRegistrationCreateWithoutUserInput[] | SurvivalRegistrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutUserInput | SurvivalRegistrationCreateOrConnectWithoutUserInput[]
+    upsert?: SurvivalRegistrationUpsertWithWhereUniqueWithoutUserInput | SurvivalRegistrationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SurvivalRegistrationCreateManyUserInputEnvelope
+    set?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    disconnect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    delete?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    update?: SurvivalRegistrationUpdateWithWhereUniqueWithoutUserInput | SurvivalRegistrationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SurvivalRegistrationUpdateManyWithWhereWithoutUserInput | SurvivalRegistrationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SurvivalRegistrationScalarWhereInput | SurvivalRegistrationScalarWhereInput[]
+  }
+
   export type AchievementUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AchievementCreateWithoutUserInput, AchievementUncheckedCreateWithoutUserInput> | AchievementCreateWithoutUserInput[] | AchievementUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AchievementCreateOrConnectWithoutUserInput | AchievementCreateOrConnectWithoutUserInput[]
@@ -78498,6 +79943,20 @@ export namespace Prisma {
     update?: BruteUpdateWithWhereUniqueWithoutFollowersInput | BruteUpdateWithWhereUniqueWithoutFollowersInput[]
     updateMany?: BruteUpdateManyWithWhereWithoutFollowersInput | BruteUpdateManyWithWhereWithoutFollowersInput[]
     deleteMany?: BruteScalarWhereInput | BruteScalarWhereInput[]
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutUserInput, SurvivalRegistrationUncheckedCreateWithoutUserInput> | SurvivalRegistrationCreateWithoutUserInput[] | SurvivalRegistrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutUserInput | SurvivalRegistrationCreateOrConnectWithoutUserInput[]
+    upsert?: SurvivalRegistrationUpsertWithWhereUniqueWithoutUserInput | SurvivalRegistrationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SurvivalRegistrationCreateManyUserInputEnvelope
+    set?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    disconnect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    delete?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    update?: SurvivalRegistrationUpdateWithWhereUniqueWithoutUserInput | SurvivalRegistrationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SurvivalRegistrationUpdateManyWithWhereWithoutUserInput | SurvivalRegistrationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SurvivalRegistrationScalarWhereInput | SurvivalRegistrationScalarWhereInput[]
   }
 
   export type BruteCreateNestedOneWithoutUserlogsInput = {
@@ -78800,6 +80259,13 @@ export namespace Prisma {
     connect?: BruteWhereUniqueInput | BruteWhereUniqueInput[]
   }
 
+  export type SurvivalRegistrationCreateNestedManyWithoutBruteInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutBruteInput, SurvivalRegistrationUncheckedCreateWithoutBruteInput> | SurvivalRegistrationCreateWithoutBruteInput[] | SurvivalRegistrationUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutBruteInput | SurvivalRegistrationCreateOrConnectWithoutBruteInput[]
+    createMany?: SurvivalRegistrationCreateManyBruteInputEnvelope
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+  }
+
   export type AchievementUncheckedCreateNestedManyWithoutBruteInput = {
     create?: XOR<AchievementCreateWithoutBruteInput, AchievementUncheckedCreateWithoutBruteInput> | AchievementCreateWithoutBruteInput[] | AchievementUncheckedCreateWithoutBruteInput[]
     connectOrCreate?: AchievementCreateOrConnectWithoutBruteInput | AchievementCreateOrConnectWithoutBruteInput[]
@@ -78972,6 +80438,13 @@ export namespace Prisma {
     create?: XOR<BruteCreateWithoutBrute_Opponents_AInput, BruteUncheckedCreateWithoutBrute_Opponents_AInput> | BruteCreateWithoutBrute_Opponents_AInput[] | BruteUncheckedCreateWithoutBrute_Opponents_AInput[]
     connectOrCreate?: BruteCreateOrConnectWithoutBrute_Opponents_AInput | BruteCreateOrConnectWithoutBrute_Opponents_AInput[]
     connect?: BruteWhereUniqueInput | BruteWhereUniqueInput[]
+  }
+
+  export type SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutBruteInput, SurvivalRegistrationUncheckedCreateWithoutBruteInput> | SurvivalRegistrationCreateWithoutBruteInput[] | SurvivalRegistrationUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutBruteInput | SurvivalRegistrationCreateOrConnectWithoutBruteInput[]
+    createMany?: SurvivalRegistrationCreateManyBruteInputEnvelope
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
   }
 
   export type EnumGenderFieldUpdateOperationsInput = {
@@ -79426,6 +80899,20 @@ export namespace Prisma {
     deleteMany?: BruteScalarWhereInput | BruteScalarWhereInput[]
   }
 
+  export type SurvivalRegistrationUpdateManyWithoutBruteNestedInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutBruteInput, SurvivalRegistrationUncheckedCreateWithoutBruteInput> | SurvivalRegistrationCreateWithoutBruteInput[] | SurvivalRegistrationUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutBruteInput | SurvivalRegistrationCreateOrConnectWithoutBruteInput[]
+    upsert?: SurvivalRegistrationUpsertWithWhereUniqueWithoutBruteInput | SurvivalRegistrationUpsertWithWhereUniqueWithoutBruteInput[]
+    createMany?: SurvivalRegistrationCreateManyBruteInputEnvelope
+    set?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    disconnect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    delete?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    update?: SurvivalRegistrationUpdateWithWhereUniqueWithoutBruteInput | SurvivalRegistrationUpdateWithWhereUniqueWithoutBruteInput[]
+    updateMany?: SurvivalRegistrationUpdateManyWithWhereWithoutBruteInput | SurvivalRegistrationUpdateManyWithWhereWithoutBruteInput[]
+    deleteMany?: SurvivalRegistrationScalarWhereInput | SurvivalRegistrationScalarWhereInput[]
+  }
+
   export type AchievementUncheckedUpdateManyWithoutBruteNestedInput = {
     create?: XOR<AchievementCreateWithoutBruteInput, AchievementUncheckedCreateWithoutBruteInput> | AchievementCreateWithoutBruteInput[] | AchievementUncheckedCreateWithoutBruteInput[]
     connectOrCreate?: AchievementCreateOrConnectWithoutBruteInput | AchievementCreateOrConnectWithoutBruteInput[]
@@ -79774,6 +81261,20 @@ export namespace Prisma {
     update?: BruteUpdateWithWhereUniqueWithoutBrute_Opponents_AInput | BruteUpdateWithWhereUniqueWithoutBrute_Opponents_AInput[]
     updateMany?: BruteUpdateManyWithWhereWithoutBrute_Opponents_AInput | BruteUpdateManyWithWhereWithoutBrute_Opponents_AInput[]
     deleteMany?: BruteScalarWhereInput | BruteScalarWhereInput[]
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput = {
+    create?: XOR<SurvivalRegistrationCreateWithoutBruteInput, SurvivalRegistrationUncheckedCreateWithoutBruteInput> | SurvivalRegistrationCreateWithoutBruteInput[] | SurvivalRegistrationUncheckedCreateWithoutBruteInput[]
+    connectOrCreate?: SurvivalRegistrationCreateOrConnectWithoutBruteInput | SurvivalRegistrationCreateOrConnectWithoutBruteInput[]
+    upsert?: SurvivalRegistrationUpsertWithWhereUniqueWithoutBruteInput | SurvivalRegistrationUpsertWithWhereUniqueWithoutBruteInput[]
+    createMany?: SurvivalRegistrationCreateManyBruteInputEnvelope
+    set?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    disconnect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    delete?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    connect?: SurvivalRegistrationWhereUniqueInput | SurvivalRegistrationWhereUniqueInput[]
+    update?: SurvivalRegistrationUpdateWithWhereUniqueWithoutBruteInput | SurvivalRegistrationUpdateWithWhereUniqueWithoutBruteInput[]
+    updateMany?: SurvivalRegistrationUpdateManyWithWhereWithoutBruteInput | SurvivalRegistrationUpdateManyWithWhereWithoutBruteInput[]
+    deleteMany?: SurvivalRegistrationScalarWhereInput | SurvivalRegistrationScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutUsedSkillsInput = {
@@ -80236,6 +81737,34 @@ export namespace Prisma {
     upsert?: BruteUpsertWithoutTournamentXpsInput
     connect?: BruteWhereUniqueInput
     update?: XOR<XOR<BruteUpdateToOneWithWhereWithoutTournamentXpsInput, BruteUpdateWithoutTournamentXpsInput>, BruteUncheckedUpdateWithoutTournamentXpsInput>
+  }
+
+  export type UserCreateNestedOneWithoutSurvivalRegistrationsInput = {
+    create?: XOR<UserCreateWithoutSurvivalRegistrationsInput, UserUncheckedCreateWithoutSurvivalRegistrationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSurvivalRegistrationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BruteCreateNestedOneWithoutSurvivalRegistrationsInput = {
+    create?: XOR<BruteCreateWithoutSurvivalRegistrationsInput, BruteUncheckedCreateWithoutSurvivalRegistrationsInput>
+    connectOrCreate?: BruteCreateOrConnectWithoutSurvivalRegistrationsInput
+    connect?: BruteWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSurvivalRegistrationsNestedInput = {
+    create?: XOR<UserCreateWithoutSurvivalRegistrationsInput, UserUncheckedCreateWithoutSurvivalRegistrationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSurvivalRegistrationsInput
+    upsert?: UserUpsertWithoutSurvivalRegistrationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSurvivalRegistrationsInput, UserUpdateWithoutSurvivalRegistrationsInput>, UserUncheckedUpdateWithoutSurvivalRegistrationsInput>
+  }
+
+  export type BruteUpdateOneRequiredWithoutSurvivalRegistrationsNestedInput = {
+    create?: XOR<BruteCreateWithoutSurvivalRegistrationsInput, BruteUncheckedCreateWithoutSurvivalRegistrationsInput>
+    connectOrCreate?: BruteCreateOrConnectWithoutSurvivalRegistrationsInput
+    upsert?: BruteUpsertWithoutSurvivalRegistrationsInput
+    connect?: BruteWhereUniqueInput
+    update?: XOR<XOR<BruteUpdateToOneWithWhereWithoutSurvivalRegistrationsInput, BruteUpdateWithoutSurvivalRegistrationsInput>, BruteUncheckedUpdateWithoutSurvivalRegistrationsInput>
   }
 
   export type BruteCreateNestedOneWithoutAchievementsInput = {
@@ -83151,6 +84680,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutUserInput = {
@@ -83243,6 +84773,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutUserInput = {
@@ -83881,6 +85412,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutFollowersInput = {
@@ -83973,11 +85505,36 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutFollowersInput = {
     where: BruteWhereUniqueInput
     create: XOR<BruteCreateWithoutFollowersInput, BruteUncheckedCreateWithoutFollowersInput>
+  }
+
+  export type SurvivalRegistrationCreateWithoutUserInput = {
+    id?: string
+    eventDate: Date | string
+    createdAt?: Date | string
+    brute: BruteCreateNestedOneWithoutSurvivalRegistrationsInput
+  }
+
+  export type SurvivalRegistrationUncheckedCreateWithoutUserInput = {
+    id?: string
+    bruteId: string
+    eventDate: Date | string
+    createdAt?: Date | string
+  }
+
+  export type SurvivalRegistrationCreateOrConnectWithoutUserInput = {
+    where: SurvivalRegistrationWhereUniqueInput
+    create: XOR<SurvivalRegistrationCreateWithoutUserInput, SurvivalRegistrationUncheckedCreateWithoutUserInput>
+  }
+
+  export type SurvivalRegistrationCreateManyUserInputEnvelope = {
+    data: SurvivalRegistrationCreateManyUserInput | SurvivalRegistrationCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type AchievementUpsertWithWhereUniqueWithoutUserInput = {
@@ -84618,6 +86175,33 @@ export namespace Prisma {
     data: XOR<BruteUpdateManyMutationInput, BruteUncheckedUpdateManyWithoutFollowersInput>
   }
 
+  export type SurvivalRegistrationUpsertWithWhereUniqueWithoutUserInput = {
+    where: SurvivalRegistrationWhereUniqueInput
+    update: XOR<SurvivalRegistrationUpdateWithoutUserInput, SurvivalRegistrationUncheckedUpdateWithoutUserInput>
+    create: XOR<SurvivalRegistrationCreateWithoutUserInput, SurvivalRegistrationUncheckedCreateWithoutUserInput>
+  }
+
+  export type SurvivalRegistrationUpdateWithWhereUniqueWithoutUserInput = {
+    where: SurvivalRegistrationWhereUniqueInput
+    data: XOR<SurvivalRegistrationUpdateWithoutUserInput, SurvivalRegistrationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SurvivalRegistrationUpdateManyWithWhereWithoutUserInput = {
+    where: SurvivalRegistrationScalarWhereInput
+    data: XOR<SurvivalRegistrationUpdateManyMutationInput, SurvivalRegistrationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SurvivalRegistrationScalarWhereInput = {
+    AND?: SurvivalRegistrationScalarWhereInput | SurvivalRegistrationScalarWhereInput[]
+    OR?: SurvivalRegistrationScalarWhereInput[]
+    NOT?: SurvivalRegistrationScalarWhereInput | SurvivalRegistrationScalarWhereInput[]
+    id?: UuidFilter<"SurvivalRegistration"> | string
+    userId?: UuidFilter<"SurvivalRegistration"> | string
+    bruteId?: UuidFilter<"SurvivalRegistration"> | string
+    eventDate?: DateTimeFilter<"SurvivalRegistration"> | Date | string
+    createdAt?: DateTimeFilter<"SurvivalRegistration"> | Date | string
+  }
+
   export type BruteCreateWithoutUserlogsInput = {
     name: string
     level?: number
@@ -84708,6 +86292,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutUserlogsInput = {
@@ -84800,6 +86385,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutUserlogsInput = {
@@ -84850,6 +86436,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLogsInput = {
@@ -84895,6 +86482,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLogsInput = {
@@ -85003,6 +86591,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutUserlogsInput = {
@@ -85095,6 +86684,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type UserUpsertWithoutLogsInput = {
@@ -85151,6 +86741,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLogsInput = {
@@ -85196,6 +86787,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutGoldTransactionsInput = {
@@ -85288,6 +86880,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutGoldTransactionsInput = {
@@ -85380,6 +86973,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutGoldTransactionsInput = {
@@ -85430,6 +87024,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGoldTransactionsInput = {
@@ -85475,6 +87070,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGoldTransactionsInput = {
@@ -85583,6 +87179,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutGoldTransactionsInput = {
@@ -85675,6 +87272,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type UserUpsertWithoutGoldTransactionsInput = {
@@ -85731,6 +87329,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGoldTransactionsInput = {
@@ -85776,6 +87375,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AchievementCreateWithoutBruteInput = {
@@ -86000,6 +87600,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutPupilsInput = {
@@ -86092,6 +87693,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutPupilsInput = {
@@ -86189,6 +87791,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutMasterInput = {
@@ -86281,6 +87884,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutMasterInput = {
@@ -86336,6 +87940,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBrutesInput = {
@@ -86381,6 +87986,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBrutesInput = {
@@ -87107,6 +88713,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowingInput = {
@@ -87152,6 +88759,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowingInput = {
@@ -87249,6 +88857,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutBrute_Opponents_BInput = {
@@ -87341,6 +88950,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutBrute_Opponents_BInput = {
@@ -87438,6 +89048,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutBrute_Opponents_AInput = {
@@ -87530,11 +89141,36 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutBrute_Opponents_AInput = {
     where: BruteWhereUniqueInput
     create: XOR<BruteCreateWithoutBrute_Opponents_AInput, BruteUncheckedCreateWithoutBrute_Opponents_AInput>
+  }
+
+  export type SurvivalRegistrationCreateWithoutBruteInput = {
+    id?: string
+    eventDate: Date | string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutSurvivalRegistrationsInput
+  }
+
+  export type SurvivalRegistrationUncheckedCreateWithoutBruteInput = {
+    id?: string
+    userId: string
+    eventDate: Date | string
+    createdAt?: Date | string
+  }
+
+  export type SurvivalRegistrationCreateOrConnectWithoutBruteInput = {
+    where: SurvivalRegistrationWhereUniqueInput
+    create: XOR<SurvivalRegistrationCreateWithoutBruteInput, SurvivalRegistrationUncheckedCreateWithoutBruteInput>
+  }
+
+  export type SurvivalRegistrationCreateManyBruteInputEnvelope = {
+    data: SurvivalRegistrationCreateManyBruteInput | SurvivalRegistrationCreateManyBruteInput[]
+    skipDuplicates?: boolean
   }
 
   export type AchievementUpsertWithWhereUniqueWithoutBruteInput = {
@@ -87778,6 +89414,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutPupilsInput = {
@@ -87870,6 +89507,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUpsertWithWhereUniqueWithoutMasterInput = {
@@ -87942,6 +89580,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBrutesInput = {
@@ -87987,6 +89626,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ClanUpsertWithoutJoinRequestsInput = {
@@ -88645,6 +90285,22 @@ export namespace Prisma {
     data: XOR<BruteUpdateManyMutationInput, BruteUncheckedUpdateManyWithoutBrute_Opponents_AInput>
   }
 
+  export type SurvivalRegistrationUpsertWithWhereUniqueWithoutBruteInput = {
+    where: SurvivalRegistrationWhereUniqueInput
+    update: XOR<SurvivalRegistrationUpdateWithoutBruteInput, SurvivalRegistrationUncheckedUpdateWithoutBruteInput>
+    create: XOR<SurvivalRegistrationCreateWithoutBruteInput, SurvivalRegistrationUncheckedCreateWithoutBruteInput>
+  }
+
+  export type SurvivalRegistrationUpdateWithWhereUniqueWithoutBruteInput = {
+    where: SurvivalRegistrationWhereUniqueInput
+    data: XOR<SurvivalRegistrationUpdateWithoutBruteInput, SurvivalRegistrationUncheckedUpdateWithoutBruteInput>
+  }
+
+  export type SurvivalRegistrationUpdateManyWithWhereWithoutBruteInput = {
+    where: SurvivalRegistrationScalarWhereInput
+    data: XOR<SurvivalRegistrationUpdateManyMutationInput, SurvivalRegistrationUncheckedUpdateManyWithoutBruteInput>
+  }
+
   export type UserCreateWithoutUsedSkillsInput = {
     admin?: boolean
     lang?: $Enums.Lang
@@ -88688,6 +90344,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUsedSkillsInput = {
@@ -88733,6 +90390,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUsedSkillsInput = {
@@ -88794,6 +90452,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUsedSkillsInput = {
@@ -88839,6 +90498,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutStartingStatsInput = {
@@ -88931,6 +90591,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutStartingStatsInput = {
@@ -89023,6 +90684,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutStartingStatsInput = {
@@ -89131,6 +90793,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutStartingStatsInput = {
@@ -89223,6 +90886,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteCreateWithoutFightsInput = {
@@ -89315,6 +90979,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutFightsInput = {
@@ -89407,6 +91072,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutFightsInput = {
@@ -89504,6 +91170,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutFightsAsAdversaryInput = {
@@ -89596,6 +91263,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutFightsAsAdversaryInput = {
@@ -89744,6 +91412,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFavoriteFightsInput = {
@@ -89789,6 +91458,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFavoriteFightsInput = {
@@ -89897,6 +91567,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutFightsInput = {
@@ -89989,6 +91660,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUpsertWithoutFightsAsAdversaryInput = {
@@ -90092,6 +91764,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutFightsAsAdversaryInput = {
@@ -90184,6 +91857,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type ClanWarUpsertWithoutFightsInput = {
@@ -90382,6 +92056,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutLogsInput = {
@@ -90474,6 +92149,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutLogsInput = {
@@ -90666,6 +92342,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutLogsInput = {
@@ -90758,6 +92435,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type DestinyChoiceUpsertWithoutLogsInput = {
@@ -90946,6 +92624,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutDestinyChoicesInput = {
@@ -91038,6 +92717,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutDestinyChoicesInput = {
@@ -91182,6 +92862,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutDestinyChoicesInput = {
@@ -91274,6 +92955,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type LogUpsertWithWhereUniqueWithoutDestinyChoiceInput = {
@@ -91463,6 +93145,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutTournamentsInput = {
@@ -91555,6 +93238,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutTournamentsInput = {
@@ -91721,6 +93405,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutTournamentAchievementsInput = {
@@ -91813,6 +93498,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutTournamentAchievementsInput = {
@@ -91921,6 +93607,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutTournamentAchievementsInput = {
@@ -92013,6 +93700,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type UserCreateWithoutTournamentGoldsInput = {
@@ -92058,6 +93746,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTournamentGoldsInput = {
@@ -92103,6 +93792,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTournamentGoldsInput = {
@@ -92164,6 +93854,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTournamentGoldsInput = {
@@ -92209,6 +93900,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutTournamentXpsInput = {
@@ -92301,6 +93993,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutTournamentXpsInput = {
@@ -92393,6 +94086,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutTournamentXpsInput = {
@@ -92501,6 +94195,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutTournamentXpsInput = {
@@ -92586,6 +94281,595 @@ export namespace Prisma {
     inventory?: InventoryItemUncheckedUpdateManyWithoutBruteNestedInput
     logs?: LogUncheckedUpdateManyWithoutCurrentBruteNestedInput
     tournamentAchievements?: TournamentAchievementUncheckedUpdateManyWithoutBruteNestedInput
+    userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
+    tournaments?: TournamentUncheckedUpdateManyWithoutParticipantsNestedInput
+    inClanWarAttackerFighters?: ClanWarFightersUncheckedUpdateManyWithoutAttackersNestedInput
+    inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
+    Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
+  }
+
+  export type UserCreateWithoutSurvivalRegistrationsInput = {
+    admin?: boolean
+    lang?: $Enums.Lang
+    bruteLimit?: number
+    name: string
+    id: string
+    connexionToken: string
+    backgroundMusic?: boolean
+    fightSpeed?: number
+    gold?: number
+    moderator?: boolean
+    dinorpgDone?: Date | string | null
+    banReason?: string | null
+    bannedAt?: Date | string | null
+    ips?: UserCreateipsInput | string[]
+    displayVersusPage?: boolean
+    displayOpponentDetails?: boolean
+    lastSeen?: Date | string
+    lastFightDate?: Date | string | null
+    consecutiveDaysPlayed?: number
+    unlockedTitleIds?: UserCreateunlockedTitleIdsInput | number[]
+    equippedTitleId?: number | null
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    achievements?: AchievementCreateNestedManyWithoutUserInput
+    brutes?: BruteCreateNestedManyWithoutUserInput
+    reportsHandled?: BruteReportCreateNestedManyWithoutHandlerInput
+    dailyObjectives?: DailyObjectiveCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutUserInput
+    inventory?: InventoryItemCreateNestedManyWithoutUserInput
+    missions?: MissionCreateNestedManyWithoutUserInput
+    missionAchievements?: MissionAchievementCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    permanentAchievements?: PermanentAchievementCreateNestedManyWithoutUserInput
+    tournamentGolds?: TournamentGoldCreateNestedManyWithoutUserInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressCreateNestedManyWithoutUserInput
+    userBattlePassProgress?: UserBattlePassProgressCreateNestedManyWithoutUserInput
+    logs?: UserLogCreateNestedManyWithoutUserInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillCreateNestedManyWithoutUserInput
+    weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
+    reports?: BruteReportCreateNestedManyWithoutUsersInput
+    favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
+    following?: BruteCreateNestedManyWithoutFollowersInput
+  }
+
+  export type UserUncheckedCreateWithoutSurvivalRegistrationsInput = {
+    admin?: boolean
+    lang?: $Enums.Lang
+    bruteLimit?: number
+    name: string
+    id: string
+    connexionToken: string
+    backgroundMusic?: boolean
+    fightSpeed?: number
+    gold?: number
+    moderator?: boolean
+    dinorpgDone?: Date | string | null
+    banReason?: string | null
+    bannedAt?: Date | string | null
+    ips?: UserCreateipsInput | string[]
+    displayVersusPage?: boolean
+    displayOpponentDetails?: boolean
+    lastSeen?: Date | string
+    lastFightDate?: Date | string | null
+    consecutiveDaysPlayed?: number
+    unlockedTitleIds?: UserCreateunlockedTitleIdsInput | number[]
+    equippedTitleId?: number | null
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    achievements?: AchievementUncheckedCreateNestedManyWithoutUserInput
+    brutes?: BruteUncheckedCreateNestedManyWithoutUserInput
+    reportsHandled?: BruteReportUncheckedCreateNestedManyWithoutHandlerInput
+    dailyObjectives?: DailyObjectiveUncheckedCreateNestedManyWithoutUserInput
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutUserInput
+    inventory?: InventoryItemUncheckedCreateNestedManyWithoutUserInput
+    missions?: MissionUncheckedCreateNestedManyWithoutUserInput
+    missionAchievements?: MissionAchievementUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    permanentAchievements?: PermanentAchievementUncheckedCreateNestedManyWithoutUserInput
+    tournamentGolds?: TournamentGoldUncheckedCreateNestedManyWithoutUserInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedCreateNestedManyWithoutUserInput
+    userBattlePassProgress?: UserBattlePassProgressUncheckedCreateNestedManyWithoutUserInput
+    logs?: UserLogUncheckedCreateNestedManyWithoutUserInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedCreateNestedManyWithoutUserInput
+    usedSkills?: UserUsedSkillUncheckedCreateNestedManyWithoutUserInput
+    weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
+    reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
+    favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
+    following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+  }
+
+  export type UserCreateOrConnectWithoutSurvivalRegistrationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSurvivalRegistrationsInput, UserUncheckedCreateWithoutSurvivalRegistrationsInput>
+  }
+
+  export type BruteCreateWithoutSurvivalRegistrationsInput = {
+    name: string
+    level?: number
+    xp?: number
+    hp?: number
+    ranking?: number
+    gender: $Enums.Gender
+    pupilsCount?: number
+    lastFight?: Date | string | null
+    fightsLeft?: number
+    lastBossFightDate?: Date | string | null
+    bossFightsToday?: number
+    weapons?: BruteCreateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteCreateskillsInput | $Enums.SkillName[]
+    agilityModifier?: number
+    agilityStat?: number
+    agilityValue?: number
+    enduranceModifier?: number
+    enduranceStat?: number
+    enduranceValue?: number
+    speedModifier?: number
+    speedStat?: number
+    speedValue?: number
+    strengthModifier?: number
+    strengthStat?: number
+    strengthValue?: number
+    pets?: BruteCreatepetsInput | $Enums.PetName[]
+    victories?: number
+    destinyPath?: BruteCreatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    registeredForTournament?: boolean
+    nextTournamentDate?: Date | string | null
+    currentTournamentDate?: Date | string | null
+    currentTournamentStepWatched?: number | null
+    opponentsGeneratedAt?: Date | string | null
+    canRankUpSince?: Date | string | null
+    favorite?: boolean
+    previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    body?: string
+    colors?: string
+    tournamentWins?: number
+    globalTournamentRoundWatched?: number | null
+    globalTournamentWatchedDate?: Date | string | null
+    deletionReason?: string | null
+    willBeDeletedAt?: Date | string | null
+    id?: string
+    resets?: number
+    ascendedSkills?: BruteCreateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteCreateascendedPetsInput | $Enums.PetName[]
+    ascendedWeapons?: BruteCreateascendedWeaponsInput | $Enums.WeaponName[]
+    ascensions?: number
+    eventTournamentRoundWatched?: number | null
+    eventTournamentWatchedDate?: Date | string | null
+    losses?: number
+    autoFightEnabled?: boolean
+    winStreakCurrent?: number
+    winStreakMax?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    achievements?: AchievementCreateNestedManyWithoutBruteInput
+    damageOnBosses?: BossDamageCreateNestedManyWithoutBruteInput
+    clan?: ClanCreateNestedOneWithoutBrutesInput
+    event?: EventCreateNestedOneWithoutBrutesInput
+    master?: BruteCreateNestedOneWithoutPupilsInput
+    pupils?: BruteCreateNestedManyWithoutMasterInput
+    user?: UserCreateNestedOneWithoutBrutesInput
+    wantToJoinClan?: ClanCreateNestedOneWithoutJoinRequestsInput
+    reports?: BruteReportCreateNestedManyWithoutBruteInput
+    startingStats?: BruteStartingStatsCreateNestedOneWithoutBruteInput
+    bruteTemporaryEffects?: BruteTemporaryEffectCreateNestedManyWithoutBruteInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponCreateNestedManyWithoutBruteInput
+    masterOfClan?: ClanCreateNestedOneWithoutMasterInput
+    clanPosts?: ClanPostCreateNestedManyWithoutAuthorInput
+    threads?: ClanThreadCreateNestedManyWithoutCreatorInput
+    destinyChoices?: DestinyChoiceCreateNestedManyWithoutBruteInput
+    wonEvents?: EventCreateNestedManyWithoutWinnerInput
+    fights?: FightCreateNestedManyWithoutBrute1Input
+    fightsAsAdversary?: FightCreateNestedManyWithoutBrute2Input
+    goldTransactions?: GoldTransactionCreateNestedManyWithoutBruteInput
+    inventory?: InventoryItemCreateNestedManyWithoutBruteInput
+    logs?: LogCreateNestedManyWithoutCurrentBruteInput
+    tournamentAchievements?: TournamentAchievementCreateNestedManyWithoutBruteInput
+    tournamentXps?: TournamentXpCreateNestedManyWithoutBruteInput
+    userlogs?: UserLogCreateNestedManyWithoutBruteInput
+    tournaments?: TournamentCreateNestedManyWithoutParticipantsInput
+    inClanWarAttackerFighters?: ClanWarFightersCreateNestedManyWithoutAttackersInput
+    inClanWarDefenderFighters?: ClanWarFightersCreateNestedManyWithoutDefendersInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
+    Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
+    Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+  }
+
+  export type BruteUncheckedCreateWithoutSurvivalRegistrationsInput = {
+    name: string
+    level?: number
+    xp?: number
+    hp?: number
+    ranking?: number
+    gender: $Enums.Gender
+    userId?: string | null
+    pupilsCount?: number
+    lastFight?: Date | string | null
+    fightsLeft?: number
+    lastBossFightDate?: Date | string | null
+    bossFightsToday?: number
+    weapons?: BruteCreateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteCreateskillsInput | $Enums.SkillName[]
+    agilityModifier?: number
+    agilityStat?: number
+    agilityValue?: number
+    enduranceModifier?: number
+    enduranceStat?: number
+    enduranceValue?: number
+    speedModifier?: number
+    speedStat?: number
+    speedValue?: number
+    strengthModifier?: number
+    strengthStat?: number
+    strengthValue?: number
+    pets?: BruteCreatepetsInput | $Enums.PetName[]
+    victories?: number
+    destinyPath?: BruteCreatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    createdAt?: Date | string
+    deletedAt?: Date | string | null
+    registeredForTournament?: boolean
+    nextTournamentDate?: Date | string | null
+    currentTournamentDate?: Date | string | null
+    currentTournamentStepWatched?: number | null
+    opponentsGeneratedAt?: Date | string | null
+    canRankUpSince?: Date | string | null
+    favorite?: boolean
+    previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    body?: string
+    colors?: string
+    tournamentWins?: number
+    globalTournamentRoundWatched?: number | null
+    globalTournamentWatchedDate?: Date | string | null
+    deletionReason?: string | null
+    willBeDeletedAt?: Date | string | null
+    id?: string
+    masterId?: string | null
+    clanId?: string | null
+    wantToJoinClanId?: string | null
+    eventId?: string | null
+    resets?: number
+    ascendedSkills?: BruteCreateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteCreateascendedPetsInput | $Enums.PetName[]
+    ascendedWeapons?: BruteCreateascendedWeaponsInput | $Enums.WeaponName[]
+    ascensions?: number
+    eventTournamentRoundWatched?: number | null
+    eventTournamentWatchedDate?: Date | string | null
+    losses?: number
+    autoFightEnabled?: boolean
+    winStreakCurrent?: number
+    winStreakMax?: number
+    bonusFightsCount?: number
+    bonusFightsDate?: Date | string | null
+    achievements?: AchievementUncheckedCreateNestedManyWithoutBruteInput
+    damageOnBosses?: BossDamageUncheckedCreateNestedManyWithoutBruteInput
+    pupils?: BruteUncheckedCreateNestedManyWithoutMasterInput
+    reports?: BruteReportUncheckedCreateNestedManyWithoutBruteInput
+    startingStats?: BruteStartingStatsUncheckedCreateNestedOneWithoutBruteInput
+    bruteTemporaryEffects?: BruteTemporaryEffectUncheckedCreateNestedManyWithoutBruteInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedCreateNestedManyWithoutBruteInput
+    masterOfClan?: ClanUncheckedCreateNestedOneWithoutMasterInput
+    clanPosts?: ClanPostUncheckedCreateNestedManyWithoutAuthorInput
+    threads?: ClanThreadUncheckedCreateNestedManyWithoutCreatorInput
+    destinyChoices?: DestinyChoiceUncheckedCreateNestedManyWithoutBruteInput
+    wonEvents?: EventUncheckedCreateNestedManyWithoutWinnerInput
+    fights?: FightUncheckedCreateNestedManyWithoutBrute1Input
+    fightsAsAdversary?: FightUncheckedCreateNestedManyWithoutBrute2Input
+    goldTransactions?: GoldTransactionUncheckedCreateNestedManyWithoutBruteInput
+    inventory?: InventoryItemUncheckedCreateNestedManyWithoutBruteInput
+    logs?: LogUncheckedCreateNestedManyWithoutCurrentBruteInput
+    tournamentAchievements?: TournamentAchievementUncheckedCreateNestedManyWithoutBruteInput
+    tournamentXps?: TournamentXpUncheckedCreateNestedManyWithoutBruteInput
+    userlogs?: UserLogUncheckedCreateNestedManyWithoutBruteInput
+    tournaments?: TournamentUncheckedCreateNestedManyWithoutParticipantsInput
+    inClanWarAttackerFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutAttackersInput
+    inClanWarDefenderFighters?: ClanWarFightersUncheckedCreateNestedManyWithoutDefendersInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
+    Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+  }
+
+  export type BruteCreateOrConnectWithoutSurvivalRegistrationsInput = {
+    where: BruteWhereUniqueInput
+    create: XOR<BruteCreateWithoutSurvivalRegistrationsInput, BruteUncheckedCreateWithoutSurvivalRegistrationsInput>
+  }
+
+  export type UserUpsertWithoutSurvivalRegistrationsInput = {
+    update: XOR<UserUpdateWithoutSurvivalRegistrationsInput, UserUncheckedUpdateWithoutSurvivalRegistrationsInput>
+    create: XOR<UserCreateWithoutSurvivalRegistrationsInput, UserUncheckedCreateWithoutSurvivalRegistrationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSurvivalRegistrationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSurvivalRegistrationsInput, UserUncheckedUpdateWithoutSurvivalRegistrationsInput>
+  }
+
+  export type UserUpdateWithoutSurvivalRegistrationsInput = {
+    admin?: BoolFieldUpdateOperationsInput | boolean
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    bruteLimit?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    backgroundMusic?: BoolFieldUpdateOperationsInput | boolean
+    fightSpeed?: IntFieldUpdateOperationsInput | number
+    gold?: IntFieldUpdateOperationsInput | number
+    moderator?: BoolFieldUpdateOperationsInput | boolean
+    dinorpgDone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    bannedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ips?: UserUpdateipsInput | string[]
+    displayVersusPage?: BoolFieldUpdateOperationsInput | boolean
+    displayOpponentDetails?: BoolFieldUpdateOperationsInput | boolean
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    consecutiveDaysPlayed?: IntFieldUpdateOperationsInput | number
+    unlockedTitleIds?: UserUpdateunlockedTitleIdsInput | number[]
+    equippedTitleId?: NullableIntFieldUpdateOperationsInput | number | null
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    achievements?: AchievementUpdateManyWithoutUserNestedInput
+    brutes?: BruteUpdateManyWithoutUserNestedInput
+    reportsHandled?: BruteReportUpdateManyWithoutHandlerNestedInput
+    dailyObjectives?: DailyObjectiveUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutUserNestedInput
+    inventory?: InventoryItemUpdateManyWithoutUserNestedInput
+    missions?: MissionUpdateManyWithoutUserNestedInput
+    missionAchievements?: MissionAchievementUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    permanentAchievements?: PermanentAchievementUpdateManyWithoutUserNestedInput
+    tournamentGolds?: TournamentGoldUpdateManyWithoutUserNestedInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUpdateManyWithoutUserNestedInput
+    userBattlePassProgress?: UserBattlePassProgressUpdateManyWithoutUserNestedInput
+    logs?: UserLogUpdateManyWithoutUserNestedInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUpdateManyWithoutUserNestedInput
+    weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
+    reports?: BruteReportUpdateManyWithoutUsersNestedInput
+    favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
+    following?: BruteUpdateManyWithoutFollowersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSurvivalRegistrationsInput = {
+    admin?: BoolFieldUpdateOperationsInput | boolean
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    bruteLimit?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    backgroundMusic?: BoolFieldUpdateOperationsInput | boolean
+    fightSpeed?: IntFieldUpdateOperationsInput | number
+    gold?: IntFieldUpdateOperationsInput | number
+    moderator?: BoolFieldUpdateOperationsInput | boolean
+    dinorpgDone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banReason?: NullableStringFieldUpdateOperationsInput | string | null
+    bannedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ips?: UserUpdateipsInput | string[]
+    displayVersusPage?: BoolFieldUpdateOperationsInput | boolean
+    displayOpponentDetails?: BoolFieldUpdateOperationsInput | boolean
+    lastSeen?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    consecutiveDaysPlayed?: IntFieldUpdateOperationsInput | number
+    unlockedTitleIds?: UserUpdateunlockedTitleIdsInput | number[]
+    equippedTitleId?: NullableIntFieldUpdateOperationsInput | number | null
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    achievements?: AchievementUncheckedUpdateManyWithoutUserNestedInput
+    brutes?: BruteUncheckedUpdateManyWithoutUserNestedInput
+    reportsHandled?: BruteReportUncheckedUpdateManyWithoutHandlerNestedInput
+    dailyObjectives?: DailyObjectiveUncheckedUpdateManyWithoutUserNestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutUserNestedInput
+    inventory?: InventoryItemUncheckedUpdateManyWithoutUserNestedInput
+    missions?: MissionUncheckedUpdateManyWithoutUserNestedInput
+    missionAchievements?: MissionAchievementUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    permanentAchievements?: PermanentAchievementUncheckedUpdateManyWithoutUserNestedInput
+    tournamentGolds?: TournamentGoldUncheckedUpdateManyWithoutUserNestedInput
+    userBattlePassMissionProgress?: UserBattlePassMissionProgressUncheckedUpdateManyWithoutUserNestedInput
+    userBattlePassProgress?: UserBattlePassProgressUncheckedUpdateManyWithoutUserNestedInput
+    logs?: UserLogUncheckedUpdateManyWithoutUserNestedInput
+    userUnlockedCosmetics?: UserUnlockedCosmeticUncheckedUpdateManyWithoutUserNestedInput
+    usedSkills?: UserUsedSkillUncheckedUpdateManyWithoutUserNestedInput
+    weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
+    reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
+    favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
+    following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+  }
+
+  export type BruteUpsertWithoutSurvivalRegistrationsInput = {
+    update: XOR<BruteUpdateWithoutSurvivalRegistrationsInput, BruteUncheckedUpdateWithoutSurvivalRegistrationsInput>
+    create: XOR<BruteCreateWithoutSurvivalRegistrationsInput, BruteUncheckedCreateWithoutSurvivalRegistrationsInput>
+    where?: BruteWhereInput
+  }
+
+  export type BruteUpdateToOneWithWhereWithoutSurvivalRegistrationsInput = {
+    where?: BruteWhereInput
+    data: XOR<BruteUpdateWithoutSurvivalRegistrationsInput, BruteUncheckedUpdateWithoutSurvivalRegistrationsInput>
+  }
+
+  export type BruteUpdateWithoutSurvivalRegistrationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    xp?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    ranking?: IntFieldUpdateOperationsInput | number
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    pupilsCount?: IntFieldUpdateOperationsInput | number
+    lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fightsLeft?: IntFieldUpdateOperationsInput | number
+    lastBossFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bossFightsToday?: IntFieldUpdateOperationsInput | number
+    weapons?: BruteUpdateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteUpdateskillsInput | $Enums.SkillName[]
+    agilityModifier?: FloatFieldUpdateOperationsInput | number
+    agilityStat?: IntFieldUpdateOperationsInput | number
+    agilityValue?: IntFieldUpdateOperationsInput | number
+    enduranceModifier?: FloatFieldUpdateOperationsInput | number
+    enduranceStat?: IntFieldUpdateOperationsInput | number
+    enduranceValue?: IntFieldUpdateOperationsInput | number
+    speedModifier?: FloatFieldUpdateOperationsInput | number
+    speedStat?: IntFieldUpdateOperationsInput | number
+    speedValue?: IntFieldUpdateOperationsInput | number
+    strengthModifier?: FloatFieldUpdateOperationsInput | number
+    strengthStat?: IntFieldUpdateOperationsInput | number
+    strengthValue?: IntFieldUpdateOperationsInput | number
+    pets?: BruteUpdatepetsInput | $Enums.PetName[]
+    victories?: IntFieldUpdateOperationsInput | number
+    destinyPath?: BruteUpdatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    registeredForTournament?: BoolFieldUpdateOperationsInput | boolean
+    nextTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentStepWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    favorite?: BoolFieldUpdateOperationsInput | boolean
+    previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    body?: StringFieldUpdateOperationsInput | string
+    colors?: StringFieldUpdateOperationsInput | string
+    tournamentWins?: IntFieldUpdateOperationsInput | number
+    globalTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    globalTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    willBeDeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    id?: StringFieldUpdateOperationsInput | string
+    resets?: IntFieldUpdateOperationsInput | number
+    ascendedSkills?: BruteUpdateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteUpdateascendedPetsInput | $Enums.PetName[]
+    ascendedWeapons?: BruteUpdateascendedWeaponsInput | $Enums.WeaponName[]
+    ascensions?: IntFieldUpdateOperationsInput | number
+    eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    eventTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    losses?: IntFieldUpdateOperationsInput | number
+    autoFightEnabled?: BoolFieldUpdateOperationsInput | boolean
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    achievements?: AchievementUpdateManyWithoutBruteNestedInput
+    damageOnBosses?: BossDamageUpdateManyWithoutBruteNestedInput
+    clan?: ClanUpdateOneWithoutBrutesNestedInput
+    event?: EventUpdateOneWithoutBrutesNestedInput
+    master?: BruteUpdateOneWithoutPupilsNestedInput
+    pupils?: BruteUpdateManyWithoutMasterNestedInput
+    user?: UserUpdateOneWithoutBrutesNestedInput
+    wantToJoinClan?: ClanUpdateOneWithoutJoinRequestsNestedInput
+    reports?: BruteReportUpdateManyWithoutBruteNestedInput
+    startingStats?: BruteStartingStatsUpdateOneWithoutBruteNestedInput
+    bruteTemporaryEffects?: BruteTemporaryEffectUpdateManyWithoutBruteNestedInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponUpdateManyWithoutBruteNestedInput
+    masterOfClan?: ClanUpdateOneWithoutMasterNestedInput
+    clanPosts?: ClanPostUpdateManyWithoutAuthorNestedInput
+    threads?: ClanThreadUpdateManyWithoutCreatorNestedInput
+    destinyChoices?: DestinyChoiceUpdateManyWithoutBruteNestedInput
+    wonEvents?: EventUpdateManyWithoutWinnerNestedInput
+    fights?: FightUpdateManyWithoutBrute1NestedInput
+    fightsAsAdversary?: FightUpdateManyWithoutBrute2NestedInput
+    goldTransactions?: GoldTransactionUpdateManyWithoutBruteNestedInput
+    inventory?: InventoryItemUpdateManyWithoutBruteNestedInput
+    logs?: LogUpdateManyWithoutCurrentBruteNestedInput
+    tournamentAchievements?: TournamentAchievementUpdateManyWithoutBruteNestedInput
+    tournamentXps?: TournamentXpUpdateManyWithoutBruteNestedInput
+    userlogs?: UserLogUpdateManyWithoutBruteNestedInput
+    tournaments?: TournamentUpdateManyWithoutParticipantsNestedInput
+    inClanWarAttackerFighters?: ClanWarFightersUpdateManyWithoutAttackersNestedInput
+    inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
+    Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
+    Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+  }
+
+  export type BruteUncheckedUpdateWithoutSurvivalRegistrationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    xp?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    ranking?: IntFieldUpdateOperationsInput | number
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    pupilsCount?: IntFieldUpdateOperationsInput | number
+    lastFight?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fightsLeft?: IntFieldUpdateOperationsInput | number
+    lastBossFightDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bossFightsToday?: IntFieldUpdateOperationsInput | number
+    weapons?: BruteUpdateweaponsInput | $Enums.WeaponName[]
+    skills?: BruteUpdateskillsInput | $Enums.SkillName[]
+    agilityModifier?: FloatFieldUpdateOperationsInput | number
+    agilityStat?: IntFieldUpdateOperationsInput | number
+    agilityValue?: IntFieldUpdateOperationsInput | number
+    enduranceModifier?: FloatFieldUpdateOperationsInput | number
+    enduranceStat?: IntFieldUpdateOperationsInput | number
+    enduranceValue?: IntFieldUpdateOperationsInput | number
+    speedModifier?: FloatFieldUpdateOperationsInput | number
+    speedStat?: IntFieldUpdateOperationsInput | number
+    speedValue?: IntFieldUpdateOperationsInput | number
+    strengthModifier?: FloatFieldUpdateOperationsInput | number
+    strengthStat?: IntFieldUpdateOperationsInput | number
+    strengthValue?: IntFieldUpdateOperationsInput | number
+    pets?: BruteUpdatepetsInput | $Enums.PetName[]
+    victories?: IntFieldUpdateOperationsInput | number
+    destinyPath?: BruteUpdatedestinyPathInput | $Enums.DestinyChoiceSide[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    registeredForTournament?: BoolFieldUpdateOperationsInput | boolean
+    nextTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentTournamentStepWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    opponentsGeneratedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    canRankUpSince?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    favorite?: BoolFieldUpdateOperationsInput | boolean
+    previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
+    body?: StringFieldUpdateOperationsInput | string
+    colors?: StringFieldUpdateOperationsInput | string
+    tournamentWins?: IntFieldUpdateOperationsInput | number
+    globalTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    globalTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deletionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    willBeDeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    id?: StringFieldUpdateOperationsInput | string
+    masterId?: NullableStringFieldUpdateOperationsInput | string | null
+    clanId?: NullableStringFieldUpdateOperationsInput | string | null
+    wantToJoinClanId?: NullableStringFieldUpdateOperationsInput | string | null
+    eventId?: NullableStringFieldUpdateOperationsInput | string | null
+    resets?: IntFieldUpdateOperationsInput | number
+    ascendedSkills?: BruteUpdateascendedSkillsInput | $Enums.SkillName[]
+    ascendedPets?: BruteUpdateascendedPetsInput | $Enums.PetName[]
+    ascendedWeapons?: BruteUpdateascendedWeaponsInput | $Enums.WeaponName[]
+    ascensions?: IntFieldUpdateOperationsInput | number
+    eventTournamentRoundWatched?: NullableIntFieldUpdateOperationsInput | number | null
+    eventTournamentWatchedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    losses?: IntFieldUpdateOperationsInput | number
+    autoFightEnabled?: BoolFieldUpdateOperationsInput | boolean
+    winStreakCurrent?: IntFieldUpdateOperationsInput | number
+    winStreakMax?: IntFieldUpdateOperationsInput | number
+    bonusFightsCount?: IntFieldUpdateOperationsInput | number
+    bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    achievements?: AchievementUncheckedUpdateManyWithoutBruteNestedInput
+    damageOnBosses?: BossDamageUncheckedUpdateManyWithoutBruteNestedInput
+    pupils?: BruteUncheckedUpdateManyWithoutMasterNestedInput
+    reports?: BruteReportUncheckedUpdateManyWithoutBruteNestedInput
+    startingStats?: BruteStartingStatsUncheckedUpdateOneWithoutBruteNestedInput
+    bruteTemporaryEffects?: BruteTemporaryEffectUncheckedUpdateManyWithoutBruteNestedInput
+    bruteTemporaryWeapons?: BruteTemporaryWeaponUncheckedUpdateManyWithoutBruteNestedInput
+    masterOfClan?: ClanUncheckedUpdateOneWithoutMasterNestedInput
+    clanPosts?: ClanPostUncheckedUpdateManyWithoutAuthorNestedInput
+    threads?: ClanThreadUncheckedUpdateManyWithoutCreatorNestedInput
+    destinyChoices?: DestinyChoiceUncheckedUpdateManyWithoutBruteNestedInput
+    wonEvents?: EventUncheckedUpdateManyWithoutWinnerNestedInput
+    fights?: FightUncheckedUpdateManyWithoutBrute1NestedInput
+    fightsAsAdversary?: FightUncheckedUpdateManyWithoutBrute2NestedInput
+    goldTransactions?: GoldTransactionUncheckedUpdateManyWithoutBruteNestedInput
+    inventory?: InventoryItemUncheckedUpdateManyWithoutBruteNestedInput
+    logs?: LogUncheckedUpdateManyWithoutCurrentBruteNestedInput
+    tournamentAchievements?: TournamentAchievementUncheckedUpdateManyWithoutBruteNestedInput
+    tournamentXps?: TournamentXpUncheckedUpdateManyWithoutBruteNestedInput
     userlogs?: UserLogUncheckedUpdateManyWithoutBruteNestedInput
     tournaments?: TournamentUncheckedUpdateManyWithoutParticipantsNestedInput
     inClanWarAttackerFighters?: ClanWarFightersUncheckedUpdateManyWithoutAttackersNestedInput
@@ -92685,6 +94969,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutAchievementsInput = {
@@ -92777,6 +95062,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutAchievementsInput = {
@@ -92827,6 +95113,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAchievementsInput = {
@@ -92872,6 +95159,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAchievementsInput = {
@@ -92980,6 +95268,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutAchievementsInput = {
@@ -93072,6 +95361,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type UserUpsertWithoutAchievementsInput = {
@@ -93128,6 +95418,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAchievementsInput = {
@@ -93173,6 +95464,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutDailyObjectivesInput = {
@@ -93218,6 +95510,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDailyObjectivesInput = {
@@ -93263,6 +95556,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDailyObjectivesInput = {
@@ -93324,6 +95618,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDailyObjectivesInput = {
@@ -93369,6 +95664,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWeeklyObjectivesInput = {
@@ -93414,6 +95710,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWeeklyObjectivesInput = {
@@ -93459,6 +95756,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWeeklyObjectivesInput = {
@@ -93520,6 +95818,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWeeklyObjectivesInput = {
@@ -93565,6 +95864,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMissionsInput = {
@@ -93610,6 +95910,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMissionsInput = {
@@ -93655,6 +95956,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMissionsInput = {
@@ -93716,6 +96018,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMissionsInput = {
@@ -93761,6 +96064,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMissionAchievementsInput = {
@@ -93806,6 +96110,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMissionAchievementsInput = {
@@ -93851,6 +96156,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMissionAchievementsInput = {
@@ -93912,6 +96218,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMissionAchievementsInput = {
@@ -93957,6 +96264,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPermanentAchievementsInput = {
@@ -94002,6 +96310,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPermanentAchievementsInput = {
@@ -94047,6 +96356,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPermanentAchievementsInput = {
@@ -94108,6 +96418,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPermanentAchievementsInput = {
@@ -94153,6 +96464,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutReportsInput = {
@@ -94245,6 +96557,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutReportsInput = {
@@ -94337,6 +96650,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutReportsInput = {
@@ -94387,6 +96701,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReportsHandledInput = {
@@ -94432,6 +96747,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReportsHandledInput = {
@@ -94482,6 +96798,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveCreateNestedManyWithoutUserInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReportsInput = {
@@ -94527,6 +96844,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUncheckedCreateNestedManyWithoutUserInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReportsInput = {
@@ -94635,6 +96953,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutReportsInput = {
@@ -94727,6 +97046,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type UserUpsertWithoutReportsHandledInput = {
@@ -94783,6 +97103,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportsHandledInput = {
@@ -94828,6 +97149,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutReportsInput = {
@@ -94958,6 +97280,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutClanInput = {
@@ -95050,6 +97373,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutClanInput = {
@@ -95152,6 +97476,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutWantToJoinClanInput = {
@@ -95244,6 +97569,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutWantToJoinClanInput = {
@@ -95346,6 +97672,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutMasterOfClanInput = {
@@ -95438,6 +97765,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutMasterOfClanInput = {
@@ -95918,6 +98246,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutMasterOfClanInput = {
@@ -96010,6 +98339,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type ClanThreadUpsertWithWhereUniqueWithoutClanInput = {
@@ -96390,6 +98720,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutThreadsInput = {
@@ -96482,6 +98813,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutThreadsInput = {
@@ -96667,6 +98999,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutThreadsInput = {
@@ -96759,6 +99092,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteCreateWithoutClanPostsInput = {
@@ -96851,6 +99185,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutClanPostsInput = {
@@ -96943,6 +99278,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutClanPostsInput = {
@@ -97080,6 +99416,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutClanPostsInput = {
@@ -97172,6 +99509,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type ClanThreadUpsertWithoutPostsInput = {
@@ -97299,6 +99637,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutDamageOnBossesInput = {
@@ -97391,6 +99730,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutDamageOnBossesInput = {
@@ -97554,6 +99894,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutDamageOnBossesInput = {
@@ -97646,6 +99987,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type ClanUpsertWithoutBossDamagesInput = {
@@ -98290,6 +100632,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutInClanWarAttackerFightersInput = {
@@ -98382,6 +100725,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutInClanWarAttackerFightersInput = {
@@ -98479,6 +100823,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutInClanWarDefenderFightersInput = {
@@ -98571,6 +100916,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutInClanWarDefenderFightersInput = {
@@ -99533,6 +101879,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutInventoryInput = {
@@ -99625,6 +101972,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutInventoryInput = {
@@ -99675,6 +102023,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInventoryInput = {
@@ -99720,6 +102069,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInventoryInput = {
@@ -99828,6 +102178,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutInventoryInput = {
@@ -99920,6 +102271,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type UserUpsertWithoutInventoryInput = {
@@ -99976,6 +102328,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInventoryInput = {
@@ -100021,6 +102374,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BattlePassMissionCreateWithoutSeasonInput = {
@@ -100381,6 +102735,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserBattlePassProgressInput = {
@@ -100426,6 +102781,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserBattlePassProgressInput = {
@@ -100516,6 +102872,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserBattlePassProgressInput = {
@@ -100561,6 +102918,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BattlePassMissionCreateWithoutUserProgressInput = {
@@ -100629,6 +102987,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserBattlePassMissionProgressInput = {
@@ -100674,6 +103033,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserBattlePassMissionProgressInput = {
@@ -100764,6 +103124,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserBattlePassMissionProgressInput = {
@@ -100809,6 +103170,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutBruteTemporaryEffectsInput = {
@@ -100901,6 +103263,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutBruteTemporaryEffectsInput = {
@@ -100993,6 +103356,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutBruteTemporaryEffectsInput = {
@@ -101101,6 +103465,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutBruteTemporaryEffectsInput = {
@@ -101193,6 +103558,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteCreateWithoutBruteTemporaryWeaponsInput = {
@@ -101285,6 +103651,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutBruteTemporaryWeaponsInput = {
@@ -101377,6 +103744,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutBruteTemporaryWeaponsInput = {
@@ -101485,6 +103853,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutBruteTemporaryWeaponsInput = {
@@ -101577,6 +103946,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type UserUnlockedCosmeticCreateWithoutPresetInput = {
@@ -101674,6 +104044,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserUnlockedCosmeticsInput = {
@@ -101719,6 +104090,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserUnlockedCosmeticsInput = {
@@ -101804,6 +104176,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserUnlockedCosmeticsInput = {
@@ -101849,6 +104222,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BruteCreateWithoutEventInput = {
@@ -101941,6 +104315,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutEventInput = {
@@ -102033,6 +104408,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutEventInput = {
@@ -102135,6 +104511,7 @@ export namespace Prisma {
     followers?: UserCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutBruteInput
   }
 
   export type BruteUncheckedCreateWithoutWonEventsInput = {
@@ -102227,6 +104604,7 @@ export namespace Prisma {
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
     Brute_Opponents_A?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_BInput
     Brute_Opponents_B?: BruteUncheckedCreateNestedManyWithoutBrute_Opponents_AInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutBruteInput
   }
 
   export type BruteCreateOrConnectWithoutWonEventsInput = {
@@ -102376,6 +104754,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutWonEventsInput = {
@@ -102468,6 +104847,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type TournamentUpsertWithoutEventInput = {
@@ -102544,6 +104924,7 @@ export namespace Prisma {
     reports?: BruteReportCreateNestedManyWithoutUsersInput
     favoriteFights?: FightCreateNestedManyWithoutFavoritedByInput
     following?: BruteCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -102589,6 +104970,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedCreateNestedManyWithoutUsersInput
     favoriteFights?: FightUncheckedCreateNestedManyWithoutFavoritedByInput
     following?: BruteUncheckedCreateNestedManyWithoutFollowersInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -102650,6 +105032,7 @@ export namespace Prisma {
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -102695,6 +105078,7 @@ export namespace Prisma {
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AchievementCreateManyUserInput = {
@@ -102925,6 +105309,13 @@ export namespace Prisma {
     claimedAt?: Date | string | null
   }
 
+  export type SurvivalRegistrationCreateManyUserInput = {
+    id?: string
+    bruteId: string
+    eventDate: Date | string
+    createdAt?: Date | string
+  }
+
   export type AchievementUpdateWithoutUserInput = {
     count?: IntFieldUpdateOperationsInput | number
     name?: EnumAchievementNameFieldUpdateOperationsInput | $Enums.AchievementName
@@ -103036,6 +105427,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutUserInput = {
@@ -103128,6 +105520,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutUserInput = {
@@ -103848,6 +106241,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutFollowersInput = {
@@ -103940,6 +106334,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutFollowersInput = {
@@ -104007,6 +106402,27 @@ export namespace Prisma {
     winStreakMax?: IntFieldUpdateOperationsInput | number
     bonusFightsCount?: IntFieldUpdateOperationsInput | number
     bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SurvivalRegistrationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    brute?: BruteUpdateOneRequiredWithoutSurvivalRegistrationsNestedInput
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bruteId?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bruteId?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AchievementCreateManyBruteInput = {
@@ -104245,6 +106661,13 @@ export namespace Prisma {
     oldName?: string | null
   }
 
+  export type SurvivalRegistrationCreateManyBruteInput = {
+    id?: string
+    userId: string
+    eventDate: Date | string
+    createdAt?: Date | string
+  }
+
   export type AchievementUpdateWithoutBruteInput = {
     count?: IntFieldUpdateOperationsInput | number
     name?: EnumAchievementNameFieldUpdateOperationsInput | $Enums.AchievementName
@@ -104374,6 +106797,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutMasterInput = {
@@ -104466,6 +106890,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutMasterInput = {
@@ -105135,6 +107560,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowingInput = {
@@ -105180,6 +107606,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutFollowingInput = {
@@ -105298,6 +107725,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutBrute_Opponents_BInput = {
@@ -105390,6 +107818,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutBrute_Opponents_BInput = {
@@ -105549,6 +107978,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUpdateManyWithoutDefendersNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutBrute_Opponents_AInput = {
@@ -105641,6 +108071,7 @@ export namespace Prisma {
     inClanWarDefenderFighters?: ClanWarFightersUncheckedUpdateManyWithoutDefendersNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutBrute_Opponents_AInput = {
@@ -105708,6 +108139,27 @@ export namespace Prisma {
     winStreakMax?: IntFieldUpdateOperationsInput | number
     bonusFightsCount?: IntFieldUpdateOperationsInput | number
     bonusFightsDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SurvivalRegistrationUpdateWithoutBruteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSurvivalRegistrationsNestedInput
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateWithoutBruteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SurvivalRegistrationUncheckedUpdateManyWithoutBruteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    eventDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LogCreateManyFightInput = {
@@ -105805,6 +108257,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     reports?: BruteReportUpdateManyWithoutUsersNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFavoriteFightsInput = {
@@ -105850,6 +108303,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     reports?: BruteReportUncheckedUpdateManyWithoutUsersNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutFavoriteFightsInput = {
@@ -106096,6 +108550,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutTournamentsInput = {
@@ -106188,6 +108643,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutTournamentsInput = {
@@ -106300,6 +108756,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUpdateManyWithoutUserNestedInput
     favoriteFights?: FightUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportsInput = {
@@ -106345,6 +108802,7 @@ export namespace Prisma {
     weeklyObjectives?: WeeklyObjectiveUncheckedUpdateManyWithoutUserNestedInput
     favoriteFights?: FightUncheckedUpdateManyWithoutFavoritedByNestedInput
     following?: BruteUncheckedUpdateManyWithoutFollowersNestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutReportsInput = {
@@ -106729,6 +109187,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutClanInput = {
@@ -106821,6 +109280,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutClanInput = {
@@ -106979,6 +109439,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutWantToJoinClanInput = {
@@ -107071,6 +109532,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutWantToJoinClanInput = {
@@ -107701,6 +110163,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutInClanWarAttackerFightersInput = {
@@ -107793,6 +110256,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutInClanWarAttackerFightersInput = {
@@ -107952,6 +110416,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutInClanWarDefenderFightersInput = {
@@ -108044,6 +110509,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutInClanWarDefenderFightersInput = {
@@ -108479,6 +110945,7 @@ export namespace Prisma {
     followers?: UserUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateWithoutEventInput = {
@@ -108571,6 +111038,7 @@ export namespace Prisma {
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
     Brute_Opponents_A?: BruteUncheckedUpdateManyWithoutBrute_Opponents_BNestedInput
     Brute_Opponents_B?: BruteUncheckedUpdateManyWithoutBrute_Opponents_ANestedInput
+    survivalRegistrations?: SurvivalRegistrationUncheckedUpdateManyWithoutBruteNestedInput
   }
 
   export type BruteUncheckedUpdateManyWithoutEventInput = {
