@@ -18,9 +18,11 @@ const UnifiedTournamentView = () => {
   const todayStr = dayjs.utc().format('YYYY-MM-DD');
   const currentDate = date || todayStr;
 
-  // Redirect /tournament (empty) to /tournament/:today - but not when on clan route (no date)
+  // Redirect /tournament (empty) a /tournament/:today,
+  // pero NO cuando estamos en rutas sin :date (clan, survival, etc.)
   const isClanRoute = location.pathname.includes('/tournament/clan/');
-  if (!date && !isClanRoute) {
+  const isSurvivalRoute = location.pathname.includes('/tournament/survival');
+  if (!date && !isClanRoute && !isSurvivalRoute) {
     return <Navigate to={`/${bruteName}/tournament/${todayStr}`} replace />;
   }
 
