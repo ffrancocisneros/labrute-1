@@ -19,6 +19,11 @@ const SurvivalView = () => {
   const [tournament, setTournament] = useState<TournamentsGetDailyResponse | null>(null);
   const [loadingTournament, setLoadingTournament] = useState(false);
 
+  const today = dayjs.utc().startOf('day');
+  const dayOfWeek = today.day(); // 4 = jueves
+  const isThursday = dayOfWeek === 4;
+  const todayStr = today.format('YYYY-MM-DD');
+
   useEffect(() => {
     if (!user) return;
 
@@ -30,15 +35,6 @@ const SurvivalView = () => {
       .catch(console.error)
       .finally(() => setLoading(false));
   }, [user]);
-
-  if (!brute) {
-    return null;
-  }
-
-  const today = dayjs.utc().startOf('day');
-  const dayOfWeek = today.day(); // 4 = jueves
-  const isThursday = dayOfWeek === 4;
-  const todayStr = today.format('YYYY-MM-DD');
 
   useEffect(() => {
     if (!brute || isThursday) return;
@@ -56,6 +52,8 @@ const SurvivalView = () => {
   }, [brute, isThursday, todayStr]);
 
   const handleRegister = () => {
+    if (!brute) return;
+
     setLoading(true);
     Server.Tournament.registerSurvival(brute.name)
       .then(() => {
@@ -64,6 +62,10 @@ const SurvivalView = () => {
       .catch(console.error)
       .finally(() => setLoading(false));
   };
+
+  if (!brute) {
+    return null;
+  }
 
   return (
     <Page title={t('tournament.survival')}>
