@@ -1582,6 +1582,19 @@ const handleSurvivalTournament = async (
     return;
   }
 
+  // Crear torneo Survival (tipo CUSTOM) y conectar participantes
+  const survivalTournament = await prisma.tournament.create({
+    data: {
+      date: today.toDate(),
+      type: TournamentType.CUSTOM,
+      rounds: 0,
+      participants: {
+        connect: participantsIds.map((id) => ({ id })),
+      },
+    },
+    select: { id: true },
+  });
+
   // Cargar brutos completos para el torneo Survival
   let roundBrutes = await prisma.brute.findMany({
     where: {
@@ -1592,6 +1605,7 @@ const handleSurvivalTournament = async (
   roundBrutes = shuffle(roundBrutes);
 
   // Torneo por rondas con byes para completar potencia de 2
+  let round = 1;
   while (roundBrutes.length > 1) {
     const bracketSize = 2 ** Math.ceil(Math.log2(roundBrutes.length));
     const byesCount = bracketSize - roundBrutes.length;
@@ -1607,7 +1621,7 @@ const handleSurvivalTournament = async (
         continue;
       }
 
-      // Generar pelea sin guardarla en DB, sólo para decidir ganador
+      // Generar pelea y guardarla en DB (para ver el torneo Survival)
       let generatedFight: Prisma.FightCreateInput | null = null;
       let retries = 0;
 
@@ -1638,12 +1652,23 @@ const handleSurvivalTournament = async (
         retries++;
       }
 
+      // Crear pelea en DB
+      await prisma.fight.create({
+        data: {
+          ...generatedFight,
+          tournamentStep: round,
+          tournament: { connect: { id: survivalTournament.id } },
+        },
+        select: { id: true },
+      });
+
       // Elegir ganador por nombre
       const winner = brute1.name === generatedFight.winner ? brute1 : brute2;
       nextRound.push(winner);
     }
 
     roundBrutes = nextRound;
+    round++;
   }
 
   const champion = roundBrutes[0];
@@ -1651,6 +1676,13 @@ const handleSurvivalTournament = async (
   if (!champion) {
     return;
   }
+
+  // Actualizar cantidad de rondas del torneo Survival
+  await prisma.tournament.update({
+    where: { id: survivalTournament.id },
+    data: { rounds: round - 1 },
+    select: { id: true },
+  });
 
   // Marcar para eliminación todos los participantes excepto el campeón
   await prisma.brute.updateMany({

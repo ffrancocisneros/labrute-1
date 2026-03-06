@@ -127,9 +127,10 @@ export const initRoutes = (app: Express, config: Config, prisma: PrismaClient) =
   app.get('/api/tournament/is-valid/global', Tournaments.isGlobalTournamentValid(prisma));
   app.patch('/api/tournament/:name/register', Tournaments.registerDaily(prisma));
   app.patch('/api/tournament/register-all', Tournaments.registerAllDaily(prisma));
-   // Survival (torneo semanal)
+  // Survival (torneo semanal)
   app.patch('/api/tournament/:name/register-survival', Tournaments.registerSurvival(prisma));
   app.get('/api/tournament/survival/selection', Tournaments.getSurvivalSelection(prisma));
+  app.get('/api/tournament/survival/:name/:date', Tournaments.getSurvival(prisma));
   app.get('/api/tournament/:name/history', Tournaments.getHistory(prisma));
   app.patch('/api/tournament/:name/update-step-watched', Tournaments.updateStepWatched(prisma));
   app.patch('/api/tournament/:name/update-global-round-watched/:fight', Tournaments.updateGlobalRoundWatched(prisma));

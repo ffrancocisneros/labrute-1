@@ -196,6 +196,10 @@ const Server = {
     getActiveSpecialRule: () => Fetch<TournamentsGetActiveSpecialRuleResponse>('/api/tournament/active-special-rule'),
     registerSurvival: (name: string) => Fetch<{ success: boolean }>(`/api/tournament/${name}/register-survival`, {}, 'PATCH'),
     getSurvivalSelection: () => Fetch<{ bruteName: string | null }>('/api/tournament/survival/selection'),
+    getSurvival: ({
+      name,
+      date,
+    }: { name: string, date: string }) => Fetch<TournamentsGetDailyResponse>(`/api/tournament/survival/${name}/${date}`),
   },
   Achievement: {
     getForUser: (userId: string) => Fetch<AchievementsGetResponse>('/api/achievements', { userId }, 'POST'),
