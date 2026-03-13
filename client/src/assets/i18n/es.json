@@ -551,6 +551,8 @@
   "tournament.survivalNoneSelected": "ninguno (se usará tu bruto de mayor nivel por defecto)",
   "tournament.survivalSelectThisBrute": "Elegir a {{name}} para Survival",
   "tournament.survivalRegistrationClosed": "La inscripción a Survival solo está disponible los jueves.",
+  "tournament.survivalNoTournament": "No hay torneo Survival disponible para esta fecha.",
+  "noTournamentForBrute": "No hay torneo disponible para esta fecha.",
   "tournamentOf": "Torneo de",
   "tournamentOf.desc": "Ver la participación de {{brute}} en el torneo del {{date}}.",
   "globalTournament": "Torneo global",

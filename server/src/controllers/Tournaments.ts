@@ -31,10 +31,30 @@ export const Tournaments = {
         throw new ExpectedError(translate('invalidParameters'));
       }
 
-      // Get tournament
-      const tournament = await prisma.tournament.findFirst({
+      const dateFilter = dayjs.utc(req.params.date, 'YYYY-MM-DD').toDate();
+      const fightInclude = {
+        fights: {
+          select: {
+            id: true,
+            brute1: true,
+            brute2: true,
+            winner: true,
+            winnerId: true,
+            loser: true,
+            loserId: true,
+            tournamentStep: true,
+            fighters: true,
+          },
+          orderBy: {
+            tournamentStep: 'asc' as const,
+          },
+        },
+      };
+
+      // Try finding the brute's own tournament first
+      let tournament = await prisma.tournament.findFirst({
         where: {
-          date: { equals: dayjs.utc(req.params.date, 'YYYY-MM-DD').toDate() },
+          date: { equals: dateFilter },
           type: TournamentType.DAILY,
           participants: {
             some: {
@@ -42,25 +62,19 @@ export const Tournaments = {
             },
           },
         },
-        include: {
-          fights: {
-            select: {
-              id: true,
-              brute1: true,
-              brute2: true,
-              winner: true,
-              winnerId: true,
-              loser: true,
-              loserId: true,
-              tournamentStep: true,
-              fighters: true,
-            },
-            orderBy: {
-              tournamentStep: 'asc',
-            },
-          },
-        },
+        include: fightInclude,
       });
+
+      // Fallback: find any daily tournament for that date (spectator mode)
+      if (!tournament) {
+        tournament = await prisma.tournament.findFirst({
+          where: {
+            date: { equals: dateFilter },
+            type: TournamentType.DAILY,
+          },
+          include: fightInclude,
+        });
+      }
 
       if (!tournament) {
         throw new NotFoundError('Tournament not found');
@@ -356,19 +370,15 @@ export const Tournaments = {
     res: Response<TournamentsGetDailyResponse>,
   ) => {
     try {
-      if (!req.params.name || !req.params.date || !dayjs.utc(req.params.date, 'YYYY-MM-DD').isValid()) {
+      if (!req.params.date || !dayjs.utc(req.params.date, 'YYYY-MM-DD').isValid()) {
         throw new ExpectedError(translate('invalidParameters'));
       }
 
+      // No participant filter: any brute can view the survival tournament
       const tournament = await prisma.tournament.findFirst({
         where: {
           date: { equals: dayjs.utc(req.params.date, 'YYYY-MM-DD').toDate() },
           type: TournamentType.CUSTOM,
-          participants: {
-            some: {
-              name: ilike(req.params.name),
-            },
-          },
         },
         include: {
           fights: {

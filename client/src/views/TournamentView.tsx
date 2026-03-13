@@ -332,7 +332,25 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
     };
   }, [display, tournament, rounds, calculateBracketLines]);
 
-  return tournament && (smallScreen
+  if (!tournament) {
+    return display ? (
+      <Page
+        title={t('tournament')}
+        headerUrl={`/${bruteName || ''}/cell`}
+      >
+        <Paper sx={{ mx: 4, textAlign: 'center', p: 3 }}>
+          <Text h4 bold>
+            {type === 'special' ? t('specialTournament') : t('tournament')}
+          </Text>
+          <Text sx={{ mt: 2 }} color="text.secondary">
+            {t('noTournamentForBrute')}
+          </Text>
+        </Paper>
+      </Page>
+    ) : null;
+  }
+
+  return smallScreen
     ? (
       <TournamentMobileView
         bruteName={bruteName}
@@ -652,7 +670,7 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
             )}
         </Paper>
       </Page>
-    ));
+    );
 };
 
 export default TournamentView;
