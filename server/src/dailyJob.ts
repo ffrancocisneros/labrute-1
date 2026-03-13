@@ -13,6 +13,8 @@ import {
   EventPauseDuration,
   Fighter,
   getCalculatedBrute,
+  getGameDay,
+  getGameTomorrow,
   getNewElo,
   getSpecialRuleForDate,
   getWinsNeededToRankUp,
@@ -109,8 +111,8 @@ const grantBugAchievement = async (prisma: PrismaClient) => {
 };
 
 const deleteMisformattedTournaments = async (prisma: PrismaClient) => {
-  const today = dayjs.utc().startOf('day');
-  const tomorrow = dayjs.utc(today).add(1, 'day');
+  const today = getGameDay();
+  const tomorrow = today.add(1, 'day');
 
   // Check tournaments already created today
   const tournamentsAlreadyCreated = await prisma.tournament.findMany({
@@ -161,8 +163,8 @@ const handleDailyTournaments = async (
   const gains: Record<string, [number, number]> = {};
   const dailyWinners: string[] = [];
 
-  const today = dayjs.utc().startOf('day');
-  const tomorrow = dayjs.utc(today).add(1, 'day');
+  const today = getGameDay();
+  const tomorrow = today.add(1, 'day');
 
   // Delete misformatted tournaments
   await deleteMisformattedTournaments(prisma);
@@ -533,7 +535,7 @@ const handleGlobalTournament = async (
   // Keep track of gains
   const gains: Record<string, [number, number]> = {};
 
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
 
   // Check if global tournament is already handled
   const globalTournament = await prisma.tournament.count({
@@ -771,7 +773,7 @@ const handleCopaDelRey = async (
   globalWinnerId: string | null,
 ): Promise<Record<string, [number, number]>> => {
   const gains: Record<string, [number, number]> = {};
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
 
   if (dailyWinners.length === 0 || !globalWinnerId) {
     return gains;
@@ -974,7 +976,7 @@ const handleUnlimitedGlobalTournament = async (
   modifiers: Modifiers,
   brutes: Pick<Brute, 'id'>[],
 ) => {
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
 
   // Check if unlimited global tournament is already handled
   const globalTournament = await prisma.tournament.count({
@@ -1184,8 +1186,8 @@ const handleSpecialTournament = async (
   modifiers: Modifiers,
 ): Promise<Record<string, [number, number]>> => {
   const gains: Record<string, [number, number]> = {};
-  const today = dayjs.utc().startOf('day');
-  const tomorrow = dayjs.utc(today).add(1, 'day');
+  const today = getGameDay();
+  const tomorrow = today.add(1, 'day');
 
   // Verificar si ya se generó el torneo especial de hoy
   const existingSpecial = await prisma.tournament.findFirst({
@@ -1515,7 +1517,7 @@ const handleSurvivalTournament = async (
   prisma: PrismaClient,
   modifiers: Modifiers,
 ) => {
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
 
   // Solo ejecutar los viernes
   if (today.day() !== 5) {
@@ -1751,8 +1753,8 @@ const storeGains = async (
     }
   }
 
-  const today = dayjs.utc().startOf('day').toDate();
-  const tomorrow = dayjs.utc().add(1, 'day').startOf('day').toDate();
+  const today = getGameDay().toDate();
+  const tomorrow = getGameTomorrow().toDate();
 
   // Store XP gains
   await prisma.tournamentXp.createMany({
@@ -1779,7 +1781,7 @@ const storeGains = async (
 
 const handleXpGains = async (prisma: PrismaClient) => {
   const now = dayjs.utc().valueOf();
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
 
   const count = await prisma.tournamentXp.count({
     where: {
@@ -1821,7 +1823,7 @@ const handleXpGains = async (prisma: PrismaClient) => {
 
 const handleTournamentEarnings = async (prisma: PrismaClient) => {
   const now = dayjs.utc().valueOf();
-  const today = dayjs.utc().startOf('day').toDate();
+  const today = getGameDay().toDate();
 
   const achievementCount = await prisma.tournamentAchievement.count({
     where: {
@@ -2258,7 +2260,7 @@ const cleanup = async (prisma: PrismaClient) => {
 
 // Handle boss rotation (weekly)
 const handleBossRotation = async (prisma: PrismaClient) => {
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
 
   // Get all active clans
   const clans = await prisma.clan.findMany({
@@ -2333,7 +2335,7 @@ const handleClanWars = async (
   prisma: PrismaClient,
   modifiers: Modifiers,
 ) => {
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
 
   // Give rewards for finished clan wars
   const finishedClanWars = await prisma.clanWar.findMany({
@@ -2757,7 +2759,7 @@ const handleClanTournaments = async (
   prisma: PrismaClient,
   modifiers: Modifiers,
 ) => {
-  const today = dayjs.utc().startOf('day').toDate();
+  const today = getGameDay().toDate();
 
   // XP y oro se acumulan y se guardan via TournamentXp / TournamentGold
   const xpByBrute: Record<string, number> = {};

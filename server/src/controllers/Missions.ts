@@ -1,11 +1,12 @@
+import { getGameDay } from '@labrute/core';
 import { ClanMissionCadence, PrismaClient } from '@labrute/prisma';
+import dayjs from 'dayjs';
 import type { Request, Response } from 'express';
 import { auth } from '../utils/auth.js';
 import { sendError } from '../utils/sendError.js';
 import { generateGeneralMissions } from '../utils/missions/generateMissions.js';
 import { claimMissionReward } from '../utils/missions/claimMissionReward.js';
 import { getWeekStart } from '../utils/objectives/generateObjectives.js';
-import dayjs from 'dayjs';
 
 export const Missions = {
   /**
@@ -80,7 +81,7 @@ export const Missions = {
     try {
       const authed = await auth(prisma, req);
 
-      const today = dayjs.utc().startOf('day').toDate();
+      const today = getGameDay().toDate();
       const weekStart = getWeekStart();
 
       // Generar misiones generales si no existen

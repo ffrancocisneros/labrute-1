@@ -9,7 +9,7 @@ import type {
 } from '@labrute/prisma';
 import dayjs from 'dayjs';
 import type { Request, Response } from 'express';
-import { ExpectedError, LimitError, NotFoundError } from '@labrute/core';
+import { ExpectedError, getGameDay, LimitError, NotFoundError } from '@labrute/core';
 import { auth } from '../utils/auth.js';
 import { sendError } from '../utils/sendError.js';
 import { getCurrentSeason } from '../utils/battlePass/getCurrentSeason.js';
@@ -192,7 +192,7 @@ export const BattlePass = {
         targetBruteId = brute.id;
       }
 
-      const today = dayjs.utc().startOf('day').toDate();
+      const today = getGameDay().toDate();
 
       for (const r of rewards) {
         switch (r.rewardType) {

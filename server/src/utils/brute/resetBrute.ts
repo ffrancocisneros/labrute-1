@@ -11,6 +11,7 @@ import {
   getSkillsList,
   getTotalXP,
   getWeaponsList,
+  getGameDay,
   keys,
   pets,
   randomItem,
@@ -251,7 +252,7 @@ export const resetBrute = async ({
       tournaments: {
         where: {
           type: TournamentType.DAILY,
-          date: dayjs.utc().startOf('day').toDate(),
+          date: getGameDay().toDate(),
         },
       },
       inventory: true,

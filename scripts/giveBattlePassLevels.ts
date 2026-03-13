@@ -1,5 +1,5 @@
 import { PrismaClient } from '@labrute/prisma';
-import { getBattlePassXpForLevel } from '@labrute/core';
+import { getBattlePassXpForLevel, getGameDay } from '@labrute/core';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 
@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 // Función para obtener la temporada actual (copiada de getCurrentSeason.ts)
 async function getCurrentSeason(prisma: PrismaClient) {
-  const today = dayjs.utc().startOf('day').toDate();
+  const today = getGameDay().toDate();
   const row = await prisma.battlePassSeason.findFirst({
     where: {
       startDate: { lte: today },

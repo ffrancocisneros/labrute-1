@@ -5,6 +5,8 @@ import {
   TournamentHistoryResponse, TournamentsGetActiveSpecialRuleResponse, TournamentsGetCopaDelReyResponse, TournamentsGetDailyResponse, TournamentsGetGlobalResponse, TournamentsGetSpecialResponse,
   TournamentsUpdateStepWatchedResponse,
   TournementsUpdateGlobalRoundWatchedResponse,
+  getGameDay,
+  getGameTomorrow,
   getSpecialRuleForDate,
 } from '@labrute/core';
 import {
@@ -190,7 +192,7 @@ export const Tournaments = {
     res: Response<TournamentsGetActiveSpecialRuleResponse>,
   ) => {
     try {
-      const today = dayjs.utc().startOf('day');
+      const today = getGameDay();
       const tomorrow = today.add(1, 'day');
       const rule = getSpecialRuleForDate(today);
       const meta = SPECIAL_RULE_META[rule];
@@ -244,7 +246,7 @@ export const Tournaments = {
         },
         data: {
           registeredForTournament: true,
-          nextTournamentDate: dayjs.utc().startOf('day').add(1, 'day').toDate(),
+          nextTournamentDate: getGameDay().add(1, 'day').toDate(),
         },
         select: { id: true },
       });
@@ -265,7 +267,7 @@ export const Tournaments = {
         throw new Error(translate('missingParameters', user));
       }
 
-      const today = dayjs.utc().startOf('day');
+      const today = getGameDay();
       const dayOfWeek = today.day(); // 0 = domingo, 4 = jueves
 
       // Solo permitir inscripción el jueves (día anterior al torneo Survival)
@@ -325,7 +327,7 @@ export const Tournaments = {
     try {
       const user = await auth(prisma, req);
 
-      const today = dayjs.utc().startOf('day');
+      const today = getGameDay();
       const eventDate = today.day() <= 5
         ? today.day(5)
         : today.add(1, 'week').day(5);
@@ -415,7 +417,7 @@ export const Tournaments = {
       });
 
       // Update all valid brutes
-      const nextTournamentDate = dayjs.utc().startOf('day').add(1, 'day').toDate();
+      const nextTournamentDate = getGameDay().add(1, 'day').toDate();
       await prisma.brute.updateMany({
         where: {
           id: { in: brutes.map((b) => b.id) },
@@ -466,7 +468,7 @@ export const Tournaments = {
       const tournament = await prisma.tournament.findFirst({
         where: {
           type: TournamentType.DAILY,
-          date: dayjs.utc().startOf('day').toDate(),
+          date: getGameDay().toDate(),
           participants: {
             some: {
               name: ilike(req.params.name),
@@ -490,7 +492,7 @@ export const Tournaments = {
 
       const steps = [0, 32, 48, 56, 60, 63];
 
-      const stepWatched = !brute.currentTournamentDate || dayjs.utc(brute.currentTournamentDate).isBefore(dayjs.utc().startOf('day'))
+      const stepWatched = !brute.currentTournamentDate || dayjs.utc(brute.currentTournamentDate).isBefore(getGameDay())
         ? 0
         : brute.currentTournamentStepWatched || 0;
       let newStepWatched = stepWatched;
@@ -504,21 +506,21 @@ export const Tournaments = {
             id: brute.id,
           },
           data: {
-            currentTournamentDate: dayjs.utc().toDate(),
+            currentTournamentDate: getGameDay().toDate(),
             currentTournamentStepWatched: 6,
           },
           select: { id: true },
         });
 
         newStepWatched = 6;
-      } else if (!brute.currentTournamentDate || dayjs.utc(brute.currentTournamentDate).isBefore(dayjs.utc().startOf('day'))) {
+      } else if (!brute.currentTournamentDate || dayjs.utc(brute.currentTournamentDate).isBefore(getGameDay())) {
         // First watch of the day
         await prisma.brute.update({
           where: {
             id: brute.id,
           },
           data: {
-            currentTournamentDate: dayjs.utc().toDate(),
+            currentTournamentDate: getGameDay().toDate(),
             currentTournamentStepWatched: 1,
           },
           select: { id: true },
@@ -578,7 +580,7 @@ export const Tournaments = {
           id: brute.id,
         },
         data: {
-          currentTournamentDate: dayjs.utc().toDate(),
+          currentTournamentDate: getGameDay().toDate(),
           currentTournamentStepWatched: 6,
         },
         select: { id: true },
@@ -756,8 +758,8 @@ export const Tournaments = {
         where: {
           type: TournamentType.DAILY,
           date: {
-            gte: dayjs.utc().startOf('day').toDate(),
-            lte: dayjs.utc().endOf('day').toDate(),
+            gte: getGameDay().toDate(),
+            lte: getGameDay().endOf('day').toDate(),
           },
         },
         select: { id: true },
@@ -795,8 +797,8 @@ export const Tournaments = {
             in: [TournamentType.GLOBAL, TournamentType.UNLIMITED_GLOBAL],
           },
           date: {
-            gte: dayjs.utc().startOf('day').toDate(),
-            lte: dayjs.utc().endOf('day').toDate(),
+            gte: getGameDay().toDate(),
+            lte: getGameDay().endOf('day').toDate(),
           },
         },
         select: { id: true },

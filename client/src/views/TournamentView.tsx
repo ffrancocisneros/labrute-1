@@ -1,4 +1,4 @@
-import { Fighter, isWinner, TournamentsGetDailyResponse } from '@labrute/core';
+import { Fighter, getGameDay, isWinner, TournamentsGetDailyResponse } from '@labrute/core';
 import { Gender } from '@labrute/prisma';
 import { Close } from '@mui/icons-material';
 import { Box, Paper, useMediaQuery, useTheme } from '@mui/material';
@@ -177,7 +177,7 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
     Server.Tournament.updateStepWatched(bruteName || '').then(({ step }) => {
       updateBrute((b) => (b ? {
         ...b,
-        currentTournamentDate: dayjs.utc().startOf('day').toDate(),
+        currentTournamentDate: getGameDay().toDate(),
         currentTournamentStepWatched: step,
       } : null));
     }).catch(console.error);
@@ -190,7 +190,7 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
 
     updateBrute((b) => (b ? {
       ...b,
-      currentTournamentDate: dayjs.utc().startOf('day').toDate(),
+      currentTournamentDate: getGameDay().toDate(),
       currentTournamentStepWatched: 6,
     } : null));
   }, [brute, updateBrute]);

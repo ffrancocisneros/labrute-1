@@ -1,13 +1,15 @@
 import express = require('express');
 
-import { Version } from '@labrute/core';
+import { getGameDay, Version } from '@labrute/core';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { doubleCsrf } from 'csrf-csrf';
+import dayjs from 'dayjs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import schedule from 'node-schedule';
+import { TournamentType } from '@labrute/prisma';
 import { GLOBAL, ServerContext } from './context.js';
 import { dailyJob } from './dailyJob.js';
 import './i18n.js';
@@ -96,8 +98,10 @@ export function main(cx: ServerContext) {
   app.listen(port, () => {
     cx.logger.info(`Server listening on port ${port}`);
 
+    const dailyJobFn = dailyJob(cx.prisma);
+
     // Trigger daily job
-    dailyJob(cx.prisma)().catch((error: Error) => {
+    dailyJobFn().catch((error: Error) => {
       cx.discord.sendError(error);
     });
 
@@ -108,16 +112,44 @@ export function main(cx: ServerContext) {
       });
     });
 
-    // Initialize daily scheduler
-    // Ejecutar dailyJob todos los días a las 19:00 hora de Argentina (America/Argentina/Buenos_Aires),
-    // independientemente de la zona horaria del servidor.
-    schedule.scheduleJob(
-      {
-        rule: '0 19 * * *',
-        tz: 'America/Argentina/Buenos_Aires',
-      },
-      dailyJob(cx.prisma),
-    );
+    // Daily job: 21:00 UTC = 18:00 Argentina (UTC-3, no DST).
+    schedule.scheduleJob('0 21 * * *', dailyJobFn);
+
+    // Fallback: every 15 min after 21:00 UTC, check if today's daily
+    // tournaments exist (using the game-day calendar). If missing, re-run.
+    schedule.scheduleJob('*/15 * * * *', async () => {
+      if (dayjs.utc().hour() < 21) {
+        return;
+      }
+
+      try {
+        const today = getGameDay();
+        const tomorrow = today.add(1, 'day');
+
+        const todayDailyTournaments = await cx.prisma.tournament.count({
+          where: {
+            type: TournamentType.DAILY,
+            date: {
+              gte: today.toDate(),
+              lt: tomorrow.toDate(),
+            },
+          },
+        });
+
+        if (todayDailyTournaments > 0) {
+          return;
+        }
+
+        cx.logger.info('Safety scheduler: running daily job because no daily tournaments found for today');
+        await dailyJobFn();
+      } catch (error) {
+        if (error instanceof Error) {
+          cx.logger.error(`Safety scheduler error: ${error.message}`);
+        } else {
+          cx.logger.error('Safety scheduler error (non-Error value)');
+        }
+      }
+    });
   });
 
   initRoutes(app, cx.config, cx.prisma);

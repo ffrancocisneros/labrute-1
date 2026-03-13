@@ -26,6 +26,7 @@ import {
   getBruteGoldValue,
   getBruteToSave,
   getFightsLeft,
+  getGameDay,
   getLevelUpChoices,
   getTotalFightsLeft,
   getRandomStartingStats,
@@ -132,7 +133,7 @@ export const Brutes = {
           tournaments: {
             where: {
               type: TournamentType.DAILY,
-              date: dayjs.utc().startOf('day').toDate(),
+              date: getGameDay().toDate(),
             },
           },
           inventory: {
@@ -823,7 +824,7 @@ export const Brutes = {
       let opponents = brute.Brute_Opponents_B.filter((o: { deletedAt: Date | null }) => o.deletedAt === null);
 
       // If never generated today or not enough opponents, reset opponents
-      if (!brute.opponentsGeneratedAt || dayjs.utc(brute.opponentsGeneratedAt).isBefore(dayjs.utc().startOf('day')) || opponents.length < ARENA_OPPONENTS_COUNT) {
+      if (!brute.opponentsGeneratedAt || dayjs.utc(brute.opponentsGeneratedAt).isBefore(getGameDay()) || opponents.length < ARENA_OPPONENTS_COUNT) {
         // Get opponents
         opponents = await getOpponents(prisma, brute);
 

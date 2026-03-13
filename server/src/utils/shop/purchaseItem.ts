@@ -1,6 +1,6 @@
 import type { PrismaClient, ShopItemType, SkillName, WeaponName } from '@labrute/prisma';
 import dayjs from 'dayjs';
-import { ExpectedError, LimitError, NotFoundError } from '@labrute/core';
+import { ExpectedError, getGameDay, getGameTomorrow, LimitError, NotFoundError } from '@labrute/core';
 import { UserLogType } from '@labrute/prisma';
 import { translate } from '../translate.js';
 import { createGoldTransaction } from '../createGoldTransaction.js';
@@ -52,8 +52,8 @@ export const purchaseItem = async ({
   }
 
   const now = new Date();
-  const dayStart = dayjs.utc().startOf('day').toDate();
-  const dayEnd = dayjs.utc().add(1, 'day').startOf('day').toDate();
+  const dayStart = getGameDay().toDate();
+  const dayEnd = getGameTomorrow().toDate();
 
   // Si hay bruteId, cargar el bruto una sola vez (para contar tiers y validar ownership)
   const brute = bruteId ? await prisma.brute.findFirst({
@@ -72,7 +72,7 @@ export const purchaseItem = async ({
   }
 
   // Procesar la compra según el tipo (transacción: ítem + descuento oro + log)
-  const today = dayjs.utc().startOf('day').toDate();
+  const today = getGameDay().toDate();
 
   await prisma.$transaction(async (tx) => {
     switch (item.type) {

@@ -1,3 +1,4 @@
+import { getGameDay } from '@labrute/core';
 import type { PrismaClient } from '@labrute/prisma';
 import dayjs from 'dayjs';
 
@@ -32,7 +33,7 @@ export interface CurrentSeasonWithRelations {
 export const getCurrentSeason = async (
   prisma: PrismaClient,
 ): Promise<CurrentSeasonWithRelations | null> => {
-  const today = dayjs.utc().startOf('day').toDate();
+  const today = getGameDay().toDate();
   const row = await prisma.battlePassSeason.findFirst({
     where: {
       startDate: { lte: today },

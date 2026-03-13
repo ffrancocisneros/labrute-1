@@ -2,7 +2,7 @@ import { Box, Paper } from '@mui/material';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TournamentsGetDailyResponse } from '@labrute/core';
+import { getGameDay, TournamentsGetDailyResponse } from '@labrute/core';
 import FantasyButton from '../components/FantasyButton';
 import Page from '../components/Page';
 import Text from '../components/Text';
@@ -19,7 +19,7 @@ const SurvivalView = () => {
   const [tournament, setTournament] = useState<TournamentsGetDailyResponse | null>(null);
   const [loadingTournament, setLoadingTournament] = useState(false);
 
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
   const dayOfWeek = today.day(); // 4 = jueves
   const isThursday = dayOfWeek === 4;
   const todayStr = today.format('YYYY-MM-DD');

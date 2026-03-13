@@ -1,3 +1,4 @@
+import { getGameDay } from '@labrute/core';
 import {
   BattlePassMissionDifficulty,
   BattlePassMissionType,
@@ -73,7 +74,7 @@ export const ensureFirstBattlePassSeason = async (prisma: PrismaClient): Promise
   const n = await prisma.battlePassSeason.count();
   if (n > 0) return;
 
-  const start = dayjs.utc().startOf('day').toDate();
+  const start = getGameDay().toDate();
   const end = dayjs.utc(start).add(30, 'day').toDate();
   const s = await prisma.battlePassSeason.create({
     data: {
@@ -150,7 +151,7 @@ export const ensureNextBattlePassSeason = async (prisma: PrismaClient): Promise<
   const current = await getCurrentSeason(prisma);
   if (!current) return;
 
-  const today = dayjs.utc().startOf('day');
+  const today = getGameDay();
   const endDate = dayjs.utc(current.endDate).startOf('day');
   const daysUntilEnd = endDate.diff(today, 'day');
   if (daysUntilEnd > 1) return;

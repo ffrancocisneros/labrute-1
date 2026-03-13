@@ -1,3 +1,4 @@
+import { getGameDay } from '@labrute/core';
 import {
   ClanMissionCadence,
   ClanMissionType,
@@ -6,7 +7,7 @@ import {
 import dayjs from 'dayjs';
 import { getWeekStart } from '../objectives/generateObjectives.js';
 
-const getToday = () => dayjs.utc().startOf('day').toDate();
+const getToday = () => getGameDay().toDate();
 
 const getWeekRange = () => {
   const start = dayjs.utc(getWeekStart()).startOf('day');

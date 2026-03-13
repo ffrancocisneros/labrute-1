@@ -1,6 +1,7 @@
 import {
   ExpectedError,
   ForbiddenError,
+  getGameDay,
   MissingElementError,
   NotFoundError,
 } from '@labrute/core';
@@ -16,7 +17,7 @@ import { sendError } from '../utils/sendError.js';
 import { translate } from '../utils/translate.js';
 
 const getNextClanTournamentDateAndFormat = () => {
-  let date = dayjs.utc().startOf('day');
+  let date = getGameDay();
 
   // We play clan tournaments on Wednesday (ELIMINATION) and Sunday (LEAGUE)
   // 0 = Sunday ... 3 = Wednesday
@@ -40,7 +41,7 @@ const getNextClanTournamentDateAndFormat = () => {
 
   // Fallback, should never happen
   return {
-    date: dayjs.utc().startOf('day'),
+    date: getGameDay(),
     format: ClanTournamentFormat.ELIMINATION,
   };
 };
@@ -180,7 +181,7 @@ export const ClanTournaments = {
         throw new NotFoundError(translate('clanNotFound'));
       }
 
-      const today = dayjs.utc().startOf('day').toDate();
+      const today = getGameDay().toDate();
 
       const tournament = await prisma.clanTournament.findFirst({
         where: {
