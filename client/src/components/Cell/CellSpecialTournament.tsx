@@ -1,5 +1,5 @@
+import { getGameDay } from '@labrute/core';
 import { Paper, PaperProps } from '@mui/material';
-import dayjs from 'dayjs';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
@@ -30,7 +30,7 @@ const CellSpecialTournament = ({ sx, ...rest }: CellSpecialTournamentProps) => {
 
   if (!activeSpecialRule || !bruteName) return null;
 
-  const todayStr = dayjs.utc().format('YYYY-MM-DD');
+  const todayStr = getGameDay().format('YYYY-MM-DD');
 
   return (
     <Paper

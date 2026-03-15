@@ -304,7 +304,7 @@ const handleDailyTournaments = async (
     // Create tournament
     const tournament = await prisma.tournament.create({
       data: {
-        date: new Date(),
+        date: today.toDate(),
         participants: {
           connect: brutes.map((brute) => ({ id: brute.id })),
         },

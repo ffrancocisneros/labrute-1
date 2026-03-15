@@ -1,9 +1,8 @@
-import { getCalculatedBrute, getRandomBody, getRandomColors, isNameValid, TemporarySkillEffect, TemporaryWeaponEffect, TOKEN_COOKIE, USER_COOKIE, UsersAuthenticateResponse } from '@labrute/core';
+import { getCalculatedBrute, getGameDay, getRandomBody, getRandomColors, isNameValid, TemporarySkillEffect, TemporaryWeaponEffect, TOKEN_COOKIE, USER_COOKIE, UsersAuthenticateResponse } from '@labrute/core';
 import { Gender } from '@labrute/prisma';
 import { Lock, LockOpen } from '@mui/icons-material';
 import { Box, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import BoxBg from '../components/BoxBg';
@@ -305,7 +304,7 @@ const HomeView = () => {
         {activeSpecialRule && user?.brutes?.length && (
           <Box
             component={Link}
-            to={`/${user.brutes[0]?.name || ''}/tournament/special/${dayjs.utc().format('YYYY-MM-DD')}`}
+            to={`/${user.brutes[0]?.name || ''}/tournament/special/${getGameDay().format('YYYY-MM-DD')}`}
             sx={{
               display: 'block',
               mb: 2,

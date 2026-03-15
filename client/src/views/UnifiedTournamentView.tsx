@@ -1,6 +1,6 @@
+import { getGameDay } from '@labrute/core';
 import { Box, Tabs } from '@mui/material';
 import Tab from '@mui/material/Tab';
-import dayjs from 'dayjs';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, Outlet, useLocation, useParams } from 'react-router';
@@ -15,7 +15,7 @@ const UnifiedTournamentView = () => {
   const location = useLocation();
   const { brute } = useBrute();
 
-  const todayStr = dayjs.utc().format('YYYY-MM-DD');
+  const todayStr = getGameDay().format('YYYY-MM-DD');
   const currentDate = date || todayStr;
 
   // Redirect /tournament (empty) a /tournament/:today,

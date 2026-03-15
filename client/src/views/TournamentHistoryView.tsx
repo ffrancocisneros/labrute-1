@@ -1,3 +1,4 @@
+import { getGameDay } from '@labrute/core';
 import { TournamentType } from '@labrute/prisma';
 import { Box, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, useMediaQuery, useTheme } from '@mui/material';
 import dayjs from 'dayjs';
@@ -20,7 +21,7 @@ const TournamentHistoryView = () => {
   const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const { data: tournaments } = useStateAsync(null, Server.Tournament.getHistory, bruteName || '');
-  const todayStr = dayjs.utc().format('YYYY-MM-DD');
+  const todayStr = getGameDay().format('YYYY-MM-DD');
   const { data: copaDelRey } = useStateAsync(null, Server.Tournament.getCopaDelRey, todayStr);
   const fetchActiveSpecialRule = useCallback(
     async (): Promise<ActiveSpecialRule | null> => (

@@ -1,4 +1,4 @@
-import { Fighter, isWinner, TournamentsGetCopaDelReyResponse } from '@labrute/core';
+import { Fighter, getGameDay, isWinner, TournamentsGetCopaDelReyResponse } from '@labrute/core';
 import { Gender } from '@labrute/prisma';
 import { Close } from '@mui/icons-material';
 import { Box, Grid, Paper, useTheme } from '@mui/material';
@@ -36,7 +36,7 @@ const CopaDelReyView = () => {
   const navigate = useNavigate();
   const { palette: { mode } } = useTheme();
 
-  const dateStr = date || dayjs.utc().format('YYYY-MM-DD');
+  const dateStr = date || getGameDay().format('YYYY-MM-DD');
   const { data } = useStateAsync(null, Server.Tournament.getCopaDelRey, dateStr);
 
   const tournament: CopaTournament | null = type === 'semifinal' ? (data?.semifinal ?? null) : (data?.final ?? null);

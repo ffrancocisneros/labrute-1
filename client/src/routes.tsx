@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import { getGameDay } from '@labrute/core';
 import React from 'react';
 import { Navigate, RouteObject } from 'react-router';
 import ProvideBrute from './components/Brute/ProvideBrute';
@@ -107,7 +107,7 @@ const routes: RouteObject[] = [
             path: 'tournament',
             element: <UnifiedTournamentView />,
             children: [
-              { path: '', element: <Navigate to={`${dayjs.utc().format('YYYY-MM-DD')}`} replace /> },
+              { path: '', element: <Navigate to={`${getGameDay().format('YYYY-MM-DD')}`} replace /> },
               { path: 'global/:date', element: <GlobalTournamentView /> },
               { path: 'copa-del-rey/:type/:date', element: <CopaDelReyView /> },
               { path: 'special/:date', element: <TournamentView type="special" /> },
