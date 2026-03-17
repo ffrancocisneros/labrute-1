@@ -155,6 +155,33 @@ const deleteMisformattedTournaments = async (prisma: PrismaClient) => {
   }
 };
 
+const repairMisdatedDailyTournaments = async (prisma: PrismaClient) => {
+  const today = getGameDay();
+  const tomorrow = today.add(1, 'day');
+  const yesterday = today.subtract(1, 'day');
+
+  const todayCount = await prisma.tournament.count({
+    where: {
+      type: TournamentType.DAILY,
+      date: { gte: today.toDate(), lt: tomorrow.toDate() },
+    },
+  });
+
+  if (todayCount > 0) return;
+
+  const repaired = await prisma.tournament.updateMany({
+    where: {
+      type: TournamentType.DAILY,
+      date: { gte: yesterday.toDate(), lt: today.toDate() },
+    },
+    data: { date: today.toDate() },
+  });
+
+  if (repaired.count > 0) {
+    LOGGER.log(`Repaired ${repaired.count} daily tournament(s): date shifted from ${yesterday.format('YYYY-MM-DD')} to ${today.format('YYYY-MM-DD')}`);
+  }
+};
+
 const handleDailyTournaments = async (
   prisma: PrismaClient,
   modifiers: Modifiers,
@@ -165,6 +192,9 @@ const handleDailyTournaments = async (
 
   const today = getGameDay();
   const tomorrow = today.add(1, 'day');
+
+  // Fix tournaments created with wrong date (new Date() instead of getGameDay())
+  await repairMisdatedDailyTournaments(prisma);
 
   // Delete misformatted tournaments
   await deleteMisformattedTournaments(prisma);
