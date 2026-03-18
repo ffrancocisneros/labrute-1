@@ -3,6 +3,8 @@ import {
   ExpectedError, FightCreateResponse, FightGetResponse, FightLogTemplateCount,
   GLOBAL_TOURNAMENT_START_HOUR, LimitError, MissingElementError, NotFoundError,
   canLevelUp, getCalculatedBrute, getFightsLeft,
+  getGameDay,
+  toGameDay,
   getXPNeeded,
   isUuid,
   isWinner,
@@ -105,8 +107,9 @@ export const Fights = {
       }
 
       // Obtener peleas bonus del bruto
+      const today = getGameDay();
       const hasBonusToday = (baseBrute1.bonusFightsDate
-        && dayjs.utc(baseBrute1.bonusFightsDate).isSame(dayjs.utc(), 'day'))
+        && toGameDay(baseBrute1.bonusFightsDate).isSame(today, 'day'))
         ?? false;
       const bonusCount = hasBonusToday ? (baseBrute1.bonusFightsCount ?? 0) : 0;
 

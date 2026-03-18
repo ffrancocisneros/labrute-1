@@ -19,4 +19,7 @@ export const getGameDay = () => dayjs.utc().add(GAME_DAY_OFFSET_HOURS, 'hour').s
 /** Shortcut: start of the next game day. */
 export const getGameTomorrow = () => getGameDay().add(1, 'day');
 
+/** Converts an arbitrary UTC date/time to its corresponding game day (start-of-day). */
+export const toGameDay = (date: Date | string) => dayjs.utc(date).add(GAME_DAY_OFFSET_HOURS, 'hour').startOf('day');
+
 export const getCurrentUTCDateString = () => dayjs.utc().format('YYYY-MM-DD');

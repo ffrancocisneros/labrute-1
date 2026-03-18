@@ -1,6 +1,6 @@
-import dayjs from 'dayjs';
 import { getMaxFightsPerDay } from './getMaxFightsPerDay';
 import { CalculatedBrute, Modifiers } from '../types';
+import { getGameDay, toGameDay } from '../utils/date';
 
 type BruteForFightsLeft = Pick<CalculatedBrute, 'id' | 'lastFight' | 'fightsLeft' | 'skills' | 'eventId'>;
 type BruteForTotalFightsLeft = BruteForFightsLeft & {
@@ -11,7 +11,7 @@ type BruteForTotalFightsLeft = BruteForFightsLeft & {
 export const getFightsLeft = (
   brute: BruteForFightsLeft,
   modifiers: Modifiers = {},
-) => (dayjs.utc(brute.lastFight).isSame(dayjs.utc(), 'day')
+) => (brute.lastFight && toGameDay(brute.lastFight).isSame(getGameDay(), 'day')
   ? brute.fightsLeft
   : getMaxFightsPerDay(brute, modifiers));
 
@@ -20,8 +20,9 @@ export const getTotalFightsLeft = (
   modifiers: Modifiers = {},
 ): number => {
   const daily = getFightsLeft(brute, modifiers);
+  const today = getGameDay();
   const bonusDeHoy = brute.bonusFightsDate != null
-    && dayjs.utc(brute.bonusFightsDate).isSame(dayjs.utc(), 'day')
+    && toGameDay(brute.bonusFightsDate).isSame(today, 'day')
     ? (brute.bonusFightsCount ?? 0)
     : 0;
   return daily + bonusDeHoy;

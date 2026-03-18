@@ -1,6 +1,5 @@
 import type { PrismaClient, ShopItemType, SkillName, WeaponName } from '@labrute/prisma';
-import dayjs from 'dayjs';
-import { ExpectedError, getGameDay, getGameTomorrow, LimitError, NotFoundError } from '@labrute/core';
+import { ExpectedError, getGameDay, getGameTomorrow, toGameDay, LimitError, NotFoundError } from '@labrute/core';
 import { UserLogType } from '@labrute/prisma';
 import { translate } from '../translate.js';
 import { createGoldTransaction } from '../createGoldTransaction.js';
@@ -111,7 +110,7 @@ export const purchaseItem = async ({
           select: { bonusFightsCount: true, bonusFightsDate: true },
         });
         const isToday = bruteWithBonus?.bonusFightsDate
-          && dayjs.utc(bruteWithBonus.bonusFightsDate).isSame(dayjs.utc(), 'day');
+          && toGameDay(bruteWithBonus.bonusFightsDate).isSame(today, 'day');
         // Agregar peleas extra al bruto
         await tx.brute.update({
           where: { id: bruteId },

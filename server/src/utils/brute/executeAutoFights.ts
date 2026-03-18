@@ -3,6 +3,8 @@ import {
   type CalculatedBrute,
   getCalculatedBrute,
   getFightsLeft,
+  getGameDay,
+  toGameDay,
   isWinner,
   randomBetween,
   FightLogTemplateCount,
@@ -20,7 +22,6 @@ import { ServerState } from '../ServerState.js';
 import { ilike } from '../ilike.js';
 import { getXPNeeded } from '@labrute/core';
 import { DISCORD, LOGGER } from '../../context.js';
-import dayjs from 'dayjs';
 
 export interface AutoFightResult {
   fightsCompleted: number;
@@ -125,8 +126,9 @@ export const executeAutoFights = async (
   let fightsLeft = getFightsLeft(calculatedBrute, modifiers);
   
   // Obtener peleas bonus del bruto
+  const today = getGameDay();
   const hasBonusToday = (brute.bonusFightsDate
-    && dayjs.utc(brute.bonusFightsDate).isSame(dayjs.utc(), 'day'))
+    && toGameDay(brute.bonusFightsDate).isSame(today, 'day'))
     ?? false;
   const bonusFightsCount = hasBonusToday ? (brute.bonusFightsCount ?? 0) : 0;
   const totalAvailableFights = fightsLeft + bonusFightsCount;
@@ -268,13 +270,12 @@ export const executeAutoFights = async (
         };
       }
 
-      // Verificar peleas restantes
+      // Verificar peleas restantes (diarias + bonus)
       const updatedFightsLeft = getFightsLeft(updatedCalculatedBrute, modifiers);
-      if (updatedFightsLeft <= 0) {
+      if (updatedFightsLeft <= 0 && currentBonusFights <= 0) {
         break;
       }
 
-      // Actualizar currentFightsLeft con el valor real
       currentFightsLeft = updatedFightsLeft;
 
       // Obtener el oponente completo de la base de datos
@@ -542,7 +543,7 @@ export const executeAutoFights = async (
   
   // Obtener peleas bonus finales
   const finalHasBonusToday = (finalBrute.bonusFightsDate
-    && dayjs.utc(finalBrute.bonusFightsDate).isSame(dayjs.utc(), 'day'))
+    && toGameDay(finalBrute.bonusFightsDate).isSame(today, 'day'))
     ?? false;
   const finalBonusFights = finalHasBonusToday ? (finalBrute.bonusFightsCount ?? 0) : 0;
   const totalFinalFights = finalFightsLeft + finalBonusFights;

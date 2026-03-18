@@ -27,6 +27,7 @@ import {
   getBruteToSave,
   getFightsLeft,
   getGameDay,
+  toGameDay,
   getLevelUpChoices,
   getTotalFightsLeft,
   getRandomStartingStats,
@@ -1651,8 +1652,9 @@ export const Brutes = {
       try {
         const user = await auth(prisma, req);
         if (brute.userId && brute.userId === user.id) {
+          const today = getGameDay();
           const isToday = brute.bonusFightsDate
-            && dayjs.utc(brute.bonusFightsDate).isSame(dayjs.utc(), 'day');
+            && toGameDay(brute.bonusFightsDate).isSame(today, 'day');
           bonusFights = isToday ? (brute.bonusFightsCount ?? 0) : 0;
         }
       } catch {

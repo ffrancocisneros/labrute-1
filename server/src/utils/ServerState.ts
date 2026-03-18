@@ -1,4 +1,4 @@
-import { keys, Modifiers } from '@labrute/core';
+import { getGameDay, getGameTomorrow, keys, Modifiers } from '@labrute/core';
 import {
   Event, EventStatus,
   PrismaClient,
@@ -70,7 +70,7 @@ const setModifiers = async (
   prisma: PrismaClient,
   modifiers: Modifiers,
 ) => {
-  const tomorrow = dayjs.utc().add(1, 'day').toDate();
+  const expiresAt = getGameTomorrow().toDate();
   const serverState = await prisma.serverState.findFirst({
     select: { id: true },
   });
@@ -81,7 +81,7 @@ const setModifiers = async (
     await prisma.serverState.create({
       data: {
         activeModifiers: modifierList,
-        modifiersEndAt: tomorrow,
+        modifiersEndAt: expiresAt,
       },
       select: { id: true },
     });
@@ -90,7 +90,7 @@ const setModifiers = async (
       where: { id: serverState.id },
       data: {
         activeModifiers: modifierList,
-        modifiersEndAt: tomorrow,
+        modifiersEndAt: expiresAt,
       },
       select: { id: true },
     });
@@ -106,7 +106,8 @@ const areModifiersExpired = async (prisma: PrismaClient) => {
     },
   });
 
-  return !serverState?.modifiersEndAt || dayjs.utc(serverState.modifiersEndAt).isSameOrBefore(dayjs.utc(), 'day');
+  return !serverState?.modifiersEndAt
+    || dayjs.utc(serverState.modifiersEndAt).isSameOrBefore(getGameDay(), 'day');
 };
 
 const getBannedIps = async (prisma: PrismaClient) => {

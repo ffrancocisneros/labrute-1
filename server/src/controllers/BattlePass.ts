@@ -7,9 +7,8 @@ import type {
   SkillName,
   WeaponName,
 } from '@labrute/prisma';
-import dayjs from 'dayjs';
 import type { Request, Response } from 'express';
-import { ExpectedError, getGameDay, LimitError, NotFoundError } from '@labrute/core';
+import { ExpectedError, getGameDay, toGameDay, LimitError, NotFoundError } from '@labrute/core';
 import { auth } from '../utils/auth.js';
 import { sendError } from '../utils/sendError.js';
 import { getCurrentSeason } from '../utils/battlePass/getCurrentSeason.js';
@@ -248,7 +247,7 @@ export const BattlePass = {
               });
 
               const isToday = brute?.bonusFightsDate
-                && dayjs.utc(brute.bonusFightsDate).isSame(dayjs.utc(), 'day');
+                && toGameDay(brute.bonusFightsDate).isSame(today, 'day');
 
               await prisma.brute.update({
                 where: { id: targetBruteId },
