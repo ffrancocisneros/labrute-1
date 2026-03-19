@@ -1,4 +1,4 @@
-import { BruteRanking, getMaxFightsPerDay, getTotalFightsLeft, getWinsNeededToRankUp, getXPNeeded } from '@labrute/core';
+import { BruteRanking, getGameDay, getMaxFightsPerDay, getTotalFightsLeft, getWinsNeededToRankUp, getXPNeeded } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
 import { PlayArrow } from '@mui/icons-material';
 import { AlertTitle, Box, BoxProps, Alert as MuiAlert, Stack, Tooltip, Typography } from '@mui/material';
@@ -292,13 +292,13 @@ const CellMain = ({
         )}
 
       {/* Rank up */}
-      {owner && brute.canRankUpSince && brute.ranking > 0 && (!dayjs.utc(brute.canRankUpSince).isSame(dayjs.utc(), 'day') || brute.currentTournamentStepWatched === 6) && (
+      {owner && brute.canRankUpSince && brute.ranking > 0 && (!dayjs.utc(brute.canRankUpSince).isSame(getGameDay(), 'day') || brute.currentTournamentStepWatched === 6) && (
         <FantasyButton color="warning" onClick={rankUp} sx={{ mb: 1 }}>
           {t('rankUp')}
         </FantasyButton>
       )}
       {/* Ascend */}
-      {owner && brute.canRankUpSince && brute.ranking === 0 && (!dayjs.utc(brute.canRankUpSince).isSame(dayjs.utc(), 'day') || brute.currentTournamentStepWatched === 6) && (
+      {owner && brute.canRankUpSince && brute.ranking === 0 && (!dayjs.utc(brute.canRankUpSince).isSame(getGameDay(), 'day') || brute.currentTournamentStepWatched === 6) && (
         <Link
           to={`/${brute.name}/ascend`}
           sx={{

@@ -1,8 +1,8 @@
-import { Fighter, GLOBAL_TOURNAMENT_START_HOUR, isWinner, TournamentsGetGlobalFight, TournamentsGetGlobalResponse } from '@labrute/core';
+import { Fighter, getGameDay, GLOBAL_TOURNAMENT_START_HOUR, isWinner, TournamentsGetGlobalFight, TournamentsGetGlobalResponse } from '@labrute/core';
 import { Gender, TournamentType } from '@labrute/prisma';
 import { Close } from '@mui/icons-material';
 import { Badge, Box, Paper, PaperProps, useTheme } from '@mui/material';
-import dayjs, { Dayjs } from 'dayjs';
+import type { Dayjs } from 'dayjs';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -45,14 +45,14 @@ const CellGlobalTournament = ({
   const Alert = useAlert();
   const navigate = useNavigate();
 
-  const now = useMemo(() => dayjs.utc(), []);
+  const now = useMemo(() => getGameDay(), []);
   const bruteName = useMemo(() => name || brute?.name || '', [brute, name]);
 
   const [data, setData] = useState<TournamentsGetGlobalResponse | null>(null);
 
   const watchingRound = useMemo(() => (date
     ? 999
-    : dayjs.utc().isSame(brute?.globalTournamentWatchedDate, 'day')
+    : getGameDay().isSame(brute?.globalTournamentWatchedDate, 'day')
       ? (brute?.globalTournamentRoundWatched || 0) + 1
       : data?.tournament?.fights.find((f) => f.tournamentStep === 1) ? 1 : 2), [brute, date, data]);
 

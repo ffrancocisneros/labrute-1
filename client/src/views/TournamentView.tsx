@@ -79,7 +79,7 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
     // Special tournaments always show all rounds
     if (type === 'special') return 6;
     if (!brute?.currentTournamentDate) return 0;
-    if (!dayjs.utc(tournament.date).isSame(dayjs.utc(), 'day')) return 6;
+    if (!dayjs.utc(tournament.date).isSame(getGameDay(), 'day')) return 6;
 
     return brute?.currentTournamentStepWatched || 0;
   }, [brute, tournament, type]);
@@ -169,7 +169,7 @@ const TournamentView = ({ type = 'daily' }: TournamentViewProps) => {
     navigate(`/${fight.brute1.name}/fight/${fight.id}`);
     if (!ownsBrute) return;
     if (fight.brute1?.id !== brute.id && fight.brute2?.id !== brute.id) return;
-    if (brute.currentTournamentDate && dayjs.utc(brute.currentTournamentDate).isSame(dayjs.utc(), 'day')) {
+    if (brute.currentTournamentDate && dayjs.utc(brute.currentTournamentDate).isSame(getGameDay(), 'day')) {
       if (newStep <= (brute.currentTournamentStepWatched || 0)) return;
     }
 

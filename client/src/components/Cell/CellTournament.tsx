@@ -1,3 +1,4 @@
+import { getGameDay } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
 import { Box, Paper, PaperProps } from '@mui/material';
 import dayjs from 'dayjs';
@@ -26,8 +27,8 @@ const CellTournament = ({
   const { brute, owner, updateBrute } = useBrute();
   const { updateData } = useAuth();
 
-  const now = useMemo(() => dayjs.utc(), []);
-  const tomorrow = useMemo(() => dayjs.utc().add(1, 'day'), []);
+  const now = useMemo(() => getGameDay(), []);
+  const tomorrow = useMemo(() => getGameDay().add(1, 'day'), []);
 
   const registerBrute = useCallback(() => {
     if (!brute) return;
@@ -70,7 +71,7 @@ const CellTournament = ({
       {/* NEXT TOURNAMENT (Only displayed if you can't rank up and if you have watched your daily tournament) */}
       {
         !brute.canRankUpSince
-        && (!dayjs.utc(brute.currentTournamentDate).isSame(dayjs.utc(), 'day') || brute.currentTournamentStepWatched === 6)
+        && (!dayjs.utc(brute.currentTournamentDate).isSame(getGameDay(), 'day') || brute.currentTournamentStepWatched === 6)
         && (
           <Paper
             sx={{

@@ -519,7 +519,7 @@ const handleDailyTournaments = async (
         && (winnerBrute.tournamentWins + 1) >= getWinsNeededToRankUp(winnerBrute)) {
         await prisma.brute.update({
           where: { id: winnerBrute.id },
-          data: { canRankUpSince: new Date() },
+          data: { canRankUpSince: today.toDate() },
           select: { id: true },
         });
       }
