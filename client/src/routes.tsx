@@ -64,6 +64,7 @@ import { CurrentEventsView } from './views/event/CurrentEventsView';
 import { EventRoundView } from './views/event/EventRoundView';
 import { UserLogView } from './views/admin/UserLogView';
 import SurvivalView from './views/SurvivalView';
+import { AdminMetricsView } from './views/admin/AdminMetricsView';
 
 const routes: RouteObject[] = [
   {
@@ -187,6 +188,7 @@ const routes: RouteObject[] = [
           { path: 'brute/:bruteName', element: <BruteAdminView /> },
           { path: 'clan/:clanId', element: <ClanAdminView /> },
           { path: 'user/logs/:userId?', element: <UserLogView /> },
+          { path: 'metrics', element: <AdminMetricsView /> },
         ],
       },
       {

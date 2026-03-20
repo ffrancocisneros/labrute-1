@@ -335,6 +335,24 @@ const Server = {
   GoldTransactions: {
     list: (params: GoldTransactionsListRequest) => Fetch<GoldTransactionsListResponse>('/api/gold-transactions/list', params, 'POST'),
   },
+  AdminMetrics: {
+    getDaily: (date?: string) => Fetch<{
+      date: string;
+      totalFights: number;
+      connectedUsersCount: number;
+      tournamentRegistrationsCount: number;
+      survivalRegistrationsCount: number;
+      activeUsersWithFightsCount: number;
+      users: Array<{
+        userId: string;
+        userName: string;
+        fightsToday: number;
+        fightsTodayRatio: string;
+        lastSeen: Date;
+        msSinceLastConnection: number;
+      }>;
+    }>(`/api/admin/metrics/daily${date ? `?date=${encodeURIComponent(date)}` : ''}`),
+  },
   Missions: {
     get: () => Fetch<{
       daily: Array<{
