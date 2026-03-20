@@ -21,13 +21,16 @@ type MetricsResponse = {
     userId: string;
     userName: string;
     fightsToday: number;
+    userTotalFightsAvailable: number;
     fightsTodayRatio: string;
-    lastSeen: Date;
-    msSinceLastConnection: number;
+    lastConnectionAt: Date | null;
+    msSinceLastConnection: number | null;
   }>;
 };
 
-const formatSince = (ms: number) => {
+const formatSince = (ms: number | null) => {
+  if (ms === null) return '-';
+
   const totalMinutes = Math.floor(ms / 60000);
   const days = Math.floor(totalMinutes / (60 * 24));
   const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
@@ -105,7 +108,11 @@ export const AdminMetricsView = () => {
                       <TableCell>{entry.userName}</TableCell>
                       <TableCell>{entry.fightsToday}</TableCell>
                       <TableCell>{entry.fightsTodayRatio}</TableCell>
-                      <TableCell>{dayjs.utc(entry.lastSeen).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
+                      <TableCell>
+                        {entry.lastConnectionAt
+                          ? dayjs.utc(entry.lastConnectionAt).format('YYYY-MM-DD HH:mm:ss')
+                          : '-'}
+                      </TableCell>
                       <TableCell>{formatSince(entry.msSinceLastConnection)}</TableCell>
                     </TableRow>
                   ))}

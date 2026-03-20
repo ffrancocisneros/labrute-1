@@ -347,9 +347,10 @@ const Server = {
         userId: string;
         userName: string;
         fightsToday: number;
+        userTotalFightsAvailable: number;
         fightsTodayRatio: string;
-        lastSeen: Date;
-        msSinceLastConnection: number;
+        lastConnectionAt: Date | null;
+        msSinceLastConnection: number | null;
       }>;
     }>(`/api/admin/metrics/daily${date ? `?date=${encodeURIComponent(date)}` : ''}`),
   },
