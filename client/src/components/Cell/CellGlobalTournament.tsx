@@ -332,7 +332,7 @@ const CellGlobalTournament = ({
         {...rest}
       >
         <Text bold h6>{t('globalTournament')}</Text>
-        <Text>{dayjs.utc(dateKey).format('DD MMMM YYYY')}</Text>
+        <Text>{(date || getGameDay()).format('DD MMMM YYYY')}</Text>
         <Box sx={{
           mt: 1,
           bgcolor: 'background.paperLight',
@@ -360,9 +360,8 @@ const CellGlobalTournament = ({
               // Check if round hour is passed
               const roundHour = GLOBAL_TOURNAMENT_START_HOUR + i;
 
-              // Para "hoy" usamos la hora actual real, no el game day (que es startOf('day')).
-              const nowUtc = dayjs.utc();
-              if ((!date || date.isSame(nowUtc, 'day')) && nowUtc.hour() < roundHour) {
+              const isTodayTournament = !date || dateKey === getGameDay().format('YYYY-MM-DD');
+              if (isTodayTournament && new Date().getUTCHours() < roundHour) {
                 return null;
               }
 
