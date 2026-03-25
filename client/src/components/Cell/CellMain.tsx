@@ -106,6 +106,7 @@ const CellMain = ({
 
   // Register all brutes for tournament
   const registerAllBrutes = useCallback(() => {
+    const nextTournamentDate = getGameDay().add(1, 'day').toDate();
     Server.Tournament.registerAllDaily().then((response) => {
       Alert.open('success', t('brutesRegistered', { count: response.registered }));
       setJustRegisteredAll(true);
@@ -114,15 +115,26 @@ const CellMain = ({
         ...data,
         brutes: data.brutes.map((b) => ({
           ...b,
-          registeredForTournament: true,
+          // Keep the frontend consistent with what the backend actually registers:
+          // only brutes eligible for daily tournaments should be marked.
+          registeredForTournament: (!b.canRankUpSince && !b.eventId)
+            ? true
+            : b.registeredForTournament,
+          nextTournamentDate: (!b.canRankUpSince && !b.eventId)
+            ? nextTournamentDate
+            : b.nextTournamentDate,
         })),
       } : data));
       // Update current brute if it exists
       if (brute) {
-        updateBrute({
-          ...brute,
-          registeredForTournament: true,
-        });
+        // Only update if this brute is actually eligible for daily tournament registration.
+        if (!brute.canRankUpSince && !brute.eventId) {
+          updateBrute({
+            ...brute,
+            registeredForTournament: true,
+            nextTournamentDate,
+          });
+        }
       }
     }).catch(catchError(Alert));
   }, [Alert, brute, t, updateBrute, updateData]);
@@ -132,7 +144,11 @@ const CellMain = ({
   // Backend will filter out invalid brutes (canRankUpSince, deletedAt, eventId)
   const hasUnregisteredBrutes = useMemo(() => {
     if (!owner || !user) return false;
-    return user.brutes.some((b) => !b.registeredForTournament && !b.canRankUpSince && !b.eventId);
+    return user.brutes.some((b) => {
+      const eligibleForDailyTournament = !b.canRankUpSince && !b.eventId;
+      const needsRegistration = !b.registeredForTournament || !b.nextTournamentDate;
+      return eligibleForDailyTournament && needsRegistration;
+    });
   }, [owner, user]);
 
   return brute && (

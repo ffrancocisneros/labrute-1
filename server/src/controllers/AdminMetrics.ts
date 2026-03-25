@@ -54,7 +54,6 @@ export const AdminMetrics = {
       const [
         connectedToday,
         fightsToday,
-        latestConnectLogs,
         modifiers,
         survivalRegistrationsCount,
         dailyTournamentBrutes,
@@ -96,15 +95,6 @@ export const AdminMetrics = {
                 userId: true,
               },
             },
-          },
-        }),
-        prisma.userLog.groupBy({
-          by: ['userId'],
-          where: {
-            type: UserLogType.CONNECT,
-          },
-          _max: {
-            date: true,
           },
         }),
         ServerState.getModifiers(prisma),
@@ -152,23 +142,22 @@ export const AdminMetrics = {
         });
       });
 
-      const connectedUserIds = connectedToday.map((connectedUser) => connectedUser.userId);
-      const lastConnectByUserId = new Map<string, Date>(
-        latestConnectLogs
-          .filter((row) => row._max.date)
-          .map((row) => [row.userId, row._max.date as Date]),
-      );
-
-      const connectedUsersBrutes = await prisma.brute.findMany({
+      // Tabla: todos los usuarios con brutes (registered), no solo los que se conectaron hoy.
+      const allRegisteredUserBrutes = await prisma.brute.findMany({
         where: {
           deletedAt: null,
           userId: {
-            in: connectedUserIds,
+            not: null,
           },
         },
         select: {
           id: true,
           userId: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
           skills: true,
           fightsLeft: true,
           lastFight: true,
@@ -180,8 +169,12 @@ export const AdminMetrics = {
 
       const today = getGameDay();
       const totalFightsAvailableByUserId = new Map<string, number>();
-      connectedUsersBrutes.forEach((brute) => {
-        if (!brute.userId) return;
+      const userNameById = new Map<string, string>();
+      allRegisteredUserBrutes.forEach((brute) => {
+        const { userId } = brute;
+        if (!userId) return;
+
+        userNameById.set(userId, brute.user?.name ?? userId);
 
         const calculatedSkills = getTieredSkills(brute, modifiers);
         const dailyFightsAvailable = getFightsLeft({
@@ -195,19 +188,52 @@ export const AdminMetrics = {
         const bruteTotal = dailyFightsAvailable + bonusFights;
 
         totalFightsAvailableByUserId.set(
-          brute.userId,
-          (totalFightsAvailableByUserId.get(brute.userId) || 0) + bruteTotal,
+          userId,
+          (totalFightsAvailableByUserId.get(userId) || 0) + bruteTotal,
         );
       });
 
-      const users = connectedToday.map((connectedUser) => {
-        const fightsTodayCount = fightsByUserId.get(connectedUser.userId) || 0;
-        const userTotalFightsAvailable = totalFightsAvailableByUserId.get(connectedUser.userId) || 0;
-        const lastConnectionAt = lastConnectByUserId.get(connectedUser.userId) || null;
+      const allRegisteredUserIds = Array.from(new Set(
+        allRegisteredUserBrutes.map((b) => b.userId).filter((id): id is string => Boolean(id)),
+      ));
+
+      const latestConnectByUserId = new Map<string, Date | null>(
+        allRegisteredUserIds.map((id) => [id, null]),
+      );
+
+      // Último CONNECT por usuario (preciso).
+      // Usamos `orderBy desc + distinct` para evitar problemas con groupBy/serialización.
+      const latestConnectLogs = await prisma.userLog.findMany({
+        where: {
+          type: UserLogType.CONNECT,
+          userId: {
+            in: allRegisteredUserIds,
+          },
+        },
+        orderBy: {
+          date: 'desc',
+        },
+        distinct: ['userId'],
+        select: {
+          userId: true,
+          date: true,
+        },
+      });
+
+      latestConnectLogs.forEach((row) => {
+        if (row.userId && row.date) {
+          latestConnectByUserId.set(row.userId, row.date);
+        }
+      });
+
+      const users = allRegisteredUserIds.map((userId) => {
+        const fightsTodayCount = fightsByUserId.get(userId) || 0;
+        const userTotalFightsAvailable = totalFightsAvailableByUserId.get(userId) || 0;
+        const lastConnectionAt = latestConnectByUserId.get(userId) || null;
 
         return {
-          userId: connectedUser.userId,
-          userName: connectedUser.user.name,
+          userId,
+          userName: userNameById.get(userId) || userId,
           fightsToday: fightsTodayCount,
           userTotalFightsAvailable,
           fightsTodayRatio: `${fightsTodayCount} de ${userTotalFightsAvailable}`,

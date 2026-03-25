@@ -2,7 +2,7 @@ import { getGameDay } from '@labrute/core';
 import { Lang } from '@labrute/prisma';
 import { Box, Paper, PaperProps } from '@mui/material';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAlert } from '../../hooks/useAlert';
 import { useAuth } from '../../hooks/useAuth';
@@ -27,8 +27,10 @@ const CellTournament = ({
   const { brute, owner, updateBrute } = useBrute();
   const { updateData } = useAuth();
 
-  const now = useMemo(() => getGameDay(), []);
-  const tomorrow = useMemo(() => getGameDay().add(1, 'day'), []);
+  // No memoizamos `now/tomorrow`: si la pestaña queda abierta varios días,
+  // la fecha no debe quedar congelada.
+  const now = getGameDay();
+  const tomorrow = getGameDay().add(1, 'day');
 
   const registerBrute = useCallback(() => {
     if (!brute) return;

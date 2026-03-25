@@ -1,6 +1,7 @@
 import { getGameDay, getGameTomorrow, keys, Modifiers } from '@labrute/core';
 import {
   Event, EventStatus,
+  TournamentType,
   PrismaClient,
 } from '@labrute/prisma';
 import dayjs from 'dayjs';
@@ -39,11 +40,41 @@ const setGlobalTournamentValid = async (prisma: PrismaClient, valid: boolean) =>
 };
 
 const isGlobalTournamentValid = async (prisma: PrismaClient) => {
-  const serverState = await prisma.serverState.findFirst({
-    select: { globalTournamentValid: true },
+  // Validación basada en la estructura del torneo global (GLOBAL o UNLIMITED_GLOBAL).
+  // Evita estados "malformed" persistentes cuando un job falló en medio.
+  const today = getGameDay();
+  const tomorrow = today.add(1, 'day');
+
+  const tournaments = await prisma.tournament.findMany({
+    where: {
+      date: {
+        gte: today.toDate(),
+        lt: tomorrow.toDate(),
+      },
+      type: {
+        in: [TournamentType.GLOBAL, TournamentType.UNLIMITED_GLOBAL],
+      },
+    },
+    select: {
+      id: true,
+      rounds: true,
+      _count: {
+        select: {
+          participants: true,
+          fights: true,
+        },
+      },
+    },
   });
 
-  return serverState?.globalTournamentValid ?? false;
+  // En eliminación simple:
+  // - número de peleas = participantes - 1
+  // Si no cumple, el torneo no es consistente para mostrar.
+  return tournaments.some((t) => (
+    t.rounds > 0
+    && t._count.participants >= 2
+    && t._count.fights === t._count.participants - 1
+  ));
 };
 
 const getModifiers = async (prisma: PrismaClient) => {

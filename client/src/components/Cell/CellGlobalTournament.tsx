@@ -45,7 +45,9 @@ const CellGlobalTournament = ({
   const Alert = useAlert();
   const navigate = useNavigate();
 
-  const now = useMemo(() => getGameDay(), []);
+  // No memoizamos `now`: si la pestaña queda abierta varios días,
+  // la fecha no debe quedar congelada.
+  const now = getGameDay();
   const bruteName = useMemo(() => name || brute?.name || '', [brute, name]);
 
   const [data, setData] = useState<TournamentsGetGlobalResponse | null>(null);

@@ -193,14 +193,29 @@ const handleDailyTournaments = async (
   const today = getGameDay();
   const tomorrow = today.add(1, 'day');
 
-  // Fix tournaments created with wrong date (new Date() instead of getGameDay())
-  await repairMisdatedDailyTournaments(prisma);
+  // Self-heal inconsistent registrations:
+  // some brutes could have `registeredForTournament=true` but `nextTournamentDate=null`.
+  // This makes the daily job skip them, which results in the daily tournament not being
+  // generated (and old tournaments being "repaired" forward).
+  await prisma.brute.updateMany({
+    where: {
+      deletedAt: null,
+      eventId: null,
+      registeredForTournament: true,
+      nextTournamentDate: null,
+      canRankUpSince: null,
+    },
+    data: {
+      // The current daily tournament is created for `today`, so the registration must target it.
+      nextTournamentDate: today.toDate(),
+    },
+  });
 
-  // Delete misformatted tournaments
+  // Delete misformatted tournaments (wrong fight count)
   await deleteMisformattedTournaments(prisma);
 
   // Get brutes who registered today and are not in a tournament
-  const registeredBrutes = await prisma.brute.findMany({
+  let registeredBrutes = await prisma.brute.findMany({
     where: {
       deletedAt: null,
       eventId: null,
@@ -228,7 +243,61 @@ const handleDailyTournaments = async (
 
   // All brutes are assigned, do nothing
   if (registeredBrutes.length === 0) {
-    return { registeredBrutes, gains, dailyWinners };
+    // Si no encontramos brutes “libres” es probable que ya exista un DAILY para hoy
+    // (por ejemplo desplazado por el repair). Si además hay brutes registrados
+    // hoy, borramos el DAILY existente y lo recreamos con las inscripciones reales.
+    const eligibleRegisteredBrutes = await prisma.brute.findMany({
+      where: {
+        deletedAt: null,
+        eventId: null,
+        registeredForTournament: true,
+        nextTournamentDate: {
+          lt: tomorrow.toDate(),
+        },
+      },
+      select: {
+        id: true,
+        level: true,
+        ranking: true,
+        name: true,
+      },
+    });
+
+    if (eligibleRegisteredBrutes.length >= 2) {
+      const existingDailyTournaments = await prisma.tournament.findMany({
+        where: {
+          type: TournamentType.DAILY,
+          date: {
+            gte: today.toDate(),
+            lt: tomorrow.toDate(),
+          },
+        },
+        select: { id: true },
+      });
+
+      if (existingDailyTournaments.length) {
+        const tournamentIds = existingDailyTournaments.map((t) => t.id);
+
+        // Delete fights first to avoid FK issues.
+        await prisma.fight.deleteMany({
+          where: {
+            tournamentId: { in: tournamentIds },
+          },
+        });
+
+        await prisma.tournament.deleteMany({
+          where: {
+            id: { in: tournamentIds },
+          },
+        });
+      }
+
+      registeredBrutes = eligibleRegisteredBrutes;
+    } else {
+      // No eligible registrations: fallback to aligning a previously misdated tournament.
+      await repairMisdatedDailyTournaments(prisma);
+      return { registeredBrutes, gains, dailyWinners };
+    }
   }
 
   // Shuffle brutes
@@ -1020,9 +1089,6 @@ const handleUnlimitedGlobalTournament = async (
     return;
   }
 
-  // Set tournament as invalid until it's finished
-  await ServerState.setGlobalTournamentValid(prisma, false);
-
   if (brutes.length < 2) {
     return;
   }
@@ -1197,9 +1263,6 @@ const handleUnlimitedGlobalTournament = async (
     data: { rounds: round - 1 },
     select: { id: true },
   });
-
-  // Set tournament as valid
-  await ServerState.setGlobalTournamentValid(prisma, true);
 
   LOGGER.log('Unlimited global tournament created');
 };
