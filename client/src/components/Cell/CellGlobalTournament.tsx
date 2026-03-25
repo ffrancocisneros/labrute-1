@@ -45,9 +45,11 @@ const CellGlobalTournament = ({
   const Alert = useAlert();
   const navigate = useNavigate();
 
-  // No memoizamos `now`: si la pestaña queda abierta varios días,
-  // la fecha no debe quedar congelada.
-  const now = getGameDay();
+  // Usamos una clave estable para evitar re-fetch infinito (y parpadeo) por identidad de Dayjs.
+  const dateKey = useMemo(
+    () => (date || getGameDay()).format('YYYY-MM-DD'),
+    [date],
+  );
   const bruteName = useMemo(() => name || brute?.name || '', [brute, name]);
 
   const [data, setData] = useState<TournamentsGetGlobalResponse | null>(null);
@@ -73,7 +75,7 @@ const CellGlobalTournament = ({
     if (!bruteName) return () => { isSubscribed = false; };
 
     setData(null);
-    Server.Tournament.getGlobal({ name: bruteName, date: (date || now).format('YYYY-MM-DD') }).then((d) => {
+    Server.Tournament.getGlobal({ name: bruteName, date: dateKey }).then((d) => {
       if (isSubscribed) {
         if (d.tournament) {
           setData(d);
@@ -88,7 +90,7 @@ const CellGlobalTournament = ({
     });
 
     return () => { isSubscribed = false; };
-  }, [bruteName, date, now]);
+  }, [bruteName, dateKey]);
 
   const lostRound = useMemo(
     () => (bruteName && data
@@ -330,7 +332,7 @@ const CellGlobalTournament = ({
         {...rest}
       >
         <Text bold h6>{t('globalTournament')}</Text>
-        <Text>{(date || now).format('DD MMMM YYYY')}</Text>
+        <Text>{dayjs.utc(dateKey).format('DD MMMM YYYY')}</Text>
         <Box sx={{
           mt: 1,
           bgcolor: 'background.paperLight',
@@ -358,7 +360,9 @@ const CellGlobalTournament = ({
               // Check if round hour is passed
               const roundHour = GLOBAL_TOURNAMENT_START_HOUR + i;
 
-              if ((!date || date.isSame(now, 'day')) && now.hour() < roundHour) {
+              // Para "hoy" usamos la hora actual real, no el game day (que es startOf('day')).
+              const nowUtc = dayjs.utc();
+              if ((!date || date.isSame(nowUtc, 'day')) && nowUtc.hour() < roundHour) {
                 return null;
               }
 
