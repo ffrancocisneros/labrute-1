@@ -96,7 +96,7 @@ model Brute {
   gender                       Gender
   userId                       String?                 @db.Uuid
   pupilsCount                  Int                     @default(0)
-  lastFight                    DateTime?               @db.Date
+  lastFight                    DateTime?               @db.Timestamptz(6)
   fightsLeft                   Int                     @default(12)
   lastBossFightDate            DateTime?               @db.Date
   bossFightsToday              Int                     @default(2)
