@@ -18,7 +18,8 @@
     "db:reset": "prisma migrate reset --skip-generate",
     "studio": "prisma studio",
     "run:retrieveFirstBonus": "yarn run compile && node ./lib/scripts/retrieveFirstBonus.js",
-    "run:fixErroredBonuses": "yarn run compile && node ./lib/scripts/fixErroredBonuses.js"
+    "run:fixErroredBonuses": "yarn run compile && node ./lib/scripts/fixErroredBonuses.js",
+    "run:punishAbuseBrutes": "yarn run compile && node ./lib/scripts/punishAbuseBrutes.js"
   },
   "dependencies": {
     "@eternaltwin/client-node": "^0.16.4",
