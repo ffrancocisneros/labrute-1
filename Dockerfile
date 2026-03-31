@@ -31,6 +31,10 @@ RUN cp prisma/package.reference.json prisma/package.json && \
 # Copy the rest of the repo
 COPY . .
 
+# Generate Prisma client (required for correct Date/DateTime decoding)
+# Nixpacks does this, but Docker image build must do it explicitly.
+RUN cd server && yarn prisma generate
+
 # Build backend + shared libs, then frontend
 RUN yarn compile
 RUN yarn build:client
