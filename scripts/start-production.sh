@@ -23,6 +23,9 @@ else
   # Migración 20260116000000_add_bonus_fights_to_brute: las columnas bonusFightsCount y bonusFightsDate ya existen
   yarn prisma migrate resolve --applied 20260116000000_add_bonus_fights_to_brute || true
 
+  # Migración 20260331180000_brute_lastfight_timestamptz: en algunos entornos lastFight quedó como TEXT (se repara en v2)
+  yarn prisma migrate resolve --applied 20260331180000_brute_lastfight_timestamptz || true
+
   # Segundo intento: ahora Prisma ya no volverá a ejecutar las migraciones problemáticas,
   # y podrá aplicar las migraciones v2 (idempotentes) que reparan el esquema.
   yarn db:sync:prod
